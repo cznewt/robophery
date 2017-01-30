@@ -1,0 +1,25 @@
+#!/srv/robotice/bin/python
+
+import sys
+from oslo.config import cfg
+from oslo.config import types
+
+from robophery.i2c.bh1750 import Bh1750Module
+
+common_opts = [
+    cfg.Opt('name',
+            short='n',
+            default="bh1750",
+            help='Sensor name'),
+    cfg.Opt('bus',
+            short='b',
+            default="1",
+            help='I2C bus'),
+]
+
+CONF = cfg.CONF
+CONF.register_cli_opts(common_opts)
+CONF(sys.argv[1:])
+
+module = Bh1750Module(CONF)
+print(module.get_data)
