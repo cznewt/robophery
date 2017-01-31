@@ -1,7 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
-import logging
 from Adafruit_I2C import Adafruit_I2C
+import logging
 from robophery.i2c import I2cModule
 
 logger = logging.getLogger("robophery.i2c.mcp9808")
@@ -76,7 +77,8 @@ class Mcp9808Module(I2cModule):
         """
         return {
             'temperature': {
-                'unit': 'celsius',
+                'type': 'gauge',
+                'unit': 'C',
                 'precision' 0.25,
                 'range_low': -40,
                 'range_high': 125,

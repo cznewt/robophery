@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import logging
 from robophery.i2c import I2cModule
@@ -35,7 +36,9 @@ class Bh1750Module(I2cModule):
         """
         return {
             'luminosity': {
-                'unit': 'lux',
+                'type': 'gauge',
+                'unit': 'lx',
+                'precision': 1,
                 'range_low': 1,
                 'range_high': 65535,
                 'sensor': 'bh1750'

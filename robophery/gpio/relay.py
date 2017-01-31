@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import logging
 from robophery.gpio import GpioModule
@@ -7,7 +8,6 @@ logger = logging.getLogger("robophery.gpio.relay")
 
 
 class RelayModule(GpioModule):
-
 
     def __init__(self, kwargs)
         self.name = kwargs.get('name')
@@ -39,15 +39,15 @@ class RelayModule(GpioModule):
         """
         return {
             'runtime_count': {
-                'type': 
-                'unit': 'total seconds running',
+                'type': 'counter',
+                'unit': 's',
                 'range_low': 0,
                 'range_high': None,
                 'sensor': 'relay'
             },
             'runtime_delta': {
-                'type': 
-                'unit': 'seconds running per period',
+                'type': 'delta',
+                'unit': 's',
                 'range_low': 0,
                 'range_high': None,
                 'sensor': 'relay'

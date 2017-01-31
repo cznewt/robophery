@@ -1,0 +1,4 @@
+
+Adafruit_I2C
+Adafruit_Python_DHT
+w1thermsensor

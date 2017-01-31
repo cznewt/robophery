@@ -1,4 +1,5 @@
-#!/usr/bin/python
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
 
 import logging
 from robophery.gpio import GpioModule
@@ -39,18 +40,19 @@ class SwitchModule(GpioModule):
         """
         return {
             'press_count': {
-                'type': 
-                'unit': 'total seconds pressed',
+                'type': 'counter',
+                'unit': 's',
+                'precision': 0.1,
                 'range_low': 0,
                 'range_high': None,
                 'sensor': 'switch'
             },
             'press_delta': {
-                'type': 
-                'unit': 'seconds pressed per period',
+                'type': 'delta',
+                'unit': 's',
+                'precision': 0.1,
                 'range_low': 0,
                 'range_high': None,
                 'sensor': 'switch'
             }
-
         }
