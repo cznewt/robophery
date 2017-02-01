@@ -9,7 +9,7 @@ logger = logging.getLogger("robophery.gpio.relay")
 
 class RelayModule(GpioModule):
 
-    def __init__(self, kwargs)
+    def __init__(self, kwargs):
         self.name = kwargs.get('name')
         self.set_port(kwargs.get('port'))
 

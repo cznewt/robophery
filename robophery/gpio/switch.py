@@ -10,13 +10,13 @@ logger = logging.getLogger("robophery.gpio.switch")
 class SwitchModule(GpioModule):
 
 
-    def __init__(self, kwargs)
+    def __init__(self, kwargs):
         self.name = kwargs.get('name')
         self.set_port(kwargs.get('port'))
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Switch status readings.
         """
@@ -34,7 +34,7 @@ class SwitchModule(GpioModule):
 
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """

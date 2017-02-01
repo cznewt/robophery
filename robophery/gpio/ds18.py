@@ -10,7 +10,7 @@ logger = logging.getLogger("robophery.gpio.ds18")
 
 class Ds18Module(GpioModule):
 
-    def __init__(self, kwargs)
+    def __init__(self, kwargs):
         self.name = kwargs.get('name')
         self.id = int(kwargs.get("id", '0'))
         self.type = kwargs.get("type", 'DS18B20')
@@ -18,7 +18,7 @@ class Ds18Module(GpioModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Query Dallas DS18 to get the humidity and temperature readings.
         """
@@ -40,7 +40,7 @@ class Ds18Module(GpioModule):
 
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """

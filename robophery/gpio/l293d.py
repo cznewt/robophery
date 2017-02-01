@@ -18,7 +18,7 @@ class L293dModule(GpioModule):
 
     motor_pins = [0 for x in range(3)]
 
-    def __init__(self, kwargs)
+    def __init__(self, kwargs):
         self.name = kwargs.get('name')
         self.motor_pins[0] = kwargs.get('port_a', 0)
         self.motor_pins[1] = kwargs.get('port_b', 0)

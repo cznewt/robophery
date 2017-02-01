@@ -17,7 +17,7 @@ class Dht22Module(GpioModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Query DHT22 to get the humidity and temperature readings.
         """
@@ -42,7 +42,7 @@ class Dht22Module(GpioModule):
 
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """

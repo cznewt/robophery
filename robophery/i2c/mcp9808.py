@@ -28,7 +28,7 @@ MCP9808_REG_DEVICE_ID = 0x07
 
 class Mcp9808Module(I2cModule):
 
-    def __init__(self, kwargs)
+    def __init__(self, kwargs):
         self.name = kwargs.get('name', 'mcp9808')
         self.set_bus(kwargs.get('bus', -1))
         self.set_addr(kwargs.get('addr', MCP9808_I2CADDR_DEFAULT))

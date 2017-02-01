@@ -9,7 +9,7 @@ logger = logging.getLogger("robophery.i2c.bh1750")
 
 class Bh1750Module(I2cModule):
 
-    def __init__(self, kwargs)
+    def __init__(self, kwargs):
         self.name = kwargs.get('name')
         self.set_bus(kwargs.get('bus'))
         self.set_addr(0x23)

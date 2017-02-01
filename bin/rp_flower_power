@@ -5,22 +5,21 @@ import sys
 from oslo_config import cfg
 from oslo_config import types
 
-from robophery.i2c.bh1750 import Bh1750Module
+from robophery.ble.flower_power import FlowerPowerModule
 
 common_opts = [
     cfg.Opt('name',
             short='n',
-            default="bh1750",
+            default="flower_power",
             help='Sensor name'),
-    cfg.Opt('bus',
-            short='b',
-            default="1",
-            help='I2C bus'),
+    cfg.Opt('mac',
+            short='m',
+            help='MAC address'),
 ]
 
 CONF = cfg.CONF
 CONF.register_cli_opts(common_opts)
 CONF(sys.argv[1:])
 
-module = Bh1750Module(CONF)
+module = FlowerPowerModule(CONF)
 print(module.get_data)
