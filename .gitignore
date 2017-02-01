@@ -3,3 +3,9 @@
 .ropeproject
 *.egg-info
 .pybuild
+
+#vimmy stuff
+*.swp
+*.swo
+
+ctags.tmp
