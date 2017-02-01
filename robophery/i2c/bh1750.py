@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import time
+
 import logging
 from robophery.i2c import I2cModule
 
@@ -43,8 +45,8 @@ class Bh1750Module(I2cModule):
         self.mode = mode
         self.bus.write_byte(self.addr, self.mode)
 
-    def set_resolution_mode(self, res_mode):
-        self.res_mode = res_mode
+    def set_resolution_mode(self, resolution_mode):
+        self.resolution_mode = resolution_mode
 
     def set_additional_delay(self, additional_delay):
         self.additional_delay = additional_delay
@@ -100,11 +102,11 @@ class Bh1750Module(I2cModule):
         ratio = 1/(1.2 * (self.mtreg/69.0) * mode2coeff)
         return ratio*count
 
-    def wait_for_result(self, additional=0):
+    def wait_for_result(self):
         basetime = 0.018 if (self.mode & 0x03) == 0x03 else 0.128
-        time.sleep(basetime * (self.mtreg/69.0) + additional)
+        time.sleep(basetime * (self.mtreg/69.0) + self.additional_delay)
 
-    def do_measurement(self, mode, additional_delay=0):
+    def do_measurement(self, mode):
         """ 
         Perform complete measurement using command
         specified by parameter mode with additional
@@ -113,7 +115,7 @@ class Bh1750Module(I2cModule):
         """
         self.reset()
         self._set_mode(mode)
-        self.wait_for_result(additional=additional_delay)
+        self.wait_for_result()
         return self.get_result()
 
     @property
@@ -122,14 +124,13 @@ class Bh1750Module(I2cModule):
         Get the luminosity readings.
         """
         if self.resolution_mode is 0:
-            return self.do_measurement(self.ONE_TIME_LOW_RES_MODE, self.additional_delay)
+            return self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
         elif self.resolution_mode is 1:
-            return self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1, self.additional_delay)
+            return self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
         elif self.resolution_mode is 2:
-            return self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2, self.additional_delay)
+            return self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
         else:
-            #TODO Error?
-
+            return -1.0
 
     @property
     def get_meta_data():
