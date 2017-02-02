@@ -9,7 +9,6 @@ logger = logging.getLogger("robophery.gpio.switch")
 
 class SwitchModule(GpioModule):
 
-
     def __init__(self, kwargs):
         self.name = kwargs.get('name')
         self.set_port(kwargs.get('port'))

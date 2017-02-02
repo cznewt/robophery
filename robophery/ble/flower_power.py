@@ -28,9 +28,9 @@ SOIL_MOISTURE_UUID = "39e1fa05-84a8-11e2-afba-0002a5d5c51b"
 class FlowerPowerModule(BleModule):
 
     def __init__(self, kwargs):
-        self.mac = kwargs.get('mac')
-        self.requester = GATTRequester(self.mac, False)
-
+        self.addr = kwargs.get('addr')
+        self.debug = True
+        self.requester = GATTRequester(self.addr, False)
 
     def connect(self):
         self.requester.connect(True)

@@ -1,4 +1,5 @@
 
-Adafruit_I2C
+oslo.config
+#Adafruit_I2C
 #Adafruit_Python_DHT
 w1thermsensor

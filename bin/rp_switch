@@ -3,19 +3,16 @@
 
 import sys
 from oslo_config import cfg
-from oslo_config import types
-
 from robophery.gpio.switch import SwitchModule
 
 common_opts = [
     cfg.Opt('name',
             short='n',
             default="switch",
-            help='Sensor name'),
+            help='Switch sensor name'),
     cfg.Opt('port',
             short='p',
-            default="20",
-            help='GPIO port'),
+            help='Switch GPIO port'),
 ]
 
 CONF = cfg.CONF

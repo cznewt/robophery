@@ -3,21 +3,22 @@
 
 import sys
 from oslo_config import cfg
-from robophery.gpio.relay import RelayModule
+from robophery.gpio.dht22 import Dht22Module
 
 common_opts = [
     cfg.Opt('name',
             short='n',
-            default="relay",
-            help='Relay actuator name'),
+            default="dht22",
+            help='DHT22 sensor name'),
     cfg.Opt('port',
             short='p',
-            help='Relay GPIO port'),
+            default="0",
+            help='GPIO port of DHT22 sensor'),
 ]
 
 CONF = cfg.CONF
 CONF.register_cli_opts(common_opts)
 CONF(sys.argv[1:])
 
-module = RelayModule(CONF)
+module = Dht22Module(CONF)
 print(module.get_data)

@@ -3,18 +3,16 @@
 
 import sys
 from oslo_config import cfg
-from oslo_config import types
-
 from robophery.ble.flower_power import FlowerPowerModule
 
 common_opts = [
     cfg.Opt('name',
             short='n',
-            default="flower_power",
-            help='Sensor name'),
-    cfg.Opt('mac',
-            short='m',
-            help='MAC address'),
+            default="flower-power",
+            help='Parrot Flower Power sensor name'),
+    cfg.Opt('addr',
+            short='a',
+            help='MAC address of Flower Power sensor'),
 ]
 
 CONF = cfg.CONF

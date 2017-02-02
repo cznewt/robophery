@@ -7,80 +7,82 @@ import RPi.GPIO as GPIO
 
 logger = logging.getLogger("robophery.gpio.l293d")
 
+# L293D pin1 or pin9 : On or off
+MOTOR_POWER_PIN = 0
+# L293D pin2 or pin10 : Anticlockwise positive
+MOTOR_FORWARD_PIN = 0
+# L293D pin7 or pin15 : Clockwise positive
+MOTOR_BACKWARD_PIN = 0
+
 
 class L293dModule(GpioModule):
     """
-    A class for a motor wired to the L293D chip where
-    motor_pins[0] is pinA is L293D pin1 or pin9 : On or off
-    motor_pins[1] is pinB is L293D pin2 or pin10 : Anticlockwise positive
-    motor_pins[2] is pinC is L293D pin7 or pin15 : Clockwise positive
+    A module for a motor controlled the L293D chip
     """
 
-    motor_pins = [0 for x in range(3)]
+    power_pin = MOTOR_POWER_PIN
+    forward_pin = MOTOR_FORWARD_PIN
+    backward_pin = MOTOR_BACKWARD_PIN
 
     def __init__(self, kwargs):
         self.name = kwargs.get('name')
-        self.motor_pins[0] = kwargs.get('port_a', 0)
-        self.motor_pins[1] = kwargs.get('port_b', 0)
-        self.motor_pins[2] = kwargs.get('port_c', 0)
+        self.power_port = kwargs.get('port_a', 0)
+        self.forward_port = kwargs.get('port_b', 0)
+        self.backward_port = kwargs.get('port_c', 0)
 
         self.direction = 0
-        self.gpio_setup(self.motor_pins)
+        self.power = 0
+
+        self.gpio_setup()
 
     @staticmethod
-    def gpio_setup(pins):
+    def gpio_setup(self):
         """
-        Set GPIO.OUT for each pin in use
+        Set GPIO.OUT for all pins
         """
-        for pin in pins:
-            GPIO.setup(pin, GPIO.OUT)
+        GPIO.setup(self.power_port, GPIO.OUT)
+        GPIO.setup(self.forward_port, GPIO.OUT)
+        GPIO.setup(self.backward_port, GPIO.OUT)
 
-    def drive_motor(self, direction=1, duration=None, wait=True):
+    def drive_motor(self, direction=1, power=100):
         """
         Method to drive L293D via GPIO
         """
         self.direction = direction
-        if direction == 0:  # Then stop motor
-            GPIO.output(self.motor_pins[0], GPIO.LOW)
-        else:  # Spin motor
-            # Set first direction GPIO level
-            GPIO.output(self.motor_pins[direction], GPIO.HIGH)
-            # Set second direction GPIO level
-            GPIO.output(self.motor_pins[direction * -1], GPIO.LOW)
-            # Turn the motor on
-            GPIO.output(self.motor_pins[0], GPIO.HIGH)
-        # If duration has been specified, sleep then stop
-        if duration is not None and direction != 0:
-            stop_thread = Thread(target=self.stop, args=(duration,))
-            # Sleep in thread
-            stop_thread.start()
-            if wait:
-                # If wait is true, the main thread is blocked
-                stop_thread.join()
+        # Stop the motor
+        if direction == 0:
+            GPIO.output(self.power_port, GPIO.LOW)
+        # Spin the motor
+        else:
+            if direction == 1:
+                GPIO.output(self.forward_port, GPIO.HIGH)
+                GPIO.output(self.backward_port, GPIO.LOW)
+            else:
+                GPIO.output(self.forward_port, GPIO.LOW)
+                GPIO.output(self.backward_port, GPIO.HIGH)
+            GPIO.output(self.power_port, GPIO.HIGH)
 
 
-    def spin_clockwise(self, duration=None, wait=True):
+    def forward(self, power=100):
         """
         Spin the motor clockwise.
         """
-        self.drive_motor(direction=1, duration=duration, wait=wait)
+        self.drive_motor(direction=1, power=100)
 
 
-    def spin_anticlockwise(self, duration=None, wait=True):
+    def spin_anticlockwise(self, power=100):
         """
         Spin motor anticlockwise.
         """
-        self.drive_motor(direction=-1, duration=duration, wait=wait)
+        self.drive_motor(direction=-1, power=100)
 
 
-    def stop(self, after=0):
+    def stop(self):
         """
-        If 'after' is specified, sleep for amount of time
+        Stop the motor.
         """
-        if after > 0:
-            sleep(after)
-        # Call drive_motor to stop motor after sleep
-        self.drive_motor(direction=0, duration=after, wait=True)
+        self.drive_motor(direction=0, power=0)
+
 
     @property
     def get_data():
@@ -89,5 +91,6 @@ class L293dModule(GpioModule):
         """
         values = [
             ('%s.direction' % self.name, self.direction, ),
+            ('%s.power' % self.name, self.power, ),
         ]
         return values
