@@ -12,15 +12,15 @@ def main():
     while True:
         bh1750.set_resolution_mode(0)
         print "Light Level (resolution 0) : {:3.2f} lx".format(bh1750.get_data)
-        #time.sleep(1)
+
         bh1750.set_resolution_mode(1)
         bh1750.set_additional_delay(1)
         print "Light Level (resolution 1) : {:3.2f} lx".format(bh1750.get_data)
-        #time.sleep(1)
+
         bh1750.set_resolution_mode(2)
         bh1750.set_additional_delay(1)
         print "Light Level (resolution 2) : {:3.2f} lx".format(bh1750.get_data)
-        #time.sleep(1)
+
 
 if __name__=="__main__":
     main()
