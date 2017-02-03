@@ -28,37 +28,16 @@
 import sys
 import time
 sys.path.append('/root/sdcard/git/robophery-dev/')
-#sys.path.append('/home/mato/work/git/robophery-dev/')
 
-#from robophery.i2c.bmp085 import BMP085Module
 import robophery.i2c.bmp085 as bmp085
 from robophery.i2c import (I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE)
-#from robophery.i2c import I2cModule
-
-# Default constructor will pick a default I2C bus.
-#
-# For the Raspberry Pi this means you should hook up to the only exposed I2C bus
-# from the main GPIO header and the library will figure out the bus number based
-# on the Pi's revision.
-#
-# For the Beaglebone Black the library will assume bus 1 by default, which is
-# exposed with SCL = P9_19 and SDA = P9_20.
-
-# Optionally you can override the bus number:
-#sensor = BMP085.BMP085(busnum=2)
-
-# You can also optionally change the BMP085 mode to one of BMP085_ULTRALOWPOWER,
-# BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES.  See the BMP085
-# datasheet for more details on the meanings of each mode (accuracy and power
-# consumption are primarily the differences).  The default mode is STANDARD.
-#sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
 
 def main():
     cfg =   { 
                 'name': 'BMP180', 
+                'address': bmp085.BMP085_I2CADDR
                 'bus': 2, 
                 'mode': bmp085.BMP085_ULTRAHIGHRES, 
-                'i2c_interface': I2C_ADAFRUIT_I2C_INTERFACE
             }
     
     bmp180sensor = bmp085.BMP085Module(cfg)
