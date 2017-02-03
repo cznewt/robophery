@@ -1,5 +1,5 @@
 
-#import smbus
+import smbus
 from robophery.core import Module
 
 #Type of I2C interface to manage system device
