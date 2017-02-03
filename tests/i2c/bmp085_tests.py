@@ -30,14 +30,13 @@ import time
 sys.path.append('/root/sdcard/git/robophery-dev/')
 
 import robophery.i2c.bmp085 as bmp085
-from robophery.i2c import (I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE)
 
 def main():
     cfg =   { 
                 'name': 'BMP180', 
-                'address': bmp085.BMP085_I2CADDR
-                'bus': 2, 
-                'mode': bmp085.BMP085_ULTRAHIGHRES, 
+                'address': bmp085.BMP085_I2CADDR,
+                'busnum': 2,
+                'mode': bmp085.BMP085_ULTRAHIGHRES
             }
     
     bmp180sensor = bmp085.BMP085Module(cfg)

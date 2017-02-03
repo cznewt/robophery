@@ -23,7 +23,7 @@
 from __future__ import division
 import logging
 import time
-from robophery.i2c import (I2cModule, I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE)
+from robophery.i2c import I2cModule
 
 BMP085_NAME_DEFAULT      = 'BMP085 sensor'
 # BMP085 default address.
@@ -67,9 +67,8 @@ class BMP085Module(I2cModule):
         self._mode = kwargs.get('mode')
         #TODO make this as kwarg
         self.set_addr(kwargs.get('address'))
-        self.set_bus(kwargs.get('bus'), I2C_ADAFRUIT_I2C_INTERFACE)
 
-        self._device = i2c.get_i2c_device(self.addr, **kwargs)
+        self.set_device(kwargs.get('address'), kwargs.get('busnum'))
 
         self._logger = logging.getLogger('Adafruit_BMP.BMP085')
 
