@@ -27,12 +27,13 @@
 #import Adafruit_BMP.BMP085 as BMP085
 import sys
 import time
-#sys.path.append('/root/sdcard/git/robophery-dev/')
-sys.path.append('/home/mato/work/git/robophery-dev/')
+sys.path.append('/root/sdcard/git/robophery-dev/')
+#sys.path.append('/home/mato/work/git/robophery-dev/')
 
 #from robophery.i2c.bmp085 import BMP085Module
 import robophery.i2c.bmp085 as bmp085
 from robophery.i2c import (I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE)
+#from robophery.i2c import I2cModule
 
 # Default constructor will pick a default I2C bus.
 #
@@ -53,7 +54,12 @@ from robophery.i2c import (I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE)
 #sensor = BMP085.BMP085(mode=BMP085.BMP085_ULTRAHIGHRES)
 
 def main():
-    cfg = {'name': 'BMP180', 'bus': 2, 'mode': bmp085.BMP085_ULTRAHIGHRES, 'i2c_interface': I2C_ADAFRUIT_I2C_INTERFACE}
+    cfg =   { 
+                'name': 'BMP180', 
+                'bus': 2, 
+                'mode': bmp085.BMP085_ULTRAHIGHRES, 
+                'i2c_interface': I2C_ADAFRUIT_I2C_INTERFACE
+            }
     
     bmp180sensor = bmp085.BMP085Module(cfg)
 
@@ -62,6 +68,7 @@ def main():
         print('Pressure = {0:0.2f} Pa'.format(bmp180sensor.read_pressure()))
         print('Altitude = {0:0.2f} m'.format(bmp180sensor.read_altitude()))
         print('Sealevel Pressure = {0:0.2f} Pa'.format(bmp180sensor.read_sealevel_pressure()))
+        time.sleep(1)
 
 if __name__=="__main__":
     main()

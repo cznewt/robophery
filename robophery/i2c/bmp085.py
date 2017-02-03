@@ -23,7 +23,7 @@
 from __future__ import division
 import logging
 import time
-from robophery.i2c import I2cModule
+from robophery.i2c import (I2cModule, I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE)
 
 # BMP085 default address.
 BMP085_I2CADDR           = 0x77
@@ -67,14 +67,7 @@ class BMP085Module(I2cModule):
             raise ValueError('Unexpected i2c_interface value {0}.  Set I2C interface to one of I2C_SMBUS_INTERFACE, I2C_ADAFRUIT_I2C_INTERFACE'.format(mode))
         self._i2c_interface = kwargs.get('i2c_interface')
 
-#TODO This logic should be in init. Left for initil testing as it is.
-        # Create I2C device.
-        if self._i2c_interface is I2C_ADAFRUIT_I2C_INTERFACE:
-            import Adafruit_GPIO.I2C as I2C
-            i2c = I2C
-            self.bus = i2c.get_i2c_device(address, **kwargs)
-        elif (self._i2c_interface is I2C_SMBUS_INTERFACE):
-            self.set_bus(kwargs.get('bus'))
+        self.set_bus(kwargs.get('bus'), BMP085_I2CADDR, self._i2c_interface)
 
         self._logger = logging.getLogger('Adafruit_BMP.BMP085')
 
