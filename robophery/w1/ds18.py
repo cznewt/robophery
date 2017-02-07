@@ -2,20 +2,19 @@
 # -*- coding: utf-8 -*-
 
 import logging
-from robophery.gpio import GpioModule
-from w1thermsensor import W1ThermSensor
+from robophery.w1 import W1Module
 
-logger = logging.getLogger("robophery.gpio.ds18")
+logger = logging.getLogger("robophery.w1.ds18")
 
 
-class Ds18Module(GpioModule):
+class Ds18Module(W1Module):
 
     def __init__(self, kwargs):
         self.name = kwargs.get('name')
+        self.set_port(kwargs.get('port'))
         self.addr = int(kwargs.get("addr", '0'))
         self.type = kwargs.get("type", 'ds18b20')
-        self.set_port(kwargs.get('port'))
-
+        super(Ds18Module, self).__init__()
 
     @property
     def get_data(self):

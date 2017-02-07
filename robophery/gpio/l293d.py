@@ -1,7 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging
 from robophery.gpio import GpioModule
 import RPi.GPIO as GPIO
 

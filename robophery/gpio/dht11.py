@@ -2,10 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import Adafruit_DHT
-import logging
 from robophery.gpio import GpioModule
-
-logger = logging.getLogger("robophery.gpio.dht11")
 
 
 class Dht11Module(GpioModule):
@@ -17,27 +14,23 @@ class Dht11Module(GpioModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Query DHT11 to get the humidity and temperature readings.
         """
-
         data = []
-
         humidity, temperature = Adafruit_DHT.read_retry(self.type, self.port)
-
         if temperature == None or humidity == None:
-            logger.error("%s: Data CRC failed" % name)
+            self._logger.error("%s: Data CRC failed" % self.name)
             temperature = None
             humidity = None
         else:
             if humidity < 0 or humidity > 100:
-                logger.error("%s: Humidity out of range" % name)
+                self._loggerr.error("%s: Humidity out of range" % self.name)
                 humidity = None
             else:
                 data.append(('%s.temperature' % (self.name), temperature, ))
                 data.append(('%s.humidity' % (self.name), humidity, ))
-
         return data
 
 
