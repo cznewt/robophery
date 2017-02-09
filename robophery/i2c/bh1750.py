@@ -2,12 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import time
-
-import logging
 from robophery.i2c import I2cModule
-
-logger = logging.getLogger("robophery.i2c.bh1750")
-
 
 class Bh1750Module(I2cModule):
     """ Implement BH1750 communication. """
@@ -34,16 +29,18 @@ class Bh1750Module(I2cModule):
 
     def __init__(self, kwargs):
         self.name = kwargs.get('name')
-        self.set_bus(kwargs.get('bus'))
+        #self.set_bus(kwargs.get('bus'))
         self.resolution_mode = kwargs.get('resolution_mode')
         self.additional_delay = kwargs.get('additional_delay')
         #TODO make this as kwarg
-        self.set_addr(0x23)
+        #self.set_addr(0x23)
         self.set_sensitivity()
+        self.setup_device(0x23, kwargs.get('bus'))
 
     def _set_mode(self, mode):
         self.mode = mode
-        self.bus.write_byte(self.addr, self.mode)
+        #self.bus.write_byte(self.addr, self.mode)
+        self.writeRaw8(self.mode)
 
     def set_resolution_mode(self, resolution_mode):
         self.resolution_mode = resolution_mode
@@ -96,7 +93,7 @@ class Bh1750Module(I2cModule):
 
     def get_result(self):
         """ Return current measurement result in lx. """   
-        data = self.bus.read_word_data(self.addr, self.mode)
+        data = self.readU16(self.mode)
         count = data >> 8 | (data&0xff)<<8
         mode2coeff =  2 if (self.mode & 0x03) == 0x01 else 1
         ratio = 1/(1.2 * (self.mtreg/69.0) * mode2coeff)
