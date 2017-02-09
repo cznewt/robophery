@@ -28,14 +28,11 @@ class Bh1750Module(I2cModule):
 
 
     def __init__(self, kwargs):
+        self.setup_device(kwargs.get('address'), kwargs.get('busnum'))
         self.name = kwargs.get('name')
-        #self.set_bus(kwargs.get('bus'))
         self.resolution_mode = kwargs.get('resolution_mode')
         self.additional_delay = kwargs.get('additional_delay')
-        #TODO make this as kwarg
-        #self.set_addr(0x23)
         self.set_sensitivity()
-        self.setup_device(0x23, kwargs.get('bus'))
 
     def _set_mode(self, mode):
         self.mode = mode

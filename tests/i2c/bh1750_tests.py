@@ -5,7 +5,7 @@ sys.path.append('/root/sdcard/git/robophery-dev/')
 from robophery.i2c.bh1750 import Bh1750Module
 
 def main():
-    cfg = {'name': 'hydro-light', 'bus': 2, 'resolution_mode': 0, 'additional_delay': 0}
+    cfg = {'name': 'hydro-light', 'address': 0x23, 'busnum': 2, 'resolution_mode': 0, 'additional_delay': 0}
     
     bh1750 = Bh1750Module(cfg);
     

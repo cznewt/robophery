@@ -1,10 +1,5 @@
 
-#import smbus
 from robophery.core import Module
-
-#Type of I2C interface to manage system device
-#I2C_SMBUS_INTERFACE = 1
-#I2C_ADAFRUIT_I2C_INTERFACE = 2
 
 class I2cModule(Module):
     I2C_LINUX_DEV_PLATFORM = 1
@@ -12,11 +7,12 @@ class I2cModule(Module):
     I2C_FT232_DEV_PLATFORM = 3
 
     def setup_device(self, address, busnum=0, platform=I2C_LINUX_DEV_PLATFORM):
-        if platform is I2C_LINUX_DEV_PLATFORM:
+        self.addr = address
+        if platform is self.I2C_LINUX_DEV_PLATFORM:
             self._interface = SMBusInterface(address, busnum)
-        elif platform is I2C_NODEMCU_DEV_PLATFORM:
+        elif platform is self.I2cModule.I2C_NODEMCU_DEV_PLATFORM:
             self._interface = NodeMcuInterface(address)
-        elif platform is I2C_FT232_DEV_PLATFORM:
+        elif platform is self.I2C_FT232_DEV_PLATFORM:
             self._interface = FT232Interface(address)
 
         self.writeRaw8 = self._interface.writeRaw8
@@ -30,30 +26,16 @@ class I2cModule(Module):
         self.readS16 = self._interface.readS16
         self.readList = self._interface.readList
 
-    def set_device(self, address, busnum):
+    @property
+    def get_addr(self):
         """
-        Set up I2C device for drivers using Adafruit_GPIO.I2C.
+        Get I2C address of device.
         """
-        import Adafruit_GPIO.I2C as I2C
-        #i2c = I2C
-        self._device = I2C.get_i2c_device(address, busnum)
-
-    def set_bus(self, busnum):
-        """
-        Set up bus for drivers using SMBus directly. 
-        """
-        import smbus
-        self.bus = smbus.SMBus(busnum)
-
-    def set_addr(self, addr):
-        """
-        Set address for reading.
-        """
-        self.addr = addr
+        return self.address
 
 class SMBusInterface():
 
-    def __init__(address, busnum):
+    def __init__(self, address, busnum):
         import smbus
         self._bus = smbus.SMBus(busnum)
         self._address = address
@@ -123,7 +105,7 @@ class SMBusInterface():
 
 class NodeMcuInterface():
 
-    def __init__(address):
+    def __init__(self, address):
         from pyb import I2C
         self.i2c = I2C(port, I2C.MASTER)
 
@@ -170,7 +152,7 @@ class NodeMcuInterface():
 
 class FT232Interface():
 
-    def __init__(address):
+    def __init__(self, address):
         from Adafruit.FT232 import I2C
 
     def writeRaw8(self, value):
