@@ -66,8 +66,6 @@ class BMP085Module(I2cModule):
         if kwargs.get('mode') not in [BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, BMP085_ULTRAHIGHRES]:
             raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(mode))
         self._mode = kwargs.get('mode')
-        #TODO make this as kwarg
-        self.set_device(kwargs.get('address'), kwargs.get('busnum'))
 
         self._logger = logging.getLogger('Adafruit_BMP.BMP085')
 
@@ -75,17 +73,17 @@ class BMP085Module(I2cModule):
         self._load_calibration()
 
     def _load_calibration(self):
-        self.cal_AC1 = self._device.readS16(BMP085_CAL_AC1, False)   # INT16
-        self.cal_AC2 = self._device.readS16(BMP085_CAL_AC2, False)   # INT16
-        self.cal_AC3 = self._device.readS16(BMP085_CAL_AC3, False)   # INT16
-        self.cal_AC4 = self._device.readU16(BMP085_CAL_AC4, False)   # UINT16
-        self.cal_AC5 = self._device.readU16(BMP085_CAL_AC5, False)   # UINT16
-        self.cal_AC6 = self._device.readU16(BMP085_CAL_AC6, False)   # UINT16
-        self.cal_B1 = self._device.readS16(BMP085_CAL_B1, False)     # INT16
-        self.cal_B2 = self._device.readS16(BMP085_CAL_B2, False)     # INT16
-        self.cal_MB = self._device.readS16(BMP085_CAL_MB, False)     # INT16
-        self.cal_MC = self._device.readS16(BMP085_CAL_MC, False)     # INT16
-        self.cal_MD = self._device.readS16(BMP085_CAL_MD, False)     # INT16
+        self.cal_AC1 = self.readS16(BMP085_CAL_AC1, False)   # INT16
+        self.cal_AC2 = self.readS16(BMP085_CAL_AC2, False)   # INT16
+        self.cal_AC3 = self.readS16(BMP085_CAL_AC3, False)   # INT16
+        self.cal_AC4 = self.readU16(BMP085_CAL_AC4, False)   # UINT16
+        self.cal_AC5 = self.readU16(BMP085_CAL_AC5, False)   # UINT16
+        self.cal_AC6 = self.readU16(BMP085_CAL_AC6, False)   # UINT16
+        self.cal_B1 = self.readS16(BMP085_CAL_B1, False)     # INT16
+        self.cal_B2 = self.readS16(BMP085_CAL_B2, False)     # INT16
+        self.cal_MB = self.readS16(BMP085_CAL_MB, False)     # INT16
+        self.cal_MC = self.readS16(BMP085_CAL_MC, False)     # INT16
+        self.cal_MD = self.readS16(BMP085_CAL_MD, False)     # INT16
         self._logger.debug('AC1 = {0:6d}'.format(self.cal_AC1))
         self._logger.debug('AC2 = {0:6d}'.format(self.cal_AC2))
         self._logger.debug('AC3 = {0:6d}'.format(self.cal_AC3))
@@ -115,15 +113,15 @@ class BMP085Module(I2cModule):
 
     def read_raw_temp(self):
         """Reads the raw (uncompensated) temperature from the sensor."""
-        self._device.write8(BMP085_CONTROL, BMP085_READTEMPCMD)
+        self.write8(BMP085_CONTROL, BMP085_READTEMPCMD)
         time.sleep(0.005)  # Wait 5ms
-        raw = self._device.readU16(BMP085_TEMPDATA, False)
+        raw = self.readU16(BMP085_TEMPDATA, False)
         self._logger.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
     def read_raw_pressure(self):
         """Reads the raw (uncompensated) pressure level from the sensor."""
-        self._device.write8(BMP085_CONTROL, BMP085_READPRESSURECMD + (self._mode << 6))
+        self.write8(BMP085_CONTROL, BMP085_READPRESSURECMD + (self._mode << 6))
         if self._mode == BMP085_ULTRALOWPOWER:
             time.sleep(0.005)
         elif self._mode == BMP085_HIGHRES:
@@ -132,9 +130,9 @@ class BMP085Module(I2cModule):
             time.sleep(0.026)
         else:
             time.sleep(0.008)
-        msb = self._device.readU8(BMP085_PRESSUREDATA)
-        lsb = self._device.readU8(BMP085_PRESSUREDATA+1)
-        xlsb = self._device.readU8(BMP085_PRESSUREDATA+2)
+        msb = self.readU8(BMP085_PRESSUREDATA)
+        lsb = self.readU8(BMP085_PRESSUREDATA+1)
+        xlsb = self.readU8(BMP085_PRESSUREDATA+2)
         raw = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - self._mode)
         self._logger.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
