@@ -67,15 +67,40 @@ class Module(object):
     FT232_PLATFORM = 5
 
 
-    def __init__(self):
-       self._logger = logging.getLogger(__name__)
-       self._platform = self._detect_platform()
+    def __init__(self, **kwargs):
+        self._logger = logging.getLogger(__name__)
+        if kwargs.get('platform') in self._supported_platforms:
+            self._platform = kwargs['platform']
+        else:
+            self._platform = self._detect_platform()
+
 
     def publish_data(self):
         pass
         #mqtt publish
 
 
+    @property
+    def _supported_platforms():
+       return [
+           self.RASPBERRYPI_PLATFORM,
+           self.BEAGLEBONE_PLATFORM,
+           self.MINNOWBOARD_PLATFORM,
+           self.NODEMCU_PLATFORM,
+           self.FT232_PLATFORM
+       ]
+
+
+    @property
+    def _linux_platforms():
+       return [
+           self.RASPBERRYPI_PLATFORM,
+           self.BEAGLEBONE_PLATFORM,
+           self.MINNOWBOARD_PLATFORM
+       ]
+
+
+    @property
     def _detect_platform():
         """
         Detect if device is running on the Raspberry Pi, Beaglebone
