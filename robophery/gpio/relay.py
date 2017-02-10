@@ -1,16 +1,14 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import logging
 from robophery.gpio import GpioModule
-
-logger = logging.getLogger("robophery.gpio.relay")
 
 
 class RelayModule(GpioModule):
 
-    def __init__(self, kwargs):
+    def __init__(self, **kwargs):
         self.name = kwargs.get('name')
+        super(RelayModule, self, **kwargs).__init__()
         self.set_port(kwargs.get('port'))
 
 

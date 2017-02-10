@@ -7,9 +7,11 @@ from robophery.gpio import GpioModule
 
 class Dht11Module(GpioModule):
 
-    def __init__(self, kwargs)
+    def __init__(self, **kwargs)
         self.name = kwargs.get('name')
-        self.type = 11
+        super(Dht11Module, self, **kwargs).__init__()
+
+        self._type = 11
         self.set_port(kwargs.get('port'))
 
 
