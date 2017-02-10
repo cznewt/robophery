@@ -7,12 +7,13 @@ from robophery.gpio import GpioModule
 
 class Dht22Module(GpioModule):
 
-    def __init__(self, **kwargs)
-        self.name = kwargs.get('name')
-        super(Dht22Module, self, **kwargs).__init__()
+    DEVICE_NAME = 'gpio-dht22'
 
-        self.type = 22
-        self.set_port(kwargs.get('port'))
+
+    def __init__(self, **kwargs)
+        super(Dht22Module, self, **kwargs).__init__()
+        self._type = 22
+        self._port = kwargs.get('port')
 
 
     @property
@@ -21,18 +22,18 @@ class Dht22Module(GpioModule):
         Query DHT22 to get the humidity and temperature readings.
         """
         data = []
-        humidity, temperature = Adafruit_DHT.read_retry(self.type, self.port)
+        humidity, temperature = Adafruit_DHT.read_retry(self._type, self._port)
         if temperature == None or humidity == None:
-            logger.error("%s: Data CRC failed" % self.name)
+            logger.error("%s: Data CRC failed" % self._name)
             temperature = None
             humidity = None
         else:
             if humidity < 0 or humidity > 100:
-                logger.error("%s: Humidity out of range" % self.name)
+                logger.error("%s: Humidity out of range" % self._name)
                 humidity = None
             else:
-                data.append(('%s.temperature' % (self.name), temperature, ))
-                data.append(('%s.humidity' % (self.name), humidity, ))
+                data.append(('%s.temperature' % (self._name), temperature, ))
+                data.append(('%s.humidity' % (self._name), humidity, ))
         return data
 
 

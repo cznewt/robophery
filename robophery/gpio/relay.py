@@ -1,15 +1,15 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from robophery.gpio import GpioModule
 
 
 class RelayModule(GpioModule):
 
+    DEVICE_NAME = 'gpio-relay'
+
+
     def __init__(self, **kwargs):
-        self.name = kwargs.get('name')
         super(RelayModule, self, **kwargs).__init__()
-        self.set_port(kwargs.get('port'))
+        self._pin = kwargs.get('pin')
 
 
     @property
@@ -18,10 +18,6 @@ class RelayModule(GpioModule):
         Relay status readings.
         """
 
-        GPIO.setup(port, GPIO.IN)
-        state = GPIO.input(self.port)
-
-        runtime_count = runtime_delta = state
      
         values = [
             ('%s.runtime_count' % self.name, runtime_count, ),

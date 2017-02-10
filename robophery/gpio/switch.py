@@ -1,14 +1,14 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from robophery.gpio import GpioModule
 
 
 class SwitchModule(GpioModule):
 
+    DEVICE_NAME = 'gpio-switch'
+
+
     def __init__(self, **kwargs):
-        self.name = kwargs.get('name')
-         super(RelayModule, self, **kwargs).__init__()
+        super(SwitchModule, self, **kwargs).__init__()
 
 
     @property

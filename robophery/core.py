@@ -64,10 +64,11 @@ class Module(object):
     BEAGLEBONE_PLATFORM = 2
     MINNOWBOARD_PLATFORM = 3
     NODEMCU_PLATFORM = 4
-    FT232_PLATFORM = 5
+    FT232H_PLATFORM = 5
 
 
     def __init__(self, **kwargs):
+        self._name = kwargs.get('name', self.DEFAULT_NAME)
         self._logger = logging.getLogger(__name__)
         if kwargs.get('platform') in self._supported_platforms:
             self._platform = kwargs['platform']
@@ -82,22 +83,22 @@ class Module(object):
 
     @property
     def _supported_platforms():
-       return [
+       return (
            self.RASPBERRYPI_PLATFORM,
            self.BEAGLEBONE_PLATFORM,
            self.MINNOWBOARD_PLATFORM,
            self.NODEMCU_PLATFORM,
-           self.FT232_PLATFORM
-       ]
+           self.FT232H_PLATFORM
+       )
 
 
     @property
     def _linux_platforms():
-       return [
+       return (
            self.RASPBERRYPI_PLATFORM,
            self.BEAGLEBONE_PLATFORM,
            self.MINNOWBOARD_PLATFORM
-       ]
+       )
 
 
     @property

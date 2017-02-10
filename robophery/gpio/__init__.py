@@ -11,15 +11,18 @@ class GpioModule(Module):
     @property
     def _setup_device(self):
 
-        if self._platform is self.RASPBERRYPI_PLATFORM:
-            from robophery.gpio.interface.raspberrypi import RaspberrypiInterface
-            self._interface = RaspberrypiInterface()
-        elif self._platform is self.BEAGLEBONE_PLATFORM:
-            from robophery.gpio.interface.beaglebone import BeagleboneInterface
-            self._interface = BeagleboneInterface()
-        elif self._platform is self.MINNOWBOARD_PLATFORM:
-            from robophery.gpio.interface.minnowboard import MinnowboardInterface
-            self._interface = MinnowboardInterface()
+        if self._platform == self.RASPBERRYPI_PLATFORM:
+            from robophery.gpio.interface.raspberrypi import RpiGpioInterface
+            self._interface = RaspberrypiGpioInterface()
+        elif self._platform == self.BEAGLEBONE_PLATFORM:
+            from robophery.gpio.interface.beaglebone import BbbGpioInterface
+            self._interface = BbbGpioInterface()
+        elif self._platform == self.MINNOWBOARD_PLATFORM:
+            from robophery.gpio.interface.minnowboard import MinnowboardGpioInterface
+            self._interface = MinnowboardGpioInterface()
+        elif self._platform == self.FT232H_PLATFORM:
+            from robophery.gpio.interface.minnowboard import Ft232hGpioInterface
+            self._interface = Ft232hGpioInterface()
         else:
             raise RuntimeError('Platform not supported for GPIO interface.')
 

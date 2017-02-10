@@ -7,12 +7,13 @@ from robophery.gpio import GpioModule
 
 class Dht11Module(GpioModule):
 
-    def __init__(self, **kwargs)
-        self.name = kwargs.get('name')
-        super(Dht11Module, self, **kwargs).__init__()
+    DEVICE_NAME = 'gpio-dht11'
 
+
+    def __init__(self, **kwargs)
+        super(Dht11Module, self, **kwargs).__init__()
         self._type = 11
-        self.set_port(kwargs.get('port'))
+        self._port = kwargs.get('port')
 
 
     @property
@@ -21,7 +22,7 @@ class Dht11Module(GpioModule):
         Query DHT11 to get the humidity and temperature readings.
         """
         data = []
-        humidity, temperature = Adafruit_DHT.read_retry(self.type, self.port)
+        humidity, temperature = Adafruit_DHT.read_retry(self._type, self._port)
         if temperature == None or humidity == None:
             self._logger.error("%s: Data CRC failed" % self.name)
             temperature = None

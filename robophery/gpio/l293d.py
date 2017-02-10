@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 from robophery.gpio import GpioModule
 import RPi.GPIO as GPIO
@@ -9,28 +7,23 @@ class L293dModule(GpioModule):
     A module for a motor controlled the L293D chip
     """
 
-    # L293D pin1 or pin9 : On or off
+    DEVICE_NAME = 'gpio-l293d'
+
+    # L293D pin1 or pin9: On or off
     MOTOR_POWER_PIN = 0
-    # L293D pin2 or pin10 : Anticlockwise positive
+    # L293D pin2 or pin10: Anticlockwise positive
     MOTOR_FORWARD_PIN = 0
-    # L293D pin7 or pin15 : Clockwise positive
+    # L293D pin7 or pin15: Clockwise positive
     MOTOR_BACKWARD_PIN = 0
 
-    power_pin = MOTOR_POWER_PIN
-    forward_pin = MOTOR_FORWARD_PIN
-    backward_pin = MOTOR_BACKWARD_PIN
-
-    def __init__(self, kwargs):
-        self.name = kwargs.get('name')
+    def __init__(self, **kwargs):
         super(L293dModule, self, **kwargs).__init__()
-        self.power_port = kwargs.get('port_a', 0)
-        self.forward_port = kwargs.get('port_b', 0)
-        self.backward_port = kwargs.get('port_c', 0)
+        self.power_pin = kwargs.get('port_a', self.MOTOR_POWER_PIN)
+        self.forward_pin = kwargs.get('port_b', self.MOTOR_FORWARD_PIN)
+        self.backward_pin = kwargs.get('port_c', self.MOTOR_BACKWARD_PIN)
 
         self.direction = 0
         self.power = 0
-
-
 
         self.gpio_setup()
 
@@ -39,9 +32,9 @@ class L293dModule(GpioModule):
         """
         Set GPIO.OUT for all pins
         """
-        GPIO.setup(self.power_port, GPIO.OUT)
-        GPIO.setup(self.forward_port, GPIO.OUT)
-        GPIO.setup(self.backward_port, GPIO.OUT)
+        GPIO.setup(self.power_pin, GPIO.OUT)
+        GPIO.setup(self.forward_pin, GPIO.OUT)
+        GPIO.setup(self.backward_pin, GPIO.OUT)
 
     def drive_motor(self, direction=1, power=100):
         """
@@ -50,16 +43,16 @@ class L293dModule(GpioModule):
         self.direction = direction
         # Stop the motor
         if direction == 0:
-            GPIO.output(self.power_port, GPIO.LOW)
+            GPIO.output(self.power_pin, GPIO.LOW)
         # Spin the motor
         else:
             if direction == 1:
-                GPIO.output(self.forward_port, GPIO.HIGH)
-                GPIO.output(self.backward_port, GPIO.LOW)
+                GPIO.output(self.forward_pin, GPIO.HIGH)
+                GPIO.output(self.backward_pin, GPIO.LOW)
             else:
-                GPIO.output(self.forward_port, GPIO.LOW)
-                GPIO.output(self.backward_port, GPIO.HIGH)
-            GPIO.output(self.power_port, GPIO.HIGH)
+                GPIO.output(self.forward_pin, GPIO.LOW)
+                GPIO.output(self.backward_pin, GPIO.HIGH)
+            GPIO.output(self.power_pin, GPIO.HIGH)
 
 
     def forward(self, power=100):

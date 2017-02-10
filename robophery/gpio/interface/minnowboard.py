@@ -1,73 +1,94 @@
+# Copyright (c) 2014 Adafruit Industries
+# Author: Tony DiCola
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in
+# all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+# THE SOFTWARE.
 
 import mraa
-from robophery.gpio.interface import GpioInterface
+import robophery._bus.interface
 
-class MinnowboardInterface(GpioInterface):
+class MinnowboardGpioInterface(interface.GpioInterface):
     """
     GPIO implementation for the Minnowboard + MAX using the mraa library
     """
     
     def __init__(self):
-        self.gpio = mraa
-        self._dir_mapping = {
-            OUT: self.gpio.DIR_OUT,
-            IN: self.gpio.DIR_IN
-        }
-        self._pud_mapping = {
-            PUD_OFF: self.gpio.MODE_STRONG,
-            PUD_UP: self.gpio.MODE_HIZ,
-            PUD_DOWN: self.gpio.MODE_PULLDOWN
-        }
-        self._edge_mapping = {
-            RISING: self.gpio.EDGE_RISING,
-            FALLING: self.gpio.EDGE_FALLING,
-            BOTH: self.gpio.EDGE_BOTH
-        }
+        self._bus = mraa
+        self._dir_mapping = { OUT: self._bus.DIR_OUT,
+                              IN: self._bus.DIR_IN }
+        self._pud_mapping = { PUD_OFF: self._bus.MODE_STRONG,
+                              PUD_UP: self._bus.MODE_HIZ,
+                              PUD_DOWN: self._bus.MODE_PULLDOWN }
+        self._edge_mapping = { RISING: self._bus.EDGE_RISING,
+                               FALLING: self._bus.EDGE_FALLING,
+                               BOTH: self._bus.EDGE_BOTH }
+
 
     def setup(self, pin, mode):
-        """Set the input or output mode for a specified pin.  Mode should be
+        """
+        Set the input or output mode for a specified pin. Mode should be
         either DIR_IN or DIR_OUT.
         """
-        self.gpio.Gpio.dir(self.gpio.Gpio(pin),self._dir_mapping[mode])   
+        self._bus.Gpio.dir(self._bus.Gpio(pin),self._dir_mapping[mode])   
 
 
     def output(self, pin, value):
-        """Set the specified pin the provided high/low value.  Value should be
+        """
+        Set the specified pin the provided high/low value. Value should be
         either 1 (ON or HIGH), or 0 (OFF or LOW) or a boolean.
         """
-        self.gpio.Gpio.write(self.gpio.Gpio(pin), value)
+        self._bus.Gpio.write(self._bus.Gpio(pin), value)
 
     
     def input(self, pin):
-        """Read the specified pin and return HIGH/true if the pin is pulled high,
+        """
+        Read the specified pin and return HIGH/true if the pin is pulled high,
         or LOW/false if pulled low.
         """
-        return self.gpio.Gpio.read(self.gpio.Gpio(pin))    
+        return self._bus.Gpio.read(self._bus.Gpio(pin))    
 
     
     def add_event_detect(self, pin, edge, callback=None, bouncetime=-1):
-        """Enable edge detection events for a particular GPIO channel.  Pin 
-        should be type IN.  Edge must be RISING, FALLING or BOTH.  Callback is a
-        function for the event.  Bouncetime is switch bounce timeout in ms for 
-        callback
+        """
+        Enable edge detection events for a particular GPIO channel. Pin 
+        should be type IN. Edge must be RISING, FALLING or BOTH. Callback is a
+        function for the event. Bouncetime is switch bounce timeout in ms for 
+        callback.
         """
         kwargs = {}
         if callback:
             kwargs['callback']=callback
         if bouncetime > 0:
             kwargs['bouncetime']=bouncetime
-        self.gpio.Gpio.isr(self.gpio.Gpio(pin), self._edge_mapping[edge], **kwargs)
+        self._bus.Gpio.isr(self._bus.Gpio(pin), self._edge_mapping[edge], **kwargs)
 
 
     def remove_event_detect(self, pin):
-        """Remove edge detection for a particular GPIO channel.  Pin should be
+        """
+        Remove edge detection for a particular GPIO channel. Pin should be
         type IN.
         """
-        self.gpio.Gpio.isrExit(self.gpio.Gpio(pin))
+        self._bus.Gpio.isrExit(self._bus.Gpio(pin))
 
 
     def wait_for_edge(self, pin, edge):
-        """Wait for an edge.   Pin should be type IN.  Edge must be RISING, 
+        """
+        Wait for an edge. Pin should be type IN. Edge must be RISING, 
         FALLING or BOTH.
         """
-        self.gpio.wait_for_edge(self.gpio.Gpio(pin), self._edge_mapping[edge])
+        self._bus.wait_for_edge(self._bus.Gpio(pin), self._edge_mapping[edge])
