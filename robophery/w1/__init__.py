@@ -13,18 +13,12 @@ class W1Module(Module):
     def _get_all_temperatures(self):
         data = []
         for sensor in W1ThermSensor.get_available_sensors():
-            data.append(('%s-%s.temperature' % (self.name, sensor.id), sensor.get_temperature()))
+            data.append(('%s-%s.temperature' % (self._name, sensor.id), sensor.get_temperature()))
+
 
     @property
     def _get_temperature(self):
-        if self.type == 'ds18b20':
-            real_type == W1ThermSensor.THERM_SENSOR_DS18B20
-        sensor = W1ThermSensor(real_type, self.addr)
-        data.append(('%s.temperature' % self.name, sensor.get_temperature()))
-
-
-    def _set_port(self, port):
-        """
-        Set GPIO port for operation.
-        """
-        self.port = int(port)
+        if self._type == 'ds18b20':
+            sensor_type = W1ThermSensor.THERM_SENSOR_DS18B20
+        sensor = W1ThermSensor(sensor_type, self._id)
+        data.append(('%s.temperature' % self._name, sensor.get_temperature()))

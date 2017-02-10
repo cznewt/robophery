@@ -12,11 +12,11 @@ class GpioModule(Module):
     def _setup_device(self):
 
         if self._platform == self.RASPBERRYPI_PLATFORM:
-            from robophery.gpio.interface.raspberrypi import RpiGpioInterface
+            from robophery.gpio.interface.raspberrypi import RaspberrypiGpioInterface
             self._interface = RaspberrypiGpioInterface()
         elif self._platform == self.BEAGLEBONE_PLATFORM:
-            from robophery.gpio.interface.beaglebone import BbbGpioInterface
-            self._interface = BbbGpioInterface()
+            from robophery.gpio.interface.beaglebone import BeagleboneGpioInterface
+            self._interface = BeagleboneGpioInterface()
         elif self._platform == self.MINNOWBOARD_PLATFORM:
             from robophery.gpio.interface.minnowboard import MinnowboardGpioInterface
             self._interface = MinnowboardGpioInterface()

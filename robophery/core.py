@@ -59,6 +59,8 @@ def detect_pi_revision():
 
 class Module(object):
 
+    DEVICE_NAME = 'unknown-device'
+
     UNKNOWN_PLATFORM = 0
     RASPBERRYPI_PLATFORM = 1
     BEAGLEBONE_PLATFORM = 2
@@ -68,12 +70,13 @@ class Module(object):
 
 
     def __init__(self, **kwargs):
-        self._name = kwargs.get('name', self.DEFAULT_NAME)
-        self._logger = logging.getLogger(__name__)
+        self._name = kwargs.get('name', self.DEVICE_NAME)
+        self._log_level = kwargs.get('log_level', 'debug')
+        self._log = logging.getLogger('robophery.%s' % self._name)
         if kwargs.get('platform') in self._supported_platforms:
             self._platform = kwargs['platform']
         else:
-            self._platform = self._detect_platform()
+            self._platform = self._detect_platform
 
 
     def publish_data(self):
@@ -82,7 +85,7 @@ class Module(object):
 
 
     @property
-    def _supported_platforms():
+    def _supported_platforms(self):
        return (
            self.RASPBERRYPI_PLATFORM,
            self.BEAGLEBONE_PLATFORM,
@@ -93,7 +96,7 @@ class Module(object):
 
 
     @property
-    def _linux_platforms():
+    def _linux_platforms(self):
        return (
            self.RASPBERRYPI_PLATFORM,
            self.BEAGLEBONE_PLATFORM,
@@ -102,7 +105,7 @@ class Module(object):
 
 
     @property
-    def _detect_platform():
+    def _detect_platform(self):
         """
         Detect if device is running on the Raspberry Pi, Beaglebone
         Black or MinnowBoard and return the platform type.

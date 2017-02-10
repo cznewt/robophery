@@ -3,21 +3,21 @@
 
 import sys
 from oslo_config import cfg
-from robophery.gpio.l293 import L293dModule
+from robophery.gpio.l293d import L293dModule
 
 common_opts = [
     cfg.Opt('name',
             short='n',
             default="l293d",
             help='L293D driver name'),
-    cfg.Opt('port_a',
-            short='pa',
+    cfg.Opt('power_pin',
+            short='a',
             help='L293D pin 1 or pin 9: On or off'),
-    cfg.Opt('port_b',
-            short='pb',
+    cfg.Opt('forward_pin',
+            short='b',
             help='L293D pin 2 or pin 10: Anticlockwise positive'),
-    cfg.Opt('port_c',
-            short='pc',
+    cfg.Opt('backward_pin',
+            short='c',
             help='L293D pin 7 or pin 15: Clockwise positive'),
 ]
 

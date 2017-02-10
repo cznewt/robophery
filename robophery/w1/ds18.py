@@ -1,38 +1,25 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
-import logging
-from robophery.w1 import W1Module
-
-logger = logging.getLogger("robophery.w1.ds18")
+import robophery.w1
 
 
-class Ds18Module(W1Module):
+class Ds18Module(w1.W1Module):
 
     def __init__(self, kwargs):
-        self.name = kwargs.get('name')
-        self.set_port(kwargs.get('port'))
-        self.addr = int(kwargs.get("addr", '0'))
-        self.type = kwargs.get("type", 'ds18b20')
         super(Ds18Module, self).__init__()
+        self._pin = kwargs.get('pin')
+        self._type = kwargs.get('type', 'ds18b20')
+        self._id = int(kwargs.get('id', '0'))
+
 
     @property
     def get_data(self):
         """
         Query Dallas DS18 family sensor to get the temperature readings.
         """
-        data = []
-
-        if self.addr == 0:
-            for sensor in W1ThermSensor.get_available_sensors():
-                data.append(('%s-%s.temperature' % (self.name, sensor.id), sensor.get_temperature()))
+        if self._id == 0:
+            return self._get_all_temperatures
         else:
-            if self.type == 'ds18b20':
-                real_type == W1ThermSensor.THERM_SENSOR_DS18B20
-            sensor = W1ThermSensor(real_type, self.addr)
-            data.append(('%s.temperature' % self.name, sensor.get_temperature()))
-
-        return data
+            return self._get_temperature
 
 
     @property

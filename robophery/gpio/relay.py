@@ -1,8 +1,8 @@
 
-from robophery.gpio import GpioModule
+import robophery.gpio
 
 
-class RelayModule(GpioModule):
+class RelayModule(gpio.GpioModule):
 
     DEVICE_NAME = 'gpio-relay'
 
@@ -10,6 +10,24 @@ class RelayModule(GpioModule):
     def __init__(self, **kwargs):
         super(RelayModule, self, **kwargs).__init__()
         self._pin = kwargs.get('pin')
+        self._power = 0
+        self.set_low(self._pin)
+
+
+    def on(self):
+        """
+        Turn on the relay.
+        """
+        self._power = 1
+        self.set_high(self._pin)
+
+
+    def off(self):
+        """
+        Turn off the relay.
+        """
+        self._power = 0
+        self.set_low(self._pin)
 
 
     @property
@@ -17,13 +35,11 @@ class RelayModule(GpioModule):
         """
         Relay status readings.
         """
-
-     
-        values = [
-            ('%s.runtime_count' % self.name, runtime_count, ),
-            ('%s.runtime_delta' % self.name, runtime_delta, ),
+        data = [
+            ('%s.runtime_count' % self.name, self._power, ),
+            ('%s.runtime_delta' % self.name, self._power, ),
         ]
-        return values
+        return data
 
 
     @property

@@ -19,7 +19,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import robophery._bus.interface
+import robophery.gpio.interface
 import RPi.GPIO
 
 class RaspberrypiGpioInterface(interface.GpioInterface):
@@ -32,7 +32,7 @@ class RaspberrypiGpioInterface(interface.GpioInterface):
         # Suppress warnings about GPIO in use.
         GPIO.setwarnings(False)
         # Setup board pin mode.
-        if mode == _bus.BOARD or mode == _bus.BCM:
+        if mode == self._bus.BOARD or mode == self._bus.BCM:
             self._bus.setmode(mode)
         elif mode is not None:
             raise ValueError('Unexpected value for mode.  Must be BOARD or BCM.')
@@ -47,13 +47,14 @@ class RaspberrypiGpioInterface(interface.GpioInterface):
                                FALLING: self._bus.FALLING,
                                BOTH: self._bus.BOTH }
 
+
     def setup(self, pin, mode, pull_up_down=PUD_OFF):
         """
         Set the input or output mode for a specified pin. Mode should be
         either OUTPUT or INPUT.
         """
         self._bus.setup(pin, self._dir_mapping[mode],
-                            pull_up_down=self._pud_mapping[pull_up_down])
+                             pull_up_down=self._pud_mapping[pull_up_down])
 
 
     def output(self, pin, value):

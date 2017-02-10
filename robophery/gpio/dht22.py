@@ -1,19 +1,17 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
 
 import Adafruit_DHT
-from robophery.gpio import GpioModule
+import robophery.gpio
 
 
-class Dht22Module(GpioModule):
+class Dht22Module(gpio.GpioModule):
 
     DEVICE_NAME = 'gpio-dht22'
 
 
-    def __init__(self, **kwargs)
+    def __init__(self, **kwargs):
         super(Dht22Module, self, **kwargs).__init__()
+        self._pin = kwargs.get('pin')
         self._type = 22
-        self._port = kwargs.get('port')
 
 
     @property
@@ -22,18 +20,15 @@ class Dht22Module(GpioModule):
         Query DHT22 to get the humidity and temperature readings.
         """
         data = []
-        humidity, temperature = Adafruit_DHT.read_retry(self._type, self._port)
+        humidity, temperature = Adafruit_DHT.read_retry(self._type, self._pin)
         if temperature == None or humidity == None:
-            logger.error("%s: Data CRC failed" % self._name)
-            temperature = None
-            humidity = None
+            self._log('error', 'Data CRC failed')
         else:
-            if humidity < 0 or humidity > 100:
-                logger.error("%s: Humidity out of range" % self._name)
-                humidity = None
-            else:
+            if humidity > 0 and humidity < 100:
                 data.append(('%s.temperature' % (self._name), temperature, ))
                 data.append(('%s.humidity' % (self._name), humidity, ))
+            else:
+                self._log('error', 'Humidity out of range')
         return data
 
 
@@ -52,7 +47,7 @@ class Dht22Module(GpioModule):
                 'sensor': 'dht22'
             },
             'humidity': {
-                'type': 'gauge'
+                'type': 'gauge',
                 'unit': 'RH',
                 'precision': 5,
                 'range_low': 0,
