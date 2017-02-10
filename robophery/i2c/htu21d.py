@@ -1,28 +1,8 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-import Adafruit_GPIO.I2C as I2C
-import logging
 import math
 from robophery.i2c import I2cModule
-
-logger = logging.getLogger("robophery.i2c.htu21d")
-
-# HTU21D default address
-HTU21D_I2CADDR            = 0x40
-# Operating modes
-HTU21D_HOLDMASTER         = 0x00
-HTU21D_NOHOLDMASTER       = 0x10
-# HTU21D commands
-HTU21D_TRIGGERTEMPCMD     = 0xE3  # Trigger Temperature Measurement
-HTU21D_TRIGGERHUMIDITYCMD = 0xE5  # Trigger Humidity Measurement
-HTU21D_WRITEUSERCMD       = 0xE6  # Write user register
-HTU21D_READUSERCMD        = 0xE7  # Read user register
-HTU21D_SOFTRESETCMD       = 0xFE  # Soft reset
-# HTU21D constants for Dew Point calculation
-HTU21D_A = 8.1332
-HTU21D_B = 1762.39
-HTU21D_C = 235.66
 
 
 class Htu21dException(Exception):
@@ -31,18 +11,30 @@ class Htu21dException(Exception):
 
 class Htu21dModule(I2cModule):
 
-    def __init__(self, mode=HTU21D_HOLDMASTER, address=HTU21D_I2CADDR, i2c=None, **kwargs):
+    # HTU21D default address
+    HTU21D_I2C_ADDR = 0x40
+    # Operating modes
+    HTU21D_HOLD_MASTER = 0x00
+    HTU21D_NOHOLD_MASTER = 0x10
+    # HTU21D commands
+    HTU21D_TRIGGER_TEMP_CMD = 0xE3  # Trigger Temperature Measurement
+    HTU21D_TRIGGERHUMIDITYCMD = 0xE5  # Trigger Humidity Measurement
+    HTU21D_WRITEUSERCMD = 0xE6  # Write user register
+    HTU21D_READUSERCMD = 0xE7  # Read user register
+    HTU21D_SOFTRESETCMD = 0xFE  # Soft reset
+    # HTU21D constants for Dew Point calculation
+    HTU21D_A = 8.1332
+    HTU21D_B = 1762.39
+    HTU21D_C = 235.66
+
+    def __init__(self, **kwargs):
+
+        super(Htu21dModule, self, **kwargs).__init__()
 
         # Check that mode is valid.
-        if mode not in [HTU21D_HOLDMASTER, HTU21D_NOHOLDMASTER]:
-            raise ValueError('Unexpected mode value {0}.  Set mode to one of HTU21D_HOLDMASTER, HTU21D_NOHOLDMASTER'.format(mode))
+        if mode not in [self.HTU21D_HOLD_MASTER, self.HTU21D_NOHOLD_MASTER]:
+            raise ValueError('Unexpected mode value {0}.'.format(mode))
         self._mode = mode
-
-        # Create I2C device.
-        if i2c is None:
-            
-            i2c = I2C
-        self.i2c = i2c.get_i2c_device(address, **kwargs)
 
 
     def crc_check(self, msb, lsb, crc):
@@ -64,7 +56,7 @@ class Htu21dModule(I2cModule):
         """
         Reads the raw temperature from the sensor.
         """
-        msb, lsb, chsum = self.i2c.readList(HTU21D_TRIGGERTEMPCMD, 3)
+        msb, lsb, chsum = self.readList(self.HTU21D_TRIGGERTEMPCMD, 3)
         if self.crc_check(msb, lsb, chsum) is False:
             raise Htu21dException("CRC Exception")
         raw = (msb << 8) + lsb
@@ -78,7 +70,7 @@ class Htu21dModule(I2cModule):
         """
         Reads the raw relative humidity from the sensor.
         """
-        msb, lsb, chsum = self.i2c.readList(HTU21D_TRIGGERHUMIDITYCMD, 3)
+        msb, lsb, chsum = self.readList(self.HTU21D_TRIGGERHUMIDITYCMD, 3)
         if self.crc_check(msb, lsb, chsum) is False:
             raise Htu21dException("CRC Exception")
         raw = (msb << 8) + lsb
@@ -114,8 +106,8 @@ class Htu21dModule(I2cModule):
         """
         Calculates the dew point temperature.
         """
-        den = math.log10(self.get_humidity * self.get_partial_pressure / 100) - HTU21D_A
-        dew = -(HTU21D_B / den + HTU21D_C)
+        den = math.log10(self.get_humidity * self.get_partial_pressure / 100) - self.HTU21D_A
+        dew = -(self.HTU21D_B / den + self.HTU21D_C)
         return dew
 
 
@@ -125,8 +117,8 @@ class Htu21dModule(I2cModule):
         Calculate the partial pressure in mmHg at ambient temperature.
         """
         Tamb = self.get_temperature
-        exp = HTU21D_B / (Tamb + HTU21D_C)
-        exp = HTU21D_A - exp
+        exp = self.HTU21D_B / (Tamb + self.HTU21D_C)
+        exp = self.HTU21D_A - exp
         pp = 10 ** exp
         return pp
 
