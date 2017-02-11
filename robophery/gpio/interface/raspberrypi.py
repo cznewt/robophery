@@ -19,10 +19,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-import robophery.gpio.interface
+from robophery.gpio.interface import GpioInterface
 import RPi.GPIO
 
-class RaspberrypiGpioInterface(interface.GpioInterface):
+class RaspberrypiGpioInterface(GpioInterface):
     """
     GPIO implementation for the Raspberry Pi using the RPi.GPIO library.
     """

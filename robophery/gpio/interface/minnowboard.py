@@ -20,9 +20,9 @@
 # THE SOFTWARE.
 
 import mraa
-import robophery.gpio.interface
+from robophery.gpio.interface import GpioInterface
 
-class MinnowboardGpioInterface(interface.GpioInterface):
+class MinnowboardGpioInterface(GpioInterface):
     """
     GPIO implementation for the Minnowboard + MAX using the mraa library
     """
