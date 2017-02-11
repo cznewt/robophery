@@ -48,11 +48,13 @@ class RaspberrypiGpioInterface(interface.GpioInterface):
                                BOTH: self._bus.BOTH }
 
 
-    def setup(self, pin, mode, pull_up_down=PUD_OFF):
+    def setup(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin. Mode should be
         either OUTPUT or INPUT.
         """
+        if pull_up_down == None:
+            pull_up_down = self.GPIO_PUD_OFF
         self._bus.setup(pin, self._dir_mapping[mode],
                              pull_up_down=self._pud_mapping[pull_up_down])
 
