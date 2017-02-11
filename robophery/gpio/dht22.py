@@ -1,15 +1,14 @@
-
 import Adafruit_DHT
-import robophery.gpio
+from robophery.gpio import GpioModule
 
 
-class Dht22Module(gpio.GpioModule):
+class Dht22Module(GpioModule):
 
     DEVICE_NAME = 'gpio-dht22'
 
 
-    def __init__(self, **kwargs):
-        super(Dht22Module, self, **kwargs).__init__()
+    def __init__(self, *args, **kwargs):
+        super(Dht22Module, self).__init__(*args, **kwargs)
         self._pin = kwargs.get('pin')
         self._type = 22
 

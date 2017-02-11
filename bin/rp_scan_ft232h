@@ -1,6 +1,0 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-from robophery.utils.ft232h import enumerate_device_serials
-
-enumerate_device_serials()

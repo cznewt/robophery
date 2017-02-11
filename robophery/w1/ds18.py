@@ -4,8 +4,8 @@ import robophery.w1
 
 class Ds18Module(w1.W1Module):
 
-    def __init__(self, kwargs):
-        super(Ds18Module, self).__init__()
+    def __init__(self, *args, **kwargs):
+        super(Ds18Module, self).__init__(*args, **kwargs)
         self._pin = kwargs.get('pin')
         self._type = kwargs.get('type', 'ds18b20')
         self._id = int(kwargs.get('id', '0'))

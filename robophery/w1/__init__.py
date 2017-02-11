@@ -5,8 +5,8 @@ from robophery.core import Module
 
 class W1Module(Module):
 
-    def __init__(self, **kwargs):
-        super(W1Module, self, **kwargs).__init__()
+    def __init__(self, *args, **kwargs):
+        super(W1Module, self).__init__(*args, **kwargs)
 
 
     @property

@@ -1,14 +1,13 @@
+from robophery.gpio import GpioModule
 
-import robophery.gpio
 
-
-class SwitchModule(gpio.GpioModule):
+class SwitchModule(GpioModule):
 
     DEVICE_NAME = 'gpio-switch'
 
 
-    def __init__(self, **kwargs):
-        super(SwitchModule, self, **kwargs).__init__()
+    def __init__(self, *args, **kwargs):
+        super(SwitchModule, self).__init__(*args, **kwargs)
         self._pin = kwargs.get('pin')
         self.set_input(self._pin)
 

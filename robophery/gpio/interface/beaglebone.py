@@ -22,7 +22,7 @@
 import Adafruit_BBIO.GPIO
 import robophery.gpio.interface
 
-class BeagleboneInterface(interface.GpioInterface):
+class BeagleboneGpioInterface(interface.GpioInterface):
     """
     GPIO implementation for the Beaglebone Black using the Adafruit_BBIO
     library.

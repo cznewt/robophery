@@ -1,12 +1,10 @@
+from robophery.gpio import GpioModule
 
-import robophery.gpio
 
-
-class L293dModule(gpio.GpioModule):
+class L293dModule(GpioModule):
     """
-    A module for a motor controlled the L293D chip
+    Module for a motor controlled by the L293D chip
     """
-
     DEVICE_NAME = 'gpio-l293d'
     # L293D pin1 or pin9: On or off
     MOTOR_POWER_PIN = 0
@@ -15,8 +13,8 @@ class L293dModule(gpio.GpioModule):
     # L293D pin7 or pin15: Clockwise positive
     MOTOR_BACKWARD_PIN = 0
 
-    def __init__(self, **kwargs):
-        super(L293dModule, self, **kwargs).__init__()
+    def __init__(self, *args, **kwargs):
+        super(L293dModule, self).__init__(*args, **kwargs)
         self._power_pin = kwargs.get('power_pin', self.MOTOR_POWER_PIN)
         self._forward_pin = kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN)
         self._backward_pin = kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN)

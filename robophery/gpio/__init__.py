@@ -3,8 +3,8 @@ from robophery.core import Module
 
 class GpioModule(Module):
 
-    def __init__(self, **kwargs):
-        super(GpioModule, self, **kwargs).__init__()
+    def __init__(self, *args, **kwargs):
+        super(GpioModule, self).__init__(*args, **kwargs)
         self._setup_device
 
 

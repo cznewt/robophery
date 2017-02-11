@@ -69,7 +69,7 @@ class Module(object):
     FT232H_PLATFORM = 5
 
 
-    def __init__(self, **kwargs):
+    def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
         self._log_level = kwargs.get('log_level', 'debug')
         self._log = logging.getLogger('robophery.%s' % self._name)

@@ -1,14 +1,13 @@
+from robophery.gpio import GpioModule
 
-import robophery.gpio
 
-
-class RelayModule(gpio.GpioModule):
+class RelayModule(GpioModule):
 
     DEVICE_NAME = 'gpio-relay'
 
 
-    def __init__(self, **kwargs):
-        super(RelayModule, self, **kwargs).__init__()
+    def __init__(self, *args, **kwargs):
+        super(RelayModule, self).__init__(*args, **kwargs)
         self._pin = kwargs.get('pin')
         self._power = 0
         self.set_low(self._pin)

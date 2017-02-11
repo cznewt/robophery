@@ -91,6 +91,7 @@ class GpioInterface(object):
         """Return true if the specified pin is pulled low."""
         return self.input(pin) == self.GPIO_MODE_LOW
 
+
     def output_pins(self, pins):
         """
         Set multiple pins high or low at once.  Pins should be a dict of pin

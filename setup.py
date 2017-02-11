@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from setuptools import setup
 
 with open('README.rst') as readme:
@@ -22,8 +24,11 @@ setup(
     zip_safe=False,
     entry_points={
         'console_scripts': [
-            'rp_ft232h_discover = robophery:utils:ft232h:discover_devices',
-            'rp_bh1750_read = robophery:cli:read:read_bh1750',
+            'rp_discover_ft232h = robophery.utils.ft232h:discover_devices',
+            'rp_read_bh1750 = robophery.cli.read:read_bh1750',
+            'rp_read_dht22 = robophery.cli.read:read_dht22',
+            'rp_read_l293d = robophery.cli.read:read_l293d',
+            'rp_read_switch = robophery.cli.read:read_switch',
         ],
     },
 )
