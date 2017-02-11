@@ -3,7 +3,7 @@
 
 import sys
 from oslo_config import cfg
-from robophery.gpio.ds18 import Ds18Module
+from robophery.w1.ds18 import Ds18Module
 
 common_opts = [
     cfg.Opt('name',
@@ -14,13 +14,13 @@ common_opts = [
             short='t',
             default="ds18b20",
             help='Specific type of Dallas DS18 family sensor'),
-    cfg.Opt('addr',
-            short='a',
-            default="0",
+    cfg.Opt('id',
+            short='i',
+            default='0',
             help='Specific sensor address ID at 1-wire bus'),
-    cfg.Opt('port',
+    cfg.Opt('pin',
             short='p',
-            help='GPIO port of 1-wire bus'),
+            help='GPIO pin of 1-wire bus'),
 ]
 
 CONF = cfg.CONF

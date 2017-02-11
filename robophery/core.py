@@ -59,20 +59,24 @@ def detect_pi_revision():
 
 class Module(object):
 
+    DEVICE_NAME = 'unknown-device'
+
     UNKNOWN_PLATFORM = 0
     RASPBERRYPI_PLATFORM = 1
     BEAGLEBONE_PLATFORM = 2
     MINNOWBOARD_PLATFORM = 3
     NODEMCU_PLATFORM = 4
-    FT232_PLATFORM = 5
+    FT232H_PLATFORM = 5
 
 
-    def __init__(self, **kwargs):
-        self._logger = logging.getLogger(__name__)
+    def __init__(self, *args, **kwargs):
+        self._name = kwargs.get('name', self.DEVICE_NAME)
+        self._log_level = kwargs.get('log_level', 'debug')
+        self._log = logging.getLogger('robophery.%s' % self._name)
         if kwargs.get('platform') in self._supported_platforms:
             self._platform = kwargs['platform']
         else:
-            self._platform = self._detect_platform()
+            self._platform = self._detect_platform
 
 
     def publish_data(self):
@@ -81,27 +85,27 @@ class Module(object):
 
 
     @property
-    def _supported_platforms():
-       return [
+    def _supported_platforms(self):
+       return (
            self.RASPBERRYPI_PLATFORM,
            self.BEAGLEBONE_PLATFORM,
            self.MINNOWBOARD_PLATFORM,
            self.NODEMCU_PLATFORM,
-           self.FT232_PLATFORM
-       ]
+           self.FT232H_PLATFORM
+       )
 
 
     @property
-    def _linux_platforms():
-       return [
+    def _linux_platforms(self):
+       return (
            self.RASPBERRYPI_PLATFORM,
            self.BEAGLEBONE_PLATFORM,
            self.MINNOWBOARD_PLATFORM
-       ]
+       )
 
 
     @property
-    def _detect_platform():
+    def _detect_platform(self):
         """
         Detect if device is running on the Raspberry Pi, Beaglebone
         Black or MinnowBoard and return the platform type.

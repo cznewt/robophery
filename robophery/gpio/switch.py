@@ -1,14 +1,15 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from robophery.gpio import GpioModule
 
 
 class SwitchModule(GpioModule):
 
-    def __init__(self, **kwargs):
-        self.name = kwargs.get('name')
-         super(RelayModule, self, **kwargs).__init__()
+    DEVICE_NAME = 'gpio-switch'
+
+
+    def __init__(self, *args, **kwargs):
+        super(SwitchModule, self).__init__(*args, **kwargs)
+        self._pin = kwargs.get('pin')
+        self.set_input(self._pin)
 
 
     @property
@@ -16,17 +17,13 @@ class SwitchModule(GpioModule):
         """
         Switch status readings.
         """
-
-        GPIO.setup(port, GPIO.IN)
-        state = GPIO.input(self.port)
-
+        state = self.input(self._pin)
         press_count = press_delta = state
-     
-        values = [
-            ('%s.press_count' % self.name, press_count, ),
-            ('%s.press_delta' % self.name, press_delta, ),
+        data = [
+            ('%s.press_count' % self._name, press_count, ),
+            ('%s.press_delta' % self._name, press_delta, ),
         ]
-        return values
+        return data
 
 
     @property

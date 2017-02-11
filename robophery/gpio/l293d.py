@@ -1,86 +1,71 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from robophery.gpio import GpioModule
-import RPi.GPIO as GPIO
+
 
 class L293dModule(GpioModule):
     """
-    A module for a motor controlled the L293D chip
+    Module for a motor controlled by the L293D chip
     """
-
-    # L293D pin1 or pin9 : On or off
+    DEVICE_NAME = 'gpio-l293d'
+    # L293D pin1 or pin9: On or off
     MOTOR_POWER_PIN = 0
-    # L293D pin2 or pin10 : Anticlockwise positive
+    # L293D pin2 or pin10: Anticlockwise positive
     MOTOR_FORWARD_PIN = 0
-    # L293D pin7 or pin15 : Clockwise positive
+    # L293D pin7 or pin15: Clockwise positive
     MOTOR_BACKWARD_PIN = 0
 
-    power_pin = MOTOR_POWER_PIN
-    forward_pin = MOTOR_FORWARD_PIN
-    backward_pin = MOTOR_BACKWARD_PIN
+    def __init__(self, *args, **kwargs):
+        super(L293dModule, self).__init__(*args, **kwargs)
+        self._power_pin = kwargs.get('power_pin', self.MOTOR_POWER_PIN)
+        self._forward_pin = kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN)
+        self._backward_pin = kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN)
+        self._direction = 0
+        self._power = 0
 
-    def __init__(self, kwargs):
-        self.name = kwargs.get('name')
-        super(L293dModule, self, **kwargs).__init__()
-        self.power_port = kwargs.get('port_a', 0)
-        self.forward_port = kwargs.get('port_b', 0)
-        self.backward_port = kwargs.get('port_c', 0)
-
-        self.direction = 0
-        self.power = 0
-
+        #Set output mode for all pins
+        self.set_low(self._power_pin)
+        self.set_low(self._forward_pin)
+        self.set_low(self._backward_pin)
 
 
-        self.gpio_setup()
-
-    @staticmethod
-    def gpio_setup(self):
-        """
-        Set GPIO.OUT for all pins
-        """
-        GPIO.setup(self.power_port, GPIO.OUT)
-        GPIO.setup(self.forward_port, GPIO.OUT)
-        GPIO.setup(self.backward_port, GPIO.OUT)
-
-    def drive_motor(self, direction=1, power=100):
+    def _run(self, direction=1, power=100):
         """
         Method to drive L293D via GPIO
         """
-        self.direction = direction
+        self._direction = direction
+        self._power = power
         # Stop the motor
         if direction == 0:
-            GPIO.output(self.power_port, GPIO.LOW)
+            self.set_low(self._power_pin)
         # Spin the motor
         else:
             if direction == 1:
-                GPIO.output(self.forward_port, GPIO.HIGH)
-                GPIO.output(self.backward_port, GPIO.LOW)
+                self.set_high(self._forward_pin)
+                self.set_low(self._backward_pin)
             else:
-                GPIO.output(self.forward_port, GPIO.LOW)
-                GPIO.output(self.backward_port, GPIO.HIGH)
-            GPIO.output(self.power_port, GPIO.HIGH)
+                self.set_low(self._forward_pin)
+                self.set_high(self._backward_pin)
+            self.set_high(self._power_pin)
 
 
     def forward(self, power=100):
         """
         Spin the motor clockwise.
         """
-        self.drive_motor(direction=1, power=100)
+        self._run(direction=1, power=100)
 
 
-    def spin_anticlockwise(self, power=100):
+    def backward(self, power=100):
         """
         Spin motor anticlockwise.
         """
-        self.drive_motor(direction=-1, power=100)
+        self._run(direction=-1, power=100)
 
 
     def stop(self):
         """
         Stop the motor.
         """
-        self.drive_motor(direction=0, power=0)
+        self._run(direction=0, power=0)
 
 
     @property
@@ -88,8 +73,8 @@ class L293dModule(GpioModule):
         """
         L293d motor status readings.
         """
-        values = [
-            ('%s.direction' % self.name, self.direction, ),
-            ('%s.power' % self.name, self.power, ),
+        data = [
+            ('%s.direction' % self._name, self._direction, ),
+            ('%s.power' % self._name, self._power, ),
         ]
-        return values
+        return data
