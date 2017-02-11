@@ -38,14 +38,14 @@ class RaspberrypiGpioInterface(GpioInterface):
             raise ValueError('Unexpected value for mode.  Must be BOARD or BCM.')
         else:
             self._bus.setmode(self._bus.BOARD)
-        self._dir_mapping = { OUT: self._bus.OUT,
-                              IN: self._bus.IN }
-        self._pud_mapping = { PUD_OFF: self._bus.PUD_OFF,
-                              PUD_DOWN: self._bus.PUD_DOWN,
-                              PUD_UP: self._bus.PUD_UP }
-        self._edge_mapping = { RISING: self._bus.RISING,
-                               FALLING: self._bus.FALLING,
-                               BOTH: self._bus.BOTH }
+        self._dir_mapping = { self.GPIO_MODE_OUT: self._bus.OUT,
+                              self.GPIO_MODE_IN: self._bus.IN }
+        self._pud_mapping = { self.GPIO_PUD_OFF: self._bus.PUD_OFF,
+                              self.GPIO_PUD_DOWN: self._bus.PUD_DOWN,
+                              self.GPIO_PUD_UP: self._bus.PUD_UP }
+        self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
+                               self.GPIO_EVENT_FALLING: self._bus.FALLING,
+                               self.GPIO_EVENT_BOTH: self._bus.BOTH }
 
 
     def setup(self, pin, mode, pull_up_down=None):
