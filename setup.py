@@ -20,4 +20,10 @@ setup(
         'Programming Language :: Python',
     ],
     zip_safe=False,
+    entry_points={
+        'console_scripts': [
+            'rp_ft232h_discover = robophery:utils:ft232h:discover_devices',
+            'rp_bh1750_read = robophery:cli:read:read_bh1750',
+        ],
+    },
 )
