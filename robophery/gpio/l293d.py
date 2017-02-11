@@ -15,9 +15,9 @@ class L293dModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(L293dModule, self).__init__(*args, **kwargs)
-        self._power_pin = kwargs.get('power_pin', self.MOTOR_POWER_PIN)
-        self._forward_pin = kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN)
-        self._backward_pin = kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN)
+        self._power_pin = int(kwargs.get('power_pin', self.MOTOR_POWER_PIN))
+        self._forward_pin = int(kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN))
+        self._backward_pin = int(kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN))
         self._direction = 0
         self._power = 0
 

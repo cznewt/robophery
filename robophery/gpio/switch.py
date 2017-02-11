@@ -9,7 +9,7 @@ class SwitchModule(GpioModule):
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
         self._pin = kwargs.get('pin')
-        self.set_input(self._pin)
+        self.input(self._pin)
 
 
     @property
@@ -17,7 +17,10 @@ class SwitchModule(GpioModule):
         """
         Switch status readings.
         """
-        state = self.input(self._pin)
+        if self.is_low(self._pin):
+            state = 0
+        else:
+            state = 1
         press_count = press_delta = state
         data = [
             ('%s.press_count' % self._name, press_count, ),
