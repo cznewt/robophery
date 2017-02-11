@@ -30,7 +30,7 @@ class RaspberrypiGpioInterface(GpioInterface):
     def __init__(self, mode=None):
         self._bus = RPi.GPIO
         # Suppress warnings about GPIO in use.
-        GPIO.setwarnings(False)
+        self._bus.setwarnings(False)
         # Setup board pin mode.
         if mode == self._bus.BOARD or mode == self._bus.BCM:
             self._bus.setmode(mode)
