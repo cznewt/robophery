@@ -155,7 +155,7 @@ class Module(object):
                 self.publish_data(self._cache)
                 self._cache = []
                 self._cycle_iteration = 1
-            time.sleep(self.READ_INTERVAL/1000)
+            time.sleep(self._read_interval / 1000)
 
 
     def publish_data(self, data):
