@@ -35,13 +35,12 @@ class BleModule(Module):
         value = self.requester.read_by_uuid(reg)[0]
         if type == 'float':
             return struct.unpack('H', value)[0] * 1.0;
-        elif type = 'string':
+        elif type == 'string':
             try:
                 value = value.decode("utf-8")
             except AttributeError:
                 pass
-            return name
-
+            return value
         else:
             return value
 
