@@ -16,6 +16,10 @@ class RelayModule(GpioModule):
         self.set_low(self._pin)
 
 
+    def __del__(self):
+        self.cleanup(self._pin)
+
+
     @property
     def do_action(self, action):
         if action == 'get_data':

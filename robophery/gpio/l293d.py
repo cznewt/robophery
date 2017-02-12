@@ -32,6 +32,12 @@ class L293dModule(GpioModule):
         self.set_low(self._backward_pin)
 
 
+    def __del__(self):
+        self.cleanup(self._power_pin)
+        self.cleanup(self._forward_pin)
+        self.cleanup(self._backward_pin)
+
+
     def _run(self, direction=1, power=100):
         """
         Method to drive L293D via GPIO

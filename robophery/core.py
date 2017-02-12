@@ -77,6 +77,10 @@ class Module(object):
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         self._log_level = kwargs.get('log_level', 'debug')
         self._log = logging.getLogger('robophery.%s' % self._name)
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.ERROR)
+        self._log.addHandler(console_handler)
+
         if kwargs.get('platform') in self._supported_platforms:
             self._platform = kwargs['platform']
         else:

@@ -14,6 +14,10 @@ class SwitchModule(GpioModule):
         self.setup(self._pin, self.GPIO_MODE_IN)
 
 
+    def __del__(self):
+        self.cleanup(self._pin)
+
+
     @property
     def do_action(self, action):
         if action == 'get_data':
