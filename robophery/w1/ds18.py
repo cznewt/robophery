@@ -17,7 +17,7 @@ class Ds18Module(robophery.w1.W1Module):
         """
         if self._id == 0:
             data = self._get_all_temperatures
-            if length(data) = 0:
+            if length(data) == 0:
                 return None
         else:
             data = self._get_temperature
