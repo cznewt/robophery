@@ -128,7 +128,7 @@ class Bh1750Module(I2cModule):
             return -1.0
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """

@@ -39,7 +39,7 @@ class Mcp9808Module(I2cModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Get the temperature readings.
         """
@@ -53,7 +53,7 @@ class Mcp9808Module(I2cModule):
 
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """

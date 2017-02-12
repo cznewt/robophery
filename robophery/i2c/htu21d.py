@@ -119,7 +119,7 @@ class Htu21dModule(I2cModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Get all sensor readings.
         """
@@ -131,7 +131,7 @@ class Htu21dModule(I2cModule):
 
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """
