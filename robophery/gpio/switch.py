@@ -10,7 +10,7 @@ class SwitchModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_addr(kwargs.get('pin'))
+        self._pin = self._normalize_pin(kwargs.get('pin'))
         self.setup(self._pin, self.GPIO_MODE_IN)
 
 
