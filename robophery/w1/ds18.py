@@ -15,7 +15,7 @@ class Ds18Module(robophery.w1.W1Module):
         """
         Query Dallas DS18 family sensor to get the temperature readings.
         """
-        if self._id == 0:
+        if self._id == '0':
             data = self._get_all_temperatures
             if len(data) == 0:
                 return None
