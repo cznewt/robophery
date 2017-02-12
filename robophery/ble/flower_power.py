@@ -122,7 +122,8 @@ class FlowerPowerModule(BleModule):
             (self._name, "luminosity", self.get_luminosity),
             (self._name, "soil_moisture", self.get_soil_moisture),
             (self._name, "soil_conductivity", self.get_soil_conductivity),
-            (self._name, "battery_level", self.get_battery_level),
+            #(self._name, "battery_level", self.get_battery_level),
+            (self._name, "led_status", self.get_led_status),
         ]
         self._disconnect()
         return values
