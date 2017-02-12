@@ -6,7 +6,7 @@ import struct
 class BleModule(Module):
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('_addr')
+        self._addr = kwargs.get('addr')
         self.requester = GATTRequester(self._addr, False)
         super(BleModule, self).__init__(*args, **kwargs)
 
