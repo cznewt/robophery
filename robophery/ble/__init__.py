@@ -16,15 +16,13 @@ class BleModule(Module):
 
 
     def _connect(self):
-        if self.debug:
-            self._logger.info("Connecting ...")
+        self._log.info("BLE %s connecting ..." % self._addr)
         self.requester.connect(True)
         chars = self.requester.discover_characteristics()
         self.characteristic = {}
         for char in chars:
             self.characteristic[char['uuid']] = char['value_handle']
-        if self.debug:
-            self._logger.info("Connected OK")
+        self._log.info("BLE %s connected OK" % self._addr)
 
 
     def _disconnect(self):
