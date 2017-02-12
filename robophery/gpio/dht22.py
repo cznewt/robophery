@@ -3,13 +3,15 @@ from robophery.gpio import GpioModule
 
 
 class Dht22Module(GpioModule):
-
+    """
+    Module for DHT22 temperature and humidity sensor.
+    """
     DEVICE_NAME = 'gpio-dht22'
 
 
     def __init__(self, *args, **kwargs):
         super(Dht22Module, self).__init__(*args, **kwargs)
-        self._pin = int(kwargs.get('pin'))
+        self._pin = self._normalize_pin(kwargs.get('pin'))
         self._type = 22
 
 

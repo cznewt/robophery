@@ -2,14 +2,16 @@ from robophery.gpio import GpioModule
 
 
 class SwitchModule(GpioModule):
-
+    """
+    Module for generic GPIO switch.
+    """
     DEVICE_NAME = 'gpio-switch'
 
 
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
-        self._pin = int(kwargs.get('pin'))
-        self.input(self._pin)
+        self._pin = self._normalize_addr(kwargs.get('pin'))
+        self.setup(self._pin, self.GPIO_MODE_IN)
 
 
     @property

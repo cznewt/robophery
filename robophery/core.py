@@ -144,11 +144,18 @@ class Module(object):
         return self.UNKNOWN_PLATFORM
 
 
-    def service_loop(self):
+    def _service_loop(self):
 
         while True:
             self.read_data
             sleep(1000)
+
+    def _service_loop(self):
+
+        while True:
+            self.read_data
+            sleep(1000)
+
 
 
     def publish_data(self):

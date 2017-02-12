@@ -3,7 +3,7 @@ from robophery.gpio import GpioModule
 
 class L293dModule(GpioModule):
     """
-    Module for a motor controlled by the L293D chip
+    Module for motor controlled by the L293D chip.
     """
     DEVICE_NAME = 'gpio-l293d'
     # L293D pin1 or pin9: On or off
@@ -15,13 +15,18 @@ class L293dModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(L293dModule, self).__init__(*args, **kwargs)
-        self._power_pin = int(kwargs.get('power_pin', self.MOTOR_POWER_PIN))
-        self._forward_pin = int(kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN))
-        self._backward_pin = int(kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN))
+        self._power_pin = self._normalize_pin(kwargs.get('power_pin', self.MOTOR_POWER_PIN))
+        self._forward_pin = self._normalize_pin(kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN))
+        self._backward_pin = self._normalize_pin(kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN))
         self._direction = 0
         self._power = 0
 
         #Set output mode for all pins
+        self.setup(self._power_pin, self.GPIO_MODE_OUT)
+        self.setup(self._forward_pin, self.GPIO_MODE_OUT)
+        self.setup(self._backward_pin, self.GPIO_MODE_OUT)
+
+        #Set state for all pins
         self.set_low(self._power_pin)
         self.set_low(self._forward_pin)
         self.set_low(self._backward_pin)

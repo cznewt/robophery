@@ -6,9 +6,8 @@ class Ds18Module(robophery.w1.W1Module):
 
     def __init__(self, *args, **kwargs):
         super(Ds18Module, self).__init__(*args, **kwargs)
-        self._pin = kwargs.get('pin')
-        self._type = kwargs.get('type', 'ds18b20')
         self._id = int(kwargs.get('id', '0'))
+        self._type = kwargs.get('type', 'ds18b20')
 
 
     @property
@@ -17,10 +16,10 @@ class Ds18Module(robophery.w1.W1Module):
         Query Dallas DS18 family sensor to get the temperature readings.
         """
         if self._id == 0:
-            return self._get_all_temperatures
+            data = self._get_all_temperatures
         else:
-            return self._get_temperature
-
+            data = self._get_temperature
+        return data
 
     @property
     def get_meta_data(self):

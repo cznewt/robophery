@@ -8,6 +8,16 @@ class GpioModule(Module):
         self._setup_device
 
 
+    def _normalize_pin(self, pin):
+        if self._platform == self.RASPBERRYPI_PLATFORM:
+            data = pin
+        elif self._platform == self.BEAGLEBONE_PLATFORM:
+            data = pin
+        else:
+            data = pin
+        return int(data)
+
+
     @property
     def _setup_device(self):
 
