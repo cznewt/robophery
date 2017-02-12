@@ -76,15 +76,15 @@ class L293dModule(GpioModule):
 
     @property
     def do_action(self, action):
-        if action = 'get_data':
+        if action == 'get_data':
             return self.get_data
-        elif action = 'stop':
+        elif action == 'stop':
             self.stop
             return self.get_data
-        elif action = 'run_forward':
+        elif action == 'run_forward':
             self.run_forward()
             return self.get_data
-        elif action = 'run_backward':
+        elif action == 'run_backward':
             self.run_backward()
             return self.get_data
 

@@ -18,12 +18,12 @@ class RelayModule(GpioModule):
 
     @property
     def do_action(self, action):
-        if action = 'get_data':
+        if action == 'get_data':
             return self.get_data
-        if action = 'turn_on':
+        elif action == 'turn_on':
             self.turn_on
             return self.get_data
-        if action = 'turn_off':
+        elif action == 'turn_off':
             self.turn_off
             return self.get_data
 

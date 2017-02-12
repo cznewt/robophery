@@ -17,7 +17,7 @@ class Dht11Module(GpioModule):
 
     @property
     def do_action(self, action):
-        if action = 'get_data':
+        if action == 'get_data':
             return self.get_data
 
 
