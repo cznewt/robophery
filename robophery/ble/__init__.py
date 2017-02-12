@@ -45,8 +45,6 @@ class BleModule(Module):
             return value
 
     def _write_uuid(self, reg, value, type='float'):
-        if type = 'string':
+        if type == 'string':
             value = struct.pack('B', value)
         self.requester.write_by_handle(self.characteristic[reg], value)
-
-
