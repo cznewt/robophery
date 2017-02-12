@@ -8,6 +8,8 @@ class Dht22Module(GpioModule):
     """
     DEVICE_NAME = 'gpio-dht22'
 
+    READ_INTERVAL = 5000
+
 
     def __init__(self, *args, **kwargs):
         super(Dht22Module, self).__init__(*args, **kwargs)
@@ -26,7 +28,7 @@ class Dht22Module(GpioModule):
         """
         Query DHT22 to get the humidity and temperature readings.
         """
-        humidity, temperature = Adafruit_DHT.read_retry(self._type, self._pin)
+        humidity, temperature = Adafruit_DHT.read(self._type, self._pin)
         if temperature == None or humidity == None:
             self._log.error('Data CRC failed')
             return None
