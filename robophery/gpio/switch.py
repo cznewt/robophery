@@ -24,11 +24,10 @@ class SwitchModule(GpioModule):
         else:
             state = 1
         press_count = press_delta = state
-        data = [
-            ('%s.press_count' % self._name, press_count, ),
-            ('%s.press_delta' % self._name, press_delta, ),
+        return [
+            (self._name, 'press_count', press_count),
+            (self._name, 'press_delta', press_delta),
         ]
-        return data
 
 
     @property

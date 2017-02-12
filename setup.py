@@ -31,6 +31,7 @@ setup(
             'rp_read_flower_power = robophery.cli.read:read_flower_power',
             'rp_read_l293d = robophery.cli.read:read_l293d',
             'rp_read_mcp9808 = robophery.cli.read:read_mcp9808',
+            'rp_read_relay = robophery.cli.read:read_relay',
             'rp_read_switch = robophery.cli.read:read_switch',
         ],
     },

@@ -37,11 +37,10 @@ class RelayModule(GpioModule):
         """
         Relay status readings.
         """
-        data = [
-            ('%s.runtime_count' % self.name, self._power, ),
-            ('%s.runtime_delta' % self.name, self._power, ),
+        return [
+            (self._name, 'runtime_count', self._power),
+            (self._name, 'runtime_delta', self._power),
         ]
-        return data
 
 
     @property

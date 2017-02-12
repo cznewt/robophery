@@ -20,17 +20,19 @@ class Dht11Module(GpioModule):
         """
         Query DHT11 to get the humidity and temperature readings.
         """
-        data = []
         humidity, temperature = Adafruit_DHT.read_retry(self._type, self._pin)
         if temperature == None or humidity == None:
             self._log.error('Data CRC failed')
+            return None
         else:
             if humidity > 0 and humidity < 100:
-                data.append(('%s.temperature' % (self._name), temperature, ))
-                data.append(('%s.humidity' % (self._name), humidity, ))
+                return [
+                    (self._name, 'temperature', temperature),
+                    (self._name, 'humidity', humidity)
+                ]
             else:
                 self._log.error('Humidity out of range')
-        return data
+                return None
 
 
     @property
