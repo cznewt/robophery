@@ -13,7 +13,7 @@ class Htu21dModule(I2cModule):
     HTU21D_HOLD_MASTER = 0x00
     HTU21D_NOHOLD_MASTER = 0x10
     # HTU21D commands
-    HTU21D_TRIGGER_TEMP_CMD = 0xE3  # Trigger Temperature Measurement
+    HTU21D_TRIGGERTEMPCMD = 0xE3  # Trigger Temperature Measurement
     HTU21D_TRIGGERHUMIDITYCMD = 0xE5  # Trigger Humidity Measurement
     HTU21D_WRITEUSERCMD = 0xE6  # Write user register
     HTU21D_READUSERCMD = 0xE7  # Read user register
