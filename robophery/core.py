@@ -146,7 +146,7 @@ class Module(object):
     def _service_loop(self):
 
         while True:
-            self._cache[self._cycle_iteration] = self.read_data
+            self._cache[self._cycle_iteration] = self.get_data
             if self._cycle_iteration < self._cycle_size:
                 self._cycle_iteration += 1
             else:
