@@ -1,6 +1,3 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from robophery.ble import BleModule
 
 
@@ -24,9 +21,7 @@ class FlowerPowerModule(BleModule):
 
 
     def __init__(self, kwargs):
-        self.debug = kwargs.get('debug', False)
-        self.addr = kwargs.get('addr')
-        super(FlowerPowerModule, self).__init__()
+        super(FlowerPowerModule, self).__init__(*args, **kwargs)
 
 
     def set_led_status(self, status):

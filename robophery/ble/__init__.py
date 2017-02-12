@@ -5,9 +5,10 @@ import struct
 
 class BleModule(Module):
 
-    def __init__(self):
-        self.requester = GATTRequester(self.addr, False)
-        super(BleModule, self).__init__()
+    def __init__(self, *args, **kwargs):
+        self._addr = kwargs.get('_addr')
+        self.requester = GATTRequester(self._addr, False)
+        super(BleModule, self).__init__(*args, **kwargs)
 
 
     def __del__(self):

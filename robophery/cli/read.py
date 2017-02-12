@@ -25,6 +25,15 @@ _i2c_opts = [
         help='I2C bus'),
 ]
 
+_ble_opts = [
+    cfg.Opt('name',
+        short='n',
+        default="sensor",
+        help='Sensor name'),
+    cfg.Opt('addr',
+        short='a',
+        help='MAC address of sensor'),
+]
 
 def _config(opts):
     CONF = cfg.CONF
@@ -33,6 +42,7 @@ def _config(opts):
     return CONF
 
 # I2C modules
+
 
 def read_bh1750():
     from robophery.i2c.bh1750 import Bh1750Module
@@ -48,6 +58,7 @@ def read_mcp9808():
     print(module.get_data)
 
 # GPIO modules
+
 
 def read_dht22():
     from robophery.gpio.dht22 import Dht22Module
@@ -78,8 +89,41 @@ def read_l293d():
     print(module.get_data)
 
 
+def read_relay():
+    from robophery.gpio.relay import RelayModule
+    config = _config(_gpio_opts)
+    module = RelayModule(**config)
+    print(module.get_data)
+
+
 def read_switch():
     from robophery.gpio.switch import SwitchModule
     config = _config(_gpio_opts)
     module = SwitchModule(**config)
+    print(module.get_data)
+
+# BLE modules
+
+
+def read_flower_power():
+    from robophery.ble.flower_power import FlowerPowerModule
+    config = _config(_ble_opts)
+    module = FlowerPowerModule(**config)
+    print(module.get_data)
+
+# 1-wire modules
+
+
+def read_ds18():
+    from robophery.w1.ds18 import Ds18Module
+    _gpio_opts.append(cfg.Opt('type',
+        short='t',
+        default="ds18b20",
+        help='Specific type of Dallas DS18 family sensor'))
+    _gpio_opts.append(cfg.Opt('id',
+        short='i',
+        default='0',
+        help='Specific sensor address ID at 1-wire bus'))
+    config = _config(_gpio_opts)
+    module = Ds18Module(**config)
     print(module.get_data)
