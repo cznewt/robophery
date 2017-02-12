@@ -60,6 +60,8 @@ def detect_pi_revision():
 class Module(object):
 
     DEVICE_NAME = 'unknown-device'
+    READ_INTERVAL = 10000
+    PUBLISH_INTERVAL = 60000
 
     UNKNOWN_PLATFORM = 0
     RASPBERRYPI_PLATFORM = 1
@@ -71,17 +73,14 @@ class Module(object):
 
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
+        self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
+        self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         self._log_level = kwargs.get('log_level', 'debug')
         self._log = logging.getLogger('robophery.%s' % self._name)
         if kwargs.get('platform') in self._supported_platforms:
             self._platform = kwargs['platform']
         else:
             self._platform = self._detect_platform
-
-
-    def publish_data(self):
-        pass
-        #mqtt publish
 
 
     @property
@@ -147,18 +146,29 @@ class Module(object):
     def _service_loop(self):
 
         while True:
-            self.read_data
-            sleep(1000)
+            self._cache[self._cycle_iteration] = self.read_data
+            if self._cycle_iteration < self._cycle_size:
+                self._cycle_iteration += 1
+            else:
+                self.publish_data(self._cache)
+                self._cache = []
+                self._cycle_iteration = 0
+            print(self._cycle_iteration)
+            sleep(self.READ_INTERVAL)
 
-    def _service_loop(self):
 
-        while True:
-            self.read_data
-            sleep(1000)
+    def start_service(self):
+
+        if self._publish_interval % self._read_interval != 0:
+            raise RuntimeError('publish_interval must be divisible by read_interval.')
+        self._cycle_size = self._publish_interval / self._read_interval
+        self._cycle_iteration = 0
+        self._cache = []
+        print(self._cycle_size)
+        self._service_loop()
 
 
-
-    def publish_data(self):
-        pass
+    def publish_data(self, data):
+        print(data)
         #mqtt publish
 

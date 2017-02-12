@@ -33,6 +33,8 @@ setup(
             'rp_read_mcp9808 = robophery.cli.read:read_mcp9808',
             'rp_read_relay = robophery.cli.read:read_relay',
             'rp_read_switch = robophery.cli.read:read_switch',
+            'rp_service_dht22 = robophery.cli.service:service_dht22',
+            'rp_service_switch = robophery.cli.service:service_switch',
         ],
     },
 )

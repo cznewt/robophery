@@ -52,25 +52,41 @@ class L293dModule(GpioModule):
             self.set_high(self._power_pin)
 
 
-    def forward(self, power=100):
+    def run_forward(self, power=100):
         """
         Spin the motor clockwise.
         """
         self._run(direction=1, power=100)
 
 
-    def backward(self, power=100):
+    def run_backward(self, power=100):
         """
         Spin motor anticlockwise.
         """
         self._run(direction=-1, power=100)
 
 
+    @property
     def stop(self):
         """
         Stop the motor.
         """
         self._run(direction=0, power=0)
+
+
+    @property
+    def do_action(self, action):
+        if action = 'get_data':
+            return self.get_data
+        elif action = 'stop':
+            self.stop
+            return self.get_data
+        elif action = 'run_forward':
+            self.run_forward()
+            return self.get_data
+        elif action = 'run_backward':
+            self.run_backward()
+            return self.get_data
 
 
     @property

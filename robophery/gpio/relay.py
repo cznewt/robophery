@@ -16,7 +16,19 @@ class RelayModule(GpioModule):
         self.set_low(self._pin)
 
 
-    def on(self):
+    @property
+    def do_action(self, action):
+        if action = 'get_data':
+            return self.get_data
+        if action = 'turn_on':
+            self.turn_on
+            return self.get_data
+        if action = 'turn_off':
+            self.turn_off
+            return self.get_data
+
+    @property
+    def turn_on(self):
         """
         Turn on the relay.
         """
@@ -24,7 +36,8 @@ class RelayModule(GpioModule):
         self.set_high(self._pin)
 
 
-    def off(self):
+    @property
+    def turn_off(self):
         """
         Turn off the relay.
         """

@@ -15,6 +15,12 @@ class SwitchModule(GpioModule):
 
 
     @property
+    def do_action(self, action):
+        if action = 'get_data':
+            return self.get_data
+
+
+    @property
     def get_data(self):
         """
         Switch status readings.
