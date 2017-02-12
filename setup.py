@@ -26,6 +26,9 @@ setup(
         'console_scripts': [
             'rp_discover_ft232h = robophery.utils.ft232h:discover_devices',
             'rp_read_bh1750 = robophery.cli.read:read_bh1750',
+            'rp_read_bmp085 = robophery.cli.read:read_bmp085',
+            'rp_read_htu21d = robophery.cli.read:read_htu21d',
+            'rp_read_mcp9808 = robophery.cli.read:read_mcp9808',
             'rp_read_dht11 = robophery.cli.read:read_dht11',
             'rp_read_dht22 = robophery.cli.read:read_dht22',
             'rp_read_ds18 = robophery.cli.read:read_ds18',
