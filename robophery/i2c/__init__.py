@@ -13,7 +13,7 @@ class I2cModule(Module):
 
 
     @property
-    def setup_device(self):
+    def _setup_device(self):
         if self._platform == self.RASPBERRYPI_PLATFORM:
             self._interface = SMBusInterface(self._addr, self._bus)
         elif self._platform == self.BEAGLEBONE_PLATFORM:

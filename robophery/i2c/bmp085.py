@@ -49,7 +49,7 @@ BMP085_PRESSUREDATA      = 0xF6
 BMP085_READTEMPCMD       = 0x2E
 BMP085_READPRESSURECMD   = 0x34
 
-class BMP085Module(I2cModule):
+class Bmp085Module(I2cModule):
     """
     Module for BMP085/BMP180 temperature and pressure sensor.
     """
@@ -60,7 +60,7 @@ class BMP085Module(I2cModule):
 
     def __init__(self, kwargs):
         self._addr = self.DEVICE_ADDR
-        super(BMP085Module, self).__init__(*args, **kwargs)
+        super(Bmp085Module, self).__init__(*args, **kwargs)
         if kwargs.get('mode') not in [BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, BMP085_ULTRAHIGHRES]:
             raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(mode))
         self._mode = kwargs.get('mode')
