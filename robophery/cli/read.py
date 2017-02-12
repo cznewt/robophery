@@ -60,6 +60,13 @@ def read_mcp9808():
 # GPIO modules
 
 
+def read_dht11():
+    from robophery.gpio.dht11 import Dht1Module
+    config = _config(_gpio_opts)
+    module = Dht11Module(**config)
+    print(module.get_data)
+
+
 def read_dht22():
     from robophery.gpio.dht22 import Dht22Module
     config = _config(_gpio_opts)

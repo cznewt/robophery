@@ -3,6 +3,7 @@ import logging
 import platform
 import re
 import time
+from oslo_config import cfg
 
 def detect_pi_version():
     """
