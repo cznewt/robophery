@@ -151,7 +151,7 @@ class Htu21dModule(I2cModule):
                 'range_low': 0,
                 'range_high': 100,
                 'sensor': 'htu21d'
-            }
+            },
             'dew_point_temperature': {
                 'type': 'gauge',
                 'unit': 'C',

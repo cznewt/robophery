@@ -26,7 +26,7 @@ class Mcp9808Module(I2cModule):
     MCP9808_REG_DEVICE_ID = 0x07
 
 
-    def __init__(self, kwargs):
+    def __init__(self, *args, **kwargs):
         self._addr = self.DEVICE_ADDR
         super(Mcp9808Module, self).__init__(*args, **kwargs)
         # Assert it's the right thing
