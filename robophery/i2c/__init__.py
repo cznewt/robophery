@@ -2,9 +2,6 @@
 from robophery.core import Module
 
 class I2cModule(Module):
-    I2C_LINUX_DEV_PLATFORM = 1
-    I2C_NODEMCU_DEV_PLATFORM = 2
-    I2C_FT232_DEV_PLATFORM = 3
 
     def __init__(self, *args, **kwargs):
         self._bus = int(kwargs.get('bus', '0'))
