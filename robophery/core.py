@@ -147,13 +147,13 @@ class Module(object):
 
         while True:
             self._cache.append(self.get_data)
+            print(self._cycle_iteration)
             if self._cycle_iteration < self._cycle_size:
                 self._cycle_iteration += 1
             else:
                 self.publish_data(self._cache)
                 self._cache = []
                 self._cycle_iteration = 0
-            print(self._cycle_iteration)
             time.sleep(self.READ_INTERVAL/1000)
 
 
@@ -166,7 +166,7 @@ class Module(object):
 
         if self._publish_interval % self._read_interval != 0:
             raise RuntimeError('publish_interval must be divisible by read_interval.')
-        self._cycle_size = self._publish_interval / self._read_interval
+        self._cycle_size = self._publish_interval / self._read_interval - 1
         self._cycle_iteration = 0
         self._cache = []
         print(self._cycle_size)
