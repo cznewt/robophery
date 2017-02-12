@@ -74,7 +74,7 @@ class L293dModule(GpioModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         L293d motor status readings.
         """
