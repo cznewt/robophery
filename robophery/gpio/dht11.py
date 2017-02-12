@@ -9,7 +9,7 @@ class Dht11Module(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(Dht11Module, self).__init__(*args, **kwargs)
-        self._pin = kwargs.get('pin')
+        self._pin = int(kwargs.get('pin'))
         self._type = 11
 
 

@@ -8,7 +8,7 @@ class RelayModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(RelayModule, self).__init__(*args, **kwargs)
-        self._pin = kwargs.get('pin')
+        self._pin = int(kwargs.get('pin'))
         self._power = 0
         self.set_low(self._pin)
 

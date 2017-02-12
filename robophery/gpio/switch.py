@@ -8,7 +8,7 @@ class SwitchModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
-        self._pin = kwargs.get('pin')
+        self._pin = int(kwargs.get('pin'))
         self.input(self._pin)
 
 
