@@ -6,7 +6,7 @@ class Mcp9808Module(I2cModule):
     Module for MCP9808 temperature sensor.
     """
     DEVICE_NAME = 'i2c-mcp9808'
-    DEVICE__ADDR = 0x18
+    DEVICE_ADDR = 0x18
 
     MCP9808_REG_CONFIG_SHUTDOWN = 0x0100
     MCP9808_REG_CONFIG_CRITLOCKED = 0x0080

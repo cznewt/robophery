@@ -61,9 +61,9 @@ class Bmp085Module(I2cModule):
     def __init__(self, *args, **kwargs):
         self._addr = self.DEVICE_ADDR
         super(Bmp085Module, self).__init__(*args, **kwargs)
-        if kwargs.get('mode') not in [BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, BMP085_ULTRAHIGHRES]:
-            raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(mode))
-        self._mode = kwargs.get('mode')
+        self._mode = kwargs.get('mode', BMP085_ULTRAHIGHRES)
+        if self._mode not in [BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, BMP085_ULTRAHIGHRES]:
+            raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(self._mode))
         # Load calibration values.
         self._load_calibration()
 

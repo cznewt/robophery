@@ -27,9 +27,9 @@ class Htu21dModule(I2cModule):
         self._addr = self.DEVICE_ADDR
         super(Htu21dModule, self).__init__(*args, **kwargs)
         # Check that mode is valid.
-        if mode not in [self.HTU21D_HOLD_MASTER, self.HTU21D_NOHOLD_MASTER]:
-            raise ValueError('Unexpected mode value {0}.'.format(mode))
-        self._mode = mode
+        self._mode = kwargs.get('mode', self.HTU21D_HOLD_MASTER)
+        if self._mode not in [self.HTU21D_HOLD_MASTER, self.HTU21D_NOHOLD_MASTER]:
+            raise ValueError('Unexpected mode value {0}.'.format(self._mode))
 
 
     def crc_check(self, msb, lsb, crc):
