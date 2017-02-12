@@ -20,9 +20,9 @@
 # THE SOFTWARE.
 
 import Adafruit_BBIO.GPIO
-import robophery.gpio.interface
+from robophery.gpio.interface import GpioInterface
 
-class BeagleboneGpioInterface(interface.GpioInterface):
+class BeagleboneGpioInterface(GpioInterface):
     """
     GPIO implementation for the Beaglebone Black using the Adafruit_BBIO
     library.
@@ -30,21 +30,23 @@ class BeagleboneGpioInterface(interface.GpioInterface):
 
     def __init__(self):
         self._bus = Adafruit_BBIO.GPIO
-        self._dir_mapping = { OUT: self._bus.OUT,
-                              IN: self._bus.IN }
-        self._pud_mapping = { PUD_OFF: self._bus.PUD_OFF,
-                              PUD_DOWN: self._bus.PUD_DOWN,
-                              PUD_UP: self._bus.PUD_UP }
-        self._edge_mapping = { RISING: self._bus.RISING,
-                               FALLING: self._bus.FALLING,
-                               BOTH: self._bus.BOTH }
+        self._dir_mapping = { self.GPIO_MODE_OUT: self._bus.OUT,
+                              self.GPIO_MODE_IN: self._bus.IN }
+        self._pud_mapping = { self.GPIO_PUD_OFF: self._bus.PUD_OFF,
+                              self.GPIO_PUD_DOWN: self._bus.PUD_DOWN,
+                              self.GPIO_PUD_UP: self._bus.PUD_UP }
+        self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
+                               self.GPIO_EVENT_FALLING: self._bus.FALLING,
+                               self.GPIO_EVENT_BOTH: self._bus.BOTH }
 
 
-    def setup(self, pin, mode, pull_up_down=PUD_OFF):
+    def setup(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin.  Mode should be
         either OUTPUT or INPUT.
         """
+        if pull_up_down == None:
+            pull_up_down = self.GPIO_PUD_OFF
         self._bus.setup(pin, self._dir_mapping[mode],
                              pull_up_down=self._pud_mapping[pull_up_down])
 

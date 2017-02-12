@@ -3,7 +3,7 @@ from robophery.gpio import GpioModule
 
 class L293dModule(GpioModule):
     """
-    Module for a motor controlled by the L293D chip
+    Module for motor controlled by the L293D chip.
     """
     DEVICE_NAME = 'gpio-l293d'
     # L293D pin1 or pin9: On or off
@@ -15,13 +15,18 @@ class L293dModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(L293dModule, self).__init__(*args, **kwargs)
-        self._power_pin = kwargs.get('power_pin', self.MOTOR_POWER_PIN)
-        self._forward_pin = kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN)
-        self._backward_pin = kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN)
+        self._power_pin = self._normalize_pin(kwargs.get('power_pin', self.MOTOR_POWER_PIN))
+        self._forward_pin = self._normalize_pin(kwargs.get('forward_pin', self.MOTOR_FORWARD_PIN))
+        self._backward_pin = self._normalize_pin(kwargs.get('backward_pin', self.MOTOR_BACKWARD_PIN))
         self._direction = 0
         self._power = 0
 
         #Set output mode for all pins
+        self.setup(self._power_pin, self.GPIO_MODE_OUT)
+        self.setup(self._forward_pin, self.GPIO_MODE_OUT)
+        self.setup(self._backward_pin, self.GPIO_MODE_OUT)
+
+        #Set state for all pins
         self.set_low(self._power_pin)
         self.set_low(self._forward_pin)
         self.set_low(self._backward_pin)
@@ -47,20 +52,21 @@ class L293dModule(GpioModule):
             self.set_high(self._power_pin)
 
 
-    def forward(self, power=100):
+    def run_forward(self, power=100):
         """
         Spin the motor clockwise.
         """
         self._run(direction=1, power=100)
 
 
-    def backward(self, power=100):
+    def run_backward(self, power=100):
         """
         Spin motor anticlockwise.
         """
         self._run(direction=-1, power=100)
 
 
+    @property
     def stop(self):
         """
         Stop the motor.
@@ -69,12 +75,26 @@ class L293dModule(GpioModule):
 
 
     @property
-    def get_data():
+    def do_action(self, action):
+        if action == 'get_data':
+            return self.get_data
+        elif action == 'stop':
+            self.stop
+            return self.get_data
+        elif action == 'run_forward':
+            self.run_forward()
+            return self.get_data
+        elif action == 'run_backward':
+            self.run_backward()
+            return self.get_data
+
+
+    @property
+    def get_data(self):
         """
         L293d motor status readings.
         """
-        data = [
-            ('%s.direction' % self._name, self._direction, ),
-            ('%s.power' % self._name, self._power, ),
+        return [
+            (self._name, 'direction', self._direction),
+            (self._name, 'power', self._power),
         ]
-        return data

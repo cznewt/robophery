@@ -2,18 +2,33 @@ from robophery.gpio import GpioModule
 
 
 class RelayModule(GpioModule):
-
+    """
+    Module for generic GPIO relay control.
+    """
     DEVICE_NAME = 'gpio-relay'
 
 
     def __init__(self, *args, **kwargs):
         super(RelayModule, self).__init__(*args, **kwargs)
-        self._pin = kwargs.get('pin')
+        self._pin = self._normalize_pin(kwargs.get('pin'))
+        self.setup(self._pin, self.GPIO_MODE_OUT)
         self._power = 0
         self.set_low(self._pin)
 
 
-    def on(self):
+    @property
+    def do_action(self, action):
+        if action == 'get_data':
+            return self.get_data
+        elif action == 'turn_on':
+            self.turn_on
+            return self.get_data
+        elif action == 'turn_off':
+            self.turn_off
+            return self.get_data
+
+    @property
+    def turn_on(self):
         """
         Turn on the relay.
         """
@@ -21,7 +36,8 @@ class RelayModule(GpioModule):
         self.set_high(self._pin)
 
 
-    def off(self):
+    @property
+    def turn_off(self):
         """
         Turn off the relay.
         """
@@ -30,15 +46,14 @@ class RelayModule(GpioModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Relay status readings.
         """
-        data = [
-            ('%s.runtime_count' % self.name, self._power, ),
-            ('%s.runtime_delta' % self.name, self._power, ),
+        return [
+            (self._name, 'runtime_count', self._power),
+            (self._name, 'runtime_delta', self._power),
         ]
-        return data
 
 
     @property

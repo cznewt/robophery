@@ -1,10 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 from robophery.ble import BleModule
 
 
 class FlowerPowerModule(BleModule):
+    """
+    Module for Parrot Flower Power device.
+    """
+    DEVICE_NAME = 'ble-flower-power'
 
     # Device information service
     DEVICE_NAME_UUID = '2a00'
@@ -24,9 +25,7 @@ class FlowerPowerModule(BleModule):
 
 
     def __init__(self, kwargs):
-        self.debug = kwargs.get('debug', False)
-        self.addr = kwargs.get('addr')
-        super(FlowerPowerModule, self).__init__()
+        super(FlowerPowerModule, self).__init__(*args, **kwargs)
 
 
     def set_led_status(self, status):
@@ -117,19 +116,15 @@ class FlowerPowerModule(BleModule):
     @property
     def get_data(self):
         self._connect()
-        output_str = "%s.{0}" % (self.name)
-
-        values = []
-
-        values.append((output_str.format("air_temperature"), self.get_air_temperature))
-        values.append((output_str.format("soil_temperature"), self.get_soil_temperature))
-        values.append((output_str.format("luminosity"), self.get_luminosity))
-        values.append((output_str.format("soil_moisture"), self.get_soil_moisture))
-        values.append((output_str.format("soil_conductivity"), self.get_soil_conductivity))
-        values.append((output_str.format("battery_level"), self.get_battery_level))
-
+        values = [
+            (self._name, "air_temperature", self.get_air_temperature),
+            (self._name, "soil_temperature", self.get_soil_temperature),
+            (self._name, "luminosity", self.get_luminosity),
+            (self._name, "soil_moisture", self.get_soil_moisture),
+            (self._name, "soil_conductivity", self.get_soil_conductivity),
+            (self._name, "battery_level", self.get_battery_level),
+        ]
         self._disconnect()
-
         return values
 
     @property

@@ -20,10 +20,10 @@
 # THE SOFTWARE.
 
 import ftdi1 as ftdi
-import robophery.gpio.interface
+from robophery.gpio.interface import GpioInterface
 
 
-class Ft232hGpioInterface(interface.GpioInterface):
+class Ft232hGpioInterface(GpioInterface):
     """
     Make GPIO constants that match main GPIO class for compatibility.
     """

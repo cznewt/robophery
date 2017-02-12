@@ -42,7 +42,7 @@ class GpioInterface(object):
     GPIO_PUD_UP = 2
 
 
-    def setup(self, pin, mode, pull_up_down=self.GPIO_PUD_OFF):
+    def setup(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin.  Mode should be
         either OUT or IN.
@@ -84,12 +84,12 @@ class GpioInterface(object):
         """
         Return true if the specified pin is pulled high.
         """
-        return self.input(pin) == self.GPIO_MODE_HIGH
+        return self.input(pin) == self.GPIO_MODE_OUT_HIGH
 
 
     def is_low(self, pin):
         """Return true if the specified pin is pulled low."""
-        return self.input(pin) == self.GPIO_MODE_LOW
+        return self.input(pin) == self.GPIO_MODE_OUT_LOW
 
 
     def output_pins(self, pins):

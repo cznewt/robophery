@@ -2,7 +2,7 @@
 import logging
 import platform
 import re
-
+import time
 
 def detect_pi_version():
     """
@@ -60,6 +60,8 @@ def detect_pi_revision():
 class Module(object):
 
     DEVICE_NAME = 'unknown-device'
+    READ_INTERVAL = 10000
+    PUBLISH_INTERVAL = 60000
 
     UNKNOWN_PLATFORM = 0
     RASPBERRYPI_PLATFORM = 1
@@ -71,17 +73,14 @@ class Module(object):
 
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
+        self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
+        self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         self._log_level = kwargs.get('log_level', 'debug')
         self._log = logging.getLogger('robophery.%s' % self._name)
         if kwargs.get('platform') in self._supported_platforms:
             self._platform = kwargs['platform']
         else:
             self._platform = self._detect_platform
-
-
-    def publish_data(self):
-        pass
-        #mqtt publish
 
 
     @property
@@ -144,14 +143,32 @@ class Module(object):
         return self.UNKNOWN_PLATFORM
 
 
-    def service_loop(self):
+    def _service_loop(self):
 
         while True:
-            self.read_data
-            sleep(1000)
+            data = self.get_data
+            self._cache.append(data)
+            print("Iteration: %s, data: %s" % (self._cycle_iteration, data))
+            if self._cycle_iteration < self._cycle_size:
+                self._cycle_iteration += 1
+            else:
+                self.publish_data(self._cache)
+                self._cache = []
+                self._cycle_iteration = 1
+            time.sleep(self._read_interval / 1000)
 
 
-    def publish_data(self):
-        pass
-        #mqtt publish
+    def publish_data(self, data):
+        print(data)
 
+
+    @property
+    def start_service(self):
+
+        if self._publish_interval % self._read_interval != 0:
+            raise RuntimeError('publish_interval must be divisible by read_interval.')
+        self._cycle_size = self._publish_interval / self._read_interval
+        self._cycle_iteration = 1
+        self._cache = []
+        print('Cycle size: %s' % self._cycle_size)
+        self._service_loop()

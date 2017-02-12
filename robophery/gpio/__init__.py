@@ -3,9 +3,27 @@ from robophery.core import Module
 
 class GpioModule(Module):
 
+    GPIO_MODE_OUT = 0
+    GPIO_MODE_IN = 1
+
+
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
         self._setup_device
+
+
+    def _normalize_pin(self, pin):
+        if self._platform == self.RASPBERRYPI_PLATFORM:
+            data = pin
+        elif self._platform == self.BEAGLEBONE_PLATFORM:
+            data = pin
+        else:
+            data = pin
+        try:
+            value = int(data)
+        except:
+            raise RuntimeError('Unknown GPIO pin.')
+        return value
 
 
     @property

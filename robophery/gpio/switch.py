@@ -2,14 +2,22 @@ from robophery.gpio import GpioModule
 
 
 class SwitchModule(GpioModule):
-
+    """
+    Module for generic GPIO switch.
+    """
     DEVICE_NAME = 'gpio-switch'
 
 
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
-        self._pin = kwargs.get('pin')
-        self.set_input(self._pin)
+        self._pin = self._normalize_pin(kwargs.get('pin'))
+        self.setup(self._pin, self.GPIO_MODE_IN)
+
+
+    @property
+    def do_action(self, action):
+        if action == 'get_data':
+            return self.get_data
 
 
     @property
@@ -17,13 +25,15 @@ class SwitchModule(GpioModule):
         """
         Switch status readings.
         """
-        state = self.input(self._pin)
+        if self.is_low(self._pin):
+            state = 0
+        else:
+            state = 1
         press_count = press_delta = state
-        data = [
-            ('%s.press_count' % self._name, press_count, ),
-            ('%s.press_delta' % self._name, press_delta, ),
+        return [
+            (self._name, 'press_count', press_count),
+            (self._name, 'press_delta', press_delta),
         ]
-        return data
 
 
     @property
