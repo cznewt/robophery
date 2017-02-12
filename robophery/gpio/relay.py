@@ -33,7 +33,7 @@ class RelayModule(GpioModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Relay status readings.
         """
