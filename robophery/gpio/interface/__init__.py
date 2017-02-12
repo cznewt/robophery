@@ -84,12 +84,12 @@ class GpioInterface(object):
         """
         Return true if the specified pin is pulled high.
         """
-        return self.input(pin) == self.GPIO_MODE_HIGH
+        return self.input(pin) == self.GPIO_MODE_OUT_HIGH
 
 
     def is_low(self, pin):
         """Return true if the specified pin is pulled low."""
-        return self.input(pin) == self.GPIO_MODE_LOW
+        return self.input(pin) == self.GPIO_MODE_OUT_LOW
 
 
     def output_pins(self, pins):
