@@ -19,7 +19,11 @@ class GpioModule(Module):
             data = pin
         else:
             data = pin
-        return int(data)
+        try:
+            value = int(data)
+        except:
+            raise RuntimeError('Unknown GPIO pin.')
+        return value
 
 
     @property
