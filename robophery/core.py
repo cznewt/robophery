@@ -146,14 +146,15 @@ class Module(object):
     def _service_loop(self):
 
         while True:
-            self._cache.append(self.get_data)
-            print(self._cycle_iteration)
+            data = self.get_data
+            self._cache.append(data)
+            print('Iteration: %s, data: %s', (self._cycle_iteration, data))
             if self._cycle_iteration < self._cycle_size:
                 self._cycle_iteration += 1
             else:
                 self.publish_data(self._cache)
                 self._cache = []
-                self._cycle_iteration = 0
+                self._cycle_iteration = 1
             time.sleep(self.READ_INTERVAL/1000)
 
 
@@ -166,8 +167,8 @@ class Module(object):
 
         if self._publish_interval % self._read_interval != 0:
             raise RuntimeError('publish_interval must be divisible by read_interval.')
-        self._cycle_size = self._publish_interval / self._read_interval - 1
-        self._cycle_iteration = 0
+        self._cycle_size = self._publish_interval / self._read_interval
+        self._cycle_iteration = 1
         self._cache = []
-        print(self._cycle_size)
+        print('Cycle size: %s' % self._cycle_size)
         self._service_loop()
