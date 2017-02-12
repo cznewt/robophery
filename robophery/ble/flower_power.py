@@ -24,7 +24,7 @@ class FlowerPowerModule(BleModule):
     SOIL_MOISTURE_UUID = "39e1fa05-84a8-11e2-afba-0002a5d5c51b"
 
 
-    def __init__(self, kwargs):
+    def __init__(self, *args, **kwargs):
         super(FlowerPowerModule, self).__init__(*args, **kwargs)
 
 
