@@ -6,7 +6,7 @@ class Ds18Module(robophery.w1.W1Module):
 
     def __init__(self, *args, **kwargs):
         super(Ds18Module, self).__init__(*args, **kwargs)
-        self._id = int(kwargs.get('id', '0'))
+        self._id = kwargs.get('id', '0')
         self._type = kwargs.get('type', 'ds18b20')
 
 
