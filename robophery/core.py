@@ -157,6 +157,11 @@ class Module(object):
             sleep(self.READ_INTERVAL)
 
 
+    def publish_data(self, data):
+        print(data)
+
+
+    @property
     def start_service(self):
 
         if self._publish_interval % self._read_interval != 0:
@@ -166,9 +171,3 @@ class Module(object):
         self._cache = []
         print(self._cycle_size)
         self._service_loop()
-
-
-    def publish_data(self, data):
-        print(data)
-        #mqtt publish
-
