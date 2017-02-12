@@ -2,7 +2,7 @@
 import logging
 import platform
 import re
-
+import time
 
 def detect_pi_version():
     """
@@ -154,7 +154,7 @@ class Module(object):
                 self._cache = []
                 self._cycle_iteration = 0
             print(self._cycle_iteration)
-            sleep(self.READ_INTERVAL)
+            time.sleep(self.READ_INTERVAL/1000)
 
 
     def publish_data(self, data):
