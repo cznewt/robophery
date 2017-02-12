@@ -147,7 +147,7 @@ class Htu21dModule(I2cModule):
             'humidity': {
                 'type': 'gauge',
                 'unit': 'RH',
-                'precision' 5,
+                'precision': 5,
                 'range_low': 0,
                 'range_high': 100,
                 'sensor': 'htu21d'
@@ -155,7 +155,7 @@ class Htu21dModule(I2cModule):
             'dew_point_temperature': {
                 'type': 'gauge',
                 'unit': 'C',
-                'precision' 0.25,
+                'precision': 0.25,
                 'range_low': 0,
                 'range_high': 100,
                 'sensor': 'htu21d'

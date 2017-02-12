@@ -61,7 +61,7 @@ class Mcp9808Module(I2cModule):
             'temperature': {
                 'type': 'gauge',
                 'unit': 'C',
-                'precision' 0.25,
+                'precision': 0.25,
                 'range_low': -40,
                 'range_high': 125,
                 'sensor': 'mcp9808'
