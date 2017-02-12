@@ -3,6 +3,10 @@ from robophery.core import Module
 
 class GpioModule(Module):
 
+    GPIO_MODE_OUT = 0
+    GPIO_MODE_IN = 1
+
+
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
         self._setup_device
