@@ -119,13 +119,18 @@ class Bh1750Module(I2cModule):
         Get the luminosity readings.
         """
         if self.resolution_mode is 0:
-            return self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
+            data = self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
         elif self.resolution_mode is 1:
-            return self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
+            data = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
         elif self.resolution_mode is 2:
-            return self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
+            data = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
         else:
-            return -1.0
+            return None
+
+        return [
+            (self._name, 'luminosity', data),
+        ]
+
 
     @property
     def get_meta_data(self):
@@ -139,6 +144,6 @@ class Bh1750Module(I2cModule):
                 'precision': 1,
                 'range_low': 1,
                 'range_high': 65535,
-                'sensor': 'bh1750'
+                'sensor': self.DEVICE_NAME
             }
         }
