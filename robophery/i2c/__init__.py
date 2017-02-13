@@ -2,18 +2,25 @@
 from robophery.core import Module
 
 class I2cModule(Module):
-    I2C_LINUX_DEV_PLATFORM = 1
-    I2C_NODEMCU_DEV_PLATFORM = 2
-    I2C_FT232_DEV_PLATFORM = 3
 
-    def setup_device(self, address, busnum=0, platform=I2C_LINUX_DEV_PLATFORM):
-        self.addr = address
-        if platform is self.I2C_LINUX_DEV_PLATFORM:
-            self._interface = SMBusInterface(address, busnum)
-        elif platform is self.I2cModule.I2C_NODEMCU_DEV_PLATFORM:
-            self._interface = NodeMcuInterface(address)
-        elif platform is self.I2C_FT232_DEV_PLATFORM:
-            self._interface = FT232Interface(address)
+    def __init__(self, *args, **kwargs):
+        self._bus = int(kwargs.get('bus', '0'))
+        super(I2cModule, self).__init__(*args, **kwargs)
+        self._setup_device
+
+
+    @property
+    def _setup_device(self):
+        if self._platform == self.RASPBERRYPI_PLATFORM:
+            self._interface = SMBusInterface(self._addr, self._bus)
+        elif self._platform == self.BEAGLEBONE_PLATFORM:
+            self._interface = SMBusInterface(self._addr, self._bus)
+        elif self._platform == self.FT232H_PLATFORM:
+            self._interface = FT232Interface(self._addr)
+        elif self._platform == self.NODEMCU_PLATFORM:
+            self._interface = NodeMcuInterface(self._addr)
+        else:
+            raise RuntimeError('Platform not supported for I2C interface.')
 
         self.writeRaw8 = self._interface.writeRaw8
         self.write8 = self._interface.write8

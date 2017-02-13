@@ -1,23 +1,19 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import math
 from robophery.i2c import I2cModule
 
 
-class Htu21dException(Exception):
-    pass
-
-
 class Htu21dModule(I2cModule):
-
+    """
+    Module for HTU21D temperature and humidity sensor.
+    """
+    DEVICE_NAME = 'i2c-htu21d'
     # HTU21D default address
-    HTU21D_I2C_ADDR = 0x40
+    DEVICE_ADDR = 0x40
     # Operating modes
     HTU21D_HOLD_MASTER = 0x00
     HTU21D_NOHOLD_MASTER = 0x10
     # HTU21D commands
-    HTU21D_TRIGGER_TEMP_CMD = 0xE3  # Trigger Temperature Measurement
+    HTU21D_TRIGGERTEMPCMD = 0xE3  # Trigger Temperature Measurement
     HTU21D_TRIGGERHUMIDITYCMD = 0xE5  # Trigger Humidity Measurement
     HTU21D_WRITEUSERCMD = 0xE6  # Write user register
     HTU21D_READUSERCMD = 0xE7  # Read user register
@@ -27,14 +23,13 @@ class Htu21dModule(I2cModule):
     HTU21D_B = 1762.39
     HTU21D_C = 235.66
 
-    def __init__(self, **kwargs):
-
-        super(Htu21dModule, self, **kwargs).__init__()
-
+    def __init__(self, *args, **kwargs):
+        self._addr = self.DEVICE_ADDR
+        super(Htu21dModule, self).__init__(*args, **kwargs)
         # Check that mode is valid.
-        if mode not in [self.HTU21D_HOLD_MASTER, self.HTU21D_NOHOLD_MASTER]:
-            raise ValueError('Unexpected mode value {0}.'.format(mode))
-        self._mode = mode
+        self._mode = kwargs.get('mode', self.HTU21D_HOLD_MASTER)
+        if self._mode not in [self.HTU21D_HOLD_MASTER, self.HTU21D_NOHOLD_MASTER]:
+            raise ValueError('Unexpected mode value {0}.'.format(self._mode))
 
 
     def crc_check(self, msb, lsb, crc):
@@ -58,10 +53,10 @@ class Htu21dModule(I2cModule):
         """
         msb, lsb, chsum = self.readList(self.HTU21D_TRIGGERTEMPCMD, 3)
         if self.crc_check(msb, lsb, chsum) is False:
-            raise Htu21dException("CRC Exception")
+            raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
         raw &= 0xFFFC
-        self._logger.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
+        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
@@ -72,10 +67,10 @@ class Htu21dModule(I2cModule):
         """
         msb, lsb, chsum = self.readList(self.HTU21D_TRIGGERHUMIDITYCMD, 3)
         if self.crc_check(msb, lsb, chsum) is False:
-            raise Htu21dException("CRC Exception")
+            raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
         raw &= 0xFFFC
-        self._logger.debug('Raw relative humidity 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
+        self._log.debug('Raw relative humidity 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
@@ -124,20 +119,19 @@ class Htu21dModule(I2cModule):
 
 
     @property
-    def get_data():
+    def get_data(self):
         """
         Get all sensor readings.
         """
-        values = [
-            ('%s.temperature' % self.name, self.get_temperature, ),
-            ('%s.humidity' % self.name, self.get_humidity, ),
-            ('%s.dew_point_temperature' % self.name, self.get_dew_point, ),
+        return [
+            (self._name, 'temperature', self.get_temperature, ),
+            (self._name, 'humidity', self.get_humidity, ),
+            (self._name, 'dew_point_temperature', self.get_dew_point, ),
         ]
-        return values
 
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """
@@ -145,7 +139,7 @@ class Htu21dModule(I2cModule):
             'temperature': {
                 'type': 'gauge',
                 'unit': 'C',
-                'precision' 0.25,
+                'precision': 0.25,
                 'range_low': -40,
                 'range_high': 125,
                 'sensor': 'htu21d'
@@ -153,15 +147,15 @@ class Htu21dModule(I2cModule):
             'humidity': {
                 'type': 'gauge',
                 'unit': 'RH',
-                'precision' 5,
+                'precision': 5,
                 'range_low': 0,
                 'range_high': 100,
                 'sensor': 'htu21d'
-            }
+            },
             'dew_point_temperature': {
                 'type': 'gauge',
                 'unit': 'C',
-                'precision' 0.25,
+                'precision': 0.25,
                 'range_low': 0,
                 'range_high': 100,
                 'sensor': 'htu21d'

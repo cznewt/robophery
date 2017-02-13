@@ -19,15 +19,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-#TODO Is this neccessary?
 from __future__ import division
-import logging
 import time
 from robophery.i2c import I2cModule
-
-BMP085_NAME_DEFAULT      = 'BMP085 sensor'
-# BMP085 default address.
-BMP085_I2CADDR           = 0x77
 
 # Operating Modes
 BMP085_ULTRALOWPOWER     = 0
@@ -55,20 +49,21 @@ BMP085_PRESSUREDATA      = 0xF6
 BMP085_READTEMPCMD       = 0x2E
 BMP085_READPRESSURECMD   = 0x34
 
-class BMP085Module(I2cModule):
+class Bmp085Module(I2cModule):
+    """
+    Module for BMP085/BMP180 temperature and pressure sensor.
+    """
+    DEVICE_NAME = 'i2c-bmp085'
+    # BMP085 default address.
+    DEVICE_ADDR = 0x77
 
-    def __init__(self, kwargs):
-        self.setup_device(kwargs.get('address'), kwargs.get('busnum'))
-        if kwargs.get('name') is '':
-            self.name = BMP085_NAME_DEFAULT
-        else:
-            self.name = kwargs.get('name')
-        if kwargs.get('mode') not in [BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, BMP085_ULTRAHIGHRES]:
-            raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(mode))
-        self._mode = kwargs.get('mode')
 
-        self._logger = logging.getLogger('Adafruit_BMP.BMP085')
-
+    def __init__(self, *args, **kwargs):
+        self._addr = self.DEVICE_ADDR
+        super(Bmp085Module, self).__init__(*args, **kwargs)
+        self._mode = kwargs.get('mode', BMP085_ULTRAHIGHRES)
+        if self._mode not in [BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, BMP085_ULTRAHIGHRES]:
+            raise ValueError('Unexpected mode value {0}.  Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(self._mode))
         # Load calibration values.
         self._load_calibration()
 
@@ -84,17 +79,17 @@ class BMP085Module(I2cModule):
         self.cal_MB = self.readS16(BMP085_CAL_MB, False)     # INT16
         self.cal_MC = self.readS16(BMP085_CAL_MC, False)     # INT16
         self.cal_MD = self.readS16(BMP085_CAL_MD, False)     # INT16
-        self._logger.debug('AC1 = {0:6d}'.format(self.cal_AC1))
-        self._logger.debug('AC2 = {0:6d}'.format(self.cal_AC2))
-        self._logger.debug('AC3 = {0:6d}'.format(self.cal_AC3))
-        self._logger.debug('AC4 = {0:6d}'.format(self.cal_AC4))
-        self._logger.debug('AC5 = {0:6d}'.format(self.cal_AC5))
-        self._logger.debug('AC6 = {0:6d}'.format(self.cal_AC6))
-        self._logger.debug('B1 = {0:6d}'.format(self.cal_B1))
-        self._logger.debug('B2 = {0:6d}'.format(self.cal_B2))
-        self._logger.debug('MB = {0:6d}'.format(self.cal_MB))
-        self._logger.debug('MC = {0:6d}'.format(self.cal_MC))
-        self._logger.debug('MD = {0:6d}'.format(self.cal_MD))
+        self._log.debug('AC1 = {0:6d}'.format(self.cal_AC1))
+        self._log.debug('AC2 = {0:6d}'.format(self.cal_AC2))
+        self._log.debug('AC3 = {0:6d}'.format(self.cal_AC3))
+        self._log.debug('AC4 = {0:6d}'.format(self.cal_AC4))
+        self._log.debug('AC5 = {0:6d}'.format(self.cal_AC5))
+        self._log.debug('AC6 = {0:6d}'.format(self.cal_AC6))
+        self._log.debug('B1 = {0:6d}'.format(self.cal_B1))
+        self._log.debug('B2 = {0:6d}'.format(self.cal_B2))
+        self._log.debug('MB = {0:6d}'.format(self.cal_MB))
+        self._log.debug('MC = {0:6d}'.format(self.cal_MC))
+        self._log.debug('MD = {0:6d}'.format(self.cal_MD))
 
     def _load_datasheet_calibration(self):
         # Set calibration from values in the datasheet example.  Useful for debugging the
@@ -116,7 +111,7 @@ class BMP085Module(I2cModule):
         self.write8(BMP085_CONTROL, BMP085_READTEMPCMD)
         time.sleep(0.005)  # Wait 5ms
         raw = self.readU16(BMP085_TEMPDATA, False)
-        self._logger.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
+        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
     def read_raw_pressure(self):
@@ -134,7 +129,7 @@ class BMP085Module(I2cModule):
         lsb = self.readU8(BMP085_PRESSUREDATA+1)
         xlsb = self.readU8(BMP085_PRESSUREDATA+2)
         raw = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - self._mode)
-        self._logger.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
+        self._log.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
     def read_temperature(self):
@@ -147,7 +142,7 @@ class BMP085Module(I2cModule):
         X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
         B5 = X1 + X2
         temp = ((B5 + 8) >> 4) / 10.0
-        self._logger.debug('Calibrated temperature {0} C'.format(temp))
+        self._log.debug('Calibrated temperature {0} C'.format(temp))
         return temp
 
     def read_pressure(self):
@@ -162,22 +157,22 @@ class BMP085Module(I2cModule):
         X1 = ((UT - self.cal_AC6) * self.cal_AC5) >> 15
         X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
         B5 = X1 + X2
-        self._logger.debug('B5 = {0}'.format(B5))
+        self._log.debug('B5 = {0}'.format(B5))
         # Pressure Calculations
         B6 = B5 - 4000
-        self._logger.debug('B6 = {0}'.format(B6))
+        self._log.debug('B6 = {0}'.format(B6))
         X1 = (self.cal_B2 * (B6 * B6) >> 12) >> 11
         X2 = (self.cal_AC2 * B6) >> 11
         X3 = X1 + X2
         B3 = (((self.cal_AC1 * 4 + X3) << self._mode) + 2) // 4
-        self._logger.debug('B3 = {0}'.format(B3))
+        self._log.debug('B3 = {0}'.format(B3))
         X1 = (self.cal_AC3 * B6) >> 13
         X2 = (self.cal_B1 * ((B6 * B6) >> 12)) >> 16
         X3 = ((X1 + X2) + 2) >> 2
         B4 = (self.cal_AC4 * (X3 + 32768)) >> 15
-        self._logger.debug('B4 = {0}'.format(B4))
+        self._log.debug('B4 = {0}'.format(B4))
         B7 = (UP - B3) * (50000 >> self._mode)
-        self._logger.debug('B7 = {0}'.format(B7))
+        self._log.debug('B7 = {0}'.format(B7))
         if B7 < 0x80000000:
             p = (B7 * 2) // B4
         else:
@@ -186,7 +181,7 @@ class BMP085Module(I2cModule):
         X1 = (X1 * 3038) >> 16
         X2 = (-7357 * p) >> 16
         p = p + ((X1 + X2 + 3791) >> 4)
-        self._logger.debug('Pressure {0} Pa'.format(p))
+        self._log.debug('Pressure {0} Pa'.format(p))
         return p
 
     def read_altitude(self, sealevel_pa=101325.0):
@@ -194,7 +189,7 @@ class BMP085Module(I2cModule):
         # Calculation taken straight from section 3.6 of the datasheet.
         pressure = float(self.read_pressure())
         altitude = 44330.0 * (1.0 - pow(pressure / sealevel_pa, (1.0/5.255)))
-        self._logger.debug('Altitude {0} m'.format(altitude))
+        self._log.debug('Altitude {0} m'.format(altitude))
         return altitude
 
     def read_sealevel_pressure(self, altitude_m=0.0):
@@ -202,5 +197,5 @@ class BMP085Module(I2cModule):
         meters. Returns a value in Pascals."""
         pressure = float(self.read_pressure())
         p0 = pressure / pow(1.0 - altitude_m/44330.0, 5.255)
-        self._logger.debug('Sealevel pressure {0} Pa'.format(p0))
+        self._log.debug('Sealevel pressure {0} Pa'.format(p0))
         return p0

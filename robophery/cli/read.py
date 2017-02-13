@@ -51,6 +51,20 @@ def read_bh1750():
     print(module.get_data)
 
 
+def read_bmp085():
+    from robophery.i2c.bmp085 import Bmp085Module
+    config = _config(_i2c_opts)
+    module = Bmp085Module(**config)
+    print(module.get_data)
+
+
+def read_htu21d():
+    from robophery.i2c.htu21d import Htu21dModule
+    config = _config(_i2c_opts)
+    module = Htu21dModule(**config)
+    print(module.get_data)
+
+
 def read_mcp9808():
     from robophery.i2c.mcp9808 import Mcp9808Module
     config = _config(_i2c_opts)

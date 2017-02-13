@@ -1,11 +1,12 @@
-#!/usr/bin/env python
-
-
 import time
 from robophery.i2c import I2cModule
 
 class Bh1750Module(I2cModule):
-    """ Implement BH1750 communication. """
+    """
+    Module for BH1750 light sensor.
+    """
+    DEVICE_NAME = 'i2c-bh1750'
+    DEVICE_ADDR = 0x23
     # Define some constants from the datasheet
     POWER_DOWN = 0x00 # No active state
     POWER_ON   = 0x01 # Power on
@@ -27,9 +28,9 @@ class Bh1750Module(I2cModule):
     ONE_TIME_LOW_RES_MODE = 0x23
 
 
-    def __init__(self, kwargs):
-        self.setup_device(kwargs.get('address'), kwargs.get('busnum'))
-        self.name = kwargs.get('name')
+    def __init__(self, *args, **kwargs):
+        self._addr = self.DEVICE_ADDR
+        super(Bh1750Module, self).__init__(*args, **kwargs)
         self.resolution_mode = kwargs.get('resolution_mode')
         self.additional_delay = kwargs.get('additional_delay')
         self.set_sensitivity()
@@ -127,7 +128,7 @@ class Bh1750Module(I2cModule):
             return -1.0
 
     @property
-    def get_meta_data():
+    def get_meta_data(self):
         """
         Get the readings meta-data.
         """
