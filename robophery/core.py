@@ -85,7 +85,7 @@ class Module(object):
             self._platform = kwargs['platform']
         else:
             self._platform = self._detect_platform
-
+        self._log('Platform: %s' % self._platform)
 
     @property
     def _supported_platforms(self):
@@ -96,6 +96,18 @@ class Module(object):
            self.NODEMCU_PLATFORM,
            self.FT232H_PLATFORM
        )
+
+
+    @property
+    def _platform_label(self):
+        platforms = [
+           self.RASPBERRYPI_PLATFORM: 'raspberrypi',
+           self.BEAGLEBONE_PLATFORM: 'beaglebone',
+           self.MINNOWBOARD_PLATFORM: 'minnowboard',
+           self.NODEMCU_PLATFORM: 'nodemcu',
+           self.FT232H_PLATFORM: 'ft232h',
+        ]
+        return platforms[self._platform]
 
 
     @property
