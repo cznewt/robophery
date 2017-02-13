@@ -4,7 +4,7 @@ from robophery.core import Module
 class I2cModule(Module):
 
     def __init__(self, *args, **kwargs):
-        self._bus = int(kwargs.get('bus', '0'))
+        self._bus = int(kwargs.get('busnum', '0'))
         super(I2cModule, self).__init__(*args, **kwargs)
         self._setup_device
 

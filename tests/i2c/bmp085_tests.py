@@ -29,17 +29,10 @@ import sys
 import time
 sys.path.append('/root/sdcard/git/robophery-dev/')
 
-import robophery.i2c.bmp085 as bmp085
+from robophery.i2c.bmp085 import Bmp085Module
 
 def main():
-    cfg =   { 
-                'name': 'BMP180', 
-                'address': bmp085.BMP085_I2CADDR,
-                'busnum': 2,
-                'mode': bmp085.BMP085_ULTRAHIGHRES
-            }
-    
-    bmp180sensor = bmp085.BMP085Module(cfg)
+    bmp180sensor = Bmp085Module(name = 'BMP180', address = Bmp085Module.DEVICE_ADDR, busnum = 2, mode = Bmp085Module.BMP085_ULTRAHIGHRES)
 
     while True:
         print('Temp = {0:0.2f} *C'.format(bmp180sensor.read_temperature()))
