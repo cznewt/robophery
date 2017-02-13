@@ -198,7 +198,7 @@ class Bmp085Module(I2cModule):
         pressure = float(self.read_pressure())
         p0 = pressure / pow(1.0 - altitude_m/44330.0, 5.255)
         self._log.debug('Sealevel pressure {0} Pa'.format(p0))
-        return p0
+        return int(p0)
 
     @property
     def get_data(self):
@@ -226,10 +226,10 @@ class Bmp085Module(I2cModule):
             },
             'pressure': {
                 'type': 'gauge',
-                'unit': 'hPa',
-                'precision': 0.03,
-                'range_low': 300,
-                'range_high': 1100,
+                'unit': 'Pa',
+                'precision': 3,
+                'range_low': 30000,
+                'range_high': 110000,
                 'sensor': self.DEVICE_NAME
             }
         }
