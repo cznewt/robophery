@@ -64,6 +64,6 @@ class Mcp9808Module(I2cModule):
                 'precision': 0.25,
                 'range_low': -40,
                 'range_high': 125,
-                'sensor': 'mcp9808'
+                'sensor': self.DEVICE_NAME
             }
         }

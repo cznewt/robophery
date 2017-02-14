@@ -131,6 +131,18 @@ class Htu21dModule(I2cModule):
 
 
     @property
+    def get_data(self):
+        """
+        Get all sensor readings.
+        """
+        return [
+            (self._name, 'temperature', self.get_temperature, ),
+            (self._name, 'humidity', self.get_humidity, ),
+#            (self._name, 'dew_point_temperature', self.get_dew_point, ),
+        ]
+
+
+    @property
     def get_meta_data(self):
         """
         Get the readings meta-data.
@@ -142,7 +154,7 @@ class Htu21dModule(I2cModule):
                 'precision': 0.25,
                 'range_low': -40,
                 'range_high': 125,
-                'sensor': 'htu21d'
+                'sensor': self.DEVICE_NAME
             },
             'humidity': {
                 'type': 'gauge',
@@ -150,14 +162,14 @@ class Htu21dModule(I2cModule):
                 'precision': 5,
                 'range_low': 0,
                 'range_high': 100,
-                'sensor': 'htu21d'
+                'sensor': self.DEVICE_NAME
             },
-            'dew_point_temperature': {
-                'type': 'gauge',
-                'unit': 'C',
-                'precision': 0.25,
-                'range_low': 0,
-                'range_high': 100,
-                'sensor': 'htu21d'
-            }
+#            'dew_point_temperature': {
+#                'type': 'gauge',
+#                'unit': 'C',
+#                'precision': 0.25,
+#                'range_low': 0,
+#                'range_high': 100,
+#                'sensor': self.DEVICE_NAME
+#            }
         }
