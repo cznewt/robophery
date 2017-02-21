@@ -1,5 +1,5 @@
+from robophery.base import Module
 
-from robophery.core import Module
 
 class I2cModule(Module):
 

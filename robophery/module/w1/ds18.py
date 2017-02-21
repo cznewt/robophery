@@ -1,8 +1,7 @@
+from robophery.w1.base import W1Module
 
-import robophery.w1
 
-
-class Ds18Module(robophery.w1.W1Module):
+class Ds18Module(W1Module):
 
     def __init__(self, *args, **kwargs):
         super(Ds18Module, self).__init__(*args, **kwargs)

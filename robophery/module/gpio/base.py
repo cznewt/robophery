@@ -1,5 +1,5 @@
+from robophery.base import Module
 
-from robophery.core import Module
 
 class GpioModule(Module):
 
@@ -9,7 +9,7 @@ class GpioModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
-        self._setup_device
+        self._setup_device(interface)
 
 
     def _normalize_pin(self, pin):
@@ -27,7 +27,7 @@ class GpioModule(Module):
 
 
     @property
-    def _setup_device(self):
+    def _setup_bus(self):
 
         if self._platform == self.RASPBERRYPI_PLATFORM:
             from robophery.gpio.interface.raspberrypi import RaspberrypiGpioInterface

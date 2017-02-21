@@ -1,5 +1,5 @@
 import Adafruit_DHT
-from robophery.gpio import GpioModule
+from robophery.module.gpio.base import GpioModule
 
 
 class Dht22Module(GpioModule):

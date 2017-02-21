@@ -1,4 +1,4 @@
-from robophery.ble import BleModule
+from robophery.module.ble.base import BleModule
 
 
 class Cc2541Module(BleModule):

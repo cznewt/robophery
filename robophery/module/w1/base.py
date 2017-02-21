@@ -1,7 +1,6 @@
-
 from w1thermsensor import W1ThermSensor
+from robophery.base import Module
 
-from robophery.core import Module
 
 class W1Module(Module):
 
