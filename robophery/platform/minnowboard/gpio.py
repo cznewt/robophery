@@ -20,7 +20,8 @@
 # THE SOFTWARE.
 
 import mraa
-from robophery.gpio.interface import GpioInterface
+from robophery.platform.gpio import GpioInterface
+
 
 class MinnowboardGpioInterface(GpioInterface):
     """

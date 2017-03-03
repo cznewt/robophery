@@ -20,7 +20,8 @@
 # THE SOFTWARE.
 
 import Adafruit_BBIO.GPIO
-from robophery.gpio.interface import GpioInterface
+from robophery.platform.gpio import GpioInterface
+
 
 class BeagleboneGpioInterface(GpioInterface):
     """

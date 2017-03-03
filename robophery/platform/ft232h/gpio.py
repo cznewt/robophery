@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 import ftdi1 as ftdi
-from robophery.gpio.interface import GpioInterface
+from robophery.platform.gpio import GpioInterface
 
 
 class Ft232hGpioInterface(GpioInterface):
@@ -92,9 +92,9 @@ class Ft232hGpioInterface(GpioInterface):
         # Get modem status. Useful to enable for debugging.
         #ret, status = ftdi.poll_modem_status(self._bus)
         #if ret == 0:
-        #	logger.debug('Modem status {0:02X}'.format(status))
+        #   logger.debug('Modem status {0:02X}'.format(status))
         #else:
-        #	logger.debug('Modem status error {0}'.format(ret))
+        #   logger.debug('Modem status error {0}'.format(ret))
         length = len(string)
         ret = ftdi.write_data(self._bus, string, length)
         # Log the string that was written in a python hex string format using a very
