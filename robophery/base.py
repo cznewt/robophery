@@ -5,6 +5,74 @@ import re
 import time
 from robophery.utils.rpi import detect_pi_version, detect_pi_revision
 
+NTB_CONFIG = {
+    'interface': {
+        'local-gpio': {
+            'engine': 'gpio',
+            'class': 'robophery.platform.ft232h.gpio.Ft232hGpioInterface',
+            'serial': 3232
+        },
+        'local-i2c': {
+            'engine': 'i2c',
+            'class': 'robophery.platform.ft232h.i2c.Ft232hI2cInterface',
+            'serial': 3232
+        }
+    }
+}
+
+NODEMCU_CONFIG = {
+    'interface': {
+        'local-gpio': {
+            'engine': 'gpio',
+            'class': 'robophery.platform.nodemcu.gpio.NodeMcuGpioInterface',
+        },
+        'local-i2c': {
+            'engine': 'i2c',
+            'class': 'robophery.platform.nodemcu.i2c.NodeMcuI2cInterface',
+        }
+    }
+}
+
+
+RPI_CONFIG = {
+    'interface': {
+        'local-gpio': {
+            'engine': 'gpio',
+            'class': 'robophery.platform.rpi.gpio.RaspberrypiGpioInterface',
+        },
+        'local-i2c': {
+            'engine': 'i2c',
+            'class': 'robophery.platform.rpi.gpio.RaspberrypiI2cInterface',
+            'bus_number': 2
+        },
+        'local-w1': {
+            'engine': 'w1',
+            'class': 'robophery.platform.linux.w1.LinuxW1Interface',
+            'uses': {
+                'interface': 'local-gpio',
+                'pin': 4,
+            }
+        },
+    },
+    'module': {
+        'dht22': {
+            'interface': 'local-gpio',
+            'class': 'robophery.module.gpio.dht22.Dht22Module'
+            'data_pin': 16,
+            'read_interval': 5000,
+        },
+        'htu21d': {
+            'interface': 'local-i2c',
+            'class': 'robophery.module.i2c.htu21d.Htu21dModule'
+            'read_interval': 5000,
+        },
+        'bh1750': {
+            'interface': 'local-i2c',
+            'class': 'robophery.module.i2c.bh1750.Bh1750Module'
+            'read_interval': 5000,
+        },
+    }
+}
 
 class ModuleManager(object):
 
@@ -24,6 +92,7 @@ class ModuleManager(object):
 
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.SERVICE_NAME)
+        self._platform = kwargs.get('platform', None)
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         self._log_level = kwargs.get('log_level', 'debug')
@@ -31,43 +100,9 @@ class ModuleManager(object):
         console_handler = logging.StreamHandler()
         console_handler.setLevel(logging.ERROR)
         self._log.addHandler(console_handler)
-        self._config = {
-            'interface': {
-                'local-gpio': {
-                    'engine': 'gpio',
-                    'class': 'robophery.platform.rpi.RaspberrypiGpioInterface',
-                },
-                'local-i2c': {
-                    'engine': 'i2c',
-                    'class': 'robophery.platform.rpi.RaspberrypiI2cInterface',
-                    'bus_number': 2
-                },
-                'ft232h-gpio': {
-                    'engine': 'gpio',
-                    'class': 'robophery.platform.ft232h.Ft232hGpioInterface',
-                    'serial': 3232
-                },
-            },
-            'module': {
-                'dht22': {
-                    'interface': 'local-gpio',
-                    'class': 'robophery.module.gpio.dht22.Dht22Module'
-                    'data_pin': 16,
-                    'read_interval': 5000,
-                },
-                'htu21d': {
-                    'interface': 'local-i2c',
-                    'class': 'robophery.module.i2c.htu21d.Htu21dModule'
-                    'read_interval': 5000,
-                },
-                'bh1750': {
-                    'interface': 'local-i2c',
-                    'class': 'robophery.module.i2c.bh1750.Bh1750Module'
-                    'read_interval': 5000,
-                },
-            }
-        }
-        self._platform = self._detect_platform()
+        self._config = RPI_CONFIG
+        if self._platform == None:
+            self._platform = self._detect_platform()
         self._setup_interfaces(self._config['interface'])
         self._setup_modules(self._config['module'])
 
@@ -130,8 +165,9 @@ class ModuleManager(object):
         for module_name, module in modules.item():
             ModuleClass = self._load_class(module.pop('class'))
             module['interface'] = self._interface[module['interface']]
+            module['manager'] = self
             if ModuleClass:
-                self._module[module_name] = module_name(**module)
+                self._module[module_name] = ModuleClass(**module)
 
 
 class Module(object):
@@ -157,71 +193,6 @@ class Module(object):
         console_handler = logging.StreamHandler()
         console_handler.setLevel(logging.ERROR)
         self._log.addHandler(console_handler)
-
-        if kwargs.get('platform') in self._supported_platforms:
-            self._platform = kwargs['platform']
-        else:
-            self._platform = self._detect_platform
-
-
-    @property
-    def _supported_platforms(self):
-        return (
-            self.RASPBERRYPI_PLATFORM,
-            self.BEAGLEBONE_PLATFORM,
-            self.MINNOWBOARD_PLATFORM,
-            self.NODEMCU_PLATFORM,
-            self.FT232H_PLATFORM
-        )
-
-
-    @property
-    def _linux_platforms(self):
-        return (
-            self.RASPBERRYPI_PLATFORM,
-            self.BEAGLEBONE_PLATFORM,
-            self.MINNOWBOARD_PLATFORM
-        )
-
-
-    @property
-    def _detect_platform(self):
-        """
-        Detect if device is running on the Raspberry Pi, Beaglebone
-        Black or MinnowBoard and return the platform type.
-        """
-
-        # Detect Raspberry Pi
-        pi = detect_pi_version()
-        if pi is not None:
-            return self.RASPBERRYPI_PLATFORM
-
-        # Detect Beaglebone Black
-        plat = platform.platform()
-        if plat.lower().find('armv7l-with-debian') > -1:
-            return self.BEAGLEBONE_PLATFORM
-        elif plat.lower().find('armv7l-with-ubuntu') > -1:
-            return self.BEAGLEBONE_PLATFORM
-        elif plat.lower().find('armv7l-with-glibc2.4') > -1:
-            return self.BEAGLEBONE_PLATFORM
-
-        # Detect Minnowboard
-        try:
-            import mraa
-            if mraa.getPlatformName()=='MinnowBoard MAX':
-                return self.MINNOWBOARD_PLATFORM
-        except ImportError:
-            pass
-
-        # Detect NodeMCU
-        try:
-            import pyb
-            return self.NODEMCU_PLATFORM
-        except ImportError:
-            pass
-
-        # Could not detect the platform, returning unknown.
-        return self.UNKNOWN_PLATFORM
 
 
     def _service_loop(self):

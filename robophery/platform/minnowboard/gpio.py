@@ -28,9 +28,8 @@ class MinnowboardGpioInterface(GpioInterface):
     GPIO implementation for the Minnowboard + MAX using the mraa library
     """
     
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self._bus = mraa
-
         self._dir_mapping = { self.GPIO_MODE_OUT: self._bus.DIR_OUT,
                               self.GPIO_MODE_IN: self._bus.DIR_IN }
         self._pud_mapping = { self.GPIO_PUD_OFF: self._bus.MODE_STRONG,
@@ -39,6 +38,7 @@ class MinnowboardGpioInterface(GpioInterface):
         self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.EDGE_RISING,
                                self.GPIO_EVENT_FALLING: self._bus.EDGE_FALLING,
                                self.GPIO_EVENT_BOTH: self._bus.EDGE_BOTH }
+        super(MinnowboardGpioInterface, self).__init__(*args, **kwargs)
 
 
     def setup(self, pin, mode):

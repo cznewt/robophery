@@ -25,7 +25,7 @@ from robophery.platform.i2c import I2cInterface
 
 class FT232Interface():
 
-    def __init__(self, address):
+    def __init__(self, *args, **kwargs):
         pass
 
     def writeRaw8(self, value):

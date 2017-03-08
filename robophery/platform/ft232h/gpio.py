@@ -41,7 +41,7 @@ class Ft232hGpioInterface(GpioInterface):
     IN   = self.IN
     OUT  = self.OUT
 
-    def __init__(self, serial=None):
+    def __init__(self, *args, **kwargs):
         """
         Create a FT232H object.  Will search for the first available FT232H
         device with the specified USB vendor ID and product ID (defaults to
@@ -50,18 +50,19 @@ class Ft232hGpioInterface(GpioInterface):
         the FT232H.enumerate_device_serials() function to see how to list all
         connected device serial numbers.
         """
+        self._serial = kwargs.get('serial', None)
         # Initialize FTDI device connection.
         self._bus = ftdi.new()
         if self._bus == 0:
             raise RuntimeError('ftdi_new failed! Is libftdi1 installed?')
         # Register handler to close and cleanup FTDI context on program exit.
         atexit.register(self.close)
-        if serial is None:
+        if self._serial is None:
             # Open USB connection for specified VID and PID if no serial is specified.
             self._check(ftdi.usb_open, self.FT232H_VID, self.FT232H_PID)
         else:
             # Open USB connection for VID, PID, serial.
-            self._check(ftdi.usb_open_string, 's:{0}:{1}:{2}'.format(self.FT232H_VID, self.FT232H_PID, serial))
+            self._check(ftdi.usb_open_string, 's:{0}:{1}:{2}'.format(self.FT232H_VID, self.FT232H_PID, self._serial))
         # Reset device.
         self._check(ftdi.usb_reset)
         # Disable flow control. Commented out because it is unclear if this is necessary.
@@ -78,6 +79,7 @@ class Ft232hGpioInterface(GpioInterface):
         self._write('\x80\x00\x00\x82\x00\x00')
         self._direction = 0x0000
         self._level = 0x0000
+        super(BeagleboneGpioInterface, self).__init__(*args, **kwargs)
 
     def close(self):
         """Close the FTDI device.  Will be automatically called when the program ends."""

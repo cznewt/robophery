@@ -28,14 +28,15 @@ class RaspberrypiGpioInterface(GpioInterface):
     GPIO implementation for the Raspberry Pi using the RPi.GPIO library.
     """
 
-    def __init__(self, mode=None):
+    def __init__(self, *args, **kwargs):
+        self._mode = kwargs.get('mode', None)
         self._bus = RPi.GPIO
         # Suppress warnings about GPIO in use.
         self._bus.setwarnings(False)
         # Setup board pin mode.
-        if mode == self._bus.BOARD or mode == self._bus.BCM:
-            self._bus.setmode(mode)
-        elif mode is not None:
+        if self._mode == self._bus.BOARD or self._mode == self._bus.BCM:
+            self._bus.setmode(self._mode)
+        elif self._mode is not None:
             raise ValueError('Unexpected value for mode.  Must be BOARD or BCM.')
         else:
             self._bus.setmode(self._bus.BOARD)
@@ -47,6 +48,7 @@ class RaspberrypiGpioInterface(GpioInterface):
         self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
                                self.GPIO_EVENT_FALLING: self._bus.FALLING,
                                self.GPIO_EVENT_BOTH: self._bus.BOTH }
+        super(RaspberrypiGpioInterface, self).__init__(*args, **kwargs)
 
 
     def setup(self, pin, mode, pull_up_down=None):

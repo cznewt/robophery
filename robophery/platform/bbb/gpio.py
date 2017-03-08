@@ -29,7 +29,7 @@ class BeagleboneGpioInterface(GpioInterface):
     library.
     """
 
-    def __init__(self):
+    def __init__(self, *args, **kwargs):
         self._bus = Adafruit_BBIO.GPIO
         self._dir_mapping = { self.GPIO_MODE_OUT: self._bus.OUT,
                               self.GPIO_MODE_IN: self._bus.IN }
@@ -39,6 +39,7 @@ class BeagleboneGpioInterface(GpioInterface):
         self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
                                self.GPIO_EVENT_FALLING: self._bus.FALLING,
                                self.GPIO_EVENT_BOTH: self._bus.BOTH }
+        super(BeagleboneGpioInterface, self).__init__(*args, **kwargs)
 
 
     def setup(self, pin, mode, pull_up_down=None):

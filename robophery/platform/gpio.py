@@ -41,6 +41,10 @@ class GpioInterface(object):
     GPIO_PUD_DOWN = 1
     GPIO_PUD_UP = 2
 
+    def __init__(self, *args, **kwargs):
+        self._pins_used = []
+        #for key, value in kwargs.items():
+        #    setattr(self, key, value)
 
     def setup(self, pin, mode, pull_up_down=None):
         """

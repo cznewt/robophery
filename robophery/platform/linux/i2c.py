@@ -1,11 +1,10 @@
-
+import smbus
 from robophery.platform.i2c import I2cInterface
 
 
 class SMBusInterface(I2cInterface):
 
-    def __init__(self, address, busnum):
-        import smbus
+    def __init__(self, *args, **kwargs):
         self._bus = smbus.SMBus(busnum)
         self._address = address
 
