@@ -82,13 +82,16 @@ class Ft232hGpioInterface(GpioInterface):
         super(BeagleboneGpioInterface, self).__init__(*args, **kwargs)
 
     def close(self):
-        """Close the FTDI device.  Will be automatically called when the program ends."""
+        """
+        Close the FTDI device. Will be automatically called when the program ends.
+        """
         if self._bus is not None:
             ftdi.free(self._bus)
         self._bus = None
 
     def _write(self, string):
-        """Helper function to call write_data on the provided FTDI device and
+        """
+        Helper function to call write_data on the provided FTDI device and
         verify it succeeds.
         """
         # Get modem status. Useful to enable for debugging.
@@ -107,14 +110,17 @@ class Ft232hGpioInterface(GpioInterface):
         if ret != length:
             raise RuntimeError('ftdi_write_data expected to write {0} bytes but actually wrote {1}!'.format(length, ret))
 
+
     def _check(self, command, *args):
-        """Helper function to call the provided command on the FTDI device and
+        """
+        Helper function to call the provided command on the FTDI device and
         verify the response matches the expected value.
         """
         ret = command(self._bus, *args)
         logger.debug('Called ftdi_{0} and got response {1}.'.format(command.__name__, ret))
         if ret != 0:
             raise RuntimeError('ftdi_{0} failed with error {1}: {2}'.format(command.__name__, ret, ftdi.get_error_string(self._bus)))
+
 
     def _poll_read(self, expected, timeout_s=5.0):
         """
@@ -142,6 +148,7 @@ class Ft232hGpioInterface(GpioInterface):
             time.sleep(0.01)
         raise RuntimeError('Timeout while polling ftdi_read_data for {0} bytes!'.format(expected))
 
+
     def _mpsse_enable(self):
         """
         Enable MPSSE mode on the FTDI device.
@@ -150,6 +157,7 @@ class Ft232hGpioInterface(GpioInterface):
         self._check(ftdi.set_bitmode, 0, 0)
         # Enable MPSSE by sending mask = 0 and mode = 2
         self._check(ftdi.set_bitmode, 0, 2)
+
 
     def _mpsse_sync(self, max_retries=10):
         """
@@ -170,6 +178,7 @@ class Ft232hGpioInterface(GpioInterface):
             tries += 1
             if tries >= max_retries:
                 raise RuntimeError('Could not synchronize with FT232H!')
+
 
     def mpsse_set_clock(self, clock_hz, adaptive=False, three_phase=False):
         """
@@ -202,6 +211,7 @@ class Ft232hGpioInterface(GpioInterface):
         # Send command to set divisor from low and high byte values.
         self._write(str(bytearray((0x86, divisor & 0xFF, (divisor >> 8) & 0xFF))))
 
+
     def mpsse_read_gpio(self):
         """
         Read both GPIO bus states and return a 16 bit value with their state.
@@ -217,6 +227,7 @@ class Ft232hGpioInterface(GpioInterface):
         logger.debug('Read MPSSE GPIO low byte = {0:02X} and high byte = {1:02X}'.format(low_byte, high_byte))
         return (high_byte << 8) | low_byte
 
+
     def mpsse_gpio(self):
         """
         Return command to update the MPSSE GPIO state to the current direction
@@ -228,20 +239,13 @@ class Ft232hGpioInterface(GpioInterface):
         dir_high = chr((self._direction >> 8) & 0xFF)
         return str(bytearray((0x80, level_low, dir_low, 0x82, level_high, dir_high)))
 
+
     def mpsse_write_gpio(self):
         """
         Write the current MPSSE GPIO state to the FT232H chip.
         """
         self._write(self.mpsse_gpio())
 
-    def get_i2c_device(self, address, **kwargs):
-        """Return an I2CDevice instance using this FT232H object and the provided
-        I2C address.  Meant to be passed as the i2c_provider parameter to objects
-        which use the Adafruit_Python_GPIO library for I2C.
-        """
-        return I2CDevice(self, address, **kwargs)
-
-    # GPIO functions below:
 
     def _setup_pin(self, pin, mode):
         if pin < 0 or pin > 15:
@@ -255,13 +259,17 @@ class Ft232hGpioInterface(GpioInterface):
         else:
             # Set the direction of the pin to 1.
             self._direction |= (1 << pin) & 0xFFFF
+        self._use_pin(pin)
 
-    def setup(self, pin, mode):
+
+    def setup_pin(self, pin, mode):
         """
         Set the input or output mode for a specified pin. Mode should be
-        either OUT or IN."""
+        either OUT or IN.
+        """
         self._setup_pin(pin, mode)
         self.mpsse_write_gpio()
+
 
     def setup_pins(self, pins, values={}, write=True):
         """
@@ -276,15 +284,17 @@ class Ft232hGpioInterface(GpioInterface):
         if write:
             self.mpsse_write_gpio()
 
+
     def _output_pin(self, pin, value):
         if value:
             self._level |= (1 << pin) & 0xFFFF
         else:
             self._level &= ~(1 << pin) & 0xFFFF
 
+
     def output(self, pin, value):
         """
-        Set the specified pin the provided high/low value.  Value should be
+        Set the specified pin the provided high/low value. Value should be
         either HIGH/LOW or a boolean (true = high).
         """
         if pin < 0 or pin > 15:
@@ -292,16 +302,18 @@ class Ft232hGpioInterface(GpioInterface):
         self._output_pin(pin, value)
         self.mpsse_write_gpio()
 
+
     def output_pins(self, pins, write=True):
         """
-        Set multiple pins high or low at once.  Pins should be a dict of pin
-        name to pin value (HIGH/True for 1, LOW/False for 0).  All provided pins
+        Set multiple pins high or low at once. Pins should be a dict of pin
+        name to pin value (HIGH/True for 1, LOW/False for 0). All provided pins
         will be set to the given values.
         """
         for pin, value in iter(pins.items()):
             self._output_pin(pin, value)
         if write:
             self.mpsse_write_gpio()
+
 
     def input(self, pin):
         """

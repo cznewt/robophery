@@ -2,16 +2,19 @@ import smbus
 from robophery.platform.i2c import I2cInterface
 
 
-class SMBusInterface(I2cInterface):
+class SMBusI2cInterface(I2cInterface):
 
     def __init__(self, *args, **kwargs):
-        self._bus = smbus.SMBus(busnum)
-        self._address = address
+        self._busnum = int(kwargs.get('busnum', 1))
+        self._bus = smbus.SMBus(self._busnum)
+        super(SMBusI2cInterface, self).__init__(*args, **kwargs)
+
 
     def writeRaw8(self, value):
         """Write an 8-bit value on the bus (without register)."""
         value = value & 0xFF
         self._bus.write_byte(self._address, value)
+
 
     def write8(self, register, value):
         """Write an 8-bit value to the specified register."""

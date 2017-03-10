@@ -41,12 +41,13 @@ class MinnowboardGpioInterface(GpioInterface):
         super(MinnowboardGpioInterface, self).__init__(*args, **kwargs)
 
 
-    def setup(self, pin, mode):
+    def setup_pin(self, pin, mode):
         """
         Set the input or output mode for a specified pin. Mode should be
         either DIR_IN or DIR_OUT.
         """
         self._bus.Gpio.dir(self._bus.Gpio(pin),self._dir_mapping[mode])   
+        self._use_pin(pin)
 
 
     def output(self, pin, value):

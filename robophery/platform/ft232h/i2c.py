@@ -26,45 +26,75 @@ from robophery.platform.i2c import I2cInterface
 class FT232Interface():
 
     def __init__(self, *args, **kwargs):
-        pass
+        super(FT232Interface, self).__init__(*args, **kwargs)
+
 
     def writeRaw8(self, value):
-        """Write an 8-bit value on the bus (without register)."""
+        """
+        Write an 8-bit value on the bus (without register).
+        """
+
 
     def write8(self, register, value):
-        """Write an 8-bit value to the specified register."""
+        """
+        Write an 8-bit value to the specified register.
+        """
+
 
     def write16(self, register, value):
-        """Write a 16-bit value to the specified register."""
+        """
+        Write a 16-bit value to the specified register.
+        """
+
 
     def writeList(self, register, data):
-        """Write bytes to the specified register."""
+        """
+        Write bytes to the specified register.
+        """
+
 
     def readRaw8(self):
-        """Read an 8-bit value on the bus (without register)."""
+        """
+        Read an 8-bit value on the bus (without register).
+        """
         return result
+
 
     def readU8(self, register):
-        """Read an unsigned byte from the specified register."""
+        """
+        Read an unsigned byte from the specified register.
+        """
         return result
+
 
     def readS8(self, register):
-        """Read a signed byte from the specified register."""
+        """
+        Read a signed byte from the specified register.
+        """
         return result
+
 
     def readU16(self, register, little_endian=True):
-        """Read an unsigned 16-bit value from the specified register, with the
+        """
+        Read an unsigned 16-bit value from the specified register, with the
         specified endianness (default little endian, or least significant byte
-        first)."""
+        first).
+        """
         return result
+
 
     def readS16(self, register, little_endian=True):
-        """Read a signed 16-bit value from the specified register, with the
+        """
+        Read a signed 16-bit value from the specified register, with the
         specified endianness (default little endian, or least significant byte
-        first)."""
+        first).
+        """
         return result
 
+
     def readList(self, register, length):
-        """Read a length number of bytes from the specified register.  Results
-        will be returned as a bytearray."""
+        """
+        Read a length number of bytes from the specified register. Results
+        will be returned as a bytearray.
+        """
         return results

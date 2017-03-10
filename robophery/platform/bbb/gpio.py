@@ -42,20 +42,21 @@ class BeagleboneGpioInterface(GpioInterface):
         super(BeagleboneGpioInterface, self).__init__(*args, **kwargs)
 
 
-    def setup(self, pin, mode, pull_up_down=None):
+    def setup_pin(self, pin, mode, pull_up_down=None):
         """
-        Set the input or output mode for a specified pin.  Mode should be
+        Set the input or output mode for a specified pin. Mode should be
         either OUTPUT or INPUT.
         """
         if pull_up_down == None:
             pull_up_down = self.GPIO_PUD_OFF
         self._bus.setup(pin, self._dir_mapping[mode],
                              pull_up_down=self._pud_mapping[pull_up_down])
+        self._use_pin(pin)
 
 
     def output(self, pin, value):
         """
-        Set the specified pin the provided high/low value.  Value should be
+        Set the specified pin the provided high/low value. Value should be
         either HIGH/LOW or a boolean (true = high).
         """
         self._bus.output(pin, value)
@@ -79,9 +80,9 @@ class BeagleboneGpioInterface(GpioInterface):
 
     def add_event_detect(self, pin, edge, callback=None, bouncetime=-1):
         """
-        Enable edge detection events for a particular GPIO channel.  Pin 
-        should be type IN.  Edge must be RISING, FALLING or BOTH.  Callback is a
-        function for the event.  Bouncetime is switch bounce timeout in ms for 
+        Enable edge detection events for a particular GPIO channel. Pin 
+        should be type IN. Edge must be RISING, FALLING or BOTH. Callback is a
+        function for the event. Bouncetime is switch bounce timeout in ms for 
         callback.
         """
         kwargs = {}
@@ -103,19 +104,19 @@ class BeagleboneGpioInterface(GpioInterface):
     def add_event_callback(self, pin, callback, bouncetime=-1):
         """
         Add a callback for an event already defined using add_event_detect().
-        Pin should be type IN.  Bouncetime is switch bounce timeout in ms for 
+        Pin should be type IN. Bouncetime is switch bounce timeout in ms for 
         callback
         """
         kwargs = {}
         if bouncetime > 0:
             kwargs['bouncetime']=bouncetime
-        self._bus.add_event_callback(pin, callback, **kwargs)
+        self._bus.add_event  _callback(pin, callback, **kwargs)
 
 
     def event_detected(self, pin):
         """
-        Returns True if an edge has occured on a given GPIO.  You need to 
-        enable edge detection using add_event_detect() first.   Pin should be 
+        Returns True if an edge has occured on a given GPIO. You need to 
+        enable edge detection using add_event_detect() first. Pin should be 
         type IN.
         """
         return self._bus.event_detected(pin)
@@ -123,7 +124,7 @@ class BeagleboneGpioInterface(GpioInterface):
 
     def wait_for_edge(self, pin, edge):
         """
-        Wait for an edge.   Pin should be type IN.  Edge must be RISING, 
+        Wait for an edge. Pin should be type IN. Edge must be RISING, 
         FALLING or BOTH.
         """
         self._bus.wait_for_edge(pin, self._edge_mapping[edge])

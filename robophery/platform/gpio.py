@@ -22,9 +22,7 @@
 
 class GpioInterface(object):
     """
-    Base class for implementing simple digital IO for a platform.
-    Implementors are expected to subclass from this and provide
-    an implementation  of the setup, output, and input functions.
+    Base class for implementing digital IO bus.
     """
 
     GPIO_MODE_OUT = 0
@@ -43,12 +41,15 @@ class GpioInterface(object):
 
     def __init__(self, *args, **kwargs):
         self._pins_used = []
-        #for key, value in kwargs.items():
-        #    setattr(self, key, value)
 
-    def setup(self, pin, mode, pull_up_down=None):
+
+    def _use_pin(pin):
+        self._pins_used.append(pin)
+
+
+    def setup_pin(self, pin, mode, pull_up_down=None):
         """
-        Set the input or output mode for a specified pin.  Mode should be
+        Set the input or output mode for a specified pin. Mode should be
         either OUT or IN.
         """
         raise NotImplementedError
@@ -56,7 +57,7 @@ class GpioInterface(object):
 
     def output(self, pin, value):
         """
-        Set the specified pin the provided high/low value.  Value should be
+        Set the specified pin the provided high/low value. Value should be
         either HIGH/LOW or a boolean (true = high).
         """
         raise NotImplementedError
@@ -98,13 +99,13 @@ class GpioInterface(object):
 
     def output_pins(self, pins):
         """
-        Set multiple pins high or low at once.  Pins should be a dict of pin
-        name to pin value (HIGH/True for 1, LOW/False for 0).  All provided pins
+        Set multiple pins high or low at once. Pins should be a dict of pin
+        name to pin value (HIGH/True for 1, LOW/False for 0). All provided pins
         will be set to the given values.
 
         General implementation just loops through pins and writes them out
-        manually.  This is not optimized, but subclasses can choose to implement
-        a more optimal batch output implementation.  See the MCP230xx class for
+        manually. This is not optimized, but subclasses can choose to implement
+        a more optimal batch output implementation. See the MCP230xx class for
         example of optimized implementation.
         """
         for pin, value in iter(pins.items()):
@@ -113,11 +114,11 @@ class GpioInterface(object):
 
     def setup_pins(self, pins):
         """
-        Setup multiple pins as inputs or outputs at once.  Pins should be a
+        Setup multiple pins as inputs or outputs at once. Pins should be a
         dict of pin name to pin type (IN or OUT).
         """
         for pin, value in iter(pins.items()):
-            self.setup(pin, value)
+            self.setup_pin(pin, value)
 
 
     def input_pins(self, pins):
@@ -131,7 +132,7 @@ class GpioInterface(object):
     def add_event_detect(self, pin, edge):
         """
         Enable edge detection events for a particular GPIO channel. Pin 
-        should be type IN.  Edge must be RISING, FALLING or BOTH.
+        should be type IN. Edge must be RISING, FALLING or BOTH.
         """
         raise NotImplementedError
 
@@ -154,8 +155,8 @@ class GpioInterface(object):
 
     def event_detected(self, pin):
         """
-        Returns True if an edge has occured on a given GPIO.  You need to 
-        enable edge detection using add_event_detect() first.   Pin should be 
+        Returns True if an edge has occured on a given GPIO. You need to 
+        enable edge detection using add_event_detect() first. Pin should be 
         type IN.
         """
         raise NotImplementedError
@@ -163,7 +164,7 @@ class GpioInterface(object):
 
     def wait_for_edge(self, pin, edge):
         """
-        Wait for an edge.   Pin should be type IN.  Edge must be RISING, 
+        Wait for an edge. Pin should be type IN. Edge must be RISING, 
         FALLING or BOTH.
         """
         raise NotImplementedError

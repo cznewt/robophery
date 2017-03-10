@@ -5,75 +5,6 @@ import re
 import time
 from robophery.utils.rpi import detect_pi_version, detect_pi_revision
 
-NTB_CONFIG = {
-    'interface': {
-        'local-gpio': {
-            'engine': 'gpio',
-            'class': 'robophery.platform.ft232h.gpio.Ft232hGpioInterface',
-            'serial': 3232
-        },
-        'local-i2c': {
-            'engine': 'i2c',
-            'class': 'robophery.platform.ft232h.i2c.Ft232hI2cInterface',
-            'serial': 3232
-        }
-    }
-}
-
-NODEMCU_CONFIG = {
-    'interface': {
-        'local-gpio': {
-            'engine': 'gpio',
-            'class': 'robophery.platform.nodemcu.gpio.NodeMcuGpioInterface',
-        },
-        'local-i2c': {
-            'engine': 'i2c',
-            'class': 'robophery.platform.nodemcu.i2c.NodeMcuI2cInterface',
-        }
-    }
-}
-
-
-RPI_CONFIG = {
-    'interface': {
-        'local-gpio': {
-            'engine': 'gpio',
-            'class': 'robophery.platform.rpi.gpio.RaspberrypiGpioInterface',
-        },
-        'local-i2c': {
-            'engine': 'i2c',
-            'class': 'robophery.platform.rpi.gpio.RaspberrypiI2cInterface',
-            'bus_number': 2
-        },
-        'local-w1': {
-            'engine': 'w1',
-            'class': 'robophery.platform.linux.w1.LinuxW1Interface',
-            'uses': {
-                'interface': 'local-gpio',
-                'pin': 4,
-            }
-        },
-    },
-    'module': {
-        'dht22': {
-            'interface': 'local-gpio',
-            'class': 'robophery.module.gpio.dht22.Dht22Module'
-            'data_pin': 16,
-            'read_interval': 5000,
-        },
-        'htu21d': {
-            'interface': 'local-i2c',
-            'class': 'robophery.module.i2c.htu21d.Htu21dModule'
-            'read_interval': 5000,
-        },
-        'bh1750': {
-            'interface': 'local-i2c',
-            'class': 'robophery.module.i2c.bh1750.Bh1750Module'
-            'read_interval': 5000,
-        },
-    }
-}
-
 class ModuleManager(object):
 
     SERVICE_NAME = 'robophery-raw'
@@ -86,6 +17,8 @@ class ModuleManager(object):
     MINNOWBOARD_PLATFORM = 'minnowboard'
     NODEMCU_PLATFORM = 'nodemcu'
     FT232H_PLATFORM = 'ft232h'
+
+    _instance = None
 
     _interface = {}
     _module = {}
@@ -169,6 +102,40 @@ class ModuleManager(object):
             if ModuleClass:
                 self._module[module_name] = ModuleClass(**module)
 
+    def run(self, modules=None) -> None:
+        """
+        Run robophery manager
+        """
+
+        for backend in backends or self._backends:
+            if not backend.own_loop:
+                self.loop.create_task(self.handle_backend(backend))
+            else:
+                backend.start_loop()
+
+        # Run forever and catch keyboard interrupt
+        try:
+            # Block until stopped
+            LOG.info("Starting BOT core loop")
+            self.loop.run_forever()
+        except KeyboardInterrupt:
+            for backend in backends or self._backends:
+                if backend.own_loop:
+                    backend.stop_loop()
+            self.loop.create_task(self.async_stop())
+            self.loop.run_forever()
+        finally:
+            self.loop.close()
+
+
+    def __new__(cls, *args, **kwargs):
+        """
+        A singleton implementation of AppLoader. There can be only one.
+        """
+        if not cls._instance:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
 
 class Module(object):
 
@@ -176,16 +143,10 @@ class Module(object):
     READ_INTERVAL = 10000
     PUBLISH_INTERVAL = 60000
 
-    UNKNOWN_PLATFORM = 0
-    RASPBERRYPI_PLATFORM = 1
-    BEAGLEBONE_PLATFORM = 2
-    MINNOWBOARD_PLATFORM = 3
-    NODEMCU_PLATFORM = 4
-    FT232H_PLATFORM = 5
-
 
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
+        self._manager = kwargs.get('manager', None)
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         self._log_level = kwargs.get('log_level', 'debug')

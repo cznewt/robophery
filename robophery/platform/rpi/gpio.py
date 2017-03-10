@@ -23,7 +23,7 @@ from robophery.platform.gpio import GpioInterface
 import RPi.GPIO
 
 
-class RaspberrypiGpioInterface(GpioInterface):
+class RaspberryPiGpioInterface(GpioInterface):
     """
     GPIO implementation for the Raspberry Pi using the RPi.GPIO library.
     """
