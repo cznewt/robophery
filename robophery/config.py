@@ -71,16 +71,16 @@ RPI_PLATFORM = {
 
 DHT22_MODULE = {
     'interface': 'local-gpio',
-    'class': 'robophery.module.gpio.dht22.Dht22Module'
+    'class': 'robophery.module.gpio.dht22.Dht22Module',
     'data_pin': None,
 }
 
 HTU21D_MODULE = {
     'interface': 'local-i2c',
-    'class': 'robophery.module.i2c.htu21d.Htu21dModule'
+    'class': 'robophery.module.i2c.htu21d.Htu21dModule',
 }
 
 BH1750_MODULE = {
     'interface': 'local-i2c',
-    'class': 'robophery.module.i2c.bh1750.Bh1750Module'
+    'class': 'robophery.module.i2c.bh1750.Bh1750Module',
 }

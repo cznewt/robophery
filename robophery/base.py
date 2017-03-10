@@ -1,13 +1,13 @@
 
 import logging
 import platform
-import re
 import time
+from importlib import import_module
 from robophery.utils.rpi import detect_pi_version, detect_pi_revision
 
 class ModuleManager(object):
 
-    SERVICE_NAME = 'robophery-raw'
+    SERVICE_NAME = 'robophery-default'
     READ_INTERVAL = 10000
     PUBLISH_INTERVAL = 60000
 
@@ -26,6 +26,8 @@ class ModuleManager(object):
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.SERVICE_NAME)
         self._platform = kwargs.get('platform', None)
+        if self._platform == None:
+            self._platform = self._detect_platform()
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         self._log_level = kwargs.get('log_level', 'debug')
@@ -33,9 +35,8 @@ class ModuleManager(object):
         console_handler = logging.StreamHandler()
         console_handler.setLevel(logging.ERROR)
         self._log.addHandler(console_handler)
-        self._config = RPI_CONFIG
-        if self._platform == None:
-            self._platform = self._detect_platform()
+        self._config = kwargs.get('config')
+        self._run_mode = 'single' # multi
         self._setup_interfaces(self._config['interface'])
         self._setup_modules(self._config['module'])
 
@@ -83,7 +84,7 @@ class ModuleManager(object):
         except ImportError:
             pass
 
-        # Could not detect the platform, returning unknown linux.
+        # Could not detect the platform, returning generic linux.
         return self.LINUX_PLATFORM
 
 
@@ -102,61 +103,17 @@ class ModuleManager(object):
             if ModuleClass:
                 self._module[module_name] = ModuleClass(**module)
 
-    def run(self, modules=None) -> None:
+    def _load_class(self, name):
         """
-        Run robophery manager
+        Load class
         """
+        if isinstance(name, str):
+            module = import_module(".".join(name.split(".")[:-1]))
+            if module:
+                return getattr(module, name.split(".")[-1], None)
+            raise Exception("Cannot load class %s" % name)
 
-        for backend in backends or self._backends:
-            if not backend.own_loop:
-                self.loop.create_task(self.handle_backend(backend))
-            else:
-                backend.start_loop()
-
-        # Run forever and catch keyboard interrupt
-        try:
-            # Block until stopped
-            LOG.info("Starting BOT core loop")
-            self.loop.run_forever()
-        except KeyboardInterrupt:
-            for backend in backends or self._backends:
-                if backend.own_loop:
-                    backend.stop_loop()
-            self.loop.create_task(self.async_stop())
-            self.loop.run_forever()
-        finally:
-            self.loop.close()
-
-
-    def __new__(cls, *args, **kwargs):
-        """
-        A singleton implementation of AppLoader. There can be only one.
-        """
-        if not cls._instance:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
-
-class Module(object):
-
-    DEVICE_NAME = 'unknown-device'
-    READ_INTERVAL = 10000
-    PUBLISH_INTERVAL = 60000
-
-
-    def __init__(self, *args, **kwargs):
-        self._name = kwargs.get('name', self.DEVICE_NAME)
-        self._manager = kwargs.get('manager', None)
-        self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
-        self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
-        self._log_level = kwargs.get('log_level', 'debug')
-        self._log = logging.getLogger('robophery.%s' % self._name)
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.ERROR)
-        self._log.addHandler(console_handler)
-
-
-    def _service_loop(self):
+    def _single_loop(self):
 
         while True:
             data = self.get_data
@@ -170,6 +127,47 @@ class Module(object):
                 self._cache = []
                 self._cycle_iteration = 1
             time.sleep(self._read_interval / 1000)
+
+
+    def run(self, modules=None):
+        """
+        Run robophery manager
+        """
+        if self._run_mode == 'single':
+
+            self._single_loop()
+
+        else:
+
+            for module in modules or self._module:
+                if not module.own_loop:
+                    self.loop.create_task(self.handle_module(module))
+                else:
+                    module.start_loop()
+
+            try:
+                self.loop.run_forever()
+            except KeyboardInterrupt:
+                for module in modules or self._module:
+                    if module.own_loop:
+                        module.stop_loop()
+                self.loop.create_task(self.async_stop())
+                self.loop.run_forever()
+            finally:
+                self.loop.close()
+
+
+
+class Module(object):
+
+    DEVICE_NAME = 'unknown-device'
+    READ_INTERVAL = 10000
+    PUBLISH_INTERVAL = 60000
+
+    def __init__(self, *args, **kwargs):
+        self._name = kwargs.get('name', self.DEVICE_NAME)
+        self._manager = kwargs.get('manager', None)
+        self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
 
 
     def publish_data(self, data):

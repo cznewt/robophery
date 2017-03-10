@@ -9,7 +9,7 @@ class GpioModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
-        self._setup_device(interface)
+        self._connect(interface)
 
 
     def _normalize_pin(self, pin):

@@ -1,4 +1,6 @@
 
+import re
+
 def detect_pi_version():
     """
     Detect the version of the Raspberry Pi.  Returns either 1, 2 or
