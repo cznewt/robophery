@@ -127,3 +127,15 @@ PFP_MODULE = {
     'interface': 'local-ble',
     'class': 'robophery.module.ble.pfp.ParrotFlowerPowerModule',
 }
+
+RELAY_MODULE = {
+    'interface': 'local-gpio',
+    'class': 'robophery.module.gpio.dht11.RelayModule',
+    'data_pin': None,
+}
+
+SWITCH_MODULE = {
+    'interface': 'local-gpio',
+    'class': 'robophery.module.gpio.dht11.SwitchModule',
+    'data_pin': None,
+}

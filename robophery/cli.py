@@ -104,6 +104,22 @@ def module_l293d():
     manager = ModuleManager(**config)
     manager.run()
 
+
+def module_relay():
+    config = _config(RELAY_MODULE, GPIO_OPTS)
+    manager = ModuleManager(**config)
+    if config['config']['module']['module']['data_pin'] == None:
+        raise ValueError("Data pin must be set.")
+    manager.run()
+
+
+def module_switch():
+    config = _config(SWITCH_MODULE, GPIO_OPTS)
+    manager = ModuleManager(**config)
+    if config['config']['module']['module']['data_pin'] == None:
+        raise ValueError("Data pin must be set.")
+    manager.run()
+
 # BLE modules
 
 
