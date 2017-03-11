@@ -181,7 +181,7 @@ class ModuleManager(object):
                 self._publish_data()
             time_stop = time.time()
             time_delta = time_stop - time_start
-            self._log.info("[manager] Reading all the data took %sms." % (time_delta * 1000))
+            self._log.info("[manager] Reading data of %s/%s took %sms." % (self._read_iter, self._read_cycle, time_delta * 1000))
             sleep_delta = (self._read_interval / 1000) - time_delta
             time.sleep(sleep_delta)
 
