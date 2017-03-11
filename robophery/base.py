@@ -211,6 +211,7 @@ class Module(object):
         self._manager = kwargs.get('manager', None)
         self._interface = kwargs.get('interface', None)
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
+        self._log = self._manager._log
 
 
     def start_service(self):
