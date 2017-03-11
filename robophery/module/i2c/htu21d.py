@@ -128,7 +128,6 @@ class Htu21dModule(I2cModule):
         humid = self.get_humidity()
         humid_time_stop = time.time()
         humid_time_delta = humid_time_stop - humid_time_start
-
         return [
             (self._name, 'temperature', temp, temp_time_delta),
             (self._name, 'humidity', humid, humid_time_delta),

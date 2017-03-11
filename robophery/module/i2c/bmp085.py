@@ -223,9 +223,17 @@ class Bmp085Module(I2cModule):
         """
         Get all sensor readings.
         """
+        temp_time_start = time.time()
+        temp = self.read_temperature()
+        temp_time_stop = time.time()
+        temp_time_delta = temp_time_stop - temp_time_start
+        press_time_start = time.time()
+        press = self.read_pressure()
+        press_time_stop = time.time()
+        press_time_delta = press_time_stop - press_time_start
         return [
-            (self._name, 'temperature', self.read_temperature()),
-            (self._name, 'pressure', self.read_pressure()),
+            (self._name, 'temperature', temp, temp_time_delta),
+            (self._name, 'pressure', press, press_time_delta),
         ]
 
 
