@@ -2,6 +2,11 @@ from robophery.module.w1.base import W1Module
 
 
 class Ds18Module(W1Module):
+    """
+    Module for Dallas 1-wire DS family temperature sensors.
+    """
+    DEVICE_NAME = 'w1-ds18'
+
 
     def __init__(self, *args, **kwargs):
         super(Ds18Module, self).__init__(*args, **kwargs)
