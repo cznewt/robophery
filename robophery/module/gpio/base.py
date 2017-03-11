@@ -9,7 +9,7 @@ class GpioModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
-        self._connect(interface)
+        self._setup_interface()
 
 
     def _normalize_pin(self, pin):
@@ -26,25 +26,8 @@ class GpioModule(Module):
         return value
 
 
-    @property
-    def _setup_bus(self):
-
-        if self._platform == self.RASPBERRYPI_PLATFORM:
-            from robophery.gpio.interface.raspberrypi import RaspberrypiGpioInterface
-            self._interface = RaspberrypiGpioInterface()
-        elif self._platform == self.BEAGLEBONE_PLATFORM:
-            from robophery.gpio.interface.beaglebone import BeagleboneGpioInterface
-            self._interface = BeagleboneGpioInterface()
-        elif self._platform == self.MINNOWBOARD_PLATFORM:
-            from robophery.gpio.interface.minnowboard import MinnowboardGpioInterface
-            self._interface = MinnowboardGpioInterface()
-        elif self._platform == self.FT232H_PLATFORM:
-            from robophery.gpio.interface.minnowboard import Ft232hGpioInterface
-            self._interface = Ft232hGpioInterface()
-        else:
-            raise RuntimeError('Platform not supported for GPIO interface.')
-
-        self.setup = self._interface.setup
+    def _setup_interface(self):
+        self.setup_pin = self._interface.setup_pin
         self.output = self._interface.output
         self.input = self._interface.input
         self.set_high = self._interface.set_high

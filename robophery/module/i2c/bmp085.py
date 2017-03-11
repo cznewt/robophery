@@ -28,7 +28,6 @@ class Bmp085Module(I2cModule):
     Module for BMP085/BMP180 temperature and pressure sensor.
     """
     DEVICE_NAME = 'i2c-bmp085'
-    # BMP085 default address.
     DEVICE_ADDR = 0x77
 
     # Operating Modes
