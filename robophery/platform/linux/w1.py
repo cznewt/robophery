@@ -9,9 +9,9 @@ class LinuxW1Interface(W1Interface):
 
 
     def _get_all_temperatures(self):
-        data = []
+        data = {}
         for sensor in w1thermsensor.W1ThermSensor.get_available_sensors():
-            data.append({sensor.id: sensor.get_temperature()})
+            data[sensor.id] = sensor.get_temperature()
         return data
 
 
