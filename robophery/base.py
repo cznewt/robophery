@@ -173,12 +173,16 @@ class ModuleManager(object):
         Run single global service loop
         """
         while True:
+            time_start = time.time()
             self._read_data()
             if self._read_iter < self._read_cycle:
                 self._read_iter += 1
             else:
                 self._publish_data()
-            time.sleep(self._read_interval / 1000)
+            time_stop = time.time()
+            time_delta = time_stop - time_start
+            self._log.info("[manager] Reading all the data took %sms." % time_delta * 1000)
+            time.sleep((self._read_interval / 1000) - time_delta)
 
 
     def run(self, modules=None):
