@@ -1,7 +1,7 @@
 from robophery.module.ble.base import BleModule
 
 
-class FlowerPowerModule(BleModule):
+class ParrotFlowerPowerModule(BleModule):
     """
     Module for Parrot Flower Power device.
     """

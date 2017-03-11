@@ -4,23 +4,24 @@
 import sys
 from oslo_config import cfg
 from robophery.base import ModuleManager
-from robophery.config import *
+from robophery.conf import *
 
 GPIO_OPTS = [
     cfg.Opt('data_pin',
         short='p',
-        help='GPIO pin of module'),
+        help='Module GPIO pin'),
 ]
 
 BLE_OPTS = [
     cfg.Opt('addr',
         short='a',
-        help='MAC address of module'),
+        help='Module MAC address'),
 ]
 
 
 def _config(module_conf, opts = None):
     conf = {
+        'log_level': 'debug',
         'read_interval': 2000,
         'platform': 'raspberrypi',
         'config': RPI_PLATFORM
@@ -38,6 +39,7 @@ def _config(module_conf, opts = None):
 
 # I2C modules
 
+
 def read_bh1750():
     config = _config(BH1750_MODULE)
     manager = ModuleManager(**config)
@@ -50,6 +52,7 @@ def read_htu21d():
     manager.run()
 
 # GPIO modules
+
 
 def read_dht22():
     config = _config(DHT22_MODULE, GPIO_OPTS)
@@ -75,24 +78,26 @@ def read_l293d():
 
 # BLE modules
 
+
 def read_flower_power():
-    from robophery.ble.flower_power import FlowerPowerModule
-    config = _config(_ble_opts)
-    module = FlowerPowerModule(**config)
-    print(module.get_data)
+    config = _config(PFP_MODULE, BLE_OPTS)
+    manager = ModuleManager(**config)
+    manager.run()
 
 # 1-wire modules
 
+
 def read_ds18():
-    from robophery.w1.ds18 import Ds18Module
-    _gpio_opts.append(cfg.Opt('type',
-        short='t',
-        default="ds18b20",
-        help='Specific type of Dallas DS18 family sensor'))
-    _gpio_opts.append(cfg.Opt('id',
-        short='i',
-        default='0',
-        help='Specific sensor address ID at 1-wire bus'))
-    config = _config(_gpio_opts)
-    module = Ds18Module(**config)
-    print(module.get_data)
+    OPTS = [
+        cfg.Opt('type',
+            short='t',
+            default="ds18b20",
+            help='Specific type of Dallas DS18 family sensor'),
+        cfg.Opt('id',
+            short='i',
+            default='0',
+            help='Specific sensor address ID at 1-wire bus')
+    ]
+    config = _config(DS18_MODULE, OPTS)
+    manager = ModuleManager(**config)
+    manager.run()

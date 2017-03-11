@@ -30,15 +30,20 @@ class ModuleManager(object):
             self._platform = self._detect_platform()
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
-        self._log_level = kwargs.get('log_level', 'debug')
-        self._log = logging.getLogger('robophery.%s' % self._name)
-        console_handler = logging.StreamHandler()
-        console_handler.setLevel(logging.ERROR)
-        self._log.addHandler(console_handler)
+        self._log_level = kwargs.get('log_level', 'info')
+        self._log_handlers = kwargs.get('log_level', ['console'])
         self._config = kwargs.get('config')
         self._run_mode = 'single' # multi
         self._setup_interfaces(self._config['interface'])
         self._setup_modules(self._config['module'])
+
+
+    def _setup_log(self):
+        self._log = logging.getLogger(self._name)
+        if console in self._log_handlers:
+            console_handler = logging.StreamHandler()
+            console_handler.setLevel(logging.ERROR)
+            self._log.addHandler(console_handler)
 
 
     def _linux_platforms(self):
@@ -105,7 +110,7 @@ class ModuleManager(object):
 
     def _load_class(self, name):
         """
-        Load class
+        Load class by path string
         """
         if isinstance(name, str):
             module = import_module(".".join(name.split(".")[:-1]))
@@ -113,8 +118,11 @@ class ModuleManager(object):
                 return getattr(module, name.split(".")[-1], None)
             raise Exception("Cannot load class %s" % name)
 
-    def _single_loop(self):
 
+    def _single_loop(self):
+        """
+        Run single global service loop
+        """
         while True:
             data = self.get_data
             self._cache.append(data)
@@ -131,7 +139,7 @@ class ModuleManager(object):
 
     def run(self, modules=None):
         """
-        Run robophery manager
+        Run robophery manager service
         """
         if self._run_mode == 'single':
 
