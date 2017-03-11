@@ -19,7 +19,7 @@ class Ds18Module(W1Module):
                 return None
             else:
                 data = []
-                for raw_name, raw_value in raw_data:
+                for raw_name, raw_value in raw_data.items():
                     data.append(('%s-%s' % (self._name, raw_name), 'temperature', raw_value))
         else:
             data = (self._name, 'temperature', self._get_temperature())
