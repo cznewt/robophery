@@ -1,4 +1,4 @@
-from robophery.w1.base import W1Module
+from robophery.module.w1.base import W1Module
 
 
 class Ds18Module(W1Module):
@@ -9,21 +9,20 @@ class Ds18Module(W1Module):
         self._type = kwargs.get('type', 'ds18b20')
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Query Dallas DS18 family sensor to get the temperature readings.
         """
         if self._id == '0':
-            data = self._get_all_temperatures
+            data = self._get_all_temperatures()
             if len(data) == 0:
                 return None
         else:
-            data = self._get_temperature
+            data = self._get_temperature()
         return data
 
-    @property
-    def get_meta_data(self):
+
+    def meta_data(self):
         """
         Get the readings meta-data.
         """
