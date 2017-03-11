@@ -21,12 +21,10 @@
 
 from robophery.platform.gpio import GpioInterface
 
-"""
 try:
     import RPi.GPIO
 except:
     raise RuntimeError("Cannot load RPi.GPIO library. Please install the library.")
-"""
 
 class RaspberryPiGpioInterface(GpioInterface):
     """
@@ -35,8 +33,6 @@ class RaspberryPiGpioInterface(GpioInterface):
 
     def __init__(self, *args, **kwargs):
         self._mode = kwargs.get('mode', None)
-        """
-        #Temp
         self._bus = RPi.GPIO
         # Suppress warnings about GPIO in use.
         self._bus.setwarnings(False)
@@ -56,7 +52,6 @@ class RaspberryPiGpioInterface(GpioInterface):
         self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
                                self.GPIO_EVENT_FALLING: self._bus.FALLING,
                                self.GPIO_EVENT_BOTH: self._bus.BOTH }
-        """
         super(RaspberryPiGpioInterface, self).__init__(*args, **kwargs)
 
 
