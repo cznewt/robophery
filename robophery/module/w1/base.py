@@ -13,4 +13,4 @@ class W1Module(Module):
 
 
     def _get_temperature(self, addr, type):
-        return self._interface._get_temperature()
+        return self._interface._get_temperature(addr, type)
