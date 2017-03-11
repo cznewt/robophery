@@ -40,13 +40,13 @@ def _config(module_conf, opts = None):
 # I2C modules
 
 
-def read_bh1750():
+def module_bh1750():
     config = _config(BH1750_MODULE)
     manager = ModuleManager(**config)
     manager.run()
 
 
-def read_htu21d():
+def module_htu21d():
     config = _config(HTU21D_MODULE)
     manager = ModuleManager(**config)
     manager.run()
@@ -54,13 +54,19 @@ def read_htu21d():
 # GPIO modules
 
 
-def read_dht22():
+def module_dht11():
+    config = _config(DHT11_MODULE, GPIO_OPTS)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
+def module_dht22():
     config = _config(DHT22_MODULE, GPIO_OPTS)
     manager = ModuleManager(**config)
     manager.run()
 
 
-def read_l293d():
+def module_l293d():
     OPTS = [
         cfg.Opt('power_pin',
             short='a',
@@ -79,7 +85,7 @@ def read_l293d():
 # BLE modules
 
 
-def read_flower_power():
+def module_pfp():
     config = _config(PFP_MODULE, BLE_OPTS)
     manager = ModuleManager(**config)
     manager.run()
@@ -87,7 +93,7 @@ def read_flower_power():
 # 1-wire modules
 
 
-def read_ds18():
+def module_ds18():
     OPTS = [
         cfg.Opt('type',
             short='t',

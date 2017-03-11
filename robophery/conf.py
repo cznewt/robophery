@@ -74,6 +74,17 @@ BH1750_MODULE = {
     'class': 'robophery.module.i2c.bh1750.Bh1750Module',
 }
 
+BMP085_MODULE = {
+    'interface': 'local-i2c',
+    'class': 'robophery.module.i2c.bmp085.Bmp085Module',
+}
+
+DHT11_MODULE = {
+    'interface': 'local-gpio',
+    'class': 'robophery.module.gpio.dht11.Dht11Module',
+    'data_pin': None,
+}
+
 DHT22_MODULE = {
     'interface': 'local-gpio',
     'class': 'robophery.module.gpio.dht22.Dht22Module',
@@ -85,9 +96,27 @@ DS18_MODULE = {
     'class': 'robophery.module.w1.ds18.Ds18Module',
 }
 
+INA219_MODULE = {
+    'interface': 'local-i2c',
+    'class': 'robophery.module.i2c.ina219.Ina219Module',
+}
+
 HTU21D_MODULE = {
     'interface': 'local-i2c',
     'class': 'robophery.module.i2c.htu21d.Htu21dModule',
+}
+
+L293D_MODULE = {
+    'interface': 'local-gpio',
+    'class': 'robophery.module.gpio.l293d.L293dModule',
+    'power_pin': None,
+    'forward_pin': None,
+    'backward_pin': None,
+}
+
+MCP9808_MODULE = {
+    'interface': 'local-i2c',
+    'class': 'robophery.module.i2c.mcp9808.Mcp9808Module',
 }
 
 PFP_MODULE = {
