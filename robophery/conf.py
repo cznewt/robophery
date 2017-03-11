@@ -58,7 +58,7 @@ RPI_PLATFORM = {
         'local-i2c': {
             'engine': 'i2c',
             'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
-            'bus_number': 2
+            'bus_number': 1
         },
         'local-w1': {
             'engine': 'w1',
