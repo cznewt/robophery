@@ -181,8 +181,9 @@ class ModuleManager(object):
                 self._publish_data()
             time_stop = time.time()
             time_delta = time_stop - time_start
+            print time_delta
             self._log.info("[manager] Reading all the data took %sms." % time_delta * 1000)
-            time.sleep((self._read_interval / 1000) - time_delta)
+            time.sleep((self._read_interval / 1000))
 
 
     def run(self, modules=None):
