@@ -149,7 +149,7 @@ class ModuleManager(object):
 
     def _read_data(self):
         data = []
-        self._log.info("[manager] Reading data iteration %s/%s at %s." % (self._read_iter, self._read_cycle, time.time()))
+        self._log.info("[manager] Started reading data iteration %s/%s at %s." % (self._read_iter, self._read_cycle, time.time()))
         for module_name, module in self._module.items():
             module_data = module.read_data()
             data.append(module_data)
@@ -177,7 +177,7 @@ class ModuleManager(object):
             self._read_data()
             time_stop = time.time()
             time_delta = time_stop - time_start
-            self._log.info("[manager] Reading data iteration %s/%s took %sms." % (self._read_iter, self._read_cycle, time_delta * 1000))
+            self._log.info("[manager] Finished reading data iteration %s/%s took %sms." % (self._read_iter, self._read_cycle, time_delta * 1000))
             sleep_delta = (self._read_interval / 1000) - time_delta
             if self._read_iter < self._read_cycle:
                 self._read_iter += 1
