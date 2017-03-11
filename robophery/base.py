@@ -151,7 +151,9 @@ class ModuleManager(object):
         data = []
         self._log.info("[manager] Reading data %s/%s at %s." % (self._read_iter, self._read_cycle, time.time()))
         for module_name, module in self._module.items():
-            data.append(module.read_data())
+            module_data = module.read_data()
+            data.append(module_data)
+            self._log.info("[manager][%s] Read data %s at %s." % (module._name, module_data, time.time()))
         self._read_cache.append(data)
 
 
