@@ -11,7 +11,7 @@ class Dht22Module(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(Dht22Module, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_pin(kwargs.get('pin'))
+        self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self._type = 22
 
 

@@ -10,8 +10,8 @@ class SwitchModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_pin(kwargs.get('pin'))
-        self.setup(self._pin, self.GPIO_MODE_IN)
+        self._pin = self._normalize_pin(kwargs.get('data_pin'))
+        self.setup_pin(self._pin, self.GPIO_MODE_IN)
 
 
     def __del__(self):

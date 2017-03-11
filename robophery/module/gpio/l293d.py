@@ -22,9 +22,9 @@ class L293dModule(GpioModule):
         self._power = 0
 
         #Set output mode for all pins
-        self.setup(self._power_pin, self.GPIO_MODE_OUT)
-        self.setup(self._forward_pin, self.GPIO_MODE_OUT)
-        self.setup(self._backward_pin, self.GPIO_MODE_OUT)
+        self.setup_pin(self._power_pin, self.GPIO_MODE_OUT)
+        self.setup_pin(self._forward_pin, self.GPIO_MODE_OUT)
+        self.setup_pin(self._backward_pin, self.GPIO_MODE_OUT)
 
         #Set state for all pins
         self.set_low(self._power_pin)
