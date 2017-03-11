@@ -153,7 +153,10 @@ class ModuleManager(object):
         for module_name, module in self._module.items():
             module_data = module.read_data()
             data.append(module_data)
-            self._log.info("[%s] Read data %s at %s." % (module._name, module_data, time.time()))
+            if module_data == None:
+                self._log.info("[%s] Failure reading the data at %s." % (module._name, time.time()))
+            else:
+                self._log.info("[%s] Received data %s at %s." % (module._name, module_data, time.time()))
         self._read_cache.append(data)
 
 

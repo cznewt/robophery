@@ -26,7 +26,7 @@ class Dht22Module(GpioModule):
         """
         humidity, temperature = Adafruit_DHT.read(self._type, self._pin)
         if temperature == None or humidity == None:
-            self._log.error('Data CRC failed')
+            self._log.error('[%s] Data CRC failed while reading data.' % self._name)
             return None
         else:
             if humidity > 0 and humidity < 100:
