@@ -190,8 +190,7 @@ class Ina219Module(I2cModule):
         return valueDec
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Get all sensor readings.
         """

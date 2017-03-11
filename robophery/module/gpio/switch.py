@@ -24,8 +24,7 @@ class SwitchModule(GpioModule):
             return self.get_data
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Switch status readings.
         """
@@ -40,8 +39,7 @@ class SwitchModule(GpioModule):
         ]
 
 
-    @property
-    def get_meta_data(self):
+    def meta_data(self):
         """
         Get the readings meta-data.
         """

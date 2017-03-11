@@ -8,8 +8,6 @@ class Dht11Module(GpioModule):
     """
     DEVICE_NAME = 'gpio-dht11'
 
-    READ_INTERVAL = 5000
-
 
     def __init__(self, *args, **kwargs):
         super(Dht11Module, self).__init__(*args, **kwargs)
@@ -17,14 +15,12 @@ class Dht11Module(GpioModule):
         self._type = 11
 
 
-    @property
-    def do_action(self, action):
+    def commit_action(self, action):
         if action == 'get_data':
             return self.get_data
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Query DHT11 to get the humidity and temperature readings.
         """
@@ -43,8 +39,7 @@ class Dht11Module(GpioModule):
                 return None
 
 
-    @property
-    def get_meta_data():
+    def meta_data():
         """
         Get the readings meta-data.
         """

@@ -8,8 +8,6 @@ class Dht22Module(GpioModule):
     """
     DEVICE_NAME = 'gpio-dht22'
 
-    READ_INTERVAL = 5000
-
 
     def __init__(self, *args, **kwargs):
         super(Dht22Module, self).__init__(*args, **kwargs)
@@ -17,14 +15,12 @@ class Dht22Module(GpioModule):
         self._type = 22
 
 
-    @property
-    def do_action(self, action):
+    def commit_action(self, action):
         if action == 'get_data':
             return self.get_data
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Query DHT22 to get the humidity and temperature readings.
         """
@@ -43,8 +39,7 @@ class Dht22Module(GpioModule):
                 return None
 
 
-    @property
-    def get_meta_data(self):
+    def meta_data(self):
         """
         Get the readings meta-data.
         """

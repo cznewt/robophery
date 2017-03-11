@@ -119,20 +119,7 @@ class Htu21dModule(I2cModule):
         return pp
 
 
-    @property
-    def get_data(self):
-        """
-        Get all sensor readings.
-        """
-        return [
-            (self._name, 'temperature', self.get_temperature, ),
-            (self._name, 'humidity', self.get_humidity, ),
-            (self._name, 'dew_point_temperature', self.get_dew_point, ),
-        ]
-
-
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Get all sensor readings.
         """
@@ -143,8 +130,7 @@ class Htu21dModule(I2cModule):
         ]
 
 
-    @property
-    def get_meta_data(self):
+    def meta_data(self):
         """
         Get the readings meta-data.
         """

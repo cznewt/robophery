@@ -72,7 +72,6 @@ class L293dModule(GpioModule):
         self._run(direction=-1, power=100)
 
 
-    @property
     def stop(self):
         """
         Stop the motor.
@@ -80,8 +79,7 @@ class L293dModule(GpioModule):
         self._run(direction=0, power=0)
 
 
-    @property
-    def do_action(self, action):
+    def commit_action(self, action):
         if action == 'get_data':
             return self.get_data
         elif action == 'stop':
@@ -95,8 +93,7 @@ class L293dModule(GpioModule):
             return self.get_data
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         L293d motor status readings.
         """

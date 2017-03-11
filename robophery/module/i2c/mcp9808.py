@@ -39,8 +39,7 @@ class Mcp9808Module(I2cModule):
             self._log.error('Not right device ID (0x4): %s' % did)
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Get the temperature readings.
         """
@@ -53,8 +52,7 @@ class Mcp9808Module(I2cModule):
         ]
 
 
-    @property
-    def get_meta_data(self):
+    def meta_data(self):
         """
         Get the readings meta-data.
         """

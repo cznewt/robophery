@@ -20,18 +20,17 @@ class RelayModule(GpioModule):
         self.cleanup(self._pin)
 
 
-    @property
-    def do_action(self, action):
-        if action == 'get_data':
-            return self.get_data
+    def commit_action(self, action):
+        if action == 'read_data':
+            return self.read_data()
         elif action == 'turn_on':
-            self.turn_on
-            return self.get_data
+            self.turn_on()
+            return self.read_data()
         elif action == 'turn_off':
-            self.turn_off
-            return self.get_data
+            self.turn_off()
+            return self.read_data()
 
-    @property
+
     def turn_on(self):
         """
         Turn on the relay.
@@ -40,7 +39,6 @@ class RelayModule(GpioModule):
         self.set_high(self._pin)
 
 
-    @property
     def turn_off(self):
         """
         Turn off the relay.
@@ -49,8 +47,7 @@ class RelayModule(GpioModule):
         self.set_low(self._pin)
 
 
-    @property
-    def get_data(self):
+    def read_data(self):
         """
         Relay status readings.
         """
@@ -60,8 +57,7 @@ class RelayModule(GpioModule):
         ]
 
 
-    @property
-    def get_meta_data():
+    def meta_data():
         """
         Get the readings meta-data.
         """

@@ -202,8 +202,8 @@ class ModuleManager(object):
 class Module(object):
 
     DEVICE_NAME = 'unknown-device'
-    READ_INTERVAL = 10000
-    PUBLISH_INTERVAL = 60000
+    READ_INTERVAL = 2000
+    PUBLISH_INTERVAL = 10000
 
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
