@@ -68,6 +68,10 @@ def module_mcp9808():
 
 def module_dht11():
     config = _config(DHT11_MODULE, GPIO_OPTS)
+    print config
+    if config:
+        raise ValueError("Robophery manager's publish_interval must be divisible by read_interval.")
+
     manager = ModuleManager(**config)
     manager.run()
 
