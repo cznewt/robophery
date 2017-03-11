@@ -5,14 +5,14 @@ class I2cInterface(object):
     """
 
     def __init__(self, *args, **kwargs):
-        self._addresses_used = []
+        self._addrs_used = []
 
 
-    def setup_address(self, address):
+    def setup_addr(self, addr):
         """
         Set the specified address.
         """
-        self._addresses_used.append(address)
+        self._addrs_used.append(addr)
 
 
     def writeRaw8(self, value):

@@ -46,7 +46,7 @@ class ModuleManager(object):
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
         if self._publish_interval % self._read_interval != 0:
-            raise RuntimeError("Robophery manager's publish_interval must be divisible by read_interval.")
+            raise ValueError("Robophery manager's publish_interval must be divisible by read_interval.")
         self._read_cycle = self._publish_interval / self._read_interval
 
         # setting up models
@@ -56,9 +56,10 @@ class ModuleManager(object):
 
     def _setup_log(self):
         self._log = logging.getLogger(self._name)
+        self._log.setLevel(logging.DEBUG)
         if 'console' in self._log_handlers:
             console_handler = logging.StreamHandler()
-            console_handler.setLevel(logging.ERROR)
+            console_handler.setLevel(logging.DEBUG)
             self._log.addHandler(console_handler)
 
 
@@ -129,7 +130,7 @@ class ModuleManager(object):
         """
         Load class by path string
         """
-        self._log.debug(name)
+        self._log.info("[Manager] Loading class %s." % name)
         if isinstance(name, str):
             module = import_module(".".join(name.split(".")[:-1]))
             if module:
@@ -139,7 +140,7 @@ class ModuleManager(object):
 
     def _read_data(self):
         data = []
-        print("Iteration: %s, read: %s" % (self._read_iter, data))
+        self._log.info("Iteration: %s, read: %s" % (self._read_iter, data))
         self._read_cache.append(data)
 
 
