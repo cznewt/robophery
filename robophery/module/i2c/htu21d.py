@@ -1,5 +1,6 @@
+
 import math
-from robophery.i2c import I2cModule
+from robophery.module.i2c.base import I2cModule
 
 
 class Htu21dModule(I2cModule):

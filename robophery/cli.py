@@ -22,6 +22,7 @@ BLE_OPTS = [
 def _config(module_conf, opts = None):
     conf = {
         'log_level': 'debug',
+        'log_handlers': ['console',],
         'read_interval': 2000,
         'platform': 'raspberrypi',
         'config': RPI_PLATFORM
@@ -62,7 +63,6 @@ def module_mcp9808():
     config = _config(MCP9808_MODULE)
     manager = ModuleManager(**config)
     manager.run()
-
 
 # GPIO modules
 

@@ -19,9 +19,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-from __future__ import division
 import time
-from robophery.i2c import I2cModule
+from __future__ import division
+from robophery.module.i2c.base import I2cModule
 
 class Bmp085Module(I2cModule):
     """

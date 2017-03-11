@@ -35,7 +35,7 @@ BBB_PLATFORM = {
         },
         'local-i2c': {
             'engine': 'i2c',
-            'class': 'robophery.platform.bbb.gpio.BeagleboneI2cInterface',
+            'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
             'bus_number': 2
         },
         'local-w1': {
@@ -57,7 +57,7 @@ RPI_PLATFORM = {
         },
         'local-i2c': {
             'engine': 'i2c',
-            'class': 'robophery.platform.linux.gpio.SMBusI2cInterface',
+            'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
             'bus_number': 2
         },
         'local-w1': {

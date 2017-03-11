@@ -21,11 +21,12 @@
 
 from robophery.platform.gpio import GpioInterface
 
+"""
 try:
     import RPi.GPIO
 except:
-    raise Exception("Cannot load RPi.GPIO library. Please install the library.")
-
+    raise RuntimeError("Cannot load RPi.GPIO library. Please install the library.")
+"""
 
 class RaspberryPiGpioInterface(GpioInterface):
     """
@@ -34,6 +35,8 @@ class RaspberryPiGpioInterface(GpioInterface):
 
     def __init__(self, *args, **kwargs):
         self._mode = kwargs.get('mode', None)
+        """
+        #Temp
         self._bus = RPi.GPIO
         # Suppress warnings about GPIO in use.
         self._bus.setwarnings(False)
@@ -44,6 +47,7 @@ class RaspberryPiGpioInterface(GpioInterface):
             raise ValueError('Unexpected value for mode.  Must be BOARD or BCM.')
         else:
             self._bus.setmode(self._bus.BOARD)
+
         self._dir_mapping = { self.GPIO_MODE_OUT: self._bus.OUT,
                               self.GPIO_MODE_IN: self._bus.IN }
         self._pud_mapping = { self.GPIO_PUD_OFF: self._bus.PUD_OFF,
@@ -52,18 +56,20 @@ class RaspberryPiGpioInterface(GpioInterface):
         self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
                                self.GPIO_EVENT_FALLING: self._bus.FALLING,
                                self.GPIO_EVENT_BOTH: self._bus.BOTH }
-        super(RaspberrypiGpioInterface, self).__init__(*args, **kwargs)
+        """
+        super(RaspberryPiGpioInterface, self).__init__(*args, **kwargs)
 
 
-    def setup(self, pin, mode, pull_up_down=None):
+    def setup_pin(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin. Mode should be
         either OUTPUT or INPUT.
         """
         if pull_up_down == None:
             pull_up_down = self.GPIO_PUD_OFF
-        self._bus.setup(pin, self._dir_mapping[mode],
-                             pull_up_down=self._pud_mapping[pull_up_down])
+        #Temp
+        #self._bus.setup(pin, self._dir_mapping[mode],
+        #                     pull_up_down=self._pud_mapping[pull_up_down])
 
 
     def output(self, pin, value):

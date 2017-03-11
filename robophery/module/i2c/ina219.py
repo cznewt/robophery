@@ -18,8 +18,8 @@
 #IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
 #CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-from robophery.i2c import I2cModule
 import time
+from robophery.module.i2c.base import I2cModule
 
 
 class Ina219Module(I2cModule):

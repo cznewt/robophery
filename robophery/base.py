@@ -8,8 +8,8 @@ from robophery.utils.rpi import detect_pi_version, detect_pi_revision
 class ModuleManager(object):
 
     SERVICE_NAME = 'robophery-default'
-    READ_INTERVAL = 10000
-    PUBLISH_INTERVAL = 60000
+    READ_INTERVAL = 2000
+    PUBLISH_INTERVAL = 10000
 
     LINUX_PLATFORM = 'linux'
     RASPBERRYPI_PLATFORM = 'raspberrypi'
@@ -23,24 +23,40 @@ class ModuleManager(object):
     _interface = {}
     _module = {}
 
+    _read_cycle = 1
+    _read_iter = 1
+    _read_cache = []
+
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.SERVICE_NAME)
+        self._run_mode = 'single' # multi
+        self._config = kwargs.get('config')
+
+        # setting up logging
+        self._log_level = kwargs.get('log_level', 'info')
+        self._log_handlers = kwargs.get('log_handlers', ['console'])
+        self._setup_log()
+
+        # setting up platform
         self._platform = kwargs.get('platform', None)
         if self._platform == None:
             self._platform = self._detect_platform()
+
+        # setting up read intervals
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._publish_interval = kwargs.get('publish_interval', self.PUBLISH_INTERVAL)
-        self._log_level = kwargs.get('log_level', 'info')
-        self._log_handlers = kwargs.get('log_level', ['console'])
-        self._config = kwargs.get('config')
-        self._run_mode = 'single' # multi
+        if self._publish_interval % self._read_interval != 0:
+            raise RuntimeError("Robophery manager's publish_interval must be divisible by read_interval.")
+        self._read_cycle = self._publish_interval / self._read_interval
+
+        # setting up models
         self._setup_interfaces(self._config['interface'])
         self._setup_modules(self._config['module'])
 
 
     def _setup_log(self):
         self._log = logging.getLogger(self._name)
-        if console in self._log_handlers:
+        if 'console' in self._log_handlers:
             console_handler = logging.StreamHandler()
             console_handler.setLevel(logging.ERROR)
             self._log.addHandler(console_handler)
@@ -101,17 +117,19 @@ class ModuleManager(object):
 
 
     def _setup_modules(self, modules={}):
-        for module_name, module in modules.item():
+        for module_name, module in modules.items():
             ModuleClass = self._load_class(module.pop('class'))
             module['interface'] = self._interface[module['interface']]
             module['manager'] = self
             if ModuleClass:
                 self._module[module_name] = ModuleClass(**module)
 
+
     def _load_class(self, name):
         """
         Load class by path string
         """
+        self._log.debug(name)
         if isinstance(name, str):
             module = import_module(".".join(name.split(".")[:-1]))
             if module:
@@ -119,21 +137,30 @@ class ModuleManager(object):
             raise Exception("Cannot load class %s" % name)
 
 
+    def _read_data(self):
+        data = []
+        print("Iteration: %s, read: %s" % (self._read_iter, data))
+        self._read_cache.append(data)
+
+
+    def _publish_data(self):
+        print("Publishing: %s" % self._read_cache)
+        self._read_cache = []
+        self._read_iter = 1
+        data = []
+        return data
+
+
     def _single_loop(self):
         """
         Run single global service loop
         """
         while True:
-            data = self.get_data
-            self._cache.append(data)
-            print("Iteration: %s, read: %s" % (self._cycle_iteration, data))
-            if self._cycle_iteration < self._cycle_size:
-                self._cycle_iteration += 1
+            self._read_data()
+            if self._read_iter < self._read_cycle:
+                self._read_iter += 1
             else:
-                self.publish_data(self._cache)
-                print("Publishing: %s" % self._cache)
-                self._cache = []
-                self._cycle_iteration = 1
+                self._publish_data()
             time.sleep(self._read_interval / 1000)
 
 
@@ -142,9 +169,7 @@ class ModuleManager(object):
         Run robophery manager service
         """
         if self._run_mode == 'single':
-
             self._single_loop()
-
         else:
 
             for module in modules or self._module:
@@ -175,54 +200,11 @@ class Module(object):
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
         self._manager = kwargs.get('manager', None)
+        self._interface = kwargs.get('interface', None)
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
 
 
-    def publish_data(self, data):
-        print(data)
-
-
-    @property
     def start_service(self):
 
-        if self._publish_interval % self._read_interval != 0:
-            raise RuntimeError('publish_interval must be divisible by read_interval.')
-        self._cycle_size = self._publish_interval / self._read_interval
         self._cycle_iteration = 1
         self._cache = []
-        print('Cycle size: %s' % self._cycle_size)
-        self._service_loop()
-
-
-
-class I2cModule(Module):
-
-    def __init__(self, *args, **kwargs):
-        self._bus = int(kwargs.get('busnum', '0'))
-        super(I2cModule, self).__init__(*args, **kwargs)
-        self._setup_device
-
-
-    @property
-    def _setup_device(self):
-        if self._platform == self.RASPBERRYPI_PLATFORM:
-            self._interface = SMBusInterface(self._addr, self._bus)
-        elif self._platform == self.BEAGLEBONE_PLATFORM:
-            self._interface = SMBusInterface(self._addr, self._bus)
-        elif self._platform == self.FT232H_PLATFORM:
-            self._interface = FT232Interface(self._addr)
-        elif self._platform == self.NODEMCU_PLATFORM:
-            self._interface = NodeMcuInterface(self._addr)
-        else:
-            raise RuntimeError('Platform not supported for I2C interface.')
-
-        self.writeRaw8 = self._interface.writeRaw8
-        self.write8 = self._interface.write8
-        self.write16 = self._interface.write16
-        self.writeList = self._interface.writeList
-        self.readRaw8 = self._interface.readRaw8
-        self.readU8 = self._interface.readU8
-        self.readS8 = self._interface.readS8
-        self.readU16 = self._interface.readU16
-        self.readS16 = self._interface.readS16
-        self.readList = self._interface.readList

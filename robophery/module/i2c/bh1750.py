@@ -1,5 +1,5 @@
 import time
-from robophery.i2c import I2cModule
+from robophery.module.i2c.base import I2cModule
 
 class Bh1750Module(I2cModule):
     """
@@ -31,9 +31,9 @@ class Bh1750Module(I2cModule):
     def __init__(self, *args, **kwargs):
         self._addr = self.DEVICE_ADDR
         super(Bh1750Module, self).__init__(*args, **kwargs)
-        self.resolution_mode = kwargs.get('resolution_mode')
-        self.additional_delay = kwargs.get('additional_delay')
-        self.set_sensitivity()
+        #self.resolution_mode = kwargs.get('resolution_mode')
+        #self.additional_delay = kwargs.get('additional_delay')
+        #self.set_sensitivity()
 
     def _set_mode(self, mode):
         self.mode = mode

@@ -1,4 +1,5 @@
-from robophery.i2c import I2cModule
+
+from robophery.module.i2c.base import I2cModule
 
 
 class Mcp9808Module(I2cModule):
