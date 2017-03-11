@@ -158,7 +158,7 @@ class ModuleManager(object):
 
 
     def _publish_data(self):
-        self._log.info("[manager] Publishing data %s at %s." % (self._read_cache, time.time()))
+        self._log.info("[manager] Publishing data at %s." % (time.time()))
         self._read_cache = []
         self._read_iter = 1
         data = []
