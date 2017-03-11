@@ -1,5 +1,6 @@
 
 import math
+import time
 from robophery.module.i2c.base import I2cModule
 
 
@@ -75,7 +76,6 @@ class Htu21dModule(I2cModule):
         return raw
 
 
-    @property
     def get_temperature(self):
         """
         Gets the temperature in degrees celsius.
@@ -86,7 +86,6 @@ class Htu21dModule(I2cModule):
         return temp
 
 
-    @property
     def get_humidity(self):
         """
         Gets the relative humidity.
@@ -97,22 +96,20 @@ class Htu21dModule(I2cModule):
         return rh
 
 
-    @property
     def get_dew_point(self):
         """
         Calculates the dew point temperature.
         """
-        den = math.log10(self.get_humidity * self.get_partial_pressure / 100) - self.HTU21D_A
+        den = math.log10(self.get_humidity() * self.get_partial_pressure() / 100) - self.HTU21D_A
         dew = -(self.HTU21D_B / den + self.HTU21D_C)
         return dew
 
 
-    @property
     def get_partial_pressure(self):
         """
         Calculate the partial pressure in mmHg at ambient temperature.
         """
-        Tamb = self.get_temperature
+        Tamb = self.get_temperature()
         exp = self.HTU21D_B / (Tamb + self.HTU21D_C)
         exp = self.HTU21D_A - exp
         pp = 10 ** exp
@@ -123,10 +120,18 @@ class Htu21dModule(I2cModule):
         """
         Get all sensor readings.
         """
+        temp_time_start = time.time()
+        temp = self.get_temperature()
+        temp_time_stop = time.time()
+        temp_time_delta = temp_time_stop - temp_time_start
+        humid_time_start = time.time()
+        humid = self.get_humidity()
+        humid_time_stop = time.time()
+        humid_time_delta = humid_time_stop - humid_time_start
+
         return [
-            (self._name, 'temperature', self.get_temperature, ),
-            (self._name, 'humidity', self.get_humidity, ),
-#            (self._name, 'dew_point_temperature', self.get_dew_point, ),
+            (self._name, 'temperature', temp, temp_time_delta),
+            (self._name, 'humidity', humid, humid_time_delta),
         ]
 
 
