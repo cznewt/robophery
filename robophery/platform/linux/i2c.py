@@ -60,7 +60,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         Read a signed byte from the specified register.
         """
-        result = self.readU8(register)
+        result = self.readU8(addr, register)
         if result > 127:
             result -= 256
         return result
@@ -71,7 +71,7 @@ class SMBusI2cInterface(I2cInterface):
         specified endianness (default little endian, or least significant byte
         first).
         """
-        result = self._bus.read_word_data(addr,register) & 0xFFFF
+        result = self._bus.read_word_data(addr, register) & 0xFFFF
         # Swap bytes if using big endian because read_word_data assumes little
         # endian on ARM (little endian) systems.
         if not little_endian:
@@ -84,7 +84,7 @@ class SMBusI2cInterface(I2cInterface):
         specified endianness (default little endian, or least significant byte
         first).
         """
-        result = self.readU16(register, little_endian)
+        result = self.readU16(addr, register, little_endian)
         if result > 32767:
             result -= 65536
         return result
