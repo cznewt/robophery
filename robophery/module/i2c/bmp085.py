@@ -63,7 +63,6 @@ class Bmp085Module(I2cModule):
         self._mode = kwargs.get('mode', self.BMP085_ULTRAHIGHRES)
         if self._mode not in [self.BMP085_ULTRALOWPOWER, self.BMP085_STANDARD, self.BMP085_HIGHRES, self.BMP085_ULTRAHIGHRES]:
             raise ValueError('Unexpected mode value {0}. Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(self._mode))
-        # Load calibration values.
         self._load_calibration()
 
 
@@ -79,22 +78,24 @@ class Bmp085Module(I2cModule):
         self.cal_MB = self.readS16(self.BMP085_CAL_MB, False)     # INT16
         self.cal_MC = self.readS16(self.BMP085_CAL_MC, False)     # INT16
         self.cal_MD = self.readS16(self.BMP085_CAL_MD, False)     # INT16
-        self._log.debug('AC1 = {0:6d}'.format(self.cal_AC1))
-        self._log.debug('AC2 = {0:6d}'.format(self.cal_AC2))
-        self._log.debug('AC3 = {0:6d}'.format(self.cal_AC3))
-        self._log.debug('AC4 = {0:6d}'.format(self.cal_AC4))
-        self._log.debug('AC5 = {0:6d}'.format(self.cal_AC5))
-        self._log.debug('AC6 = {0:6d}'.format(self.cal_AC6))
-        self._log.debug('B1 = {0:6d}'.format(self.cal_B1))
-        self._log.debug('B2 = {0:6d}'.format(self.cal_B2))
-        self._log.debug('MB = {0:6d}'.format(self.cal_MB))
-        self._log.debug('MC = {0:6d}'.format(self.cal_MC))
-        self._log.debug('MD = {0:6d}'.format(self.cal_MD))
+#        self._log.debug('AC1 = {0:6d}'.format(self.cal_AC1))
+#        self._log.debug('AC2 = {0:6d}'.format(self.cal_AC2))
+#        self._log.debug('AC3 = {0:6d}'.format(self.cal_AC3))
+#        self._log.debug('AC4 = {0:6d}'.format(self.cal_AC4))
+#        self._log.debug('AC5 = {0:6d}'.format(self.cal_AC5))
+#        self._log.debug('AC6 = {0:6d}'.format(self.cal_AC6))
+#        self._log.debug('B1 = {0:6d}'.format(self.cal_B1))
+#        self._log.debug('B2 = {0:6d}'.format(self.cal_B2))
+#        self._log.debug('MB = {0:6d}'.format(self.cal_MB))
+#        self._log.debug('MC = {0:6d}'.format(self.cal_MC))
+#        self._log.debug('MD = {0:6d}'.format(self.cal_MD))
 
 
     def _load_datasheet_calibration(self):
-        # Set calibration from values in the datasheet example.  Useful for debugging the
-        # temp and pressure calculation accuracy.
+        """
+        Set calibration from values in the datasheet example. Useful for
+        debugging the temperature and pressure calculation accuracy.
+        """
         self.cal_AC1 = 408
         self.cal_AC2 = -72
         self.cal_AC3 = -14383
@@ -109,16 +110,20 @@ class Bmp085Module(I2cModule):
 
 
     def read_raw_temp(self):
-        """Reads the raw (uncompensated) temperature from the sensor."""
+        """
+        Read the raw (uncompensated) temperature from the sensor.
+        """
         self.write8(self.BMP085_CONTROL, self.BMP085_READTEMPCMD)
-        time.sleep(0.005)  # Wait 5ms
+        time.sleep(0.005) # Wait 5ms
         raw = self.readU16(self.BMP085_TEMPDATA, False)
         self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
     def read_raw_pressure(self):
-        """Reads the raw (uncompensated) pressure level from the sensor."""
+        """
+        Read the raw (uncompensated) pressure level from the sensor.
+        """
         self.write8(self.BMP085_CONTROL, self.BMP085_READPRESSURECMD + (self._mode << 6))
         if self._mode == self.BMP085_ULTRALOWPOWER:
             time.sleep(0.005)
@@ -137,7 +142,9 @@ class Bmp085Module(I2cModule):
 
 
     def read_temperature(self):
-        """Gets the compensated temperature in degrees celsius."""
+        """
+        Get the compensated temperature in degrees celsius.
+        """
         UT = self.read_raw_temp()
         # Datasheet value for debugging:
         #UT = 27898
@@ -151,7 +158,9 @@ class Bmp085Module(I2cModule):
 
 
     def read_pressure(self):
-        """Gets the compensated pressure in Pascals."""
+        """
+        Get the compensated pressure in Pascals.
+        """
         UT = self.read_raw_temp()
         UP = self.read_raw_pressure()
         # Datasheet values for debugging:
@@ -165,19 +174,19 @@ class Bmp085Module(I2cModule):
         self._log.debug('B5 = {0}'.format(B5))
         # Pressure Calculations
         B6 = B5 - 4000
-        self._log.debug('B6 = {0}'.format(B6))
+#        self._log.debug('B6 = {0}'.format(B6))
         X1 = (self.cal_B2 * (B6 * B6) >> 12) >> 11
         X2 = (self.cal_AC2 * B6) >> 11
         X3 = X1 + X2
         B3 = (((self.cal_AC1 * 4 + X3) << self._mode) + 2) // 4
-        self._log.debug('B3 = {0}'.format(B3))
+#        self._log.debug('B3 = {0}'.format(B3))
         X1 = (self.cal_AC3 * B6) >> 13
         X2 = (self.cal_B1 * ((B6 * B6) >> 12)) >> 16
         X3 = ((X1 + X2) + 2) >> 2
         B4 = (self.cal_AC4 * (X3 + 32768)) >> 15
-        self._log.debug('B4 = {0}'.format(B4))
+#        self._log.debug('B4 = {0}'.format(B4))
         B7 = (UP - B3) * (50000 >> self._mode)
-        self._log.debug('B7 = {0}'.format(B7))
+#        self._log.debug('B7 = {0}'.format(B7))
         if B7 < 0x80000000:
             p = (B7 * 2) // B4
         else:
@@ -186,28 +195,27 @@ class Bmp085Module(I2cModule):
         X1 = (X1 * 3038) >> 16
         X2 = (-7357 * p) >> 16
         p = p + ((X1 + X2 + 3791) >> 4)
-        self._log.debug('Pressure {0} Pa'.format(p))
+#        self._log.debug('Pressure {0} Pa'.format(p))
         return p
 
 
     def read_altitude(self, sealevel_pa=101325.0):
         """
-        Calculates the altitude in meters.
+        Calculate the altitude in meters.
         """
         pressure = float(self.read_pressure())
         altitude = 44330.0 * (1.0 - pow(pressure / sealevel_pa, (1.0/5.255)))
-        self._log.debug('Altitude {0} m'.format(altitude))
+#        self._log.debug('Altitude {0} m'.format(altitude))
         return altitude
 
 
     def read_sealevel_pressure(self, altitude_m=0.0):
         """
-        Calculates the pressure at sealevel when given a known altitude in
-        meters. Returns a value in Pascals.
+        Calculate the pressure at sealevel when given a known altitude in
+        meters. Return a value in Pascals.
         """
         pressure = float(self.read_pressure())
         p0 = pressure / pow(1.0 - altitude_m/44330.0, 5.255)
-        self._log.debug('Sealevel pressure {0} Pa'.format(p0))
         return int(p0)
 
 
