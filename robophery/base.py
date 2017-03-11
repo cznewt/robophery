@@ -130,8 +130,10 @@ class ModuleManager(object):
             ModuleClass = self._load_class(module.get('class'))
             module['interface'] = self._interface[module['interface']]
             module['manager'] = self
+            if module_name != 'module':
+                module['name'] = module_name
             self._module[module_name] = ModuleClass(**module)
-            self._log.info("[manager] Loaded module '%s' with '%s' class." % (module_name, module.get('class')))
+            self._log.info("[manager] Loaded module '%s' with '%s' class." % (self._module[module_name]._name, module.get('class')))
 
 
     def _load_class(self, name):
