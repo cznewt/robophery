@@ -15,8 +15,8 @@ class LinuxW1Interface(W1Interface):
         return data
 
 
-    def _get_temperature(self, dev_type, dev_id):
-        if dev_type == 'ds18b20':
+    def _get_temperature(self, addr, type):
+        if type == 'ds18b20':
             sensor_type = w1thermsensor.W1ThermSensor.THERM_SENSOR_DS18B20
-        sensor = w1thermsensor.W1ThermSensor(sensor_type, dev_id)
+        sensor = w1thermsensor.W1ThermSensor(type, addr)
         return sensor.get_temperature()
