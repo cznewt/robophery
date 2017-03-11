@@ -18,10 +18,10 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-import time
 from __future__ import division
+import time
 from robophery.module.i2c.base import I2cModule
+
 
 class Bmp085Module(I2cModule):
     """
