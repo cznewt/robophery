@@ -95,6 +95,12 @@ def module_l293d():
             help='L293D pin 7 or pin 15: Clockwise positive'),
     ]
     config = _config(L293D_MODULE, OPTS)
+    if config['config']['module']['module']['power_pin'] == None:
+        raise ValueError("Power pin must be set.")
+    if config['config']['module']['module']['forward_pin'] == None:
+        raise ValueError("Forward pin must be set.")
+    if config['config']['module']['module']['backward_pin'] == None:
+        raise ValueError("Backward pin must be set.")
     manager = ModuleManager(**config)
     manager.run()
 
@@ -103,6 +109,8 @@ def module_l293d():
 
 def module_pfp():
     config = _config(PFP_MODULE, BLE_OPTS)
+    if config['config']['module']['module']['addr'] == None:
+        raise ValueError("MAC address must be set.")
     manager = ModuleManager(**config)
     manager.run()
 
