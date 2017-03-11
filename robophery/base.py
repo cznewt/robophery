@@ -37,10 +37,15 @@ class ModuleManager(object):
         self._log_handlers = kwargs.get('log_handlers', ['console'])
         self._setup_log()
 
+        self._log.info("[manager] Robophery manager is starting.")
+
+
         # setting up platform
         self._platform = kwargs.get('platform', None)
         if self._platform == None:
             self._platform = self._detect_platform()
+        self._log.info("[manager] Assuming '%s' platform." % self._platform)
+        self._log.info("[manager] Log level set to %s with %s handler(s)." % (self._log_level.upper(), ', '.join(self._log_handlers)))
 
         # setting up read intervals
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
@@ -48,10 +53,13 @@ class ModuleManager(object):
         if self._publish_interval % self._read_interval != 0:
             raise ValueError("Robophery manager's publish_interval must be divisible by read_interval.")
         self._read_cycle = self._publish_interval / self._read_interval
+        self._log.info("[manager] Read interval is %sms, publish interval is %sms, that gives %s operations in single publish cycle." % (self._read_interval, self._publish_interval, self._read_cycle))
 
         # setting up models
         self._setup_interfaces(self._config['interface'])
         self._setup_modules(self._config['module'])
+
+        self._log.info("[manager] Robophery manager successfuly started in '%s' mode." % self._run_mode)
 
 
     def _setup_log(self):
@@ -112,35 +120,34 @@ class ModuleManager(object):
 
     def _setup_interfaces(self, interfaces={}):
         for interface_name, interface in interfaces.items():
-            InterfaceClass = self._load_class(interface.pop('class'))
-            if InterfaceClass:
-                self._interface[interface_name] = InterfaceClass(**interface)
+            InterfaceClass = self._load_class(interface.get('class'))
+            self._interface[interface_name] = InterfaceClass(**interface)
+            self._log.info("[manager] Loaded interface '%s' with '%s' class." % (interface_name, interface.get('class')))
 
 
     def _setup_modules(self, modules={}):
         for module_name, module in modules.items():
-            ModuleClass = self._load_class(module.pop('class'))
+            ModuleClass = self._load_class(module.get('class'))
             module['interface'] = self._interface[module['interface']]
             module['manager'] = self
-            if ModuleClass:
-                self._module[module_name] = ModuleClass(**module)
+            self._module[module_name] = ModuleClass(**module)
+            self._log.info("[manager] Loaded module '%s' with '%s' class." % (module_name, module.get('class')))
 
 
     def _load_class(self, name):
         """
         Load class by path string
         """
-        self._log.info("[Manager] Loading class %s." % name)
         if isinstance(name, str):
             module = import_module(".".join(name.split(".")[:-1]))
             if module:
                 return getattr(module, name.split(".")[-1], None)
-            raise Exception("Cannot load class %s" % name)
+            raise Exception("[manager] Cannot load class '%s'" % name)
 
 
     def _read_data(self):
         data = []
-        self._log.info("Iteration: %s, read: %s" % (self._read_iter, data))
+        self._log.info("[manager] Read iteration %s at %s." % (self._read_iter, time.time()))
         self._read_cache.append(data)
 
 

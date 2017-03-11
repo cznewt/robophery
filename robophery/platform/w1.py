@@ -5,4 +5,4 @@ class W1Interface(object):
     """
 
     def __init__(self, *args, **kwargs):
-        self._addresses_used = []
+        self._ids_used = []
