@@ -34,7 +34,7 @@ def _config(module_conf, opts = None):
         CONF = cfg.CONF
         CONF.register_cli_opts(opts)
         CONF(sys.argv[1:])
-        conf.update(CONF)
+        conf['config']['module']['module'].update(CONF)
     return conf
 
 # I2C modules
@@ -68,17 +68,17 @@ def module_mcp9808():
 
 def module_dht11():
     config = _config(DHT11_MODULE, GPIO_OPTS)
-    print config
-    if config:
-        raise ValueError("Robophery manager's publish_interval must be divisible by read_interval.")
-
     manager = ModuleManager(**config)
+    if config['config']['module']['module']['data_pin'] == None:
+        raise ValueError("Data pin must be set.")
     manager.run()
 
 
 def module_dht22():
     config = _config(DHT22_MODULE, GPIO_OPTS)
     manager = ModuleManager(**config)
+    if config['config']['module']['module']['data_pin'] == None:
+        raise ValueError("Data pin must be set.")
     manager.run()
 
 
