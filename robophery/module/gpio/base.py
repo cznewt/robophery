@@ -13,16 +13,7 @@ class GpioModule(Module):
 
 
     def _normalize_pin(self, pin):
-        if self._platform == self.RASPBERRYPI_PLATFORM:
-            data = pin
-        elif self._platform == self.BEAGLEBONE_PLATFORM:
-            data = pin
-        else:
-            data = pin
-        try:
-            value = int(data)
-        except:
-            raise RuntimeError('Unknown GPIO pin.')
+        value = int(pin)
         return value
 
 
