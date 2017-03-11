@@ -27,7 +27,7 @@ class Ds18Module(W1Module):
                 for raw_name, raw_value in raw_data.items():
                     data.append(('%s-%s' % (self._name, raw_name), 'temperature', raw_value))
         else:
-            data = (self._name, 'temperature', self._get_temperature())
+            data = (self._name, 'temperature', self._get_temperature(self._addr, self._type))
 
         return data
 
