@@ -35,7 +35,6 @@ def _config(module_conf, opts = None):
         CONF.register_cli_opts(opts)
         CONF(sys.argv[1:])
         conf.update(CONF)
-    print conf
     return conf
 
 # I2C modules

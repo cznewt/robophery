@@ -147,12 +147,12 @@ class ModuleManager(object):
 
     def _read_data(self):
         data = []
-        self._log.info("[manager] Read iteration %s at %s." % (self._read_iter, time.time()))
+        self._log.info("[manager] Reading data %s/%s at %s." % (self._read_iter, self._read_cycle, time.time()))
         self._read_cache.append(data)
 
 
     def _publish_data(self):
-        print("Publishing: %s" % self._read_cache)
+        self._log.info("[manager] Publishing data %s at %s." % (self._read_cache, time.time()))
         self._read_cache = []
         self._read_iter = 1
         data = []
