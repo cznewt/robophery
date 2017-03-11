@@ -114,11 +114,11 @@ def module_ds18():
         cfg.Opt('type',
             short='t',
             default="ds18b20",
-            help='Specific type of Dallas DS18 family sensor'),
-        cfg.Opt('id',
-            short='i',
+            help='Specific type of Dallas DS18 family midule.'),
+        cfg.Opt('addr',
+            short='a',
             default='0',
-            help='Specific sensor address ID at 1-wire bus')
+            help='Specific module address at 1-wire bus.')
     ]
     config = _config(DS18_MODULE, OPTS)
     manager = ModuleManager(**config)
