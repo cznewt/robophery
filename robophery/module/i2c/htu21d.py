@@ -57,7 +57,7 @@ class Htu21dModule(I2cModule):
             raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
         raw &= 0xFFFC
-        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
+#        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
@@ -71,7 +71,7 @@ class Htu21dModule(I2cModule):
             raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
         raw &= 0xFFFC
-        self._log.debug('Raw relative humidity 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
+#        self._log.debug('Raw relative humidity 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
