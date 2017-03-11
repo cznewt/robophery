@@ -116,7 +116,7 @@ class Bmp085Module(I2cModule):
         self.write8(self.BMP085_CONTROL, self.BMP085_READTEMPCMD)
         time.sleep(0.005) # Wait 5ms
         raw = self.readU16(self.BMP085_TEMPDATA, False)
-        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
+#        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
@@ -137,7 +137,7 @@ class Bmp085Module(I2cModule):
         lsb = self.readU8(self.BMP085_PRESSUREDATA+1)
         xlsb = self.readU8(self.BMP085_PRESSUREDATA+2)
         raw = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - self._mode)
-        self._log.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
+#        self._log.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
 
@@ -153,7 +153,7 @@ class Bmp085Module(I2cModule):
         X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
         B5 = X1 + X2
         temp = ((B5 + 8) >> 4) / 10.0
-        self._log.debug('Calibrated temperature {0} C'.format(temp))
+#        self._log.debug('Calibrated temperature {0} C'.format(temp))
         return temp
 
 
@@ -171,7 +171,7 @@ class Bmp085Module(I2cModule):
         X1 = ((UT - self.cal_AC6) * self.cal_AC5) >> 15
         X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
         B5 = X1 + X2
-        self._log.debug('B5 = {0}'.format(B5))
+#        self._log.debug('B5 = {0}'.format(B5))
         # Pressure Calculations
         B6 = B5 - 4000
 #        self._log.debug('B6 = {0}'.format(B6))
