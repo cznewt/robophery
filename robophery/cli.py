@@ -40,6 +40,12 @@ def _config(module_conf, opts = None):
 # I2C modules
 
 
+def module_bmp085():
+    config = _config(BMP085_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_bh1750():
     config = _config(BH1750_MODULE)
     manager = ModuleManager(**config)
@@ -50,6 +56,13 @@ def module_htu21d():
     config = _config(HTU21D_MODULE)
     manager = ModuleManager(**config)
     manager.run()
+
+
+def module_mcp9808():
+    config = _config(MCP9808_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
 
 # GPIO modules
 

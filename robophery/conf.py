@@ -1,4 +1,6 @@
 
+# Platform config
+
 FT232H_PLATFORM = {
     'interface': {
         'ft232h-gpio': {
@@ -68,6 +70,8 @@ RPI_PLATFORM = {
         },
     },
 }
+
+# Module config
 
 BH1750_MODULE = {
     'interface': 'local-i2c',

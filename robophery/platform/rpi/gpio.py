@@ -20,7 +20,11 @@
 # THE SOFTWARE.
 
 from robophery.platform.gpio import GpioInterface
-import RPi.GPIO
+
+try:
+    import RPi.GPIO
+except:
+    raise Exception("Cannot load RPi.GPIO library. Please install the library.")
 
 
 class RaspberryPiGpioInterface(GpioInterface):

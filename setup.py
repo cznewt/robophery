@@ -7,7 +7,7 @@ with open('README.rst') as readme:
 
 setup(
     name='robophery',
-    version='0.1',
+    version='0.2',
     description='Python library for interfacing low level hardware sensors and actuators with MQTT bindings.',
     long_description=long_description,
     author='Aleš Komárek',
