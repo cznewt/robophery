@@ -81,16 +81,16 @@ class L293dModule(GpioModule):
 
     def commit_action(self, action):
         if action == 'get_data':
-            return self.get_data
+            return self.read_data()
         elif action == 'stop':
             self.stop
-            return self.get_data
+            return self.read_data()
         elif action == 'run_forward':
             self.run_forward()
-            return self.get_data
+            return self.read_data()
         elif action == 'run_backward':
             self.run_backward()
-            return self.get_data
+            return self.read_data()
 
 
     def read_data(self):

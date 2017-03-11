@@ -130,12 +130,12 @@ PFP_MODULE = {
 
 RELAY_MODULE = {
     'interface': 'local-gpio',
-    'class': 'robophery.module.gpio.dht11.RelayModule',
+    'class': 'robophery.module.gpio.relay.RelayModule',
     'data_pin': None,
 }
 
 SWITCH_MODULE = {
     'interface': 'local-gpio',
-    'class': 'robophery.module.gpio.dht11.SwitchModule',
+    'class': 'robophery.module.gpio.switch.SwitchModule',
     'data_pin': None,
 }

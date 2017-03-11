@@ -16,8 +16,8 @@ class Dht22Module(GpioModule):
 
 
     def commit_action(self, action):
-        if action == 'get_data':
-            return self.get_data
+        if action == 'read_data':
+            return self.read_data()
 
 
     def read_data(self):
