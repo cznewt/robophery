@@ -148,6 +148,8 @@ class ModuleManager(object):
     def _read_data(self):
         data = []
         self._log.info("[manager] Reading data %s/%s at %s." % (self._read_iter, self._read_cycle, time.time()))
+        for module in self._module:
+            data.append(module.read_data())
         self._read_cache.append(data)
 
 
@@ -196,7 +198,6 @@ class ModuleManager(object):
                 self.loop.run_forever()
             finally:
                 self.loop.close()
-
 
 
 class Module(object):
