@@ -29,6 +29,10 @@ def _config(module_conf, opts = None):
         'platform': 'raspberrypi',
         'config': RPI_PLATFORM
     }
+    conf['config']['comm'] = {
+        'default-mqtt': LINUX_MQTT_COMM,
+        'default-statsd': LINUX_STATSD_COMM,
+    }
     conf['config']['module'] = {
         'module': module_conf,
     }

@@ -20,6 +20,7 @@ class ModuleManager(object):
 
     _instance = None
 
+    _comm = {}
     _interface = {}
     _module = {}
 
@@ -55,7 +56,8 @@ class ModuleManager(object):
         self._read_cycle = self._publish_interval / self._read_interval
         self._log.info("[manager] Read interval is %sms, publish interval is %sms, that gives %s operations in single publish cycle." % (self._read_interval, self._publish_interval, self._read_cycle))
 
-        # setting up models
+        # setting up base classes
+        self._setup_communication(self._config['comm'])
         self._setup_interfaces(self._config['interface'])
         self._setup_modules(self._config['module'])
 
@@ -118,11 +120,20 @@ class ModuleManager(object):
         return self.LINUX_PLATFORM
 
 
+    def _setup_communication(self, comms={}):
+        for comm_name, comm in comms.items():
+            CommClass = self._load_class(comm.get('class'))
+            comm['manager'] = self
+            self._comm[comm_name] = CommClass(**comm)
+            self._log.info("[manager] Loaded communication channel '%s' with '%s' class." % (comm_name, comm.get('class')))
+
+
     def _setup_interfaces(self, interfaces={}):
         for interface_name, interface in interfaces.items():
             InterfaceClass = self._load_class(interface.get('class'))
+            interface['manager'] = self
             self._interface[interface_name] = InterfaceClass(**interface)
-            self._log.info("[manager] Loaded interface '%s' with '%s' class." % (interface_name, interface.get('class')))
+            self._log.info("[manager] Loaded platform interface '%s' with '%s' class." % (interface_name, interface.get('class')))
 
 
     def _setup_modules(self, modules={}):
