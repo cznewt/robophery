@@ -75,8 +75,12 @@ HTU21D - I2C humidity/temperature sensor
 ----------------------------------------
 
 * http://randymxj.com/?p=550 - Python Library for HTU21D Humidity Sensor on Beaglebone Black and Raspberry Pi with Adafruit_I2C
-* https://github.com/randymxj/Adafruit-Raspberry-Pi-Python-Code/tree/master/Adafruit_HTU21D - This library is used as source, requires Adafruit_I2C python library to work
-* https://learn.adafruit.com/adafruit-htu21d-f-temperature-humidity-sensor?view=all
+
+
+SI7021 - I2C humidity/temperature sensor
+----------------------------------------
+
+* https://github.com/ControlEverythingCommunity/SI7021/blob/master/Python/SI7021.py
 
 
 MCP9808 - I2C temperature sensor

@@ -29,6 +29,7 @@ class SMBusI2cInterface(I2cInterface):
         value = value & 0xFF
         self._bus.write_byte_data(addr, register, value)
 
+
     def write16(self, addr, register, value):
         """
         Write a 16-bit value to the specified register.
@@ -36,11 +37,13 @@ class SMBusI2cInterface(I2cInterface):
         value = value & 0xFFFF
         self._bus.write_word_data(addr, register, value)
 
+
     def writeList(self, addr, register, data):
         """
         Write bytes to the specified register.
         """
         self._bus.write_i2c_block_data(addr, register, data)
+
 
     def readRaw8(self, addr):
         """
@@ -49,12 +52,14 @@ class SMBusI2cInterface(I2cInterface):
         result = self._bus.read_byte(addr) & 0xFF
         return result
 
+
     def readU8(self, addr, register):
         """
         Read an unsigned byte from the specified register.
         """
         result = self._bus.read_byte_data(addr, register) & 0xFF
         return result
+
 
     def readS8(self, addr, register):
         """
@@ -64,6 +69,7 @@ class SMBusI2cInterface(I2cInterface):
         if result > 127:
             result -= 256
         return result
+
 
     def readU16(self, addr, register, little_endian=True):
         """
@@ -78,6 +84,7 @@ class SMBusI2cInterface(I2cInterface):
             result = ((result << 8) & 0xFF00) + (result >> 8)
         return result
 
+
     def readS16(self, addr, register, little_endian=True):
         """
         Read a signed 16-bit value from the specified register, with the
@@ -88,6 +95,7 @@ class SMBusI2cInterface(I2cInterface):
         if result > 32767:
             result -= 65536
         return result
+
 
     def readList(self, addr, register, length):
         """Read a length number of bytes from the specified register.  Results
