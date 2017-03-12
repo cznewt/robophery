@@ -173,12 +173,17 @@ class ModuleManager(object):
 
     def _publish_data(self):
         self._log.info("[manager] Publishing data at %s." % (time.time()))
-        self._log.info("[manager] Publishing data at %s." % self._read_cache)
         cache = self._read_cache
-        data = []
+        self._log.info("[manager] Publishing data at %s." % cache)
+        data = {}
+        for i in range(self._read_cycle):
+            #iter = cache[i]
+            pass
+            #if not data.get()
+        for comm_name, comm in self._comm.items():
+            comm.send_data(data)
         self._read_cache = []
         self._read_iter = 1
-        return data
 
 
     def _single_loop(self):

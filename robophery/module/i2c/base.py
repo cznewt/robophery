@@ -1,6 +1,5 @@
 from robophery.base import Module
 
-
 class I2cModule(Module):
 
     def __init__(self, *args, **kwargs):

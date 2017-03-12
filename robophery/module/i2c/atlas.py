@@ -1,6 +1,4 @@
-import time       # used for sleep delay and timestamps
-import string     # helps parse strings
-
+import time
 
 class AtlasModule(I2cModule):
     """
