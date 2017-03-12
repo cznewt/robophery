@@ -1,4 +1,3 @@
-
 from robophery.module.i2c.base import I2cModule
 
 

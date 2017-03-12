@@ -1,4 +1,5 @@
 import time
+from robophery.module.i2c.base import I2cModule
 
 
 class Si7021Module(I2cModule):
