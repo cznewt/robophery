@@ -7,42 +7,21 @@ class BleModule(Module):
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr')
-        self.requester = GATTRequester(self._addr, False)
         super(BleModule, self).__init__(*args, **kwargs)
 
 
-    def __del__(self):
-        self._disconnect()
-
-
-    def _connect(self):
-        self._log.info("BLE %s connecting ..." % self._addr)
-        self.requester.connect(True)
-        chars = self.requester.discover_characteristics()
-        self.characteristic = {}
-        for char in chars:
-            self.characteristic[char['uuid']] = char['value_handle']
-        self._log.info("BLE %s connected OK" % self._addr)
+    def _connect(self, addr):
+        self._interface._connect(self._addr)
 
 
     def _disconnect(self):
-        self.requester.disconnect()
+        self._interface._disconnect()
 
 
     def _read_uuid(self, reg, type='float'):
-        value = self.requester.read_by_uuid(reg)[0]
-        if type == 'float':
-            return struct.unpack('H', value)[0] * 1.0;
-        elif type == 'string':
-            try:
-                value = value.decode("utf-8")
-            except AttributeError:
-                pass
-            return value
-        else:
-            return value
+        return self._interface._read_uuid(reg, type)
+
 
     def _write_uuid(self, reg, value, type='float'):
-        if type == 'string':
-            value = struct.pack('B', value)
-        self.requester.write_by_handle(self.characteristic[reg], value)
+        char = self._interface.characteristic[reg]
+        self._interface.write_by_handle(char, value, type)
