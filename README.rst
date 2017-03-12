@@ -102,17 +102,18 @@ AtlasScientific sensors
 * https://github.com/AtlasScientific/Raspberry-Pi-sample-code
 * https://www.atlas-scientific.com/_files/code/pi_sample_code.pdf
 
+
 BLE modules
 ===========
 
 
-CC2541 SensorTag - multiple sensors
------------------------------------
+CC2541 SensorTag - multiple BLE sensors
+---------------------------------------
 
 * https://github.com/mvartani76/RPi-Ble-Sensor-Tag-Python
 
 
-Parrot Flower Power - BLE gardening sensors
+Parrot Flower Power - gardening BLE sensors
 -------------------------------------------
 
 * http://www.parrot.com/usa/products/flower-power/
