@@ -148,6 +148,11 @@ RELAY_MODULE = {
     'data_pin': None,
 }
 
+SI7021_MODULE = {
+    'interface': 'local-i2c',
+    'class': 'robophery.module.i2c.si7021.Si7021Module',
+}
+
 SWITCH_MODULE = {
     'interface': 'local-gpio',
     'class': 'robophery.module.gpio.switch.SwitchModule',

@@ -69,6 +69,12 @@ def module_mcp9808():
     manager = ModuleManager(**config)
     manager.run()
 
+
+def module_si7021():
+    config = _config(SI7021_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
 # GPIO modules
 
 

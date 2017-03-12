@@ -12,8 +12,8 @@ class Htu21dModule(I2cModule):
     # HTU21D default address
     DEVICE_ADDR = 0x40
     # Operating modes
-    HTU21D_HOLD_MASTER = 0x00
-    HTU21D_NOHOLD_MASTER = 0x10
+    HOLD_MASTER = 0x00
+    NOHOLD_MASTER = 0x10
     # HTU21D commands
     HTU21D_TRIGGERTEMPCMD = 0xE3  # Trigger Temperature Measurement
     HTU21D_TRIGGERHUMIDITYCMD = 0xE5  # Trigger Humidity Measurement
@@ -29,8 +29,8 @@ class Htu21dModule(I2cModule):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Htu21dModule, self).__init__(*args, **kwargs)
         # Check that mode is valid.
-        self._mode = kwargs.get('mode', self.HTU21D_HOLD_MASTER)
-        if self._mode not in [self.HTU21D_HOLD_MASTER, self.HTU21D_NOHOLD_MASTER]:
+        self._mode = kwargs.get('mode', self.HOLD_MASTER)
+        if self._mode not in [self.HOLD_MASTER, self.NOHOLD_MASTER]:
             raise ValueError('Unexpected mode value {0}.'.format(self._mode))
 
 

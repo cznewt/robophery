@@ -144,7 +144,7 @@ class ModuleManager(object):
             if module_name != 'module':
                 module['name'] = module_name
             self._module[module_name] = ModuleClass(**module)
-            self._log.info("[manager] Loaded module '%s' with '%s' class." % (self._module[module_name]._name, module.get('class')))
+            self._log.info("[manager] Loaded device module '%s' with '%s' class." % (self._module[module_name]._name, module.get('class')))
 
 
     def _load_class(self, name):
