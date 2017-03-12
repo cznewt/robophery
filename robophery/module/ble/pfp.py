@@ -3,9 +3,9 @@ from robophery.module.ble.base import BleModule
 
 class ParrotFlowerPowerModule(BleModule):
     """
-    Module for Parrot Flower Power device.
+    Module for Parrot Flower Power.
     """
-    DEVICE_NAME = 'ble-flower-power'
+    DEVICE_NAME = 'ble-pfp'
 
     # Device information service
     DEVICE_NAME_UUID = '2a00'

@@ -9,12 +9,14 @@ from robophery.conf import *
 GPIO_OPTS = [
     cfg.Opt('data_pin',
         short='p',
+        default=None,
         help='Module GPIO pin'),
 ]
 
 BLE_OPTS = [
     cfg.Opt('addr',
         short='a',
+        default=None,
         help='Module MAC address'),
 ]
 
