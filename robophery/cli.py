@@ -70,17 +70,17 @@ def module_mcp9808():
 
 def module_dht11():
     config = _config(DHT11_MODULE, GPIO_OPTS)
-    manager = ModuleManager(**config)
     if config['config']['module']['module']['data_pin'] == None:
         raise ValueError("Data pin must be set.")
+    manager = ModuleManager(**config)
     manager.run()
 
 
 def module_dht22():
     config = _config(DHT22_MODULE, GPIO_OPTS)
-    manager = ModuleManager(**config)
     if config['config']['module']['module']['data_pin'] == None:
         raise ValueError("Data pin must be set.")
+    manager = ModuleManager(**config)
     manager.run()
 
 
@@ -109,17 +109,17 @@ def module_l293d():
 
 def module_relay():
     config = _config(RELAY_MODULE, GPIO_OPTS)
-    manager = ModuleManager(**config)
     if config['config']['module']['module']['data_pin'] == None:
         raise ValueError("Data pin must be set.")
+    manager = ModuleManager(**config)
     manager.run()
 
 
 def module_switch():
     config = _config(SWITCH_MODULE, GPIO_OPTS)
-    manager = ModuleManager(**config)
     if config['config']['module']['module']['data_pin'] == None:
         raise ValueError("Data pin must be set.")
+    manager = ModuleManager(**config)
     manager.run()
 
 # BLE modules
