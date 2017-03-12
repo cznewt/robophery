@@ -58,7 +58,7 @@ class Bmp085Module(I2cModule):
 
 
     def __init__(self, *args, **kwargs):
-        self._addr = self.DEVICE_ADDR
+        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Bmp085Module, self).__init__(*args, **kwargs)
         self._mode = kwargs.get('mode', self.BMP085_ULTRAHIGHRES)
         if self._mode not in [self.BMP085_ULTRALOWPOWER, self.BMP085_STANDARD, self.BMP085_HIGHRES, self.BMP085_ULTRAHIGHRES]:

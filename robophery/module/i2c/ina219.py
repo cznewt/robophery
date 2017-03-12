@@ -80,7 +80,7 @@ class Ina219Module(I2cModule):
 
 
     def __init__(self, *args, **kwargs):
-        self._addr = self.DEVICE_ADDR
+        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Ina219Module, self).__init__(*args, **kwargs)
         self._set_calibration_32v_2a()
 

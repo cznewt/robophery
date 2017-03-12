@@ -1,4 +1,3 @@
-
 import re
 
 def detect_pi_version():
@@ -52,4 +51,3 @@ def detect_pi_revision():
                 return 2
         # Couldn't find the revision, throw an exception.
         raise RuntimeError('Could not determine Raspberry Pi revision.')
-

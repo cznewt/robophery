@@ -4,7 +4,13 @@ RoboPhery: Robotic Peripehrials
 ===============================
 
 Python library for interfacing low level hardware sensors and actuators with
-MQTT bindings.
+MQTT and Statsd bindings.
+
+
+Standards
+=========
+
+* SenML https://tools.ietf.org/html/draft-jennings-senml-08
 
 
 GPIO modules
@@ -30,8 +36,8 @@ L293D - GPIO DC motor actuator
 * https://github.com/jamesevickery/l293d
 
 
-DS18B20 - GPIO temperature sensor
----------------------------------
+DS18B20 - 1-wire temperature sensor
+-----------------------------------
 
 * https://github.com/timofurrer/w1thermsensor
 * https://learn.adafruit.com/adafruits-raspberry-pi-lesson-11-ds18b20-temperature-sensing?view=all
@@ -85,6 +91,12 @@ TSL2591 - I2C luminosity sensor
 
 * https://github.com/maxlklaxl/python-tsl2591
 
+
+AtlasScientific sensors
+-----------------------
+
+* https://github.com/AtlasScientific/Raspberry-Pi-sample-code
+* https://www.atlas-scientific.com/_files/code/pi_sample_code.pdf
 
 BLE modules
 ===========

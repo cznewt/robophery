@@ -1,4 +1,3 @@
-
 import ftdi1 as ftdi
 
 FT232H_VID = 0x0403   # Default FTDI FT232H vendor ID

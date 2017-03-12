@@ -29,7 +29,7 @@ class Bh1750Module(I2cModule):
 
 
     def __init__(self, *args, **kwargs):
-        self._addr = self.DEVICE_ADDR
+        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Bh1750Module, self).__init__(*args, **kwargs)
         self.resolution_mode = kwargs.get('resolution_mode')
         self.additional_delay = kwargs.get('additional_delay')

@@ -26,7 +26,7 @@ class Htu21dModule(I2cModule):
     HTU21D_C = 235.66
 
     def __init__(self, *args, **kwargs):
-        self._addr = self.DEVICE_ADDR
+        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Htu21dModule, self).__init__(*args, **kwargs)
         # Check that mode is valid.
         self._mode = kwargs.get('mode', self.HTU21D_HOLD_MASTER)

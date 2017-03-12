@@ -1,5 +1,5 @@
 
-# Platform config
+# Platform configs
 
 FT232H_PLATFORM = {
     'interface': {
@@ -71,7 +71,21 @@ RPI_PLATFORM = {
     },
 }
 
-# Module config
+# Communication configs
+
+LINUX_MQTT_COMMUNICATION = {
+    'host': '127.0.0.1',
+    'port': 1886,
+    'class': 'robophery.comm.linux.mqtt.PahoMqttComm',
+}
+
+LINUX_STATSD_COMMUNICATION = {
+    'host': '127.0.0.1',
+    'port': 8125,
+    'class': 'robophery.comm.linux.statsd.GenericStatsdComm',
+}
+
+# Module configs
 
 BH1750_MODULE = {
     'interface': 'local-i2c',
@@ -100,14 +114,14 @@ DS18_MODULE = {
     'class': 'robophery.module.w1.ds18.Ds18Module',
 }
 
-INA219_MODULE = {
-    'interface': 'local-i2c',
-    'class': 'robophery.module.i2c.ina219.Ina219Module',
-}
-
 HTU21D_MODULE = {
     'interface': 'local-i2c',
     'class': 'robophery.module.i2c.htu21d.Htu21dModule',
+}
+
+INA219_MODULE = {
+    'interface': 'local-i2c',
+    'class': 'robophery.module.i2c.ina219.Ina219Module',
 }
 
 L293D_MODULE = {
