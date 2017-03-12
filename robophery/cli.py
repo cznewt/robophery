@@ -13,6 +13,7 @@ GPIO_OPTS = [
         help='Module GPIO pin'),
 ]
 
+
 BLE_OPTS = [
     cfg.Opt('addr',
         short='a',
