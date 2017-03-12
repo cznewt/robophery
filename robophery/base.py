@@ -163,7 +163,7 @@ class ModuleManager(object):
         self._log.info("[manager] Started reading data iteration %s/%s at %s." % (self._read_iter, self._read_cycle, time.time()))
         for module_name, module in self._module.items():
             module_data = module.read_data()
-            data.append(module_data)
+            data = data + module_data
             if module_data == None:
                 self._log.info("[%s] Failure reading the data at %s." % (module._name, time.time()))
             else:
