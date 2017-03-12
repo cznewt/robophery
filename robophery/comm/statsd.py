@@ -1,5 +1,5 @@
 
-class GenericStatsdComm(object):
+class StatsdComm(object):
     """
     Base class for implementing Statsd communication.
     """
