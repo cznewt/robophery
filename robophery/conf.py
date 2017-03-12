@@ -74,13 +74,13 @@ RPI_PLATFORM = {
 # Communication configs
 
 LINUX_MQTT_COMM = {
-    'host': '127.0.0.1',
+    'host': 'localhost',
     'port': 1883,
     'class': 'robophery.comm.linux.mqtt.PahoMqttComm',
 }
 
 LINUX_STATSD_COMM = {
-    'host': '127.0.0.1',
+    'host': 'localhost',
     'port': 8125,
     'class': 'robophery.comm.linux.statsd.GenericStatsdComm',
 }
