@@ -75,7 +75,7 @@ RPI_PLATFORM = {
 
 LINUX_MQTT_COMM = {
     'host': '127.0.0.1',
-    'port': 1886,
+    'port': 1883,
     'class': 'robophery.comm.linux.mqtt.PahoMqttComm',
 }
 
