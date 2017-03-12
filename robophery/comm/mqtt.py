@@ -5,4 +5,4 @@ class MqttComm(object):
     """
 
     def __init__(self, *args, **kwargs):
-        pass
+        self._manager = kwargs.get('manager', None)
