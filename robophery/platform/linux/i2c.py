@@ -42,7 +42,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         self._bus.write_i2c_block_data(addr, register, data)
 
-    def readRaw8(self):
+    def readRaw8(self, addr):
         """
         Read an 8-bit value on the bus (without register).
         """
