@@ -1,6 +1,6 @@
 from ustruct import (pack, unpack)
 
-class NodemcuI2cInterface():
+class NodemcuI2cInterface(I2cInterface):
     def __init__(self, scl_pin=5, sda_pin=4, frequency=100000):
         from machine import Pin, I2C
 
