@@ -23,7 +23,20 @@ NODEMCU_PLATFORM = {
         'local-i2c': {
             'engine': 'i2c',
             'class': 'robophery.platform.nodemcu.i2c.NodeMcuI2cInterface',
+            'uses': {
+                'interface': 'local-gpio',
+                'scl_pin': 5,
+                'sda_pin': 4,
+            }
         }
+        'local-w1': {
+            'engine': 'w1',
+            'class': 'robophery.platform.linux.w1.LinuxW1Interface',
+            'uses': {
+                'interface': 'local-gpio',
+                'data_pin': 3,
+            }
+        },
     }
 }
 

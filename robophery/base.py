@@ -131,6 +131,8 @@ class ModuleManager(object):
     def _setup_interfaces(self, interfaces={}):
         for interface_name, interface in interfaces.items():
             InterfaceClass = self._load_class(interface.get('class'))
+            if 'uses' in interface:
+                interface['uses']['interface'] = self._interface[interface['uses']['interface']]
             interface['manager'] = self
             self._interface[interface_name] = InterfaceClass(**interface)
             self._log.info("[manager] Loaded platform interface '%s' with '%s' class." % (interface_name, interface.get('class')))

@@ -110,7 +110,7 @@ class BeagleboneGpioInterface(GpioInterface):
         kwargs = {}
         if bouncetime > 0:
             kwargs['bouncetime']=bouncetime
-        self._bus.add_event  _callback(pin, callback, **kwargs)
+        self._bus.add_event_callback(pin, callback, **kwargs)
 
 
     def event_detected(self, pin):
