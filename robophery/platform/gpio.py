@@ -18,19 +18,22 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-from robophery.base import Interface
 
-class GpioInterface(Interface):
+
+class GpioInterface(object):
     """
     Base class for implementing digital IO bus.
     """
 
     GPIO_MODE_OUT = 0
     GPIO_MODE_IN = 1
+    GPIO_MODE_ALT = 2
+    GPIO_MODE_NONE = 3
 
     GPIO_MODE_OUT_HIGH = True
     GPIO_MODE_OUT_LOW = False
 
+    GPIO_EVENT_NONE = 0
     GPIO_EVENT_RISING = 1
     GPIO_EVENT_FALLING = 2
     GPIO_EVENT_BOTH = 3
@@ -39,19 +42,25 @@ class GpioInterface(Interface):
     GPIO_PUD_DOWN = 1
     GPIO_PUD_UP = 2
 
+    GPIO_DRIVE_LOW = 0
+    GPIO_DRIVE_MEDIUM = 1
+    GPIO_DRIVE_HIGH = 2
+
     def __init__(self, *args, **kwargs):
-        self._pins_used = []
-        super(GpioInterface, self).__init__(*args, **kwargs)
-
-
-    def _use_pin(self, pin):
-        self._pins_used.append(pin)
+        self._pins = {}
 
 
     def setup_pin(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin. Mode should be
         either OUT or IN.
+        """
+        raise NotImplementedError
+
+
+    def get_pin(self, pin):
+        """
+        Return pin object specified by its number
         """
         raise NotImplementedError
 

@@ -1,10 +1,16 @@
 from ustruct import (pack, unpack)
 
 class NodemcuI2cInterface(I2cInterface):
-    def __init__(self, scl_pin=5, sda_pin=4, frequency=100000):
+    def __init__(self, gpio_interface, scl_pin=5, sda_pin=4, frequency=100000):
         from machine import Pin, I2C
 
-        self._bus = I2C(scl=Pin(scl_pin), sda=Pin(sda_pin), freq=frequency)
+        gpio_interface.setup_pin(scl_pin)
+        gpio_interface.setup_pin(sda_pin)
+
+        self._scl = gpio_interface.get_pin(scl_pin)
+        self._sda = gpio_interface.get_pin(sda_pin)
+
+        self._bus = I2C(scl=self._scl, sda=self._sda, freq=frequency)
 
     def scan_bus():
         """Return list of found addresses on bus"""
