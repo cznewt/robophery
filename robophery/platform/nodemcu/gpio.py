@@ -21,8 +21,8 @@ class NodeMcuGpioInterface(GpioInterface):
         self._drive_mapping = { self.GPIO_DRIVE_LOW: Pin.LOW_POWER,
                                 self.GPIO_DRIVE_MEDIUM: Pin.MED_POWER }
                                 self.GPIO_DRIVE_HIGH: Pin.HIGH_POWER }
-        self.pins_irq_triggers = {}
-        self.pins_event_detected = {}
+        self._pins_irq_triggers = {}
+        self._pins_event_detected = {}
         super(NodeMcuGpioInterface, self).__init__(*args, **kwargs)
 
 
@@ -40,7 +40,7 @@ class NodeMcuGpioInterface(GpioInterface):
         if drive == None:
             pull_up_down = self.GPIO_DRIVE_LOW
 
-        pins[pin] = Pin(pin, 
+        self._pins[pin] = Pin(pin, 
                         mode=self._dir_mapping[mode], 
                         pull=self._pud_mapping[pull_up_down]
                         value=init_value
@@ -51,8 +51,8 @@ class NodeMcuGpioInterface(GpioInterface):
         """
         Return pin object specified by its number
         """
-        if pin in pins.keys():
-            return pins[pin]
+        if pin in self._pins.keys():
+            return self._pins[pin]
         else:
             return 'None'
 
@@ -61,7 +61,7 @@ class NodeMcuGpioInterface(GpioInterface):
         Set the specified pin the provided high/low value. Value should be
         either HIGH/LOW or a boolean (true = high).
         """
-        self.pins[pin].value(value)
+        self._pins[pin].value(value)
 
 
     def input(self, pin):
@@ -69,7 +69,7 @@ class NodeMcuGpioInterface(GpioInterface):
         Read the specified pin and return HIGH/true if the pin is pulled high,
         or LOW/false if pulled low.
         """
-        return self.pins[pin].value()
+        return self._pins[pin].value()
 
 
     def input_pins(self, pins):
@@ -77,7 +77,7 @@ class NodeMcuGpioInterface(GpioInterface):
         Read multiple pins specified in the given list and return list of pin values
         GPIO.HIGH/True if the pin is pulled high, or GPIO.LOW/False if pulled low.
         """
-        return [self.pins[pin].value() for pin in pins]
+        return [self._pins[pin].value() for pin in pins]
 
 
     def add_event_detect(self, pin, edge, callback=None, bouncetime=-1, priority=1):
@@ -89,9 +89,9 @@ class NodeMcuGpioInterface(GpioInterface):
         """
         if callback is None:
             callback = self.event_callback
-        self.pins_irq_triggers[pin] = self._edge_mapping(edge)
-        self.pins[pin].irq(handler=callback, 
-                           trigger=self.pins_irq_triggers[pin],
+        self._pins_irq_triggers[pin] = self._edge_mapping(edge)
+        self._pins[pin].irq(handler=callback, 
+                           trigger=self._pins_irq_triggers[pin],
                            priority=priority)
 
 
@@ -100,8 +100,8 @@ class NodeMcuGpioInterface(GpioInterface):
         Remove edge detection for a particular GPIO channel. Pin should be
         type IN.
         """
-        del(self.pins_irq_triggers[pin]) 
-        self.pins[pin].irq()
+        del(self._pins_irq_triggers[pin]) 
+        self._pins[pin].irq()
                           
 
     def add_event_callback(self, pin, callback, bouncetime=-1, priority=1):
@@ -110,8 +110,8 @@ class NodeMcuGpioInterface(GpioInterface):
         Pin should be type IN.  Bouncetime is switch bounce timeout in ms for 
         callback
         """
-        self.pins[pin].irq(handler=callback, 
-                           trigger=self.pins_irq_triggers[pin],
+        self._pins[pin].irq(handler=callback, 
+                           trigger=self._pins_irq_triggers[pin],
                            priority=priority)
 
 
@@ -121,9 +121,9 @@ class NodeMcuGpioInterface(GpioInterface):
         enable edge detection using add_event_detect() first.   Pin should be 
         type IN.
         """
-        if self.pins_event_detected[pin] == True
-            self.pins_event_detected[pin] = False
-        return self.pins_event_detected[pin]
+        if self._pins_event_detected[pin] == True
+            self._pins_event_detected[pin] = False
+        return self._pins_event_detected[pin]
 
 
     def wait_for_edge(self, pin, edge):
@@ -131,7 +131,7 @@ class NodeMcuGpioInterface(GpioInterface):
         Wait for an edge.   Pin should be type IN.  Edge must be RISING, 
         FALLING or BOTH.
         """
-        while self.pins_event_detected[pin] == False:
+        while self._pins_event_detected[pin] == False:
         self._bus.wait_for_edge(pin, self._edge_mapping[edge])
 
     def event_callback(sef):
