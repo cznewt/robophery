@@ -17,7 +17,7 @@ class NodeMcuGpioInterface(GpioInterface):
                               self.GPIO_PUD_UP: Pin.PULL_UP }
         self._edge_mapping = { self.GPIO_EVENT_RISING: Pin.IRQ_RISING,
                                self.GPIO_EVENT_FALLING: Pin.IRQ_FALLING,
-                               self.GPIO_EVENT_BITH: Pin.IRQ_FALLING|Pin.IRQ_RISING }
+                               self.GPIO_EVENT_BOTH: Pin.IRQ_FALLING|Pin.IRQ_RISING }
         self._drive_mapping = { self.GPIO_DRIVE_LOW: Pin.LOW_POWER,
                                 self.GPIO_DRIVE_MEDIUM: Pin.MED_POWER }
                                 self.GPIO_DRIVE_HIGH: Pin.HIGH_POWER }
