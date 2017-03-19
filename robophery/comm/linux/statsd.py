@@ -19,4 +19,4 @@ class GenericStatsdComm(StatsdComm):
             for value_name, value_value in value.items():
                 bucket = "{0}.{1}".format(name, value_name)
                 self._log.debug("Published bucket {0} with value {1} to {2}.".format(bucket, value_value, self._host))
-                self._client.gauge(self, bucket, value_value, sample_rate=None)
+                self._client.gauge(bucket, value_value, sample_rate=self._sample_rate)
