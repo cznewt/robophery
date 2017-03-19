@@ -13,3 +13,6 @@ class ServoModule(PwmModule):
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
         super(ServoModule, self).__init__(*args, **kwargs)
         self.setup_pin(self._pin, 0)
+
+    def read_data(self):
+        return []
