@@ -11,7 +11,7 @@ class Ds18Module(W1Module):
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', '0')
-        self._type = kwargs.get('type', 'ds18b20')
+        self._type = kwargs.get('type', 'DS18S20')
         super(Ds18Module, self).__init__(*args, **kwargs)
 
 

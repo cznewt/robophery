@@ -4,6 +4,15 @@ from robophery.platform.w1 import W1Interface
 
 class LinuxW1Interface(W1Interface):
 
+    AVAILABLE_TYPES = [
+        "DS18S20",
+        "DS1822",
+        "DS18B20",
+        "DS1825",
+        "DS28EA00",
+        "MAX31850K"
+    ]
+
     def __init__(self, *args, **kwargs):
         self._parent_interface = kwargs['parent']['interface']
         self._parent_data_pin = kwargs['parent']['data_pin']
