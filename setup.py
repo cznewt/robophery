@@ -14,7 +14,7 @@ setup(
     author_email='ales.komarek@newt.cz',
     license='Apache Software License',
     url='http://www.github.cz/cznewt/robophery',
-    modules=['robophery'],
+    packages=['robophery'],
     classifiers=[
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: Apache Software License',
