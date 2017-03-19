@@ -62,7 +62,7 @@ class Pca9685PwmInterface(PwmInterface):
         self._parent_interface.setup_addr(self._parent_address)
         self._pins_available = self.AVAILABLE_PINS
         super(Pca9685PwmInterface, self).__init__(*args, **kwargs)
-        self.set_all_pwm(0, 0)
+        self.setup_pins(0, 0)
         self._parent_interface.write8(self._parent_address, self.MODE2, self.OUTDRV)
         self._parent_interface.write8(self._parent_address, self.MODE1, self.ALLCALL)
         # wait for oscillator
@@ -116,10 +116,12 @@ class Pca9685PwmInterface(PwmInterface):
         self._parent_interface.write8(self._parent_address, self.LED0_OFF_H+4*pin, off >> 8)
 
 
-    def setup_pins(self, pin, dutycycle, frequency=2000):
+    def setup_pins(self, dutycycle, frequency=2000):
         """
         Sets all PWM channels.
         """
+        on = 0
+        off = 0
         self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_L, on & 0xFF)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_H, on >> 8)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_OFF_L, off & 0xFF)
