@@ -17,3 +17,12 @@ class StatsdComm(object):
 
     def _base_name(self):
         return '{0} {1}'.format(self._class.split('.')[-1], self._name)
+
+
+    def send_data(self, data):
+        for name, datum in data.items():
+            self.send_datum({name: datum})
+
+
+    def send_datum(self, datum):
+        raise NotImplementedError
