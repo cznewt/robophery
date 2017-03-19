@@ -37,7 +37,7 @@ class HcSr04Module(GpioModule):
         #    pulse_end = time.time()
 
         #pulse_duration = pulse_end - pulse_start
-        pulse_duration - 0.001
+        pulse_duration = 0.001
         distance = pulse_duration * 1715
 
         data = [
