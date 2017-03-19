@@ -5,6 +5,10 @@ class PwmModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(PwmModule, self).__init__(*args, **kwargs)
+        self.setup_pin = self._interface.setup_pin
+        self.set_duty_cycle = self._interface.set_duty_cycle
+        self.set_frequency = self._interface.set_frequency
+        self.stop = self._interface.stop
 
 
     def __str__(self):

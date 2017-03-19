@@ -74,7 +74,17 @@ class Pca9685PwmInterface(PwmInterface):
         # wait for oscillator
         self._msleep(5)
 
-    def set_pwm_freq(self, freq):
+
+    def set_duty_cycle(self, pin, dutycycle):
+        """
+        Set percent duty cycle of PWM output on specified pin. Duty cycle must
+        be a value 0.0 to 100.0 (inclusive).
+        """
+        pass
+
+
+    def set_frequency(self, pin, frequency)
+    #def set_pwm_freq(self, freq):
         """
         Set the PWM frequency to the provided value in hertz.
         """
@@ -91,21 +101,22 @@ class Pca9685PwmInterface(PwmInterface):
         self._parent_interface.write8(self._parent_address, self.MODE1, newmode)  # go to sleep
         self._parent_interface.write8(self._parent_address, self.PRESCALE, prescale)
         self._parent_interface.write8(self._parent_address, self.MODE1, oldmode)
-        self._msleep(0.005)
+        self._msleep(5)
         self._parent_interface.write8(self._parent_address, self.MODE1, oldmode | 0x80)
 
-
-    def set_pwm(self, channel, on, off):
+    def setup_pin(self, pin, dutycycle, frequency=2000):
         """
-        Sets a single PWM channel.
+        Sets a single PWM pin.
         """
-        self._parent_interface.write8(self._parent_address, self.LED0_ON_L+4*channel, on & 0xFF)
-        self._parent_interface.write8(self._parent_address, self.LED0_ON_H+4*channel, on >> 8)
-        self._parent_interface.write8(self._parent_address, self.LED0_OFF_L+4*channel, off & 0xFF)
-        self._parent_interface.write8(self._parent_address, self.LED0_OFF_H+4*channel, off >> 8)
+        on = 0
+        off = 0
+        self._parent_interface.write8(self._parent_address, self.LED0_ON_L+4*pin, on & 0xFF)
+        self._parent_interface.write8(self._parent_address, self.LED0_ON_H+4*pin, on >> 8)
+        self._parent_interface.write8(self._parent_address, self.LED0_OFF_L+4*pin, off & 0xFF)
+        self._parent_interface.write8(self._parent_address, self.LED0_OFF_H+4*pin, off >> 8)
 
 
-    def set_all_pwm(self, on, off):
+    def setup_pins(self, pin, dutycycle, frequency=2000):
         """
         Sets all PWM channels.
         """
