@@ -63,14 +63,14 @@ class Pca9685PwmInterface(PwmInterface):
         self._pins_available = self.AVAILABLE_PINS
         super(Pca9685PwmInterface, self).__init__(*args, **kwargs)
         self.set_all_pwm(0, 0)
-        self._parent_interface.write8(self.MODE2, self.OUTDRV)
-        self._parent_interface.write8(self.MODE1, self.ALLCALL)
+        self._parent_interface.write8(self._parent_address, self.MODE2, self.OUTDRV)
+        self._parent_interface.write8(self._parent_address, self.MODE1, self.ALLCALL)
         # wait for oscillator
         self._msleep(5)
-        mode1 = self._parent_interface.readU8(self.MODE1)
+        mode1 = self._parent_interface.readU8(self._parent_address, self.MODE1)
         # wake up (reset sleep)
         mode1 = mode1 & ~self.SLEEP
-        self._parent_interface.write8(self.MODE1, mode1)
+        self._parent_interface.write8(self._parent_address, self.MODE1, mode1)
         # wait for oscillator
         self._msleep(5)
 
@@ -86,13 +86,13 @@ class Pca9685PwmInterface(PwmInterface):
         self._log.debug('Estimated pre-scale: {0}'.format(prescaleval))
         prescale = int(math.floor(prescaleval + 0.5))
         self._log.debug('Final pre-scale: {0}'.format(prescale))
-        oldmode = self.readU8(self.MODE1);
+        oldmode = self.readU8(self._parent_address, self.MODE1);
         newmode = (oldmode & 0x7F) | 0x10    # sleep
-        self._parent_interface.write8(self.MODE1, newmode)  # go to sleep
-        self._parent_interface.write8(self.PRESCALE, prescale)
-        self._parent_interface.write8(self.MODE1, oldmode)
+        self._parent_interface.write8(self._parent_address, self.MODE1, newmode)  # go to sleep
+        self._parent_interface.write8(self._parent_address, self.PRESCALE, prescale)
+        self._parent_interface.write8(self._parent_address, self.MODE1, oldmode)
         self._msleep(0.005)
-        self._parent_interface.write8(self.MODE1, oldmode | 0x80)
+        self._parent_interface.write8(self._parent_address, self.MODE1, oldmode | 0x80)
 
 
     def set_pwm(self, channel, on, off):
