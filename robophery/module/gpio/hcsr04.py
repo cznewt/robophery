@@ -31,12 +31,13 @@ class HcSr04Module(GpioModule):
         self._usleep(10)
         self.set_low(self._trigger_pin)
 
-        while self.is_low(self._echo_pin):
-            pulse_start = time.time()
-        while self.is_high(self._echo_pin):
-            pulse_end = time.time()
+        #while self.is_low(self._echo_pin):
+        #    pulse_start = time.time()
+        #while self.is_high(self._echo_pin):
+        #    pulse_end = time.time()
 
-        pulse_duration = pulse_end - pulse_start
+        #pulse_duration = pulse_end - pulse_start
+        pulse_duration - 0.001
         distance = pulse_duration * 1715
 
         data = [
