@@ -83,7 +83,7 @@ class Pca9685PwmInterface(PwmInterface):
         pass
 
 
-    def set_frequency(self, pin, frequency)
+    def set_frequency(self, pin, frequency):
     #def set_pwm_freq(self, freq):
         """
         Set the PWM frequency to the provided value in hertz.
