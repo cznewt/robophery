@@ -31,6 +31,7 @@ class Pca9685PwmInterface(PwmInterface):
     """
     DEVICE_NAME        = 'i2c-pca9685'
     DEVICE_ADDR        = 0x40
+    AVAILABLE_PINS     = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
     # Registers/etc:
     MODE1              = 0x00

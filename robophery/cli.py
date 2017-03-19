@@ -51,7 +51,6 @@ def _config(module_conf, opts = None):
 def manager_service():
     sys.path.append("/etc/robophery")
     from robophery_conf import CONF
-    print CONF
     manager = ModuleManager(**CONF)
     manager.run()
 
