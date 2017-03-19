@@ -163,7 +163,7 @@ class ModuleManager(object):
         """
         if isinstance(name, str):
             module = import_module(".".join(name.split(".")[:-1]))
-            if module:
+            if module and module != None:
                 return getattr(module, name.split(".")[-1], None)
             raise Exception("Cannot load class {0}".format(name))
 
