@@ -114,7 +114,7 @@ class SenMLDocument(object):
 
     measurement_factory = SenMLMeasurement
 
-    def __init__(self, measurements=None, *args, base=None, **kwargs):
+    def __init__(self, measurements=None, base=None, *args, **kwargs):
         """Constructor
         """
         super().__init__(*args, **kwargs)

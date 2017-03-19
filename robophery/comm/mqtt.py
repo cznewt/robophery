@@ -9,7 +9,7 @@ class MqttComm(object):
         self._name = kwargs.get('name')
         self._manager = kwargs.get('manager', None)
         self._class = kwargs.get('class', None)
-        self._host = kwargs.get('host', '172.0.0.1')
+        self._host = kwargs.get('host', '127.0.0.1')
         self._port = kwargs.get('port', 1883)
         self._subscribe_topic = kwargs.get('subscribe_topic', 'robophery/#')
         self._publish_topic = kwargs.get('publish_topic', 'robophery')
