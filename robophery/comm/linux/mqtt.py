@@ -41,4 +41,4 @@ class PahoMqttComm(MqttComm):
 #            tls=tls,
             port=self._port,
             protocol=mqtt.MQTTv311)
-        self._log.debug("Published {0} to {1}.".format(datum, self._host))
+        self._log.debug("Published message {0} to {1}.".format(datum, self._host))

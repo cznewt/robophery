@@ -45,18 +45,17 @@ class Vl53L0XModule(I2cModule):
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
-        super(Tls2591Module, self).__init__(*args, **kwargs)
+        super(Vl53L0XModule, self).__init__(*args, **kwargs)
 
-
-        val1 = bus.read_byte_data(address, VL53L0X_REG_IDENTIFICATION_REVISION_ID)
+##        val1 = bus.read_byte_data(address, VL53L0X_REG_IDENTIFICATION_REVISION_ID)
         print "Revision ID: " + hex(val1)
-        val1 = bus.read_byte_data(address, VL53L0X_REG_IDENTIFICATION_MODEL_ID)
+##        val1 = bus.read_byte_data(address, VL53L0X_REG_IDENTIFICATION_MODEL_ID)
         print "Device ID: " + hex(val1)
     #    case VL53L0X_VCSEL_PERIOD_PRE_RANGE:
     #        Status = VL53L0X_RdByte(Dev,
     #            VL53L0X_REG_PRE_RANGE_CONFIG_VCSEL_PERIOD,
     #            &vcsel_period_reg);
-        val1 = bus.read_byte_data(address, VL53L0X_REG_PRE_RANGE_CONFIG_VCSEL_PERIOD)
+##        val1 = bus.read_byte_data(address, VL53L0X_REG_PRE_RANGE_CONFIG_VCSEL_PERIOD)
         print "PRE_RANGE_CONFIG_VCSEL_PERIOD=" + hex(val1) + " decode: " + str(VL53L0X_decode_vcsel_period(val1))
 
 
@@ -65,7 +64,7 @@ class Vl53L0XModule(I2cModule):
     #            VL53L0X_REG_FINAL_RANGE_CONFIG_VCSEL_PERIOD,
     #            &vcsel_period_reg);
 
-        val1 = bus.read_byte_data(address, VL53L0X_REG_FINAL_RANGE_CONFIG_VCSEL_PERIOD)
+##        val1 = bus.read_byte_data(address, VL53L0X_REG_FINAL_RANGE_CONFIG_VCSEL_PERIOD)
         print "FINAL_RANGE_CONFIG_VCSEL_PERIOD=" + hex(val1) + " decode: " + str(VL53L0X_decode_vcsel_period(val1))
 
 
