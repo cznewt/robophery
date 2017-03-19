@@ -9,8 +9,8 @@ class HcSr04Module(GpioModule):
     DEVICE_NAME = 'gpio-hcsr04'
 
     def __init__(self, *args, **kwargs):
-        self._trigger_pin = self._normalize_pin(kwargs.get('_trigger_pin'))
-        self._echo_pin = self._normalize_pin(kwargs.get('_echo_pin'))
+        self._trigger_pin = self._normalize_pin(kwargs.get('trigger_pin'))
+        self._echo_pin = self._normalize_pin(kwargs.get('echo_pin'))
         super(HcSr04Module, self).__init__(*args, **kwargs)
         self.setup_pin(self._trigger_pin, self.GPIO_MODE_OUT)
         self.set_low(self._trigger_pin)
