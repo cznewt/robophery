@@ -51,8 +51,8 @@ def _config(module_conf, opts = None):
 def manager_service():
     sys.path.append("/etc/robophery")
     from robophery_conf import CONF
-    config = _config(CONF)
-    manager = ModuleManager(**config)
+    print CONF
+    manager = ModuleManager(**CONF)
     manager.run()
 
 # I2C modules
