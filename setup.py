@@ -15,6 +15,7 @@ setup(
     license='Apache Software License',
     url='http://www.github.cz/cznewt/robophery',
     packages=['robophery'],
+    package_dir={'robophery': 'robophery'},
     classifiers=[
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: Apache Software License',
