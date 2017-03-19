@@ -1,7 +1,7 @@
 
-===============================
-RoboPhery: Robotic Peripehrials
-===============================
+==============================
+RoboPhery: Robotic Peripherals
+==============================
 
 Python library for interfacing low level hardware sensors and actuators with
 MQTT and Statsd bindings.
@@ -51,6 +51,13 @@ DHT11/DHT22 - GPIO humidity/temperature sensors
 * https://github.com/adafruit/Adafruit_Python_DHT
 * https://cdn-shop.adafruit.com/datasheets/DHT22.pdf
 * https://cdn-shop.adafruit.com/datasheets/DHT11-chinese.pdf
+
+
+HD44780 controller - GPIO LCD library
+-------------------------------------
+
+* https://github.com/dbrgn/RPLCD
+* https://github.com/adafruit/Adafruit_Python_CharLCD
 
 
 I2C modules

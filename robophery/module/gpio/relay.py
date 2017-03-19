@@ -47,25 +47,27 @@ class RelayModule(GpioModule):
         """
         Relay status readings.
         """
-        return [
-            (self._name, 'runtime_count', self._power),
-            (self._name, 'runtime_delta', self._power),
+        data = [
+            (self._name, 'on_count', self._power, 0),
+            (self._name, 'on_delta', self._power, 0),
         ]
+        self._log_data(data)
+        return data
 
 
-    def meta_data():
+    def meta_data(self):
         """
         Get the readings meta-data.
         """
         return {
-            'runtime_count': {
+            'on_count': {
                 'type': 'counter',
                 'unit': 's',
                 'range_low': 0,
                 'range_high': None,
                 'sensor': 'relay'
             },
-            'runtime_delta': {
+            'on_delta': {
                 'type': 'delta',
                 'unit': 's',
                 'range_low': 0,

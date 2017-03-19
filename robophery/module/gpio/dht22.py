@@ -1,4 +1,5 @@
 import Adafruit_DHT
+import time
 from robophery.module.gpio.base import GpioModule
 
 
@@ -24,19 +25,30 @@ class Dht22Module(GpioModule):
         """
         Query DHT22 to get the humidity and temperature readings.
         """
+        read_time_start = time.time()
         humidity, temperature = Adafruit_DHT.read(self._type, self._pin)
+        read_time_stop = time.time()
+        read_time_delta = (read_time_stop - read_time_start) / 2
         if temperature == None or humidity == None:
-            self._log.error('[%s] Data CRC failed while reading data.' % self._name)
-            return None
+            self._log.error("Data CRC failed while reading data.")
+            data = [
+                (self._name, 'temperature', None, read_time_delta),
+                (self._name, 'humidity', None, read_time_delta)
+            ]
         else:
             if humidity > 0 and humidity < 100:
-                return [
-                    (self._name, 'temperature', temperature),
-                    (self._name, 'humidity', humidity)
+                data = [
+                    (self._name, 'temperature', temperature, read_time_delta),
+                    (self._name, 'humidity', humidity, read_time_delta)
                 ]
             else:
                 self._log.error('Humidity out of range')
-                return None
+                data = [
+                    (self._name, 'temperature', None, read_time_delta),
+                    (self._name, 'humidity', None, read_time_delta)
+                ]
+        self._log_data(data)
+        return data
 
 
     def meta_data(self):

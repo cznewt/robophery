@@ -4,6 +4,7 @@
 *.egg-info
 .pybuild
 dist/
+docs/build/
 
 #vimmy stuff
 *.swp

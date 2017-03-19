@@ -1,11 +1,19 @@
+from robophery.base import Interface
 
-class I2cInterface(object):
+
+class I2cInterface(Interface):
     """
     Base class for implementing I2C bus.
     """
 
     def __init__(self, *args, **kwargs):
         self._addrs_used = []
+        super(I2cInterface, self).__init__(*args, **kwargs)
+
+
+    def __str__(self):
+
+        return "%s (bus number: %s)" % (self._base_name(), self._busnum)
 
 
     def setup_addr(self, addr):

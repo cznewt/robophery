@@ -23,16 +23,16 @@ NODEMCU_PLATFORM = {
         'local-i2c': {
             'engine': 'i2c',
             'class': 'robophery.platform.nodemcu.i2c.NodeMcuI2cInterface',
-            'uses': {
+            'parent': {
                 'interface': 'local-gpio',
                 'scl_pin': 5,
                 'sda_pin': 4,
             }
-        }
+        },
         'local-w1': {
             'engine': 'w1',
-            'class': 'robophery.platform.linux.w1.LinuxW1Interface',
-            'uses': {
+            'class': 'robophery.platform.nodemcu.w1.NodeMcuW1Interface',
+            'parent': {
                 'interface': 'local-gpio',
                 'data_pin': 3,
             }
@@ -54,7 +54,7 @@ BBB_PLATFORM = {
         'local-w1': {
             'engine': 'w1',
             'class': 'robophery.platform.linux.w1.LinuxW1Interface',
-            'uses': {
+            'parent': {
                 'interface': 'local-gpio',
                 'pin': 4,
             }
@@ -73,12 +73,50 @@ RPI_PLATFORM = {
             'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
             'bus_number': 1
         },
+        'local-pwm': {
+            'engine': 'pwm',
+            'class': 'robophery.platform.rpi.pwm.LinuxW1Interface',
+            'parent': {
+                'interface': 'local-gpio',
+                'pins': [4, 5, 10],
+            }
+        },
         'local-w1': {
             'engine': 'w1',
             'class': 'robophery.platform.linux.w1.LinuxW1Interface',
-            'uses': {
+            'parent': {
                 'interface': 'local-gpio',
                 'pin': 4,
+            }
+        },
+    },
+}
+
+RPI_PCF_PLATFORM = {
+    'interface': {
+        'local-gpio': {
+            'engine': 'gpio',
+            'class': 'robophery.platform.rpi.gpio.RaspberryPiGpioInterface',
+        },
+        'local-i2c': {
+            'engine': 'i2c',
+            'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
+            'bus_number': 1
+        },
+        'pcf-gpio': {
+            'engine': 'gpio',
+            'class': 'robophery.platform.pcf8574.gpio.Pcf8574GpioInterface',
+            'parent': {
+                'interface': 'local-i2c',
+                'address': 0x3f,
+            }
+        },
+        'local-w1': {
+            'engine': 'w1',
+            'class': 'robophery.platform.linux.w1.LinuxW1Interface',
+            'parent': {
+                'interface': 'local-gpio',
+                'data_pin': 4,
             }
         },
     },
@@ -125,6 +163,24 @@ DHT22_MODULE = {
 DS18_MODULE = {
     'interface': 'local-w1',
     'class': 'robophery.module.w1.ds18.Ds18Module',
+    'addr': '00145071daff',
+}
+
+HD44780_PFC_MODULE = {
+    'interface': 'pcf-gpio',
+    'class': 'robophery.module.gpio.hd44780.Hd44780Module',
+    'rs_pin': 0,
+    'rw_pin': 1,
+    'en_pin': 2,
+    'bl_pin': 3,
+    'd4_pin': 4,
+    'd5_pin': 5,
+    'd6_pin': 6,
+    'd7_pin': 7,
+    'cols': 20,
+    'rows': 4,
+    'auto_linebreaks': True,
+    'backlight_enabled': True
 }
 
 HTU21D_MODULE = {
@@ -170,4 +226,9 @@ SWITCH_MODULE = {
     'interface': 'local-gpio',
     'class': 'robophery.module.gpio.switch.SwitchModule',
     'data_pin': None,
+}
+
+VL53L0X_MODULE = {
+    'interface': 'local-i2c',
+    'class': 'robophery.module.i2c.vl53l0x.Vl53L0XModule',
 }

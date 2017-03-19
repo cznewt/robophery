@@ -5,7 +5,22 @@ from robophery.platform.w1 import W1Interface
 class LinuxW1Interface(W1Interface):
 
     def __init__(self, *args, **kwargs):
+        self._parent_interface = kwargs['parent']['interface']
+        self._parent_data_pin = kwargs['parent']['data_pin']
+#        self._parent_interface.setup_pin(self._parent_data_pin)
         super(LinuxW1Interface, self).__init__(*args, **kwargs)
+
+
+    def __str__(self):
+        return "{0} (connected to {1}, data pin {2})".format(self._base_name(), self._parent_interface._name, self._parent_data_pin)
+
+
+    def _get_devices(self):
+        output = []
+        devices = w1thermsensor.W1ThermSensor.get_available_sensors()
+        for device in devices:
+            output.append(device.id)
+        return output 
 
 
     def _get_all_temperatures(self):

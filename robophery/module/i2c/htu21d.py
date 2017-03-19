@@ -48,7 +48,6 @@ class Htu21dModule(I2cModule):
             return False
 
 
-    @property
     def get_raw_temp(self):
         """
         Reads the raw temperature from the sensor.
@@ -62,7 +61,6 @@ class Htu21dModule(I2cModule):
         return raw
 
 
-    @property
     def get_raw_humidity(self):
         """
         Reads the raw relative humidity from the sensor.
@@ -80,7 +78,7 @@ class Htu21dModule(I2cModule):
         """
         Gets the temperature in degrees celsius.
         """
-        raw = self.get_raw_temp
+        raw = self.get_raw_temp()
         temp = float(raw)/65536 * 175.72
         temp -= 46.85
         return temp
@@ -90,7 +88,7 @@ class Htu21dModule(I2cModule):
         """
         Gets the relative humidity.
         """
-        raw = self.get_raw_humidity
+        raw = self.get_raw_humidity()
         rh = float(raw)/65536 * 125
         rh -= 6
         return rh
@@ -128,10 +126,12 @@ class Htu21dModule(I2cModule):
         humid = self.get_humidity()
         humid_time_stop = time.time()
         humid_time_delta = humid_time_stop - humid_time_start
-        return [
+        data = [
             (self._name, 'temperature', temp, temp_time_delta),
             (self._name, 'humidity', humid, humid_time_delta),
         ]
+        self._log_data(data)
+        return data
 
 
     def meta_data(self):

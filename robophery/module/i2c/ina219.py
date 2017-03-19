@@ -194,8 +194,33 @@ class Ina219Module(I2cModule):
         """
         Get all sensor readings.
         """
-        return [
+        data = [
             (self._name, 'voltage', self.get_shunt_voltage()),
             (self._name, 'current', self.get_current()),
-            (self._name, 'power', self.get_power()),
+            #(self._name, 'power', self.get_power()),
         ]
+        self._log_data(data)
+        return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {
+            'voltage': {
+                'type': 'gauge',
+                'unit': 'V',
+                'precision': 0.0003,
+                'range_low': 0,
+                'range_high': 26,
+                'sensor': self.DEVICE_NAME
+            },
+            'current': {
+                'type': 'gauge',
+                'unit': 'A',
+                'precision': 0.0008,
+                'range_low': 0,
+                'range_high': 3.2,
+                'sensor': self.DEVICE_NAME
+            },
+        }

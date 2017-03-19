@@ -231,10 +231,12 @@ class Bmp085Module(I2cModule):
         press = self.read_pressure()
         press_time_stop = time.time()
         press_time_delta = press_time_stop - press_time_start
-        return [
+        data = [
             (self._name, 'temperature', temp, temp_time_delta),
             (self._name, 'pressure', press, press_time_delta),
         ]
+        self._log_data(data)
+        return data
 
 
     def meta_data(self):

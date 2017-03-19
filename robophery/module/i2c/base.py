@@ -7,6 +7,10 @@ class I2cModule(Module):
         self._interface.setup_addr(self._addr)
 
 
+    def __str__(self):
+        return "{0} (connected to {1}, address {2:#x})".format(self._base_name(), self._interface._name, self._addr)
+
+
     def writeRaw8(self, value):
         self._interface.writeRaw8(self._addr, value)
 

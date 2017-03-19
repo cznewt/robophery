@@ -12,6 +12,14 @@ class SwitchModule(GpioModule):
         super(SwitchModule, self).__init__(*args, **kwargs)
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self.setup_pin(self._pin, self.GPIO_MODE_IN)
+        self._event_count = 0
+        self._time_count = 0
+        edge = self._interface.GPIO_EVENT_RISING
+        self.add_event_detect(self._pin, edge, callback=self._process_edge)
+
+
+    def _process_edge(self, pin):
+        self._event_count += 1
 
 
     def commit_action(self, action):
@@ -23,15 +31,13 @@ class SwitchModule(GpioModule):
         """
         Switch status readings.
         """
-        if self.is_low(self._pin):
-            state = 0
-        else:
-            state = 1
-        press_count = press_delta = state
-        return [
-            (self._name, 'press_count', press_count),
-            (self._name, 'press_delta', press_delta),
+        data = [
+            (self._name, 'on_total', self._event_count, 0),
+            (self._name, 'on_delta', self._event_count, 0),
         ]
+        self._log_data(data)
+        return data
+
 
 
     def meta_data(self):
@@ -39,7 +45,7 @@ class SwitchModule(GpioModule):
         Get the readings meta-data.
         """
         return {
-            'press_count': {
+            'on_total': {
                 'type': 'counter',
                 'unit': 's',
                 'precision': 0.1,
@@ -47,7 +53,7 @@ class SwitchModule(GpioModule):
                 'range_high': None,
                 'sensor': 'switch'
             },
-            'press_delta': {
+            'on_delta': {
                 'type': 'delta',
                 'unit': 's',
                 'precision': 0.1,

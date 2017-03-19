@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import sys
+import os
 from oslo_config import cfg
 from robophery.base import ModuleManager
 from robophery.conf import *
@@ -28,7 +29,7 @@ def _config(module_conf, opts = None):
         'log_handlers': ['console',],
         'read_interval': 2000,
         'platform': 'raspberrypi',
-        'config': RPI_PLATFORM
+        'config': RPI_PCF_PLATFORM
     }
     conf['config']['comm'] = {
         'default-mqtt': LINUX_MQTT_COMM,
@@ -43,6 +44,16 @@ def _config(module_conf, opts = None):
         CONF(sys.argv[1:])
         conf['config']['module']['module'].update(CONF)
     return conf
+
+# Manager service
+
+
+def manager_service():
+    sys.path.append("/etc/robophery")
+    from robophery_conf import CONF
+    config = _config(CONF)
+    manager = ModuleManager(**config)
+    manager.run()
 
 # I2C modules
 
@@ -114,6 +125,12 @@ def module_l293d():
         raise ValueError("Forward pin must be set.")
     if config['config']['module']['module']['backward_pin'] == None:
         raise ValueError("Backward pin must be set.")
+    manager = ModuleManager(**config)
+    manager.run()
+
+
+def module_hd44780_pcf():
+    config = _config(HD44780_PFC_MODULE, GPIO_OPTS)
     manager = ModuleManager(**config)
     manager.run()
 

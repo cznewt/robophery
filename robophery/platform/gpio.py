@@ -18,9 +18,9 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
+from robophery.base import Interface
 
-
-class GpioInterface(object):
+class GpioInterface(Interface):
     """
     Base class for implementing digital IO bus.
     """
@@ -41,6 +41,7 @@ class GpioInterface(object):
 
     def __init__(self, *args, **kwargs):
         self._pins_used = []
+        super(GpioInterface, self).__init__(*args, **kwargs)
 
 
     def _use_pin(pin):
@@ -189,4 +190,3 @@ class GpioInterface(object):
     def _bit2(self, src, bit, val):
         bit = 1 << bit
         return (src | bit) if val else (src & ~bit)
-
