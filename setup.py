@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from setuptools import setup
+from setuptools import setup, find_packages
 
 with open('README.rst') as readme:
     long_description = ''.join(readme.readlines())
@@ -14,8 +14,7 @@ setup(
     author_email='ales.komarek@newt.cz',
     license='Apache Software License',
     url='http://www.github.cz/cznewt/robophery',
-    packages=['robophery'],
-    package_dir={'robophery': 'robophery'},
+    packages=find_packages(exclude=['.txt']),
     classifiers=[
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: Apache Software License',
