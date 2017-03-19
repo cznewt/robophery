@@ -99,17 +99,17 @@ class Pca9685PwmInterface(PwmInterface):
         """
         Sets a single PWM channel.
         """
-        self._parent_interface.write8(self.LED0_ON_L+4*channel, on & 0xFF)
-        self._parent_interface.write8(self.LED0_ON_H+4*channel, on >> 8)
-        self._parent_interface.write8(self.LED0_OFF_L+4*channel, off & 0xFF)
-        self._parent_interface.write8(self.LED0_OFF_H+4*channel, off >> 8)
+        self._parent_interface.write8(self._parent_address, self.LED0_ON_L+4*channel, on & 0xFF)
+        self._parent_interface.write8(self._parent_address, self.LED0_ON_H+4*channel, on >> 8)
+        self._parent_interface.write8(self._parent_address, self.LED0_OFF_L+4*channel, off & 0xFF)
+        self._parent_interface.write8(self._parent_address, self.LED0_OFF_H+4*channel, off >> 8)
 
 
     def set_all_pwm(self, on, off):
         """
         Sets all PWM channels.
         """
-        self._parent_interface.write8(self.ALL_LED_ON_L, on & 0xFF)
-        self._parent_interface.write8(self.ALL_LED_ON_H, on >> 8)
-        self._parent_interface.write8(self.ALL_LED_OFF_L, off & 0xFF)
-        self._parent_interface.write8(self.ALL_LED_OFF_H, off >> 8)
+        self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_L, on & 0xFF)
+        self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_H, on >> 8)
+        self._parent_interface.write8(self._parent_address, self.ALL_LED_OFF_L, off & 0xFF)
+        self._parent_interface.write8(self._parent_address, self.ALL_LED_OFF_H, off >> 8)
