@@ -11,7 +11,7 @@ class PwmInterface(Interface):
 
 
     def _use_pin(self, pin):
-        self._pins_used.append(self, pin)
+        self._pins_used.append(pin)
 
 
     def setup_pin(self, pin, dutycycle, frequency=2000):
