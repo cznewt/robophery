@@ -14,7 +14,7 @@ class LinuxGraphiteCarbonComm(GraphiteCarbonComm):
 
 
     def send_datum(self, datum):
-        message = ()
+        message = []
         log_message = {}
         current_time = int(time.time())
         for name, value in datum.items():
