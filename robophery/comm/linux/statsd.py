@@ -11,7 +11,7 @@ class LinuxStatsdComm(StatsdComm):
         self._prefix = kwargs.get('prefix', self._manager._name)
         self._client = StatsdClient(host=self._host, port=self._port,
             sample_rate=self._sample_rate, prefix=self._prefix)
-        super(GenericStatsdComm, self).__init__(*args, **kwargs)
+        super(LinuxStatsdComm, self).__init__(*args, **kwargs)
 
 
     def send_datum(self, datum):
