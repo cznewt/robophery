@@ -19,7 +19,7 @@ class LinuxGraphiteCarbonComm(GraphiteCarbonComm):
         current_time = int(time.time())
         for name, value in datum.items():
             for value_name, value_value in value.items():
-                bucket = "{0}.{1}".format(name, value_name)
+                bucket = "{0}.{1}.{2}".format(self._prefix, name, value_name)
                 message.append("{0} {1} {2}".format(bucket, value_value, current_time))
                 log_message[bucket] = value_value
         self._log.debug("Published buckets {0} to {1}.".format(log_message, self._host))
