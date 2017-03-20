@@ -1,7 +1,7 @@
 from robophery.comm.statsd import StatsdComm
 from robophery.utils.statsd import StatsdClient
 
-class GenericStatsdComm(StatsdComm):
+class LinuxStatsdComm(StatsdComm):
 
     def __init__(self, *args, **kwargs):
         self._host = kwargs.get('host', 'localhost')
