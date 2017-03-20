@@ -61,8 +61,9 @@ class Pca9685PwmInterface(PwmInterface):
         self._parent_address = kwargs['parent']['address']
         self._parent_interface.setup_addr(self._parent_address)
         self._pins_available = self.AVAILABLE_PINS
+        self._frequency = None
         super(Pca9685PwmInterface, self).__init__(*args, **kwargs)
-        self.setup_pins(0, 0)
+        self.set_all_duty_cycle(0)
         self._parent_interface.write8(self._parent_address, self.MODE2, self.OUTDRV)
         self._parent_interface.write8(self._parent_address, self.MODE1, self.ALLCALL)
         # wait for oscillator
@@ -75,53 +76,47 @@ class Pca9685PwmInterface(PwmInterface):
         self._msleep(5)
 
 
-    def set_duty_cycle(self, pin, dutycycle):
-        """
-        Set percent duty cycle of PWM output on specified pin. Duty cycle must
-        be a value 0.0 to 100.0 (inclusive).
-        """
-        pass
-
-
-    def set_frequency(self, pin, frequency):
-    #def set_pwm_freq(self, freq):
+    def set_frequency(self, frequency):
         """
         Set the PWM frequency to the provided value in hertz.
         """
         prescaleval = 25000000.0    # 25MHz
         prescaleval /= 4096.0       # 12-bit
-        prescaleval /= float(freq)
+        prescaleval /= float(frequency)
         prescaleval -= 1.0
-        self._log.debug('Setting PWM frequency to {0} Hz'.format(freq))
+        self._log.debug('Setting PWM frequency to {0} Hz'.format(frequency))
         self._log.debug('Estimated pre-scale: {0}'.format(prescaleval))
         prescale = int(math.floor(prescaleval + 0.5))
         self._log.debug('Final pre-scale: {0}'.format(prescale))
-        oldmode = self.readU8(self._parent_address, self.MODE1);
+        oldmode = self._parent_interface.readU8(self._parent_address, self.MODE1);
         newmode = (oldmode & 0x7F) | 0x10    # sleep
         self._parent_interface.write8(self._parent_address, self.MODE1, newmode)  # go to sleep
         self._parent_interface.write8(self._parent_address, self.PRESCALE, prescale)
         self._parent_interface.write8(self._parent_address, self.MODE1, oldmode)
         self._msleep(5)
         self._parent_interface.write8(self._parent_address, self.MODE1, oldmode | 0x80)
+        self._frequency = frequency
 
-    def setup_pin(self, pin, dutycycle, frequency=2000):
+
+    def set_duty_cycle(self, pin, dutycycle):
         """
-        Sets a single PWM pin.
+        Set percent duty cycle of PWM output on specified pin. Duty cycle must
+        be a value 0.0 to 100.0 (inclusive).
         """
         on = 0
-        off = 0
+        off = dutycycle
         self._parent_interface.write8(self._parent_address, self.LED0_ON_L+4*pin, on & 0xFF)
         self._parent_interface.write8(self._parent_address, self.LED0_ON_H+4*pin, on >> 8)
         self._parent_interface.write8(self._parent_address, self.LED0_OFF_L+4*pin, off & 0xFF)
         self._parent_interface.write8(self._parent_address, self.LED0_OFF_H+4*pin, off >> 8)
 
 
-    def setup_pins(self, dutycycle, frequency=2000):
+    def set_all_duty_cycle(self, dutycycle):
         """
         Sets all PWM channels.
         """
         on = 0
-        off = 0
+        off = dutycycle
         self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_L, on & 0xFF)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_H, on >> 8)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_OFF_L, off & 0xFF)
