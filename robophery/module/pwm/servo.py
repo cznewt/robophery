@@ -21,7 +21,7 @@ class ServoModule(PwmModule):
         self._reverse_logic = kwargs.get('reverse_logic', False)
         self._offset_angle = kwargs.get('offset_angle', 0)
         super(ServoModule, self).__init__(*args, **kwargs)
-        self.setup_pin(self._pin, 0)
+        self._use_pin(self._pin)
         self.set_angle(self._angle)
 
 
