@@ -112,7 +112,7 @@ class Pca9685PwmInterface(PwmInterface):
         be a value 0.0 to 100.0 (inclusive).
         """
         on = 0
-        off = dutycycle
+        off = int(dutycycle)
         self._parent_interface.write8(self._parent_address, self.LED0_ON_L+4*pin, on & 0xFF)
         self._parent_interface.write8(self._parent_address, self.LED0_ON_H+4*pin, on >> 8)
         self._parent_interface.write8(self._parent_address, self.LED0_OFF_L+4*pin, off & 0xFF)
@@ -124,7 +124,7 @@ class Pca9685PwmInterface(PwmInterface):
         Sets all PWM channels.
         """
         on = 0
-        off = dutycycle
+        off = int(dutycycle)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_L, on & 0xFF)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_ON_H, on >> 8)
         self._parent_interface.write8(self._parent_address, self.ALL_LED_OFF_L, off & 0xFF)
