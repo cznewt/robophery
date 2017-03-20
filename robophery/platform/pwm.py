@@ -10,7 +10,7 @@ class PwmInterface(Interface):
         super(PwmInterface, self).__init__(*args, **kwargs)
 
 
-    def _use_pin(pin):
+    def _use_pin(self, pin):
         self._pins_used.append(self, pin)
 
 

@@ -76,6 +76,14 @@ class Pca9685PwmInterface(PwmInterface):
         self._msleep(5)
 
 
+    def setup_pin(self, pin, dutycycle=0, frequency=2000):
+        """
+        Enable PWM output on specified pin. Set to initial percent duty cycle
+        value (0.0 to 100.0) and frequency (in Hz).
+        """
+        self._use_pin(pin)
+
+
     def set_frequency(self, frequency):
         """
         Set the PWM frequency to the provided value in hertz.
