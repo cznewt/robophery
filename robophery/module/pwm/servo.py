@@ -1,4 +1,4 @@
-
+import time
 from robophery.module.pwm.base import PwmModule
 
 
