@@ -32,13 +32,19 @@ class PahoMqttComm(MqttComm):
         self._log.debug("Received message {0} on topic {1}". format(msg.payload, msg.topic))
 
 
-    def send_datum(self, datum):
-        publish.single(self._publish_topic,
-            payload=self._to_string(datum),
-            hostname=self._host,
-            client_id=self._manager._name,
-#            auth=auth,
-#            tls=tls,
-            port=self._port,
-            protocol=mqtt.MQTTv311)
-        self._log.debug("Published message {0} to {1}.".format(datum, self._host))
+    def send_data(self, data):
+        final_data = {}
+        for name, datum in data.items():
+            names = name.split('.')
+            final_data[names[0]][names[1]] = datum['avg_value']
+        for name, datum in final_data.items():
+            topic = "{0}/{1}".format(self._publish_topic, name)
+            publish.single(topic,
+                payload=self._to_string(datum),
+                hostname=self._host,
+                client_id=self._manager._name,
+    #            auth=auth,
+    #            tls=tls,
+                port=self._port,
+                protocol=mqtt.MQTTv311)
+            self._log.debug("Published message {0} to {1}.".format(datum, self._host))
