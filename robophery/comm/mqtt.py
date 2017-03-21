@@ -12,7 +12,7 @@ class MqttComm(object):
         self._host = kwargs.get('host', '127.0.0.1')
         self._port = kwargs.get('port', 1883)
         self._subscribe_topic = kwargs.get('subscribe_topic', 'robophery_sub/{1}#'.format(self._name))
-        self._publish_topic = kwargs.get('publish_topic', 'robophery_pub/{1}'.format(self._name))
+        self._publish_topic = kwargs.get('publish_topic', 'robophery_pub/{0}'.format(self._name))
         self._publish_format = kwargs.get('publish_format', 'SenML')
         self._log = self._manager._get_logger(self._name)
         self._log.info("Started communication channel {0}.".format(self))
