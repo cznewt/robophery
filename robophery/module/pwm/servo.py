@@ -24,7 +24,13 @@ class ServoModule(PwmModule):
         self.setup_pin(self._pin)
         self.set_angle(self._angle)
         self.set_angle(180)
+        time.sleep(2)
         self.set_angle(0)
+        time.sleep(2)
+        self.set_angle(90)
+        time.sleep(2)
+        self.set_angle(0)
+        time.sleep(2)
         self.set_angle(90)
 
 
