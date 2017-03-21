@@ -23,6 +23,9 @@ class ServoModule(PwmModule):
         super(ServoModule, self).__init__(*args, **kwargs)
         self.setup_pin(self._pin)
         self.set_angle(self._angle)
+        self.set_angle(180)
+        self.set_angle(0)
+        self.set_angle(90)
 
 
     def reset(self):

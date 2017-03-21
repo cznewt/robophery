@@ -88,21 +88,22 @@ class Pca9685PwmInterface(PwmInterface):
         """
         Set the PWM frequency to the provided value in hertz.
         """
-        prescaleval = 25000000.0    # 25MHz
-        prescaleval /= 4096.0       # 12-bit
-        prescaleval /= float(frequency)
-        prescaleval -= 1.0
-        self._log.debug('Setting PWM frequency to {0} Hz'.format(frequency))
-        self._log.debug('Estimated pre-scale: {0}'.format(prescaleval))
-        prescale = int(math.floor(prescaleval + 0.5))
-        self._log.debug('Final pre-scale: {0}'.format(prescale))
-        oldmode = self._parent_interface.readU8(self._parent_address, self.MODE1);
-        newmode = (oldmode & 0x7F) | 0x10    # sleep
-        self._parent_interface.write8(self._parent_address, self.MODE1, newmode)  # go to sleep
-        self._parent_interface.write8(self._parent_address, self.PRESCALE, prescale)
-        self._parent_interface.write8(self._parent_address, self.MODE1, oldmode)
-        self._msleep(5)
-        self._parent_interface.write8(self._parent_address, self.MODE1, oldmode | 0x80)
+        if frequency != self._frequency:
+            prescaleval = 25000000.0    # 25MHz
+            prescaleval /= 4096.0       # 12-bit
+            prescaleval /= float(frequency)
+            prescaleval -= 1.0
+            self._log.debug('Setting PWM frequency to {0} Hz'.format(frequency))
+            self._log.debug('Estimated pre-scale: {0}'.format(prescaleval))
+            prescale = int(math.floor(prescaleval + 0.5))
+            self._log.debug('Final pre-scale: {0}'.format(prescale))
+            oldmode = self._parent_interface.readU8(self._parent_address, self.MODE1);
+            newmode = (oldmode & 0x7F) | 0x10    # sleep
+            self._parent_interface.write8(self._parent_address, self.MODE1, newmode)  # go to sleep
+            self._parent_interface.write8(self._parent_address, self.PRESCALE, prescale)
+            self._parent_interface.write8(self._parent_address, self.MODE1, oldmode)
+            self._msleep(5)
+            self._parent_interface.write8(self._parent_address, self.MODE1, oldmode | 0x80)
         self._frequency = frequency
 
 
