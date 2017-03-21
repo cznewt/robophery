@@ -36,7 +36,7 @@ class ServoModule(PwmModule):
         deg = (angle / 1.8) / 100
         pulse = self.SERVO_MIN_PULSE + (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * deg
         self._log.debug('Pulse length: {0}'.format(pulse))
-        self.set_pulse_length(pulse)
+        self.set_duty_cycle(self._pin, pulse)
 
 
     def set_pulse_length(self, pulse):
