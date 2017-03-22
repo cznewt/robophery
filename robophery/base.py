@@ -66,10 +66,10 @@ class ModuleManager(object):
 
     def _get_logger(self, name):
         log = logging.getLogger(name)
-        if 'console' in self._log_handlers:
-            console_handler = logging.StreamHandler()
-            console_handler.setLevel(logging.DEBUG)
-            log.addHandler(console_handler)
+#        if 'console' in self._log_handlers:
+#            console_handler = logging.StreamHandler()
+#            console_handler.setLevel(logging.DEBUG)
+#            log.addHandler(console_handler)
         return log
 
 
