@@ -51,4 +51,4 @@ class PahoMqttComm(MqttComm):
                            port=self._port,
                            protocol=mqtt.MQTTv311)
             self._log.debug(
-                "Published message {0} to {1}.".format(datum, self._host))
+                "Published message {0} to {1}/{2}.".format(datum, self._host, topic))
