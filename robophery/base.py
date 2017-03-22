@@ -140,13 +140,20 @@ class ModuleManager(object):
         Initialise platform bus interfaces
         """
         for interface_name, interface in interfaces.items():
-            InterfaceClass = self._load_class(interface.get('class'))
-            interface['name'] = interface_name
-            interface['manager'] = self
+            if 'parent' not in interface:
+                InterfaceClass = self._load_class(interface.get('class'))
+                interface['name'] = interface_name
+                interface['manager'] = self
+                self._interface[interface_name] = InterfaceClass(**interface)
+        for interface_name, interface in interfaces.items():
             if 'parent' in interface:
+                InterfaceClass = self._load_class(interface.get('class'))
+                interface['name'] = interface_name
+                interface['manager'] = self
                 interface['parent']['interface'] = self._interface[
                     interface['parent']['interface']]
-            self._interface[interface_name] = InterfaceClass(**interface)
+                self._interface[interface_name] = InterfaceClass(**interface)
+
 
     def _setup_modules(self, modules={}):
         """
