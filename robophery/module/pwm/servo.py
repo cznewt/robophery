@@ -17,19 +17,20 @@ class ServoModule(PwmModule):
 
     def __init__(self, *args, **kwargs):
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
-        self._angle = kwargs.get('angle', 90)
+        self._angle = kwargs.get('angle', None)
         self._reverse_logic = kwargs.get('reverse_logic', False)
         self._offset_angle = kwargs.get('offset_angle', 0)
         super(ServoModule, self).__init__(*args, **kwargs)
         self.setup_pin(self._pin)
-        self.set_angle(self._angle)
-        self.set_angle(135)
-        time.sleep(2)
-        self.set_angle(45)
-        time.sleep(2)
-        self.set_angle(135)
-        time.sleep(2)
-        self.set_angle(90)
+        if self._angle is not None:
+            self.set_angle(self._angle)
+        #self.set_angle(135)
+        #time.sleep(2)
+        #self.set_angle(45)
+        #time.sleep(2)
+        #self.set_angle(135)
+        #time.sleep(2)
+        #self.set_angle(90)
 
 
     def reset(self):
@@ -38,6 +39,7 @@ class ServoModule(PwmModule):
 
     def set_angle(self, angle):
         deg = (angle / 1.8) / 100
+        self._angle = angle
         pulse = self.SERVO_MIN_PULSE + (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * deg
         self._log.debug('Pulse length: {0}'.format(pulse))
         self.set_duty_cycle(self._pin, pulse)
