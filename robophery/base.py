@@ -254,7 +254,8 @@ class ModuleManager(object):
                 self._read_iter += 1
             else:
                 self._publish_data()
-            time.sleep(sleep_delta)
+            if sleep_delta > 0:
+                time.sleep(sleep_delta)
 
     def run(self, modules=None):
         """
