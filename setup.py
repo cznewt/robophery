@@ -38,6 +38,7 @@ setup(
             'rp_pfp = robophery.cli:module_pfp',
             'rp_relay = robophery.cli:module_relay',
             'rp_si7021 = robophery.cli:module_si7021',
+            'rp_servo = robophery.cli:module_servo',
             'rp_switch = robophery.cli:module_switch',
         ],
     },
