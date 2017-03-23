@@ -151,11 +151,15 @@ def module_switch():
 
 def module_servo():
     OPTS = [
+        cfg.Opt('data_pin',
+                short='p',
+                default=None,
+                help='Module GPIO pin'),
         cfg.Opt('angle',
                 short='a',
                 default=90)
     ]
-    config = _config(SERVO_MODULE, GPIO_OPTS + OPTS)
+    config = _config(SERVO_MODULE, OPTS)
     manager = ModuleManager(**config)
     manager.run()
 
