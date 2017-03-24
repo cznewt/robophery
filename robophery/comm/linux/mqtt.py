@@ -28,9 +28,9 @@ class PahoMqttComm(MqttComm):
         """
         The callback for when a PUBLISH message is received from the broker.
         """
-        self.receive_data(msg.topic, msg.payload)
         self._log.debug("Received message {0} on topic {1}". format(
             msg.payload, msg.topic))
+        self.receive_data(msg.topic, msg.payload)
 
     def send_data(self, data):
         final_data = {}

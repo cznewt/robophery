@@ -1,4 +1,3 @@
-import json
 from robophery.comm.mqtt import MqttComm
 from umqtt.simple import MQTTClient
 
@@ -21,6 +20,7 @@ class ModeMcuMqttComm(MqttComm):
         The callback for when a PUBLISH message is received from the broker.
         """
         self._log.debug("Received message {0} on topic {1}".format(msg, topic))
+        self.receive_data(topic, msg)
 
     def send_datum(self, datum):
         self._client.publish(self._publish_topic, self._to_string(datum))

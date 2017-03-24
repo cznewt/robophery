@@ -7,7 +7,7 @@ class Dht11Module(GpioModule):
     """
     Module for DHT11 temperature and humidity sensor.
     """
-    DEVICE_NAME = 'gpio-dht11'
+    DEVICE_NAME = 'dht11'
 
 
     def __init__(self, *args, **kwargs):

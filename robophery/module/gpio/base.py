@@ -6,16 +6,13 @@ class GpioModule(Module):
     GPIO_MODE_OUT = 0
     GPIO_MODE_IN = 1
 
-
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
         self._setup_interface()
 
-
     def _normalize_pin(self, pin):
         value = int(pin)
         return value
-
 
     def _setup_interface(self):
         self.setup_pin = self._interface.setup_pin

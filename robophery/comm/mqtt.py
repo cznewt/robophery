@@ -29,8 +29,13 @@ class MqttComm(object):
     def _to_string(self, datum):
         return json.dumps(datum)
 
-    def receive_data(self, topic, data):
-        pass
+    def receive_data(self, topic, raw_data):
+        data = json.loads(raw_data)
+        tgt = data.get('tgt', 'unknown')
+        fun = data.get('fun', 'get_data')
+        arg = data.get('arg', None)
+        if tgt in self._module:
+            output = self._module[tgt].commit_action(fun, arg)
 
     def send_data(self, data):
         for name, datum in data.items():

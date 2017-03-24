@@ -17,11 +17,9 @@ class HcSr04Module(GpioModule):
         self.setup_pin(self._echo_pin, self.GPIO_MODE_IN)
         self._msleep(2000)
 
-
     def __del__(self):
         self.cleanup(self._trigger_pin)
         self.cleanup(self._echo_pin)
-
 
     def read_data(self):
         """
@@ -31,12 +29,12 @@ class HcSr04Module(GpioModule):
         self._usleep(10)
         self.set_low(self._trigger_pin)
 
-        #while self.is_low(self._echo_pin):
+        # while self.is_low(self._echo_pin):
         #    pulse_start = time.time()
-        #while self.is_high(self._echo_pin):
+        # while self.is_high(self._echo_pin):
         #    pulse_end = time.time()
 
-        #pulse_duration = pulse_end - pulse_start
+        # pulse_duration = pulse_end - pulse_start
         pulse_duration = 0.001
         distance = pulse_duration * 1715
 
@@ -46,14 +44,13 @@ class HcSr04Module(GpioModule):
         self._log_data(data)
         return data
 
-
     def meta_data(self):
         """
         Get the readings meta-data.
         """
         return {
             'distance': {
-                'type': 'gauge', 
+                'type': 'gauge',
                 'unit': 'm',
                 'precision': 0.01,
                 'range_low': 0.03,

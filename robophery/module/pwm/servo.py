@@ -6,7 +6,7 @@ class ServoModule(PwmModule):
     """
     Module for generic PWM servo control.
     """
-    DEVICE_NAME = 'pwm-servo'
+    DEVICE_NAME = 'servo'
 
     SERVO_MIN_ANGLE = 0
     SERVO_MAX_ANGLE = 180
@@ -24,13 +24,16 @@ class ServoModule(PwmModule):
         if self._angle is not None:
             self._angle = int(self._angle)
             self.set_angle(self._angle)
-        # self.set_angle(135)
-        # time.sleep(2)
-        # self.set_angle(45)
-        # time.sleep(2)
-        # self.set_angle(135)
-        # time.sleep(2)
-        # self.set_angle(90)
+
+    def commit_action(self, fun, arg=None):
+        if fun == 'read_data':
+            return self.read_data()
+        elif fun == 'set_angle':
+            self.set_angle(arg[0])
+            return self.read_data()
+        elif fun == 'reset':
+            self.reset()
+            return self.read_data()
 
     def reset(self):
         self._interface._parent_interface.writeRaw8(0x00, 0x06)

@@ -7,14 +7,12 @@ class RelayModule(GpioModule):
     """
     DEVICE_NAME = 'gpio-relay'
 
-
     def __init__(self, *args, **kwargs):
         super(RelayModule, self).__init__(*args, **kwargs)
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self.setup_pin(self._pin, self.GPIO_MODE_OUT)
         self._power = 0
         self.set_low(self._pin)
-
 
     def commit_action(self, action):
         if action == 'read_data':
@@ -26,7 +24,6 @@ class RelayModule(GpioModule):
             self.turn_off()
             return self.read_data()
 
-
     def turn_on(self):
         """
         Turn on the relay.
@@ -34,14 +31,12 @@ class RelayModule(GpioModule):
         self._power = 1
         self.set_high(self._pin)
 
-
     def turn_off(self):
         """
         Turn off the relay.
         """
         self._power = 0
         self.set_low(self._pin)
-
 
     def read_data(self):
         """
@@ -53,7 +48,6 @@ class RelayModule(GpioModule):
         ]
         self._log_data(data)
         return data
-
 
     def meta_data(self):
         """
