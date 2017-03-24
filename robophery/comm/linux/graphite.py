@@ -12,7 +12,6 @@ class LinuxGraphiteCarbonComm(GraphiteCarbonComm):
         self._prefix = kwargs.get('prefix', self._manager._name)
         super(LinuxGraphiteCarbonComm, self).__init__(*args, **kwargs)
 
-
     def send_datum(self, datum):
         message = []
         log_message = {}
