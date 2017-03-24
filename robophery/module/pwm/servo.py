@@ -22,6 +22,7 @@ class ServoModule(PwmModule):
         super(ServoModule, self).__init__(*args, **kwargs)
         self.setup_pin(self._pin)
         if self._angle is not None:
+            self._angle = int(self._angle)
             self.set_angle(self._angle)
         # self.set_angle(135)
         # time.sleep(2)
