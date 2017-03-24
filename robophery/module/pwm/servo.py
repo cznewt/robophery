@@ -14,7 +14,6 @@ class ServoModule(PwmModule):
     SERVO_MIN_PULSE = 150
     SERVO_MAX_PULSE = 600
 
-
     def __init__(self, *args, **kwargs):
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self._angle = kwargs.get('angle', None)
@@ -24,26 +23,24 @@ class ServoModule(PwmModule):
         self.setup_pin(self._pin)
         if self._angle is not None:
             self.set_angle(self._angle)
-        #self.set_angle(135)
-        #time.sleep(2)
-        #self.set_angle(45)
-        #time.sleep(2)
-        #self.set_angle(135)
-        #time.sleep(2)
-        #self.set_angle(90)
-
+        # self.set_angle(135)
+        # time.sleep(2)
+        # self.set_angle(45)
+        # time.sleep(2)
+        # self.set_angle(135)
+        # time.sleep(2)
+        # self.set_angle(90)
 
     def reset(self):
         self._interface._parent_interface.writeRaw8(0x00, 0x06)
 
-
     def set_angle(self, angle):
         deg = (angle / 1.8) / 100
         self._angle = angle
-        pulse = self.SERVO_MIN_PULSE + (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * deg
-        self._log.debug('Pulse length: {0}'.format(pulse))
+        pulse = self.SERVO_MIN_PULSE + \
+            (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * deg
+        self._log.debug('Set angle {0} deg (pulse {1})'.format(angle, pulse))
         self.set_duty_cycle(self._pin, pulse)
-
 
     def set_pulse_length(self, pulse):
         # 1,000,000 us per second
@@ -52,12 +49,11 @@ class ServoModule(PwmModule):
         pulse_length //= 60
         self._log.debug('{0}us per period'.format(pulse_length))
         # 12 bits of resolution
-        pulse_length //= 4096     
+        pulse_length //= 4096
         self._log.debug('{0}us per bit'.format(pulse_length))
         pulse *= 1000
         pulse //= pulse_length
         self.set_duty_cycle(self._pin, pulse)
-
 
     def read_data(self):
         data = [
@@ -66,14 +62,13 @@ class ServoModule(PwmModule):
         self._log_data(data)
         return data
 
-
     def meta_data(self):
         """
         Get the readings meta-data.
         """
         return {
             'angle': {
-                'type': 'gauge', 
+                'type': 'gauge',
                 'unit': 'deg',
                 'precision': 0.1,
                 'range_low': 0,
