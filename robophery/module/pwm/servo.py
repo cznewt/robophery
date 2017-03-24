@@ -36,7 +36,7 @@ class ServoModule(PwmModule):
         self._interface._parent_interface.writeRaw8(0x00, 0x06)
 
     def set_angle(self, angle):
-        deg = (angle / 1.8) / 100
+        deg = int((angle / 1.8) / 100)
         self._angle = angle
         pulse = self.SERVO_MIN_PULSE + \
             (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * deg
