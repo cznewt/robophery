@@ -37,10 +37,10 @@ class ServoModule(PwmModule):
 
     def set_angle(self, angle):
         self._angle = angle
-        pulse = int(self.SERVO_MIN_PULSE + \
+        pulse = int(self.SERVO_MIN_PULSE +
             (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * angle / 180.0)
         self._log.debug('Set angle {0} deg (pulse {1})'.format(angle, pulse))
-        if pulse > self.SERVO_MIN_PULSE and pulse < self.SERVO_MAX_PULSE:
+        if pulse >= self.SERVO_MIN_PULSE and pulse <= self.SERVO_MAX_PULSE:
             self.set_duty_cycle(self._pin, pulse)
 
     def set_pulse_length(self, pulse):
