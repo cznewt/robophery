@@ -35,7 +35,10 @@ class MqttComm(object):
         fun = data.get('fun', 'get_data')
         arg = data.get('arg', None)
         if tgt in self._module:
-            output = self._module[tgt].commit_action(fun, arg)
+            output = self._manager._module[tgt].commit_action(fun, arg)
+        else:
+            output = ""
+        return output
 
     def send_data(self, data):
         for name, datum in data.items():
