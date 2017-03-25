@@ -13,7 +13,7 @@ class MqttComm(object):
         self._host = kwargs.get('host', '127.0.0.1')
         self._port = kwargs.get('port', 1883)
         self._subscribe_topic = kwargs.get(
-            'subscribe_topic', 'robophery_sub/{0}#'.format(self._manager._name))
+            'subscribe_topic', 'robophery_sub/{0}'.format(self._manager._name))
         self._publish_topic = kwargs.get(
             'publish_topic', 'robophery_pub/{0}'.format(self._manager._name))
         self._publish_format = kwargs.get('publish_format', 'SenML')
