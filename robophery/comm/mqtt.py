@@ -34,7 +34,7 @@ class MqttComm(object):
         tgt = data.get('tgt', 'unknown')
         fun = data.get('fun', 'get_data')
         arg = data.get('arg', None)
-        if tgt in self._module:
+        if tgt in self._manager._module:
             output = self._manager._module[tgt].commit_action(fun, arg)
         else:
             output = ""
