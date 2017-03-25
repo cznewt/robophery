@@ -38,7 +38,7 @@ class ServoModule(PwmModule):
             return self.read_data()
 
     def reset(self):
-        self._interface._parent_interface.writeRaw8(0x00, 0x06)
+        self._interface.reset()
 
     def set_angle(self, angle):
         self._angle = angle
