@@ -21,7 +21,9 @@ class ServoModule(PwmModule):
         self._offset_angle = kwargs.get('offset_angle', 0)
         super(ServoModule, self).__init__(*args, **kwargs)
         self.setup_pin(self._pin)
-        if self._angle is not None:
+        if self._angle is None:
+            self._angle = 90
+        else:
             self._angle = int(self._angle)
             self.set_angle(self._angle)
 
