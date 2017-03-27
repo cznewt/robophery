@@ -221,6 +221,11 @@ MCP9808_MODULE = {
     'class': 'robophery.module.i2c.mcp9808.Mcp9808Module',
 }
 
+MPU6050_MODULE = {
+    'interface': 'local_i2c',
+    'class': 'robophery.module.i2c.mpu6050.Mpu6050Module',
+}
+
 PFP_MODULE = {
     'interface': 'local_ble',
     'class': 'robophery.module.ble.pfp.ParrotFlowerPowerModule',
@@ -247,6 +252,16 @@ SWITCH_MODULE = {
     'interface': 'local_gpio',
     'class': 'robophery.module.gpio.switch.SwitchModule',
     'data_pin': None,
+}
+
+T6713_MODULE = {
+    'interface': 'local_i2c',
+    'class': 'robophery.module.i2c.tsl2561.T6713Module',
+}
+
+TSL2561_MODULE = {
+    'interface': 'local_i2c',
+    'class': 'robophery.module.i2c.tsl2561.Tsl2561Module',
 }
 
 VL53L0X_MODULE = {

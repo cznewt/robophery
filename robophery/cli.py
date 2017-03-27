@@ -78,8 +78,20 @@ def module_mcp9808():
     manager.run()
 
 
+def module_mpu6050():
+    config = _config(MPU6050_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_si7021():
     config = _config(SI7021_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
+def module_vl53l0x():
+    config = _config(VL53L0X_MODULE)
     manager = ModuleManager(**config)
     manager.run()
 
@@ -115,11 +127,11 @@ def module_l293d():
                 help='L293D pin 7 or pin 15: Clockwise positive'),
     ]
     config = _config(L293D_MODULE, OPTS)
-    if config['config']['module']['module']['power_pin'] == None:
+    if config['config']['module']['module']['power_pin'] is None:
         raise ValueError("Power pin must be set.")
-    if config['config']['module']['module']['forward_pin'] == None:
+    if config['config']['module']['module']['forward_pin'] is None:
         raise ValueError("Forward pin must be set.")
-    if config['config']['module']['module']['backward_pin'] == None:
+    if config['config']['module']['module']['backward_pin'] is None:
         raise ValueError("Backward pin must be set.")
     manager = ModuleManager(**config)
     manager.run()
@@ -133,7 +145,7 @@ def module_hd44780_pcf():
 
 def module_relay():
     config = _config(RELAY_MODULE, GPIO_OPTS)
-    if config['config']['module']['module']['data_pin'] == None:
+    if config['config']['module']['module']['data_pin'] is None:
         raise ValueError("Data pin must be set.")
     manager = ModuleManager(**config)
     manager.run()
@@ -141,7 +153,7 @@ def module_relay():
 
 def module_switch():
     config = _config(SWITCH_MODULE, GPIO_OPTS)
-    if config['config']['module']['module']['data_pin'] == None:
+    if config['config']['module']['module']['data_pin'] is None:
         raise ValueError("Data pin must be set.")
     manager = ModuleManager(**config)
     manager.run()
