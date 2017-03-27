@@ -32,8 +32,8 @@ class Bh1750Module(I2cModule):
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Bh1750Module, self).__init__(*args, **kwargs)
-        self.resolution_mode = kwargs.get('resolution_mode')
-        self.additional_delay = kwargs.get('additional_delay')
+        self.resolution_mode = kwargs.get('resolution_mode', 2)
+        self.additional_delay = kwargs.get('additional_delay', 0)
         self.set_sensitivity()
 
     def _set_mode(self, mode):
@@ -102,7 +102,7 @@ class Bh1750Module(I2cModule):
         time.sleep(basetime * (self.mtreg / 69.0) + self.additional_delay)
 
     def do_measurement(self, mode):
-        """ 
+        """
         Perform complete measurement using command
         specified by parameter mode with additional
         delay specified in parameter additional_delay.
@@ -118,17 +118,18 @@ class Bh1750Module(I2cModule):
         Get the luminosity readings.
         """
         if self.resolution_mode is 0:
-            data = self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
+            luminosity = self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
         elif self.resolution_mode is 1:
-            data = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
+            luminosity = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
         elif self.resolution_mode is 2:
-            data = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
+            luminosity = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
         else:
-            return None
-
-        return [
-            (self._name, 'luminosity', data),
+            luminosity = None
+        data = [
+            (self._name, 'luminosity', luminosity, 0),
         ]
+        self._log_data(data)
+        return data
 
     def meta_data(self):
         """
