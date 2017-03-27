@@ -7,7 +7,7 @@ class Vl53L0XModule(I2cModule):
     """
     Module for VL53L0X light to distance sensor.
     """
-    DEVICE_NAME = 'i2c-vl53l0x'
+    DEVICE_NAME = 'vl53l0x'
     # VL53L0X default address
     DEVICE_ADDR = 0x29
 
@@ -23,7 +23,6 @@ class Vl53L0XModule(I2cModule):
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Vl53L0XModule, self).__init__(*args, **kwargs)
-
         val1 = self.readU8(self.VL53L0X_REG_IDENTIFICATION_REVISION_ID)
         self._revision_id = hex(val1)
         val1 = self.readU8(self.VL53L0X_REG_IDENTIFICATION_MODEL_ID)
@@ -34,11 +33,11 @@ class Vl53L0XModule(I2cModule):
     def bswap(self, val):
         return struct.unpack('<H', struct.pack('>H', val))[0]
 
-    def mread_word_data(self, adr, reg):
-        return self.bswap(self._interface.read_word_data(self._addr, reg))
+    def mread_word_data(self, reg):
+        return self.bswap(self.readU16(reg))
 
-    def mwrite_word_data(self, adr, reg, data):
-        return bus.write_word_data(self._addr, reg, self.bswap(data))
+    def mwrite_word_data(self, reg, data):
+        return self.write16(reg, self.bswap(data))
 
     def _makeuint16(self, lsb, msb):
         return ((msb & 0xFF) << 8) | (lsb & 0xFF)
@@ -53,36 +52,21 @@ class Vl53L0XModule(I2cModule):
 
     def read_distance(self):
         val1 = self.write8(self.VL53L0X_REG_SYSRANGE_START, 0x01)
-
-#        Status = VL53L0X_RdByte(Dev, VL53L0X_REG_RESULT_RANGE_STATUS,
-#            &SysRangeStatusRegister);
-#        if (Status == VL53L0X_ERROR_NONE) {
-#            if (SysRangeStatusRegister & 0x01)
-#                *pMeasurementDataReady = 1;
-#            else
-#                *pMeasurementDataReady = 0;
-#        }
         cnt = 0
-        while (cnt < 100):  # 1 second waiting time max
+        while (cnt < 100):
+            # 1 second waiting time max
             self._msleep(10)
             val = self.readU8(self.VL53L0X_REG_RESULT_RANGE_STATUS)
             if (val & 0x01):
                 break
             cnt += 1
 
-#        if (val & 0x01):
-#            print "ready"
-#        else:
-#            print "not ready"
-
-        #Status = VL53L0X_ReadMulti(Dev, 0x14, localBuffer, 12);
         data = self.readList(0x14, 12)
         ambient_count = self._makeuint16(data[7], data[6])
         signal_count = self._makeuint16(data[9], data[8])
-        #tmpuint16 = VL53L0X_MAKEUINT16(localBuffer[11], localBuffer[10]);
         distance = self._makeuint16(data[11], data[10])
-
         range_status_internal = ((data[0] & 0x78) >> 3)
+        return distance
 
     def read_data(self):
         """
@@ -108,7 +92,7 @@ class Vl53L0XModule(I2cModule):
                 'unit': 'm',
                 'precision': 0.01,
                 'range_low': 0.03,
-                'range_high': 4,
+                'range_high': 1,
                 'sensor': self.DEVICE_NAME
             },
         }
