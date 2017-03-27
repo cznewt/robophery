@@ -8,7 +8,7 @@ class Htu21dModule(I2cModule):
     """
     Module for HTU21D temperature and humidity sensor.
     """
-    DEVICE_NAME = 'i2c-htu21d'
+    DEVICE_NAME = 'htu21d'
     # HTU21D default address
     DEVICE_ADDR = 0x40
     # Operating modes
@@ -33,7 +33,6 @@ class Htu21dModule(I2cModule):
         if self._mode not in [self.HOLD_MASTER, self.NOHOLD_MASTER]:
             raise ValueError('Unexpected mode value {0}.'.format(self._mode))
 
-
     def crc_check(self, msb, lsb, crc):
         remainder = ((msb << 8) | lsb) << 8
         remainder |= crc
@@ -47,7 +46,6 @@ class Htu21dModule(I2cModule):
         else:
             return False
 
-
     def get_raw_temp(self):
         """
         Reads the raw temperature from the sensor.
@@ -57,9 +55,7 @@ class Htu21dModule(I2cModule):
             raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
         raw &= 0xFFFC
-#        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
-
 
     def get_raw_humidity(self):
         """
@@ -70,38 +66,34 @@ class Htu21dModule(I2cModule):
             raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
         raw &= 0xFFFC
-#        self._log.debug('Raw relative humidity 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
-
 
     def get_temperature(self):
         """
         Gets the temperature in degrees celsius.
         """
         raw = self.get_raw_temp()
-        temp = float(raw)/65536 * 175.72
+        temp = float(raw) / 65536 * 175.72
         temp -= 46.85
         return temp
-
 
     def get_humidity(self):
         """
         Gets the relative humidity.
         """
         raw = self.get_raw_humidity()
-        rh = float(raw)/65536 * 125
+        rh = float(raw) / 65536 * 125
         rh -= 6
         return rh
-
 
     def get_dew_point(self):
         """
         Calculates the dew point temperature.
         """
-        den = math.log10(self.get_humidity() * self.get_partial_pressure() / 100) - self.HTU21D_A
+        den = math.log10(self.get_humidity() *
+                         self.get_partial_pressure() / 100) - self.HTU21D_A
         dew = -(self.HTU21D_B / den + self.HTU21D_C)
         return dew
-
 
     def get_partial_pressure(self):
         """
@@ -112,7 +104,6 @@ class Htu21dModule(I2cModule):
         exp = self.HTU21D_A - exp
         pp = 10 ** exp
         return pp
-
 
     def read_data(self):
         """
@@ -132,7 +123,6 @@ class Htu21dModule(I2cModule):
         ]
         self._log_data(data)
         return data
-
 
     def meta_data(self):
         """
@@ -155,12 +145,4 @@ class Htu21dModule(I2cModule):
                 'range_high': 100,
                 'sensor': self.DEVICE_NAME
             },
-#            'dew_point_temperature': {
-#                'type': 'gauge',
-#                'unit': 'C',
-#                'precision': 0.25,
-#                'range_low': 0,
-#                'range_high': 100,
-#                'sensor': self.DEVICE_NAME
-#            }
         }

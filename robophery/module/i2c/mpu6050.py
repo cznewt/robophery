@@ -11,7 +11,7 @@ class Mpu6050Module(I2cModule):
     """
     MPU6050 PWM MPU-6050 Gyroscope / Accelerometer sensor.
     """
-    DEVICE_NAME = 'i2c-mpu605'
+    DEVICE_NAME = 'mpu6050'
     DEVICE_ADDR = 0x68
 
     # Global Variables

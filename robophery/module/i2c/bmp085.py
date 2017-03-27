@@ -27,44 +27,43 @@ class Bmp085Module(I2cModule):
     """
     Module for BMP085/BMP180 temperature and pressure sensor.
     """
-    DEVICE_NAME = 'i2c-bmp085'
+    DEVICE_NAME = 'bmp085'
     DEVICE_ADDR = 0x77
 
     # Operating Modes
-    BMP085_ULTRALOWPOWER     = 0
-    BMP085_STANDARD          = 1
-    BMP085_HIGHRES           = 2
-    BMP085_ULTRAHIGHRES      = 3
+    BMP085_ULTRALOWPOWER = 0
+    BMP085_STANDARD = 1
+    BMP085_HIGHRES = 2
+    BMP085_ULTRAHIGHRES = 3
 
     # BMP085 Registers
-    BMP085_CAL_AC1           = 0xAA  # R   Calibration data (16 bits)
-    BMP085_CAL_AC2           = 0xAC  # R   Calibration data (16 bits)
-    BMP085_CAL_AC3           = 0xAE  # R   Calibration data (16 bits)
-    BMP085_CAL_AC4           = 0xB0  # R   Calibration data (16 bits)
-    BMP085_CAL_AC5           = 0xB2  # R   Calibration data (16 bits)
-    BMP085_CAL_AC6           = 0xB4  # R   Calibration data (16 bits)
-    BMP085_CAL_B1            = 0xB6  # R   Calibration data (16 bits)
-    BMP085_CAL_B2            = 0xB8  # R   Calibration data (16 bits)
-    BMP085_CAL_MB            = 0xBA  # R   Calibration data (16 bits)
-    BMP085_CAL_MC            = 0xBC  # R   Calibration data (16 bits)
-    BMP085_CAL_MD            = 0xBE  # R   Calibration data (16 bits)
-    BMP085_CONTROL           = 0xF4
-    BMP085_TEMPDATA          = 0xF6
-    BMP085_PRESSUREDATA      = 0xF6
+    BMP085_CAL_AC1 = 0xAA  # R   Calibration data (16 bits)
+    BMP085_CAL_AC2 = 0xAC  # R   Calibration data (16 bits)
+    BMP085_CAL_AC3 = 0xAE  # R   Calibration data (16 bits)
+    BMP085_CAL_AC4 = 0xB0  # R   Calibration data (16 bits)
+    BMP085_CAL_AC5 = 0xB2  # R   Calibration data (16 bits)
+    BMP085_CAL_AC6 = 0xB4  # R   Calibration data (16 bits)
+    BMP085_CAL_B1 = 0xB6  # R   Calibration data (16 bits)
+    BMP085_CAL_B2 = 0xB8  # R   Calibration data (16 bits)
+    BMP085_CAL_MB = 0xBA  # R   Calibration data (16 bits)
+    BMP085_CAL_MC = 0xBC  # R   Calibration data (16 bits)
+    BMP085_CAL_MD = 0xBE  # R   Calibration data (16 bits)
+    BMP085_CONTROL = 0xF4
+    BMP085_TEMPDATA = 0xF6
+    BMP085_PRESSUREDATA = 0xF6
 
     # Commands
-    BMP085_READTEMPCMD       = 0x2E
-    BMP085_READPRESSURECMD   = 0x34
-
+    BMP085_READTEMPCMD = 0x2E
+    BMP085_READPRESSURECMD = 0x34
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Bmp085Module, self).__init__(*args, **kwargs)
         self._mode = kwargs.get('mode', self.BMP085_ULTRAHIGHRES)
         if self._mode not in [self.BMP085_ULTRALOWPOWER, self.BMP085_STANDARD, self.BMP085_HIGHRES, self.BMP085_ULTRAHIGHRES]:
-            raise ValueError('Unexpected mode value {0}. Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(self._mode))
+            raise ValueError(
+                'Unexpected mode value {0}. Set mode to one of BMP085_ULTRALOWPOWER, BMP085_STANDARD, BMP085_HIGHRES, or BMP085_ULTRAHIGHRES'.format(self._mode))
         self._load_calibration()
-
 
     def _load_calibration(self):
         self.cal_AC1 = self.readS16(self.BMP085_CAL_AC1, False)   # INT16
@@ -90,7 +89,6 @@ class Bmp085Module(I2cModule):
 #        self._log.debug('MC = {0:6d}'.format(self.cal_MC))
 #        self._log.debug('MD = {0:6d}'.format(self.cal_MD))
 
-
     def _load_datasheet_calibration(self):
         """
         Set calibration from values in the datasheet example. Useful for
@@ -108,23 +106,22 @@ class Bmp085Module(I2cModule):
         self.cal_MC = -8711
         self.cal_MD = 2868
 
-
     def read_raw_temp(self):
         """
         Read the raw (uncompensated) temperature from the sensor.
         """
         self.write8(self.BMP085_CONTROL, self.BMP085_READTEMPCMD)
-        time.sleep(0.005) # Wait 5ms
+        time.sleep(0.005)  # Wait 5ms
         raw = self.readU16(self.BMP085_TEMPDATA, False)
 #        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
-
 
     def read_raw_pressure(self):
         """
         Read the raw (uncompensated) pressure level from the sensor.
         """
-        self.write8(self.BMP085_CONTROL, self.BMP085_READPRESSURECMD + (self._mode << 6))
+        self.write8(self.BMP085_CONTROL,
+                    self.BMP085_READPRESSURECMD + (self._mode << 6))
         if self._mode == self.BMP085_ULTRALOWPOWER:
             time.sleep(0.005)
         elif self._mode == self.BMP085_HIGHRES:
@@ -134,12 +131,11 @@ class Bmp085Module(I2cModule):
         else:
             time.sleep(0.008)
         msb = self.readU8(self.BMP085_PRESSUREDATA)
-        lsb = self.readU8(self.BMP085_PRESSUREDATA+1)
-        xlsb = self.readU8(self.BMP085_PRESSUREDATA+2)
+        lsb = self.readU8(self.BMP085_PRESSUREDATA + 1)
+        xlsb = self.readU8(self.BMP085_PRESSUREDATA + 2)
         raw = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - self._mode)
-#        self._log.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
+        # self._log.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
-
 
     def read_temperature(self):
         """
@@ -147,15 +143,15 @@ class Bmp085Module(I2cModule):
         """
         UT = self.read_raw_temp()
         # Datasheet value for debugging:
-        #UT = 27898
-        # Calculations below are taken straight from section 3.5 of the datasheet.
+        # UT = 27898
+        # Calculations below are taken straight from section 3.5 of the
+        # datasheet.
         X1 = ((UT - self.cal_AC6) * self.cal_AC5) >> 15
         X2 = (self.cal_MC << 11) // (X1 + self.cal_MD)
         B5 = X1 + X2
         temp = ((B5 + 8) >> 4) / 10.0
 #        self._log.debug('Calibrated temperature {0} C'.format(temp))
         return temp
-
 
     def read_pressure(self):
         """
@@ -198,16 +194,14 @@ class Bmp085Module(I2cModule):
 #        self._log.debug('Pressure {0} Pa'.format(p))
         return p
 
-
     def read_altitude(self, sealevel_pa=101325.0):
         """
         Calculate the altitude in meters.
         """
         pressure = float(self.read_pressure())
-        altitude = 44330.0 * (1.0 - pow(pressure / sealevel_pa, (1.0/5.255)))
+        altitude = 44330.0 * (1.0 - pow(pressure / sealevel_pa, (1.0 / 5.255)))
 #        self._log.debug('Altitude {0} m'.format(altitude))
         return altitude
-
 
     def read_sealevel_pressure(self, altitude_m=0.0):
         """
@@ -215,9 +209,8 @@ class Bmp085Module(I2cModule):
         meters. Return a value in Pascals.
         """
         pressure = float(self.read_pressure())
-        p0 = pressure / pow(1.0 - altitude_m/44330.0, 5.255)
+        p0 = pressure / pow(1.0 - altitude_m / 44330.0, 5.255)
         return int(p0)
-
 
     def read_data(self):
         """
@@ -237,7 +230,6 @@ class Bmp085Module(I2cModule):
         ]
         self._log_data(data)
         return data
-
 
     def meta_data(self):
         """

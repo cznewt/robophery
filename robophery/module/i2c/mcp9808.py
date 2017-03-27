@@ -5,7 +5,7 @@ class Mcp9808Module(I2cModule):
     """
     Module for MCP9808 temperature sensor.
     """
-    DEVICE_NAME = 'i2c-mcp9808'
+    DEVICE_NAME = 'mcp9808'
     DEVICE_ADDR = 0x18
 
     MCP9808_REG_CONFIG_SHUTDOWN = 0x0100
@@ -25,18 +25,16 @@ class Mcp9808Module(I2cModule):
     MCP9808_REG_MANUF_ID = 0x06
     MCP9808_REG_DEVICE_ID = 0x07
 
-
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Mcp9808Module, self).__init__(*args, **kwargs)
         # Assert it's the right thing
-        mid = self.readU16(self.MCP9808_REG_MANUF_ID) 
+        mid = self.readU16(self.MCP9808_REG_MANUF_ID)
         if mid != 0x0054:
             self._log.error('Not right manufacturer (0x54): %s' % mid)
-        did = self.readU16(self.MCP9808_REG_DEVICE_ID) 
+        did = self.readU16(self.MCP9808_REG_DEVICE_ID)
         if did != 0x0400:
             self._log.error('Not right device ID (0x4): %s' % did)
-
 
     def read_data(self):
         """
@@ -45,11 +43,11 @@ class Mcp9808Module(I2cModule):
         data = self.readU16(self.MCP9808_REG_AMBIENT_TEMP)
         temperature = data & 0x0FFF
         temperature /= 16.0
-        if data & 0x1000: temperature -= 256
+        if data & 0x1000:
+            temperature -= 256
         return [
             (self._name, 'temperature', temperature),
         ]
-
 
     def meta_data(self):
         """
