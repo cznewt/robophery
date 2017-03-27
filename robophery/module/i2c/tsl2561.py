@@ -46,42 +46,43 @@
 import time
 from robophery.module.i2c.base import I2cModule
 
+
 class Tsl2561Module(I2cModule):
     """
     Module for TSL2561 based light-to-digital convertor.
     """
-    DEVICE_NAME = 'i2c-tsl2561'
+    DEVICE_NAME = 'tsl2561'
     # TSL2561 default address
     DEVICE_ADDR = 0x39
 
     # Commands
-    CMD       = 0x80
+    CMD = 0x80
     CMD_CLEAR = 0x40
-    CMD_WORD  = 0x20
+    CMD_WORD = 0x20
     CMD_BLOCK = 0x10
 
     # Registers
-    REG_CONTROL   = 0x00
-    REG_TIMING    = 0x01
-    REG_ID        = 0x0A
+    REG_CONTROL = 0x00
+    REG_TIMING = 0x01
+    REG_ID = 0x0A
     REG_BLOCKREAD = 0x0B
-    REG_DATA0     = 0x0C
-    REG_DATA1     = 0x0E
+    REG_DATA0 = 0x0C
+    REG_DATA1 = 0x0E
 
     # Control parameters
-    POWER_UP   = 0x03
+    POWER_UP = 0x03
     POWER_DOWN = 0x00
 
     # Timing parameters
-    GAIN_LOW          = 0b00000000
-    GAIN_HIGH         = 0b00010000
+    GAIN_LOW = 0b00000000
+    GAIN_HIGH = 0b00010000
     INTEGRATION_START = 0b00001000
-    INTEGRATION_STOP  = 0b00000000
-    INTEGRATE_13      = 0b00000000
-    INTEGRATE_101     = 0b00000001
-    INTEGRATE_402     = 0b00000010
-    INTEGRATE_DEFAULT = 0b00000010 # INTEGRATE_402
-    INTEGRATE_NA      = 0b00000011
+    INTEGRATION_STOP = 0b00000000
+    INTEGRATE_13 = 0b00000000
+    INTEGRATE_101 = 0b00000001
+    INTEGRATE_402 = 0b00000010
+    INTEGRATE_DEFAULT = 0b00000010  # INTEGRATE_402
+    INTEGRATE_NA = 0b00000011
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
@@ -97,14 +98,12 @@ class Tsl2561Module(I2cModule):
         self._control(self.POWER_UP)
         self._reconfigure()
 
-
     def _control(self, params):
         cmd = self.CMD | self.REG_CONTROL
         self._bus.write_byte_data(cmd, params)
 
         # Wait for 400ms to be power up.
         time.sleep(0.4)
-
 
     def _reconfigure(self):
         cmd = self.CMD | self.REG_TIMING
@@ -113,7 +112,6 @@ class Tsl2561Module(I2cModule):
 
         # Wait for 400ms to complete initial A/D conversion.
         time.sleep(0.4)
-
 
     def read_luminosity(self):
         cmd = self.CMD | self.CMD_WORD | self.REG_DATA0
@@ -126,10 +124,9 @@ class Tsl2561Module(I2cModule):
 
         # If either sensor is satulated, no acculate lux value
         # can be achieved.
-        if (self._channel0 == 0xffff
-            or self._channel1 == 0xffff):
+        if (self._channel0 == 0xffff or self._channel1 == 0xffff):
             lux = None
-            return
+            return lux
 
         # The following lux value calculation code is taken from
         # the SparkFun's example code.
@@ -142,7 +139,7 @@ class Tsl2561Module(I2cModule):
         if (d0 == 0):
             # Sometimes, the channel0 returns 0 when dark...
             lux = 0.0
-            return
+            return lux
         ratio = d1 / d0
 
         integ_scale = 1
@@ -170,7 +167,6 @@ class Tsl2561Module(I2cModule):
         else:
             return 0.0
 
-
     def read_data(self):
         """
         Get all sensor readings.
@@ -179,6 +175,7 @@ class Tsl2561Module(I2cModule):
         lumin = self.read_luminosity()
         lumin_time_stop = time.time()
         lumin_time_delta = lumin_time_stop - lumin_time_start
+
         return [
             (self._name, 'luminosity', lumin, lumin_time_delta),
         ]

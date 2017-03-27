@@ -6,7 +6,7 @@ class Si7021Module(I2cModule):
     """
     Module for SI7021 temperature and humidity sensor.
     """
-    DEVICE_NAME = 'i2c-si7021'
+    DEVICE_NAME = 'si7021'
     # SI7021 default address
     DEVICE_ADDR = 0x40
     # Operating modes
@@ -17,7 +17,6 @@ class Si7021Module(I2cModule):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Si7021Module, self).__init__(*args, **kwargs)
 
-
     def read_temperature(self):
         # Read data back, 2 bytes, Temperature MSB first
         self.writeRaw8(self.READ_TEMP_CMD)
@@ -26,7 +25,6 @@ class Si7021Module(I2cModule):
         data1 = self.readRaw8()
         return ((data0 * 256 + data1) * 175.72 / 65536.0) - 46.85
 
-
     def read_humidity(self):
         self.writeRaw8(self.READ_HUMIDITY_CMD)
         self._msleep(300)
@@ -34,7 +32,6 @@ class Si7021Module(I2cModule):
         data0 = self.readRaw8()
         data1 = self.readRaw8()
         return ((data0 * 256 + data1) * 125 / 65536.0) - 6
-
 
     def read_data(self):
         """
@@ -54,7 +51,6 @@ class Si7021Module(I2cModule):
         ]
         self._log_data(data)
         return data
-
 
     def meta_data(self):
         """
