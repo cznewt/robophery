@@ -66,7 +66,7 @@ class Vl53L0XModule(I2cModule):
         signal_count = self._makeuint16(data[9], data[8])
         distance = self._makeuint16(data[11], data[10])
         range_status_internal = ((data[0] & 0x78) >> 3)
-        return distance
+        return distance * 0.001
 
     def read_data(self):
         """
