@@ -176,6 +176,8 @@ class Tsl2561Module(I2cModule):
         lumin_time_stop = time.time()
         lumin_time_delta = lumin_time_stop - lumin_time_start
 
-        return [
+        data = [
             (self._name, 'luminosity', lumin, lumin_time_delta),
         ]
+        self._log_data(data)
+        return data

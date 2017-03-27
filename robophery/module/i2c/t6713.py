@@ -55,6 +55,8 @@ class T6713Module(I2cModule):
         co2 = self.read_co2()
         co2_time_stop = time.time()
         co2_time_delta = co2_time_stop - co2_time_start
-        return [
+        data = [
             (self._name, 'co2_concetration', co2, co2_time_delta),
         ]
+        self._log_data(data)
+        return data

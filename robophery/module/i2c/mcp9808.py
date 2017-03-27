@@ -45,9 +45,11 @@ class Mcp9808Module(I2cModule):
         temperature /= 16.0
         if data & 0x1000:
             temperature -= 256
-        return [
-            (self._name, 'temperature', temperature),
+        data = [
+            (self._name, 'temperature', temperature, 0),
         ]
+        self._log_data(data)
+        return data
 
     def meta_data(self):
         """
