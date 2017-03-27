@@ -1,3 +1,4 @@
+import time
 from robophery.module.i2c.base import I2cModule
 
 
@@ -29,10 +30,10 @@ class Mcp9808Module(I2cModule):
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Mcp9808Module, self).__init__(*args, **kwargs)
         # Assert it's the right thing
-        mid = self.readU16(self.MCP9808_REG_MANUF_ID)
+        mid = self.readU16(self.MCP9808_REG_MANUF_ID, False)
         if mid != 0x0054:
             self._log.error('Not right manufacturer (0x54): %s' % mid)
-        did = self.readU16(self.MCP9808_REG_DEVICE_ID)
+        did = self.readU16(self.MCP9808_REG_DEVICE_ID, False)
         if did != 0x0400:
             self._log.error('Not right device ID (0x4): %s' % did)
 
@@ -40,13 +41,16 @@ class Mcp9808Module(I2cModule):
         """
         Get the temperature readings.
         """
-        data = self.readU16(self.MCP9808_REG_AMBIENT_TEMP)
+        temp_time_start = time.time()
+        data = self.readU16(self.MCP9808_REG_AMBIENT_TEMP, False)
         temperature = data & 0x0FFF
         temperature /= 16.0
         if data & 0x1000:
             temperature -= 256
+        temp_time_stop = time.time()
+        temp_time_delta = temp_time_stop - temp_time_start
         data = [
-            (self._name, 'temperature', temperature, 0),
+            (self._name, 'temperature', temperature, temp_time_delta),
         ]
         self._log_data(data)
         return data
