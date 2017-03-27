@@ -80,7 +80,7 @@ class L293dModule(GpioModule):
         if action == 'get_data':
             return self.read_data()
         elif action == 'stop':
-            self.stop
+            self.stop()
             return self.read_data()
         elif action == 'run_forward':
             self.run_forward()
@@ -93,7 +93,9 @@ class L293dModule(GpioModule):
         """
         L293d motor status readings.
         """
-        return [
+        data = [
             (self._name, 'direction', self._direction),
             (self._name, 'power', self._power),
         ]
+        self._log_data(data)
+        return data

@@ -26,7 +26,7 @@ class Dht11Module(GpioModule):
         humidity, temperature = Adafruit_DHT.read(self._type, self._pin)
         read_time_stop = time.time()
         read_time_delta = (read_time_stop - read_time_start) / 2
-        if temperature == None or humidity == None:
+        if temperature is None or humidity is None:
             self._log.error("Data CRC failed while reading data.")
             data = [
                 (self._name, 'temperature', None, read_time_delta),

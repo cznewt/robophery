@@ -31,28 +31,26 @@ class BeagleboneGpioInterface(GpioInterface):
 
     def __init__(self, *args, **kwargs):
         self._bus = Adafruit_BBIO.GPIO
-        self._dir_mapping = { self.GPIO_MODE_OUT: self._bus.OUT,
-                              self.GPIO_MODE_IN: self._bus.IN }
-        self._pud_mapping = { self.GPIO_PUD_OFF: self._bus.PUD_OFF,
-                              self.GPIO_PUD_DOWN: self._bus.PUD_DOWN,
-                              self.GPIO_PUD_UP: self._bus.PUD_UP }
-        self._edge_mapping = { self.GPIO_EVENT_RISING: self._bus.RISING,
-                               self.GPIO_EVENT_FALLING: self._bus.FALLING,
-                               self.GPIO_EVENT_BOTH: self._bus.BOTH }
+        self._dir_mapping = {self.GPIO_MODE_OUT: self._bus.OUT,
+                             self.GPIO_MODE_IN: self._bus.IN}
+        self._pud_mapping = {self.GPIO_PUD_OFF: self._bus.PUD_OFF,
+                             self.GPIO_PUD_DOWN: self._bus.PUD_DOWN,
+                             self.GPIO_PUD_UP: self._bus.PUD_UP}
+        self._edge_mapping = {self.GPIO_EVENT_RISING: self._bus.RISING,
+                              self.GPIO_EVENT_FALLING: self._bus.FALLING,
+                              self.GPIO_EVENT_BOTH: self._bus.BOTH}
         super(BeagleboneGpioInterface, self).__init__(*args, **kwargs)
-
 
     def setup_pin(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin. Mode should be
         either OUTPUT or INPUT.
         """
-        if pull_up_down == None:
+        if pull_up_down is None:
             pull_up_down = self.GPIO_PUD_OFF
         self._bus.setup(pin, self._dir_mapping[mode],
-                             pull_up_down=self._pud_mapping[pull_up_down])
+                        pull_up_down=self._pud_mapping[pull_up_down])
         self._use_pin(pin)
-
 
     def output(self, pin, value):
         """
@@ -61,7 +59,6 @@ class BeagleboneGpioInterface(GpioInterface):
         """
         self._bus.output(pin, value)
 
-
     def input(self, pin):
         """
         Read the specified pin and return HIGH/true if the pin is pulled high,
@@ -69,14 +66,12 @@ class BeagleboneGpioInterface(GpioInterface):
         """
         return self._bus.input(pin)
 
-
     def input_pins(self, pins):
         """
         Read multiple pins specified in the given list and return list of pin values
         GPIO.HIGH/True if the pin is pulled high, or GPIO.LOW/False if pulled low.
         """
         return [self._bus.input(pin) for pin in pins]
-
 
     def add_event_detect(self, pin, edge, callback=None, bouncetime=-1):
         """
@@ -87,11 +82,10 @@ class BeagleboneGpioInterface(GpioInterface):
         """
         kwargs = {}
         if callback:
-            kwargs['callback']=callback
+            kwargs['callback'] = callback
         if bouncetime > 0:
-            kwargs['bouncetime']=bouncetime
+            kwargs['bouncetime'] = bouncetime
         self._bus.add_event_detect(pin, self._edge_mapping[edge], **kwargs)
-
 
     def remove_event_detect(self, pin):
         """
@@ -99,7 +93,6 @@ class BeagleboneGpioInterface(GpioInterface):
         type IN.
         """
         self._bus.remove_event_detect(pin)
-
 
     def add_event_callback(self, pin, callback, bouncetime=-1):
         """
@@ -109,9 +102,8 @@ class BeagleboneGpioInterface(GpioInterface):
         """
         kwargs = {}
         if bouncetime > 0:
-            kwargs['bouncetime']=bouncetime
+            kwargs['bouncetime'] = bouncetime
         self._bus.add_event_callback(pin, callback, **kwargs)
-
 
     def event_detected(self, pin):
         """
@@ -121,14 +113,12 @@ class BeagleboneGpioInterface(GpioInterface):
         """
         return self._bus.event_detected(pin)
 
-
     def wait_for_edge(self, pin, edge):
         """
         Wait for an edge. Pin should be type IN. Edge must be RISING, 
         FALLING or BOTH.
         """
         self._bus.wait_for_edge(pin, self._edge_mapping[edge])
-
 
     def cleanup(self, pin=None):
         """

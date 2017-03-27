@@ -1,3 +1,4 @@
+import time
 from robophery.module.gpio.base import GpioModule
 
 
@@ -10,8 +11,10 @@ class RelayModule(GpioModule):
     def __init__(self, *args, **kwargs):
         super(RelayModule, self).__init__(*args, **kwargs)
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
+        self._state = 0
+        self._runtime = 0
+        self._runtime_start = None
         self.setup_pin(self._pin, self.GPIO_MODE_OUT)
-        self._power = 0
         self.set_low(self._pin)
 
     def commit_action(self, action):
@@ -28,23 +31,31 @@ class RelayModule(GpioModule):
         """
         Turn on the relay.
         """
-        self._power = 1
         self.set_high(self._pin)
+        self._state = 1
+        self._turn_on_count += 1
+        self._runtime_start = time.time()
 
     def turn_off(self):
         """
         Turn off the relay.
         """
-        self._power = 0
         self.set_low(self._pin)
+        self._update_runtime()
+        self._state = 0
+        self._turn_off_count += 1
+        self._runtime_start = None
 
     def read_data(self):
         """
-        Relay status readings.
+        Switch status readings.
         """
+        self._update_runtime()
         data = [
-            (self._name, 'on_count', self._power, 0),
-            (self._name, 'on_delta', self._power, 0),
+            (self._name, 'state', self._state, 0),
+            (self._name, 'runtime', self._runtime, 0),
+            (self._name, 'turned_on', self._turn_on_count, 0),
+            (self._name, 'turned_off', self._turn_off_count, 0),
         ]
         self._log_data(data)
         return data
@@ -54,18 +65,32 @@ class RelayModule(GpioModule):
         Get the readings meta-data.
         """
         return {
-            'on_count': {
+            'state': {
+                'type': 'gauge',
+                'unit': '',
+                'range_low': 0,
+                'range_high': 1,
+                'sensor': self.DEVICE_NAME
+            },
+            'runtime': {
                 'type': 'counter',
                 'unit': 's',
                 'range_low': 0,
                 'range_high': None,
-                'sensor': 'relay'
+                'sensor': self.DEVICE_NAME
             },
-            'on_delta': {
-                'type': 'delta',
-                'unit': 's',
+            'turned_on': {
+                'type': 'counter',
+                'unit': 'times',
                 'range_low': 0,
                 'range_high': None,
-                'sensor': 'relay'
-            }
+                'sensor': self.DEVICE_NAME
+            },
+            'turned_off': {
+                'type': 'counter',
+                'unit': 'times',
+                'range_low': 0,
+                'range_high': None,
+                'sensor': self.DEVICE_NAME
+            },
         }
