@@ -32,6 +32,7 @@ setup(
             'rp_dht22 = robophery.cli:module_dht22',
             'rp_ds18 = robophery.cli:module_ds18',
             'rp_htu21d = robophery.cli:module_htu21d',
+            'rp_hcsr04 = robophery.cli:module_hcsr04',
             'rp_hd44780_pcf = robophery.cli:module_hd44780_pcf',
             'rp_l293d = robophery.cli:module_l293d',
             'rp_mcp9808 = robophery.cli:module_mcp9808',

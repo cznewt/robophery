@@ -114,6 +114,24 @@ def module_dht22():
     manager.run()
 
 
+def module_hcsr04():
+    OPTS = [
+        cfg.Opt('trigger_pin',
+                short='t',
+                help='Trigger pin'),
+        cfg.Opt('echo_pin',
+                short='e',
+                help='Echo pin'),
+    ]
+    config = _config(HCSR04_MODULE, OPTS)
+    if config['config']['module']['module']['trigger_pin'] is None:
+        raise ValueError("Trigger pin must be set.")
+    if config['config']['module']['module']['echo_pin'] is None:
+        raise ValueError("Echo pin must be set.")
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_l293d():
     OPTS = [
         cfg.Opt('power_pin',

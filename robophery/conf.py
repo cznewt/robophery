@@ -181,6 +181,13 @@ DS18_MODULE = {
     'addr': '00145071daff',
 }
 
+HCSR04_MODULE = {
+    'interface': 'local_gpio',
+    'class': 'robophery.module.gpio.hcsr04.Hcsr04Module',
+    'echo_pin': None,
+    'trigger_pin': None,
+}
+
 HD44780_PFC_MODULE = {
     'interface': 'pcf_gpio',
     'class': 'robophery.module.gpio.hd44780.Hd44780Module',
