@@ -7,19 +7,16 @@ class Dht22Module(GpioModule):
     """
     Module for DHT22 temperature and humidity sensor.
     """
-    DEVICE_NAME = 'gpio-dht22'
-
+    DEVICE_NAME = 'dht22'
 
     def __init__(self, *args, **kwargs):
         super(Dht22Module, self).__init__(*args, **kwargs)
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self._type = 22
 
-
     def commit_action(self, action):
         if action == 'read_data':
             return self.read_data()
-
 
     def read_data(self):
         """
@@ -50,14 +47,13 @@ class Dht22Module(GpioModule):
         self._log_data(data)
         return data
 
-
     def meta_data(self):
         """
         Get the readings meta-data.
         """
         return {
             'temperature': {
-                'type': 'gauge', 
+                'type': 'gauge',
                 'unit': 'C',
                 'precision': 0.5,
                 'range_low': -40,

@@ -6,7 +6,7 @@ class Ds18Module(W1Module):
     """
     Module for Dallas 1-wire DS family temperature sensors.
     """
-    DEVICE_NAME = 'w1-ds18'
+    DEVICE_NAME = 'ds18'
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('address', '0')

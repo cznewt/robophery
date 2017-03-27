@@ -6,7 +6,7 @@ class HcSr04Module(GpioModule):
     """
     Module for range sensor HC-SR04.
     """
-    DEVICE_NAME = 'gpio-hcsr04'
+    DEVICE_NAME = 'hcsr04'
 
     def __init__(self, *args, **kwargs):
         self._trigger_pin = self._normalize_pin(kwargs.get('trigger_pin'))

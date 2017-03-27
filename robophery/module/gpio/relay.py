@@ -5,7 +5,7 @@ class RelayModule(GpioModule):
     """
     Module for generic GPIO relay control.
     """
-    DEVICE_NAME = 'gpio-relay'
+    DEVICE_NAME = 'relay'
 
     def __init__(self, *args, **kwargs):
         super(RelayModule, self).__init__(*args, **kwargs)

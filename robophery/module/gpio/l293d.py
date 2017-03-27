@@ -5,7 +5,7 @@ class L293dModule(GpioModule):
     """
     Module for motor controlled by the L293D chip.
     """
-    DEVICE_NAME = 'gpio-l293d'
+    DEVICE_NAME = 'l293d'
     # L293D pin1 or pin9: On or off
     MOTOR_POWER_PIN = 0
     # L293D pin2 or pin10: Anticlockwise positive

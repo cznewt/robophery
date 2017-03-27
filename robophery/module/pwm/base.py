@@ -1,5 +1,5 @@
-
 from robophery.base import Module
+
 
 class PwmModule(Module):
 
@@ -10,10 +10,8 @@ class PwmModule(Module):
         self.set_frequency = self._interface.set_frequency
         self.stop = self._interface.stop
 
-
     def __str__(self):
         return "{0} (connected to {1}, data pin {2})".format(self._base_name(), self._interface._name, self._pin)
-
 
     def _normalize_pin(self, pin):
         value = int(pin)

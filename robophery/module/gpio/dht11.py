@@ -9,17 +9,14 @@ class Dht11Module(GpioModule):
     """
     DEVICE_NAME = 'dht11'
 
-
     def __init__(self, *args, **kwargs):
         super(Dht11Module, self).__init__(*args, **kwargs)
         self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self._type = 11
 
-
     def commit_action(self, action):
         if action == 'read_data':
             return self.read_data()
-
 
     def read_data(self):
         """
@@ -50,14 +47,13 @@ class Dht11Module(GpioModule):
         self._log_data(data)
         return data
 
-
     def meta_data(self):
         """
         Get the readings meta-data.
         """
         return {
             'temperature': {
-                'type': 'gauge', 
+                'type': 'gauge',
                 'unit': 'C',
                 'precision': 2,
                 'range_low': 0,

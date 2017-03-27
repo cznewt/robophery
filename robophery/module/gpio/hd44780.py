@@ -62,7 +62,7 @@ class Hd44780Module(GpioModule):
     """
     Module for Character LCD controller with HD44780 chip.
     """
-    DEVICE_NAME = 'gpio-hd44780'
+    DEVICE_NAME = 'hd44780'
 
     # Commands
     LCD_CLEARDISPLAY = 0x01
