@@ -1,5 +1,4 @@
-#from robophery.platform.gpio import GpioInterface
-from gpio_base import GpioInterface
+from robophery.platform.gpio import GpioInterface
 
 
 class NodeMcuGpioInterface(GpioInterface):
