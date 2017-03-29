@@ -1,10 +1,12 @@
-from robophery.platform.gpio import GpioInterface
+#from robophery.platform.gpio import GpioInterface
+from gpio_base import GpioInterface
 
 
 class NodeMcuGpioInterface(GpioInterface):
     """
     GPIO implementation for the NodeMCU.
     """
+    NODEMCU_GPIO_COUNT = 15
 
     def __init__(self, *args, **kwargs):
         from machine import Pin
@@ -19,11 +21,13 @@ class NodeMcuGpioInterface(GpioInterface):
                                self.GPIO_EVENT_FALLING: Pin.IRQ_FALLING,
                                self.GPIO_EVENT_BOTH: Pin.IRQ_FALLING|Pin.IRQ_RISING }
         self._drive_mapping = { self.GPIO_DRIVE_LOW: Pin.LOW_POWER,
-                                self.GPIO_DRIVE_MEDIUM: Pin.MED_POWER }
+                                self.GPIO_DRIVE_MEDIUM: Pin.MED_POWER,
                                 self.GPIO_DRIVE_HIGH: Pin.HIGH_POWER }
+        self._pins = {}
+        self._pins_irq = {}
         self._pins_irq_triggers = {}
-        self._pins_event_detected = {}
-        super(NodeMcuGpioInterface, self).__init__(*args, **kwargs)
+
+        #super(NodeMcuGpioInterface, self).__init__(*args, **kwargs)
 
 
     def setup_pin(self, pin, mode=None, pull_up_down=None, init_value=False, drive=None):
@@ -42,9 +46,10 @@ class NodeMcuGpioInterface(GpioInterface):
 
         self._pins[pin] = Pin(pin, 
                         mode=self._dir_mapping[mode], 
-                        pull=self._pud_mapping[pull_up_down]
-                        value=init_value
+                        pull=self._pud_mapping[pull_up_down],
+                        value=init_value,
                         drive=self._drive_mapping)
+        self._pins_irq[pin] = PinIrq()
 
 
     def get_pin(self, pin):
@@ -87,20 +92,21 @@ class NodeMcuGpioInterface(GpioInterface):
         function for the event. Bouncetime is switch bounce timeout in ms for 
         callback.
         """
-        if callback is None:
-            callback = self.event_callback
+        if callback is not None:
+            self._pins_irq[pin].setup_callback(callback)
         self._pins_irq_triggers[pin] = self._edge_mapping(edge)
-        self._pins[pin].irq(handler=callback, 
-                           trigger=self._pins_irq_triggers[pin],
-                           priority=priority)
-
+        self._pins[pin].irq(handler=self._pins_irq[pin].irq_handler, 
+                            trigger=self._pins_irq_triggers[pin],
+                            priority=priority)
 
     def remove_event_detect(self, pin):
         """
         Remove edge detection for a particular GPIO channel. Pin should be
         type IN.
         """
+        del(self._pins_irq[pin]) 
         del(self._pins_irq_triggers[pin]) 
+        #TODO does this work?
         self._pins[pin].irq()
                           
 
@@ -110,9 +116,7 @@ class NodeMcuGpioInterface(GpioInterface):
         Pin should be type IN.  Bouncetime is switch bounce timeout in ms for 
         callback
         """
-        self._pins[pin].irq(handler=callback, 
-                           trigger=self._pins_irq_triggers[pin],
-                           priority=priority)
+        self._pins_irq[pin].setup_callback(callback)
 
 
     def event_detected(self, pin):
@@ -121,9 +125,7 @@ class NodeMcuGpioInterface(GpioInterface):
         enable edge detection using add_event_detect() first.   Pin should be 
         type IN.
         """
-        if self._pins_event_detected[pin] == True
-            self._pins_event_detected[pin] = False
-        return self._pins_event_detected[pin]
+        return self._pins_irq[pin].is_event_detected()
 
 
     def wait_for_edge(self, pin, edge):
@@ -131,9 +133,30 @@ class NodeMcuGpioInterface(GpioInterface):
         Wait for an edge.   Pin should be type IN.  Edge must be RISING, 
         FALLING or BOTH.
         """
-        while self._pins_event_detected[pin] == False:
-        self._bus.wait_for_edge(pin, self._edge_mapping[edge])
+        while self._pins_irq[pin].is_event_detected() == False:
+            #TODO timeout
+            pass
 
-    def event_callback(sef):
-        self.event_detected = True
 
+class PinIrq():
+    def __init__(self, callback=None):
+        self._pin_event_detected = False
+        self._callback = callback
+
+
+    def is_event_detected(self):
+        if self._pin_event_detected == True:
+            self._pin_event_detected = False
+            return True
+        else:
+            return False
+
+
+    def setup_callback(self, callback):
+        self._callback = callback
+
+
+    def irq_handler(self):
+        self._pin_event_detected = True
+        if self._callback is not None:
+            self._callback()
