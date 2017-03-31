@@ -9,5 +9,7 @@ docs/build/
 #vimmy stuff
 *.swp
 *.swo
+*.vim
+*project/
 
 ctags.tmp
