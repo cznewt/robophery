@@ -1,4 +1,4 @@
-from robophery.module.ble.base import BleModule
+from robophery.interface.ble import BleModule
 
 
 class ParrotFlowerPowerModule(BleModule):

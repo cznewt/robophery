@@ -4,7 +4,7 @@
 # Released under the MIT License
 # Copyright (c) 2015, 2016, 2017 MrTijn/Tijndagamer
 import time
-from robophery.module.i2c.base import I2cModule
+from robophery.interface.i2c import I2cModule
 
 
 class Mpu6050Module(I2cModule):

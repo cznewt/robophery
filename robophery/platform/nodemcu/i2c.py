@@ -1,8 +1,10 @@
 from ustruct import (pack, unpack)
+from machine import I2C
+from robophery.interface.i2c import I2cInterface
+
 
 class NodemcuI2cInterface(I2cInterface):
     def __init__(self, gpio_interface, scl_pin=5, sda_pin=4, frequency=100000):
-        from machine import Pin, I2C
 
         gpio_interface.setup_pin(scl_pin)
         gpio_interface.setup_pin(sda_pin)
@@ -12,7 +14,7 @@ class NodemcuI2cInterface(I2cInterface):
 
         self._bus = I2C(scl=self._scl, sda=self._sda, freq=frequency)
 
-    def scan_bus():
+    def scan_bus(self):
         """Return list of found addresses on bus"""
         return self._bus.scan()
 

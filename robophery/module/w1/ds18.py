@@ -1,5 +1,5 @@
 import time
-from robophery.module.w1.base import W1Module
+from robophery.interface.w1 import W1Module
 
 
 class Ds18Module(W1Module):

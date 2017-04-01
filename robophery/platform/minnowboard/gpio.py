@@ -18,9 +18,8 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
 import mraa
-from robophery.platform.gpio import GpioInterface
+from robophery.interface.gpio import GpioInterface
 
 
 class MinnowboardGpioInterface(GpioInterface):

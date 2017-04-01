@@ -1,4 +1,5 @@
-from robophery.platform.gpio import GpioInterface
+from robophery.interface.gpio import GpioInterface
+
 
 class Pcf8574GpioInterface(GpioInterface):
     """

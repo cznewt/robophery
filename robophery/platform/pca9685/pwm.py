@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 from __future__ import division
 import math
-from robophery.platform.pwm import PwmInterface
+from robophery.interface.pwm import PwmInterface
 
 
 class Pca9685PwmInterface(PwmInterface):

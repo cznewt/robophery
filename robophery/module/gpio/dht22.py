@@ -1,6 +1,6 @@
 import Adafruit_DHT
 import time
-from robophery.module.gpio.base import GpioModule
+from robophery.interface.gpio import GpioModule
 
 
 class Dht22Module(GpioModule):

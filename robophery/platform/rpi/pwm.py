@@ -18,13 +18,14 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-from robophery.platform.pwm import PwmInterface
+from robophery.interface.pwm import PwmInterface
 
 try:
     import RPi.GPIO
 except:
-    raise RuntimeError("Cannot load RPi.GPIO library. Please install the library.")
+    raise RuntimeError(
+        "Cannot load RPi.GPIO library. Please install the library.")
+
 
 class RaspberryPiPwmInterface(PwmInterface):
     """
@@ -36,14 +37,14 @@ class RaspberryPiPwmInterface(PwmInterface):
         self._pins_available = kwargs['parent']['data_pins']
         self.pins = {}
 
-
     def setup_pin(self, pin, dutycycle, frequency=2000):
         """
         Enable PWM output on specified pin. Set to initial percent duty cycle
         value (0.0 to 100.0) and frequency (in Hz).
         """
         if dutycycle < 0.0 or dutycycle > 100.0:
-            raise ValueError('Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+            raise ValueError(
+                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
         # Make pin an output.
         self._parent_interface.setup(pin, self._parent_interface.GPIO_MODE_OUT)
         # Create PWM instance and save a reference for later access.
@@ -51,33 +52,34 @@ class RaspberryPiPwmInterface(PwmInterface):
         # Start the PWM at the specified duty cycle.
         self.pins[pin].start(dutycycle)
 
-
     def set_duty_cycle(self, pin, dutycycle):
         """
         Set percent duty cycle of PWM output on specified pin. Duty cycle must
         be a value 0.0 to 100.0 (inclusive).
         """
         if dutycycle < 0.0 or dutycycle > 100.0:
-            raise ValueError('Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+            raise ValueError(
+                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
         if pin not in self.pins:
-            raise ValueError('Pin {0} is not configured as a PWM. Make sure to first call start for the pin.'.format(pin))
+            raise ValueError(
+                'Pin {0} is not configured as a PWM.'.format(pin))
         self.pins[pin].ChangeDutyCycle(dutycycle)
-
 
     def set_frequency(self, pin, frequency):
         """
         Set frequency (in Hz) of PWM output on specified pin.
         """
         if pin not in self.pins:
-            raise ValueError('Pin {0} is not configured as a PWM. Make sure to first call start for the pin.'.format(pin))
+            raise ValueError(
+                'Pin {0} is not configured as a PWM.'.format(pin))
         self.pins[pin].ChangeFrequency(frequency)
-
 
     def stop(self, pin):
         """
         Stop PWM output on specified pin.
         """
         if pin not in self.pins:
-            raise ValueError('Pin {0} is not configured as a PWM. Make sure to first call start for the pin.'.format(pin))
+            raise ValueError(
+                'Pin {0} is not configured as a PWM.'.format(pin))
         self.pins[pin].stop()
         del self.pins[pin]

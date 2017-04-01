@@ -1,4 +1,4 @@
-from robophery.module.gpio.base import GpioModule
+from robophery.interface.gpio import GpioModule
 
 
 class RevCounterModule(GpioModule):

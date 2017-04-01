@@ -18,17 +18,19 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-
-from robophery.platform.pwm import PwmInterface
+from robophery.interface.pwm import PwmInterface
 
 try:
     import Adafruit_BBIO.PWM
-except:
-    raise RuntimeError("Cannot load RPi.GPIO library. Please install the library.")
+except Exception:
+    raise RuntimeError(
+        "Cannot load RPi.GPIO library. Please install the library.")
+
 
 class BeaglebonePwmInterface(PwmInterface):
     """
-    PWM implementation for the BeagleBone Black using the Adafruit_BBIO.PWM library.
+    PWM implementation for the BeagleBone Black using the Adafruit_BBIO.PWM
+    library.
     """
     AVAILABLE_PINS = [
         'P8_13',
@@ -47,41 +49,25 @@ class BeaglebonePwmInterface(PwmInterface):
         'P9_42',
     ]
 
-
     def __init__(self, *args, **kwargs):
         self._bus = Adafruit_BBIO.PWM
         self._pins_available = self.AVAILABLE_PINS
         super(BeaglebonePwmInterface, self).__init__(*args, **kwargs)
 
-
     def setup_pin(self, pin, dutycycle, frequency=2000):
-        """
-        Enable PWM output on specified pin. Set to initial percent duty cycle
-        value (0.0 to 100.0) and frequency (in Hz).
-        """
         if dutycycle < 0.0 or dutycycle > 100.0:
-            raise ValueError('Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+            raise ValueError(
+                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
         self._bus.start(pin, dutycycle, frequency)
 
-
     def set_duty_cycle(self, pin, dutycycle):
-        """
-        Set percent duty cycle of PWM output on specified pin. Duty cycle must
-        be a value 0.0 to 100.0 (inclusive).
-        """
         if dutycycle < 0.0 or dutycycle > 100.0:
-            raise ValueError('Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+            raise ValueError(
+                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
         self._bus.set_duty_cycle(pin, dutycycle)
 
-
     def set_frequency(self, pin, frequency):
-        """
-        Set frequency (in Hz) of PWM output on specified pin.
-        """
         self._bus.set_frequency(pin, frequency)
 
     def stop(self, pin):
-        """
-        Stop PWM output on specified pin.
-        """
         self._bus.stop(pin)

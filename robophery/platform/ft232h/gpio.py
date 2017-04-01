@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 import ftdi1 as ftdi
-from robophery.platform.gpio import GpioInterface
+from robophery.interface.gpio import GpioInterface
 
 
 class Ft232hGpioInterface(GpioInterface):
@@ -35,11 +35,6 @@ class Ft232hGpioInterface(GpioInterface):
     LSBFIRST = 1
 
     _REPEAT_DELAY = 4
-
-    HIGH = self.HIGH
-    LOW  = self.LOW
-    IN   = self.IN
-    OUT  = self.OUT
 
     def __init__(self, *args, **kwargs):
         """

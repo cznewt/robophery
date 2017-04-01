@@ -1,6 +1,4 @@
-import struct
-from bluetooth.ble import GATTRequester, GATTResponse
-from robophery.core import Module
+from robophery.base import Interface, Module
 
 
 class BleModule(Module):
@@ -21,3 +19,13 @@ class BleModule(Module):
     def _write_uuid(self, reg, value, type='float'):
         char = self._interface.characteristic[reg]
         self._interface.write_by_handle(char, value, type)
+
+
+class BleInterface(Interface):
+    """
+    Base class for implementing bluetooth low-energy bus.
+    """
+
+    def __init__(self, *args, **kwargs):
+        self._addrs_used = []
+        super(BleInterface, self).__init__(*args, **kwargs)

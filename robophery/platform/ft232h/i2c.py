@@ -20,7 +20,7 @@
 # THE SOFTWARE.
 
 import ftdi1 as ftdi
-from robophery.platform.i2c import I2cInterface
+from robophery.interface.i2c import I2cInterface
 
 
 class FT232Interface():
@@ -28,30 +28,25 @@ class FT232Interface():
     def __init__(self, *args, **kwargs):
         super(FT232Interface, self).__init__(*args, **kwargs)
 
-
     def writeRaw8(self, addr, value):
         """
         Write an 8-bit value on the bus (without register).
         """
-
 
     def write8(self, addr, register, value):
         """
         Write an 8-bit value to the specified register.
         """
 
-
     def write16(self, addr, register, value):
         """
         Write a 16-bit value to the specified register.
         """
 
-
     def writeList(self, addr, register, data):
         """
         Write bytes to the specified register.
         """
-
 
     def readRaw8(self):
         """
@@ -59,20 +54,17 @@ class FT232Interface():
         """
         return result
 
-
     def readU8(self, addr, register):
         """
         Read an unsigned byte from the specified register.
         """
         return result
 
-
     def readS8(self, addr, register):
         """
         Read a signed byte from the specified register.
         """
         return result
-
 
     def readU16(self, addr, register, little_endian=True):
         """
@@ -82,7 +74,6 @@ class FT232Interface():
         """
         return result
 
-
     def readS16(self, addr, register, little_endian=True):
         """
         Read a signed 16-bit value from the specified register, with the
@@ -90,7 +81,6 @@ class FT232Interface():
         first).
         """
         return result
-
 
     def readList(self, addr, register, length):
         """

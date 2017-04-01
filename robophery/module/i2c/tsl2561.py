@@ -44,7 +44,7 @@
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import time
-from robophery.module.i2c.base import I2cModule
+from robophery.interface.i2c import I2cModule
 
 
 class Tsl2561Module(I2cModule):

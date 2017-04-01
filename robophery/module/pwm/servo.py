@@ -1,5 +1,4 @@
-import time
-from robophery.module.pwm.base import PwmModule
+from robophery.interface.pwm import PwmModule
 
 
 class ServoModule(PwmModule):

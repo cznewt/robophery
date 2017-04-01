@@ -1,26 +1,39 @@
-# Copyright (c) 2014 Adafruit Industries
-# Author: Tony DiCola
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-# THE SOFTWARE.
+from robophery.base import Interface, Module
 
 
-class GpioInterface(object):
+class GpioModule(Module):
+
+    GPIO_MODE_OUT = 0
+    GPIO_MODE_IN = 1
+
+    def __init__(self, *args, **kwargs):
+        super(GpioModule, self).__init__(*args, **kwargs)
+        self._setup_interface()
+
+    def _normalize_pin(self, pin):
+        value = int(pin)
+        return value
+
+    def _setup_interface(self):
+        self.setup_pin = self._interface.setup_pin
+        self.output = self._interface.output
+        self.input = self._interface.input
+        self.set_high = self._interface.set_high
+        self.set_low = self._interface.set_low
+        self.is_high = self._interface.is_high
+        self.is_low = self._interface.is_low
+        self.input_pins = self._interface.input_pins
+        self.output_pins = self._interface.output_pins
+        self.setup_pins = self._interface.setup_pins
+        self.add_event_detect = self._interface.add_event_detect
+        self.remove_event_detect = self._interface.remove_event_detect
+        self.add_event_callback = self._interface.add_event_callback
+        self.event_detected = self._interface.event_detected
+        self.wait_for_edge = self._interface.wait_for_edge
+        self.cleanup = self._interface.cleanup
+
+
+class GpioInterface(Interface):
     """
     Base class for implementing digital IO bus.
     """
@@ -49,7 +62,6 @@ class GpioInterface(object):
     def __init__(self, *args, **kwargs):
         self._pins = {}
 
-
     def setup_pin(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin. Mode should be
@@ -57,13 +69,11 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def get_pin(self, pin):
         """
         Return pin object specified by its number
         """
         raise NotImplementedError
-
 
     def output(self, pin, value):
         """
@@ -72,7 +82,6 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def input(self, pin):
         """
         Read the specified pin and return HIGH/true if the pin is pulled high,
@@ -80,13 +89,11 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def set_high(self, pin):
         """
         Set the specified pin HIGH.
         """
         self.output(pin, self.GPIO_MODE_OUT_HIGH)
-
 
     def set_low(self, pin):
         """
@@ -94,18 +101,15 @@ class GpioInterface(object):
         """
         self.output(pin, self.GPIO_MODE_OUT_LOW)
 
-
     def is_high(self, pin):
         """
         Return true if the specified pin is pulled high.
         """
         return self.input(pin) == self.GPIO_MODE_OUT_HIGH
 
-
     def is_low(self, pin):
         """Return true if the specified pin is pulled low."""
         return self.input(pin) == self.GPIO_MODE_OUT_LOW
-
 
     def output_pins(self, pins):
         """
@@ -121,7 +125,6 @@ class GpioInterface(object):
         for pin, value in iter(pins.items()):
             self.output(pin, value)
 
-
     def setup_pins(self, pins):
         """
         Setup multiple pins as inputs or outputs at once. Pins should be a
@@ -130,14 +133,12 @@ class GpioInterface(object):
         for pin, value in iter(pins.items()):
             self.setup_pin(pin, value)
 
-
     def input_pins(self, pins):
         """
         Read multiple pins specified in the given list and return list of pin values
         GPIO.HIGH/True if the pin is pulled high, or GPIO.LOW/False if pulled low.
         """
         return [self.input(pin) for pin in pins]
-
 
     def add_event_detect(self, pin, edge):
         """
@@ -146,7 +147,6 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def remove_event_detect(self, pin):
         """
         Remove edge detection for a particular GPIO channel. Pin should be
@@ -154,14 +154,12 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def add_event_callback(self, pin, callback):
         """
         Add a callback for an event already defined using add_event_detect().
         Pin should be type IN.
         """
         raise NotImplementedError
-
 
     def event_detected(self, pin):
         """
@@ -171,14 +169,12 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def wait_for_edge(self, pin, edge):
         """
         Wait for an edge. Pin should be type IN. Edge must be RISING, 
         FALLING or BOTH.
         """
         raise NotImplementedError
-
 
     def cleanup(self, pin=None):
         """
@@ -187,14 +183,13 @@ class GpioInterface(object):
         """
         raise NotImplementedError
 
-
     def _validate_pin(self, pin):
         """
         Raise an exception if pin is outside the range of allowed values.
         """
         if pin < 0 or pin >= self.NUM_GPIO:
-            raise ValueError('Invalid GPIO value, must be between 0 and {0}.'.format(self.NUM_GPIO))
-
+            raise ValueError(
+                'Invalid GPIO value, must be between 0 and {0}.'.format(self.NUM_GPIO))
 
     def _bit2(self, src, bit, val):
         bit = 1 << bit

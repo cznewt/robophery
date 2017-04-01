@@ -18,7 +18,7 @@
 from __future__ import print_function, division, absolute_import, unicode_literals
 import time
 from enum import Enum
-from robophery.module.gpio.base import GpioModule
+from robophery.interface.gpio import GpioModule
 
 
 # Flags for display entry mode

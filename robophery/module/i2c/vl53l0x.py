@@ -1,6 +1,6 @@
 import struct
 import time
-from robophery.module.i2c.base import I2cModule
+from robophery.interface.i2c import I2cModule
 
 
 class Vl53L0XModule(I2cModule):
