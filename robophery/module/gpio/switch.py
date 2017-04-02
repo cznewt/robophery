@@ -14,12 +14,9 @@ class SwitchModule(GpioModule):
         self._turn_on_count = 0
         self._turn_off_count = 0
         self._runtime = 0
-        rise_edge = self._interface.GPIO_EVENT_RISING
-        fall_edge = self._interface.GPIO_EVENT_FALLING
-        self.add_event_detect(self._pin, rise_edge,
-                              callback=self._process_rise)
-        self.add_event_detect(self._pin, fall_edge,
-                              callback=self._process_fall)
+        both_edge = self._interface.GPIO_EVENT_BOTH
+        self.add_event_detect(self._pin, both_edge,
+                              callback=self._process_event)
         if self.is_high(self._pin):
             self._runtime_start = self._get_time()
             self._state = 1
@@ -27,16 +24,16 @@ class SwitchModule(GpioModule):
             self._runtime_start = None
             self._state = 0
 
-    def _process_rise(self, pin):
-        self._state = 1
-        self._turn_on_count += 1
-        self._runtime_start = self._get_time()
-
-    def _process_fall(self, pin):
-        self._update_runtime()
-        self._state = 0
-        self._turn_off_count += 1
-        self._runtime_start = None
+    def _process_event(self, pin, edge):
+        if edge == self._edge_mapping[self.GPIO_EVENT_RISING]:
+            self._state = 1
+            self._turn_on_count += 1
+            self._runtime_start = self._get_time()
+        else:
+            self._update_runtime()
+            self._state = 0
+            self._turn_off_count += 1
+            self._runtime_start = None
 
     def _update_runtime(self):
         if self._runtime_start is not None:
