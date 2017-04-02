@@ -45,6 +45,12 @@ class RelayModule(GpioModule):
         self._turn_off_count += 1
         self._runtime_start = None
 
+    def _update_runtime(self):
+        if self._runtime_start is not None:
+            now = self._get_time()
+            self._runtime = self._runtime + (now - self._runtime_start)
+            self._runtime_start = now
+
     def read_data(self):
         """
         Switch status readings.
