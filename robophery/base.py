@@ -213,6 +213,10 @@ class ModuleManager(object):
                                 name)].append(metric[3])
                         else:
                             data["{0}.read_time".format(name)] = [metric[3]]
+                    if "{0}.error".format(name) in data:
+                        data["{0}.error".format(name)].append(1)
+                    else:
+                        data["{0}.error".format(name)] = [1]
                 else:
                     if "{0}.error".format(name) in data:
                         data["{0}.error".format(name)].append(0)
