@@ -23,8 +23,12 @@ class RevCounterModule(GpioModule):
         """
         Revolutions status readings.
         """
+        read_start = self._get_time()
+        revolutions = self._revolutions
+        read_stop = self._get_time()
+        read_time = read_stop - read_start
         data = [
-            (self._name, 'revolutions', self._revolutions, 0),
+            (self._name, 'revolutions', revolutions, read_time),
         ]
         self._log_data(data)
         return data

@@ -61,8 +61,12 @@ class ServoModule(PwmModule):
         self.set_duty_cycle(self._pin, pulse)
 
     def read_data(self):
+        read_start = self._get_time()
+        angle = self._angle
+        read_stop = self._get_time()
+        read_time = read_stop - read_start
         data = [
-            (self._name, 'angle', self._angle, 0),
+            (self._name, 'angle', angle, read_time),
         ]
         self._log_data(data)
         return data
