@@ -215,23 +215,23 @@ class Bmp085Module(I2cModule):
         """
         Get all sensor readings.
         """
-        temp_time_start = self._get_time()
+        read_start = self._get_time()
         try:
             temp = self.read_temperature()
         except IOError:
             temp = None
-        temp_time_stop = self._get_time()
-        temp_time_delta = temp_time_stop - temp_time_start
-        press_time_start = self._get_time()
+        read_stop = self._get_time()
+        temp_read_time = read_stop - read_start
+        read_start = self._get_time()
         try:
             press = self.read_pressure()
         except IOError:
             press = None
-        press_time_stop = self._get_time()
-        press_time_delta = press_time_stop - press_time_start
+        read_stop = self._get_time()
+        press_read_time = read_stop - read_start
         data = [
-            (self._name, 'temperature', temp, temp_time_delta),
-            (self._name, 'pressure', press, press_time_delta),
+            (self._name, 'temperature', temp, temp_read_time),
+            (self._name, 'pressure', press, press_read_time),
         ]
         self._log_data(data)
         return data

@@ -49,12 +49,15 @@ class SwitchModule(GpioModule):
         """
         Switch status readings.
         """
+        read_start = self._get_time()
         self._update_runtime()
+        read_stop = self._get_time()
+        read_time = (read_stop - read_start) / 4
         data = [
-            (self._name, 'state', self._state, 0),
-            (self._name, 'runtime', self._runtime, 0),
-            (self._name, 'turned_on', self._turn_on_count, 0),
-            (self._name, 'turned_off', self._turn_off_count, 0),
+            (self._name, 'state', self._state, read_time),
+            (self._name, 'runtime', self._runtime, read_time),
+            (self._name, 'turned_on', self._turn_on_count, read_time),
+            (self._name, 'turned_off', self._turn_off_count, read_time),
         ]
         self._log_data(data)
         return data
