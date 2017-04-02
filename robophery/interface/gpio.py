@@ -61,6 +61,7 @@ class GpioInterface(Interface):
 
     def __init__(self, *args, **kwargs):
         self._pins = {}
+        super(GpioInterface, self).__init__(*args, **kwargs)
 
     def setup_pin(self, pin, mode, pull_up_down=None):
         """
