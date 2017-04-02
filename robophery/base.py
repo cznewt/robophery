@@ -350,8 +350,12 @@ class Module(object):
             self._log.error("Failure reading data.")
         else:
             for datum in data:
-                self._log.debug("Reading {0}.{1} metric, value {2} {3}.".format(
-                    datum[0], datum[1], datum[2], self.meta_data()[datum[1]]['unit']))
+                if datum[2] is None:
+                    self._log.error("Failure reading data from {0}.{1}.".format(
+                        datum[0], datum[1]))
+                else:
+                    self._log.debug("Reading {0}.{1} metric, value {2} {3}.".format(
+                        datum[0], datum[1], datum[2], self.meta_data()[datum[1]]['unit']))
 
     def _sleep(self, seconds):
         """

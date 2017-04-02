@@ -71,15 +71,15 @@ class Vl53L0XModule(I2cModule):
         """
         Get sensor reading.
         """
-        read_time_start = self._get_time()
+        read_start = self._get_time()
         try:
             distance = self.read_distance()
         except IOError:
             distance = None
-        read_time_stop = self._get_time()
-        read_time_delta = read_time_stop - read_time_start
+        read_stop = self._get_time()
+        read_time = read_stop - read_start
         data = [
-            (self._name, 'distance', distance, read_time_delta),
+            (self._name, 'distance', distance, read_time),
         ]
         self._log_data(data)
         return data
