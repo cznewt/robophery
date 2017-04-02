@@ -24,8 +24,8 @@ class SwitchModule(GpioModule):
             self._runtime_start = None
             self._state = 0
 
-    def _process_event(self, pin, edge):
-        if edge == self._edge_mapping[self.GPIO_EVENT_RISING]:
+    def _process_event(self, pin):
+        if self.is_high(pin):
             self._state = 1
             self._turn_on_count += 1
             self._runtime_start = self._get_time()
