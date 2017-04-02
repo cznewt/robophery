@@ -36,10 +36,11 @@ class PahoMqttComm(MqttComm):
         final_data = {}
         for name, datum in data.items():
             names = name.split('.')
-            if names[0] in final_data:
-                final_data[names[0]][names[1]] = datum['avg_value']
-            else:
-                final_data[names[0]] = {names[1]: datum['avg_value']}
+            if 'avg_value' in datum:
+                if names[0] in final_data:
+                    final_data[names[0]][names[1]] = datum['avg_value']
+                else:
+                    final_data[names[0]] = {names[1]: datum['avg_value']}
         for name, datum in final_data.items():
             topic = "{0}/{1}".format(self._publish_topic, name)
             publish.single(topic,
