@@ -159,8 +159,8 @@ class Bmp085Module(I2cModule):
         UT = self.read_raw_temp()
         UP = self.read_raw_pressure()
         # Datasheet values for debugging:
-        #UT = 27898
-        #UP = 23843
+        # UT = 27898
+        # UP = 23843
         # Calculations below are taken straight from section 3.5 of the datasheet.
         # Calculate true temperature coefficient B5.
         X1 = ((UT - self.cal_AC6) * self.cal_AC5) >> 15
@@ -216,11 +216,17 @@ class Bmp085Module(I2cModule):
         Get all sensor readings.
         """
         temp_time_start = self._get_time()
-        temp = self.read_temperature()
+        try:
+            temp = self.read_temperature()
+        except IOError:
+            temp = None
         temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
         press_time_start = self._get_time()
-        press = self.read_pressure()
+        try:
+            press = self.read_pressure()
+        except IOError:
+            press = None
         press_time_stop = self._get_time()
         press_time_delta = press_time_stop - press_time_start
         data = [

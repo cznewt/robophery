@@ -36,16 +36,23 @@ class Mcp9808Module(I2cModule):
         if did != 0x0400:
             self._log.error('Not right device ID (0x4): %s' % did)
 
-    def read_data(self):
-        """
-        Get the temperature readings.
-        """
-        temp_time_start = self._get_time()
+    def get_temperature(self):
         data = self.readU16(self.MCP9808_REG_AMBIENT_TEMP, False)
         temperature = data & 0x0FFF
         temperature /= 16.0
         if data & 0x1000:
             temperature -= 256
+        return temperature
+
+    def read_data(self):
+        """
+        Get the temperature readings.
+        """
+        temp_time_start = self._get_time()
+        try:
+            temperature = self.get_temperature()
+        except IOError:
+            temperature = None
         temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
         data = [

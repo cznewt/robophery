@@ -116,16 +116,22 @@ class Bh1750Module(I2cModule):
         """
         Get the luminosity readings.
         """
-        if self.resolution_mode is 0:
-            luminosity = self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
-        elif self.resolution_mode is 1:
-            luminosity = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
-        elif self.resolution_mode is 2:
-            luminosity = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
-        else:
+        read_time_start = self._get_time()
+        try:
+            if self.resolution_mode is 0:
+                luminosity = self.do_measurement(self.ONE_TIME_LOW_RES_MODE)
+            elif self.resolution_mode is 1:
+                luminosity = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_1)
+            elif self.resolution_mode is 2:
+                luminosity = self.do_measurement(self.ONE_TIME_HIGH_RES_MODE_2)
+            else:
+                luminosity = None
+        except IOError:
             luminosity = None
+        read_time_stop = self._get_time()
+        read_time_delta = read_time_stop - read_time_start
         data = [
-            (self._name, 'luminosity', luminosity, 0),
+            (self._name, 'luminosity', luminosity, read_time_delta),
         ]
         self._log_data(data)
         return data

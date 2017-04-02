@@ -37,11 +37,17 @@ class Si7021Module(I2cModule):
         Get all sensor readings.
         """
         temp_time_start = self._get_time()
-        temp = self.read_temperature()
+        try:
+            temp = self.read_temperature()
+        except IOError:
+            temp = None
         temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
         humid_time_start = self._get_time()
-        humid = self.read_humidity()
+        try:
+            humid = self.read_humidity()
+        except IOError:
+            humid = None
         humid_time_stop = self._get_time()
         humid_time_delta = humid_time_stop - humid_time_start
         data = [

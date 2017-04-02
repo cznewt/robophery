@@ -72,7 +72,10 @@ class Vl53L0XModule(I2cModule):
         Get sensor reading.
         """
         read_time_start = self._get_time()
-        distance = self.read_distance()
+        try:
+            distance = self.read_distance()
+        except IOError:
+            distance = None
         read_time_stop = self._get_time()
         read_time_delta = read_time_stop - read_time_start
         data = [
