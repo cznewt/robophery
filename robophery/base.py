@@ -33,6 +33,21 @@ def list_max(list):
     return max
 
 
+class SimpleLogger(object):
+
+    def __init__(self, name):
+        self._name = name
+
+    def info(self, value):
+        print("[{0}] {1}".format(time.time(), value))
+
+    def error(self, value):
+        print("[{0}] {1}".format(time.time(), value))
+
+    def debug(self, value):
+        print("[{0}] {1}".format(time.time(), value))
+
+
 class ModuleManager(object):
 
     SERVICE_NAME = 'robophery'
@@ -95,11 +110,10 @@ class ModuleManager(object):
             self._name, self._run_mode, self._platform))
 
     def _get_logger(self, name):
-        log = logging.getLogger(name)
-#        if 'console' in self._log_handlers:
-#            console_handler = logging.StreamHandler()
-#            console_handler.setLevel(logging.DEBUG)
-#            log.addHandler(console_handler)
+        try:
+            log = logging.getLogger(name)
+        except Exception:
+            log = SimpleLogger(name)
         return log
 
     def _linux_platforms(self):
