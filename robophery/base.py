@@ -1,13 +1,36 @@
-import logging
-import platform
 import time
-from importlib import import_module
-from robophery.utils.math import list_avg, list_min, list_max
-from robophery.utils.rpi import detect_pi_version
 
-logging_format = "%(created)f [%(name)s] %(message)s"
+try:
+    import platform
+    import logging
+    logging_format = "%(created)f [%(name)s] %(message)s"
+    logging.basicConfig(format=logging_format, level=logging.DEBUG)
+    from importlib import import_module
+except Exception:
+    pass
 
-logging.basicConfig(format=logging_format, level=logging.DEBUG)
+
+def list_avg(list):
+    sum = 0
+    for elm in list:
+        sum += elm
+    return sum / (len(list) * 1.0)
+
+
+def list_min(list):
+    min = list[0]
+    for elm in list[1:]:
+        if elm < min:
+            min = elm
+    return min
+
+
+def list_max(list):
+    max = list[0]
+    for elm in list[1:]:
+        if elm > max:
+            max = elm
+    return max
 
 
 class ModuleManager(object):
@@ -93,6 +116,7 @@ class ModuleManager(object):
         """
 
         # Detect Raspberry Pi
+        from robophery.utils.rpi import detect_pi_version
         pi = detect_pi_version()
         if pi is not None:
             return self.RASPBERRYPI_PLATFORM
@@ -214,14 +238,14 @@ class ModuleManager(object):
                         else:
                             data["{0}.read_time".format(name)] = [metric[3]]
                     if "{0}.error".format(name) in data:
-                        data["{0}.error".format(name)].append(1)
-                    else:
-                        data["{0}.error".format(name)] = [1]
-                else:
-                    if "{0}.error".format(name) in data:
                         data["{0}.error".format(name)].append(0)
                     else:
                         data["{0}.error".format(name)] = [0]
+                else:
+                    if "{0}.error".format(name) in data:
+                        data["{0}.error".format(name)].append(1)
+                    else:
+                        data["{0}.error".format(name)] = [1]
         for datum_name, datum in data.items():
             metric_name = '.'.join(datum_name.split('.')[:-1])
             if not metric_name in output_data:
@@ -358,7 +382,7 @@ class Module(object):
                     self._log.error("Failure reading data from {0}.{1}.".format(
                         datum[0], datum[1]))
                 else:
-                    self._log.debug("Reading {0}.{1} metric, value {2} {3}.".format(
+                    self._log.debug("Success reading {0}.{1} metric, value {2} {3}.".format(
                         datum[0], datum[1], datum[2], self.meta_data()[datum[1]]['unit']))
 
     def _sleep(self, seconds):
