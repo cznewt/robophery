@@ -1,4 +1,3 @@
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -53,10 +52,10 @@ class AtlasModule(I2cModule):
         # the read and calibration commands require a longer timeout
         if((string.upper().startswith("R")) or
                 (string.upper().startswith("CAL"))):
-            time.sleep(self.long_timeout)
+            self._sleep(self.long_timeout)
         elif string.upper().startswith("SLEEP"):
             return "sleep mode"
         else:
-            time.sleep(self.short_timeout)
+            self._sleep(self.short_timeout)
 
         return self.read()

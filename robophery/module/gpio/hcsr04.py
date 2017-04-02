@@ -1,4 +1,3 @@
-import time
 from robophery.interface.gpio import GpioModule
 
 
@@ -30,9 +29,9 @@ class HcSr04Module(GpioModule):
         self.set_low(self._trigger_pin)
 
         # while self.is_low(self._echo_pin):
-        #    pulse_start = time.time()
+        #    pulse_start = self._get_time()
         # while self.is_high(self._echo_pin):
-        #    pulse_end = time.time()
+        #    pulse_end = self._get_time()
 
         # pulse_duration = pulse_end - pulse_start
         pulse_duration = 0.001

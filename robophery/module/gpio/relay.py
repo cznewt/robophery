@@ -1,4 +1,3 @@
-import time
 from robophery.interface.gpio import GpioModule
 
 
@@ -34,7 +33,7 @@ class RelayModule(GpioModule):
         self.set_high(self._pin)
         self._state = 1
         self._turn_on_count += 1
-        self._runtime_start = time.time()
+        self._runtime_start = self._get_time()
 
     def turn_off(self):
         """

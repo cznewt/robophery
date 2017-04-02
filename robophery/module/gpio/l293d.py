@@ -94,8 +94,8 @@ class L293dModule(GpioModule):
         L293d motor status readings.
         """
         data = [
-            (self._name, 'direction', self._direction),
-            (self._name, 'power', self._power),
+            (self._name, 'direction', self._direction, 0),
+            (self._name, 'power', self._power, 0),
         ]
         self._log_data(data)
         return data

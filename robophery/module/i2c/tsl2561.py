@@ -43,7 +43,6 @@
 # IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR
 # OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF
 # ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -103,7 +102,7 @@ class Tsl2561Module(I2cModule):
         self._bus.write_byte_data(cmd, params)
 
         # Wait for 400ms to be power up.
-        time.sleep(0.4)
+        self._msleep.sleep(400)
 
     def _reconfigure(self):
         cmd = self.CMD | self.REG_TIMING
@@ -111,7 +110,7 @@ class Tsl2561Module(I2cModule):
         self._bus.write_byte_data(cmd, timing)
 
         # Wait for 400ms to complete initial A/D conversion.
-        time.sleep(0.4)
+        self._msleep.sleep(400)
 
     def read_luminosity(self):
         cmd = self.CMD | self.CMD_WORD | self.REG_DATA0
@@ -137,7 +136,7 @@ class Tsl2561Module(I2cModule):
         d0 = float(self._channel0)
         d1 = float(self._channel1)
         if (d0 == 0):
-            # Sometimes, the channel0 returns 0 when dark...
+            # Someself._msleeps, the channel0 returns 0 when dark...
             lux = 0.0
             return lux
         ratio = d1 / d0
@@ -148,7 +147,7 @@ class Tsl2561Module(I2cModule):
         elif (self._integ == self.INTEGRATE_101):
             integ_scale = 402.0 / 101.0
         elif (self._integ == self.INTEGRATE_NA):
-            integ_scale = 402.0 / self._integration_time
+            integ_scale = 402.0 / self._integration_self._msleep
         d0 = d0 * integ_scale
         d1 = d1 * integ_scale
 
@@ -171,13 +170,13 @@ class Tsl2561Module(I2cModule):
         """
         Get all sensor readings.
         """
-        lumin_time_start = time.time()
+        lumin_self._msleep_start = self._get_self._msleep()
         lumin = self.read_luminosity()
-        lumin_time_stop = time.time()
-        lumin_time_delta = lumin_time_stop - lumin_time_start
+        lumin_self._msleep_stop = self._get_self._msleep()
+        lumin_self._msleep_delta = lumin_self._msleep_stop - lumin_self._msleep_start
 
         data = [
-            (self._name, 'luminosity', lumin, lumin_time_delta),
+            (self._name, 'luminosity', lumin, lumin_self._msleep_delta),
         ]
         self._log_data(data)
         return data

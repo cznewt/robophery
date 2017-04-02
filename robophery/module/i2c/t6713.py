@@ -1,5 +1,4 @@
 import array
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -18,7 +17,7 @@ class T6713Module(I2cModule):
     def _status(self):
         buffer = array.array('B', [0x04, 0x13, 0x8a, 0x00, 0x01])
         self.dev.write(buffer)
-        time.sleep(0.1)
+        self._msleep(100)
         data = self.dev.read(4)
         buffer = array.array('B', data)
         return buffer[2] * 256 + buffer[3]
@@ -26,7 +25,7 @@ class T6713Module(I2cModule):
     def _checkABC(self):
         buffer = array.array('B', [0x04, 0x03, 0xee, 0x00, 0x01])
         self.dev.write(buffer)
-        time.sleep(0.1)
+        self._msleep(100)
         data = self.dev.read(4)
         buffer = array.array('B', data)
         return buffer[2] * 256 + buffer[3]
@@ -34,7 +33,7 @@ class T6713Module(I2cModule):
     def _calibrate(self):
         buffer = array.array('B', [0x05, 0x03, 0xec, 0xff, 0x00])
         self.dev.write(buffer)
-        time.sleep(0.1)
+        self._msleep(100)
         data = self.dev.read(5)
         buffer = array.array('B', data)
         return buffer[3] * 256 + buffer[3]
@@ -42,7 +41,7 @@ class T6713Module(I2cModule):
     def read_co2(self):
         buffer = array.array('B', [0x04, 0x13, 0x8b, 0x00, 0x01])
         self.dev.write(buffer)
-        time.sleep(0.1)
+        self._msleep(100)
         data = self.dev.read(4)
         buffer = array.array('B', data)
         return buffer[2] * 256 + buffer[3]
@@ -51,9 +50,9 @@ class T6713Module(I2cModule):
         """
         Get all sensor readings.
         """
-        co2_time_start = time.time()
+        co2_time_start = self._get_time()
         co2 = self.read_co2()
-        co2_time_stop = time.time()
+        co2_time_stop = self._get_time()
         co2_time_delta = co2_time_stop - co2_time_start
         data = [
             (self._name, 'co2_concetration', co2, co2_time_delta),

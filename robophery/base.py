@@ -1,4 +1,3 @@
-
 import logging
 import platform
 import time
@@ -13,7 +12,7 @@ logging.basicConfig(format=logging_format, level=logging.DEBUG)
 
 class ModuleManager(object):
 
-    SERVICE_NAME = 'robo01'
+    SERVICE_NAME = 'robophery'
     READ_INTERVAL = 2000
     PUBLISH_INTERVAL = 10000
 
@@ -154,7 +153,6 @@ class ModuleManager(object):
                     interface['parent']['interface']]
                 self._interface[interface_name] = InterfaceClass(**interface)
 
-
     def _setup_modules(self, modules={}):
         """
         Initialise platform modules
@@ -182,14 +180,14 @@ class ModuleManager(object):
         Read data from all registered modules
         """
         data = []
-        time_start = time.time()
+        time_start = self._get_time()
         self._log.debug("Started data reading cycle, iteration {0} of {1}.".format(
             self._read_iter, self._read_cycle))
         for module_name, module in self._module.items():
             module_data = module.read_data()
             data = data + module_data
         self._read_cache.append(data)
-        time_stop = time.time()
+        time_stop = self._get_time()
         time_delta = time_stop - time_start
         self._log.debug("Finished data reading cycle, iteration {0} of {1}, operation took {2} ms.".format(
             self._read_iter, self._read_cycle, time_delta * 1000))
@@ -243,6 +241,19 @@ class ModuleManager(object):
         self._read_cache = []
         self._read_iter = 1
 
+    def _sleep(self, seconds):
+        """
+        Sleep for the specified amount of seconds.
+        """
+        self._log.debug("Sleeping for {0} s.". format(seconds))
+        time.sleep(seconds)
+
+    def _get_time(self):
+        """
+        Get specific time.
+        """
+        return time.time()
+
     def _single_loop(self):
         """
         Run single global service loop
@@ -255,7 +266,7 @@ class ModuleManager(object):
             else:
                 self._publish_data()
             if sleep_delta > 0:
-                time.sleep(sleep_delta)
+                self._sleep(sleep_delta)
 
     def run(self, modules=None):
         """
@@ -284,7 +295,7 @@ class ModuleManager(object):
 
 class Interface(object):
 
-    DEVICE_NAME = 'unknown-bus'
+    DEVICE_NAME = 'bus'
 
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
@@ -316,7 +327,7 @@ class Interface(object):
 
 class Module(object):
 
-    DEVICE_NAME = 'unknown-device'
+    DEVICE_NAME = 'device'
     READ_INTERVAL = 2000
 
     def __init__(self, *args, **kwargs):
@@ -335,12 +346,19 @@ class Module(object):
         return '{0} {1}'.format(self._class.split('.')[-1], self._name)
 
     def _log_data(self, data):
-        if data == None:
+        if data is None:
             self._log.error("Failure reading data.")
         else:
             for datum in data:
                 self._log.debug("Reading {0}.{1} metric, value {2} {3}.".format(
                     datum[0], datum[1], datum[2], self.meta_data()[datum[1]]['unit']))
+
+    def _sleep(self, seconds):
+        """
+        Sleep for the specified amount of seconds.
+        """
+        self._log.debug("Sleeping for {0} s.". format(seconds))
+        time.sleep(seconds)
 
     def _msleep(self, milliseconds):
         """
@@ -356,7 +374,8 @@ class Module(object):
         self._log.debug("Sleeping for {0} us.". format(microseconds))
         time.sleep(microseconds / 1000000.0)
 
-    def _service(self):
-
-        self._cycle_iteration = 1
-        self._cache = []
+    def _get_time(self):
+        """
+        Get specific time.
+        """
+        return time.time()

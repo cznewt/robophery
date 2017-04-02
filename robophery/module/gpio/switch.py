@@ -1,4 +1,3 @@
-import time
 from robophery.interface.gpio import GpioModule
 
 
@@ -22,7 +21,7 @@ class SwitchModule(GpioModule):
         self.add_event_detect(self._pin, fall_edge,
                               callback=self._process_fall)
         if self.is_high(self._pin):
-            self._runtime_start = time.time()
+            self._runtime_start = self._get_time()
             self._state = 1
         else:
             self._runtime_start = None
@@ -31,7 +30,7 @@ class SwitchModule(GpioModule):
     def _process_rise(self, pin):
         self._state = 1
         self._turn_on_count += 1
-        self._runtime_start = time.time()
+        self._runtime_start = self._get_time()
 
     def _process_fall(self, pin):
         self._update_runtime()
@@ -41,7 +40,7 @@ class SwitchModule(GpioModule):
 
     def _update_runtime(self):
         if self._runtime_start is not None:
-            now = time.time()
+            now = self._get_time()
             self._runtime = self._runtime + (now - self._runtime_start)
             self._runtime_start = now
 

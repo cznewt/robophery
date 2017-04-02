@@ -1,4 +1,3 @@
-import time
 from robophery.interface.w1 import W1Module
 
 
@@ -25,9 +24,9 @@ class Ds18Module(W1Module):
         """
         data = []
         if self._addr in ['0', None]:
-            read_time_start = time.time()
+            read_time_start = self._get_time()
             raw_data = self._get_all_temperatures()
-            read_time_stop = time.time()
+            read_time_stop = self._get_time()
             if len(raw_data) == 0:
                 return None
             else:
@@ -37,9 +36,9 @@ class Ds18Module(W1Module):
                     data.append(('{0}-{1}'.format(self._name, raw_name),
                                  'temperature', raw_value, read_time_delta))
         else:
-            read_time_start = time.time()
+            read_time_start = self._get_time()
             temperature = self._get_temperature(self._addr, self._type)
-            read_time_stop = time.time()
+            read_time_stop = self._get_time()
             read_time_delta = read_time_stop - read_time_start
             data.append((self._name, 'temperature',
                          temperature, read_time_delta))

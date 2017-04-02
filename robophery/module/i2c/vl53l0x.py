@@ -1,5 +1,4 @@
 import struct
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -72,9 +71,9 @@ class Vl53L0XModule(I2cModule):
         """
         Get sensor reading.
         """
-        read_time_start = time.time()
+        read_time_start = self._get_time()
         distance = self.read_distance()
-        read_time_stop = time.time()
+        read_time_stop = self._get_time()
         read_time_delta = read_time_stop - read_time_start
         data = [
             (self._name, 'distance', distance, read_time_delta),

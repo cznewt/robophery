@@ -19,7 +19,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 from __future__ import division
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -111,7 +110,7 @@ class Bmp085Module(I2cModule):
         Read the raw (uncompensated) temperature from the sensor.
         """
         self.write8(self.BMP085_CONTROL, self.BMP085_READTEMPCMD)
-        time.sleep(0.005)  # Wait 5ms
+        self._msleep(5)  # Wait 5ms
         raw = self.readU16(self.BMP085_TEMPDATA, False)
 #        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
@@ -123,13 +122,13 @@ class Bmp085Module(I2cModule):
         self.write8(self.BMP085_CONTROL,
                     self.BMP085_READPRESSURECMD + (self._mode << 6))
         if self._mode == self.BMP085_ULTRALOWPOWER:
-            time.sleep(0.005)
+            self._msleep(5)
         elif self._mode == self.BMP085_HIGHRES:
-            time.sleep(0.014)
+            self._msleep(14)
         elif self._mode == self.BMP085_ULTRAHIGHRES:
-            time.sleep(0.026)
+            self._msleep(26)
         else:
-            time.sleep(0.008)
+            self._msleep(8)
         msb = self.readU8(self.BMP085_PRESSUREDATA)
         lsb = self.readU8(self.BMP085_PRESSUREDATA + 1)
         xlsb = self.readU8(self.BMP085_PRESSUREDATA + 2)
@@ -216,13 +215,13 @@ class Bmp085Module(I2cModule):
         """
         Get all sensor readings.
         """
-        temp_time_start = time.time()
+        temp_time_start = self._get_time()
         temp = self.read_temperature()
-        temp_time_stop = time.time()
+        temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
-        press_time_start = time.time()
+        press_time_start = self._get_time()
         press = self.read_pressure()
-        press_time_stop = time.time()
+        press_time_stop = self._get_time()
         press_time_delta = press_time_stop - press_time_start
         data = [
             (self._name, 'temperature', temp, temp_time_delta),

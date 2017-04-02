@@ -1,5 +1,4 @@
 import Adafruit_DHT
-import time
 from robophery.interface.gpio import GpioModule
 
 
@@ -22,9 +21,9 @@ class Dht11Module(GpioModule):
         """
         Query DHT11 to get the humidity and temperature readings.
         """
-        read_time_start = time.time()
+        read_time_start = self._get_time()
         humidity, temperature = Adafruit_DHT.read(self._type, self._pin)
-        read_time_stop = time.time()
+        read_time_stop = self._get_time()
         read_time_delta = (read_time_stop - read_time_start) / 2
         if temperature is None or humidity is None:
             self._log.error("Data CRC failed while reading data.")

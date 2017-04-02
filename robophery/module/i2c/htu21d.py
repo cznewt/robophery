@@ -1,5 +1,4 @@
 import math
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -108,13 +107,13 @@ class Htu21dModule(I2cModule):
         """
         Get all sensor readings.
         """
-        temp_time_start = time.time()
+        temp_time_start = self._get_time()
         temp = self.get_temperature()
-        temp_time_stop = time.time()
+        temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
-        humid_time_start = time.time()
+        humid_time_start = self._get_time()
         humid = self.get_humidity()
-        humid_time_stop = time.time()
+        humid_time_stop = self._get_time()
         humid_time_delta = humid_time_stop - humid_time_start
         data = [
             (self._name, 'temperature', temp, temp_time_delta),

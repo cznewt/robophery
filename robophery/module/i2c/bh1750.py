@@ -1,4 +1,3 @@
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -99,7 +98,7 @@ class Bh1750Module(I2cModule):
 
     def wait_for_result(self):
         basetime = 0.018 if (self.mode & 0x03) == 0x03 else 0.128
-        time.sleep(basetime * (self.mtreg / 69.0) + self.additional_delay)
+        self._sleep(basetime * (self.mtreg / 69.0) + self.additional_delay)
 
     def do_measurement(self, mode):
         """

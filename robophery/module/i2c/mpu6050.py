@@ -3,7 +3,6 @@
 # Made by: MrTijn/Tijndagamer
 # Released under the MIT License
 # Copyright (c) 2015, 2016, 2017 MrTijn/Tijndagamer
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -235,17 +234,17 @@ class Mpu6050Module(I2cModule):
         """
         Get all sensor readings.
         """
-        temp_time_start = time.time()
+        temp_time_start = self._get_time()
         temp = self.get_temp()
-        temp_time_stop = time.time()
+        temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
-        accel_time_start = time.time()
+        accel_time_start = self._get_time()
         accel = self.get_accel_data()
-        accel_time_stop = time.time()
+        accel_time_stop = self._get_time()
         accel_time_delta = (accel_time_stop - accel_time_start) / 3
-        gyro_time_start = time.time()
+        gyro_time_start = self._get_time()
         gyro = self.get_gyro_data()
-        gyro_time_stop = time.time()
+        gyro_time_stop = self._get_time()
         gyro_time_delta = (gyro_time_stop - gyro_time_start) / 3
         data = [
             (self._name, 'temperature', temp, temp_time_delta),

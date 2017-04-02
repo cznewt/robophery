@@ -1,4 +1,3 @@
-import time
 from robophery.interface.i2c import I2cModule
 
 
@@ -41,13 +40,13 @@ class Mcp9808Module(I2cModule):
         """
         Get the temperature readings.
         """
-        temp_time_start = time.time()
+        temp_time_start = self._get_time()
         data = self.readU16(self.MCP9808_REG_AMBIENT_TEMP, False)
         temperature = data & 0x0FFF
         temperature /= 16.0
         if data & 0x1000:
             temperature -= 256
-        temp_time_stop = time.time()
+        temp_time_stop = self._get_time()
         temp_time_delta = temp_time_stop - temp_time_start
         data = [
             (self._name, 'temperature', temperature, temp_time_delta),
