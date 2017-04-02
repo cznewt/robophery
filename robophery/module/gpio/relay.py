@@ -13,6 +13,8 @@ class RelayModule(GpioModule):
         self._state = 0
         self._runtime = 0
         self._runtime_start = None
+        self._turn_on_count = 0
+        self._turn_off_count = 0
         self.setup_pin(self._pin, self.GPIO_MODE_OUT)
         self.set_low(self._pin)
 
