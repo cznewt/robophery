@@ -20,10 +20,7 @@ class HcSr04Module(GpioModule):
         self.cleanup(self._trigger_pin)
         self.cleanup(self._echo_pin)
 
-    def read_data(self):
-        """
-        Distance reading.
-        """
+    def get_distance(self):
         self.set_high(self._trigger_pin)
         self._usleep(10)
         self.set_low(self._trigger_pin)
@@ -36,9 +33,18 @@ class HcSr04Module(GpioModule):
         # pulse_duration = pulse_end - pulse_start
         pulse_duration = 0.001
         distance = pulse_duration * 1715
+        return distance
 
+    def read_data(self):
+        """
+        Distance reading.
+        """
+        read_start = self._get_time()
+        distance = self.get_distance()
+        read_stop = self._get_time()
+        read_time = read_stop - read_start
         data = [
-            (self._name, 'distance', distance),
+            (self._name, 'distance', distance, read_time),
         ]
         self._log_data(data)
         return data
