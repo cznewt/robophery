@@ -69,7 +69,7 @@ class T6713Module(I2cModule):
                 'type': 'gauge',
                 'unit': 'ppm',
                 'precision': 30,
-                'range_low': 400,
+                'range_low': 0,
                 'range_high': 5000,
                 'sensor': self.DEVICE_NAME
             },

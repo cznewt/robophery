@@ -32,7 +32,8 @@ wide voltage range makes is usable with 2.7V to 5.5V logic.
 More information
 ----------------
 
-* https://learn.adafruit.com/mcp9808-temperature-sensor-python-library MCP9808 Temperature Sensor Python Library
+* https://learn.adafruit.com/adafruit-mcp9808-precision-i2c-temperature-sensor-guide/overview
+* https://github.com/philipcristiano/beagleboneblack/blob/master/mcp9808.py
 
 Where to buy
 ------------
@@ -64,6 +65,9 @@ More information
 * http://datasheets.maximintegrated.com/en/ds/DS18B20.pdf 
 * http://learn.adafruit.com/measuring-temperature-with-a-beaglebone-black
 * http://designandmake.designspark.com/eng/projects/35/view/stage/design
+* https://github.com/timofurrer/w1thermsensor
+* http://www.bonebrews.com/temperature-monitoring-with-the-ds18b20-on-a-beaglebone-black/
+* http://interactingobjects.com/ds18b20-temperature-sensor-on-a-beaglebone-black-running-ubuntu/
 
 Where to buy
 ------------

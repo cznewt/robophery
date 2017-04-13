@@ -10,6 +10,12 @@ Relay Board - GPIO Swich
    :scale: 30 %
    :align: center
 
+More information
+----------------
+
+* https://github.com/adafruit/Adafruit_Python_GPIO
+
+
 SIS-PM Control - USB Switch
 ===========================
 
@@ -17,6 +23,9 @@ SIS-PM Control - USB Switch
    :scale: 30 %
    :align: center
 
-`Sispm`_
+More information
+----------------
 
-.. _Sispm: http://sispmctl.sourceforge.net/
+* `sispmctl.sourceforge.net`_
+
+.. _sispmctl.sourceforge.net: http://sispmctl.sourceforge.net/

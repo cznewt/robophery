@@ -3,6 +3,20 @@
 Measuring Flow of Liquid
 ========================
 
+Flow measurement is the quantification of bulk fluid movement. Flow can be
+measured in a variety of ways. Positive-displacement flow meters accumulate a
+fixed volume of fluid and then count the number of times the volume is filled
+to measure flow. Other flow measurement methods rely on forces produced by the
+flowing stream as it overcomes a known constriction, to indirectly calculate
+flow. Flow may be measured by measuring the velocity of fluid over a known
+area.
+
+
+More information
+================
+
+* https://en.wikipedia.org/wiki/Flow_measurement
+
 
 Plastic 1/2" - GPIO Liquid Flow Meter
 =====================================
@@ -30,7 +44,7 @@ However, its great for basic measurement tasks!
 Where to buy
 ------------
 
-* http://www.adafruit.com/products/828 $10
+* 10 USD - http://www.adafruit.com/products/828
 
 
 Brass 1/2" - GPIO Liquid Flow Meter
@@ -51,4 +65,4 @@ allows the sensor to stay safe and dry.
 Where to buy
 ------------
 
-* http://www.adafruit.com/products/833 $25
+* 25 USD - http://www.adafruit.com/products/833

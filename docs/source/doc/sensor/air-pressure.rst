@@ -3,8 +3,23 @@
 Measuring Air Pressure
 ======================
 
-BMP180 - I²C Temperature and Pressure Sensor
-============================================
+Atmospheric pressure, sometimes also called barometric pressure, is the
+pressure within the atmosphere of Earth (or that of another planet). In most
+circumstances atmospheric pressure is closely approximated by the hydrostatic
+pressure caused by the weight of air above the measurement point. As elevation
+increases, there is less overlying atmospheric mass, so that atmospheric
+pressure decreases with increasing elevation. Pressure measures force per unit
+area, with SI units of pascals (1 Pa = 1 N/m2).
+
+
+More information
+================
+
+* https://en.wikipedia.org/wiki/Atmospheric_pressure
+
+
+BMP085/180 - I²C Temperature and Pressure Sensor
+================================================
 
 BMP180 is a high accuracy, mini size, ultra-low power pressure sensor, can be
 used in mobile devices; Excellent performance, absolute accuracy minimum up to
@@ -20,11 +35,11 @@ to microprocessor via I²C highway; Main features: Pressure range: 300~1100hPa
 More information
 ----------------
 
-* https://github.com/eddienigma/rpi-python-bmp180
 * https://github.com/adafruit/Adafruit_Python_BMP
+* https://github.com/eddienigma/rpi-python-bmp180
 
 Where to buy
 ------------
 
-* http://www.dx.com/p/bosch-bmp180-atmospheric-temperature-pressure-sensor-module-deep-blue-331485 - BMP180 $3
-* http://www.adafruit.com/product/1603 - BMP180 $10
+* 3 USD - http://www.dx.com/p/bosch-bmp180-atmospheric-temperature-pressure-sensor-module-deep-blue-331485
+* 10 USD - http://www.adafruit.com/product/1603

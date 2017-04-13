@@ -11,3 +11,4 @@ Chapter 3. Actuators
    display-tft.rst
    electric-modulation.rst
    electric-switch.rst
+   electric-motor.rst

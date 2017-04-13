@@ -18,7 +18,7 @@ More information
 * http://www.intorobotics.com/common-budgeted-arduino-light-sensors/
 
 
-BH1750 - I2C Luminosity Sensor
+BH1750 - I²C Luminosity Sensor
 ==============================
 
 Power supply: 3~5V; Data range: 0-65535; Sensor built-in and 16bitAD
@@ -34,6 +34,7 @@ lux high precision measurement.
 More information
 ----------------
 
+* http://www.instructables.com/id/BH1750-Digital-Light-Sensor/
 * http://bozontlabs.blogspot.cz/2014/09/beaglebone-black-and-bh1750-light-sensor.html
 
 Where to buy
@@ -42,7 +43,7 @@ Where to buy
 * 150 CZK - http://www.santy.cz/senzory-c24/senzor-intenzity-svetla-digi-i181/
 
 
-TSL2591 - I2C Luminosity Sensor
+TSL2591 - I²C Luminosity Sensor
 ===============================
 
 The TSL2591 luminosity sensor is an advanced digital light sensor, ideal for
@@ -58,20 +59,25 @@ does not accurately represent what human eyes see (since we cannot perceive
 the IR light that is detected by most photo diodes) This sensor is much like
 the TSL2561 but with a wider range (and the interface code is different). This
 sensor has a massive 600,000,000:1 dynamic range! Unlike the TSL2561 you
-cannot change the I2C address, so keep that in mind.
-
-This board/chip uses I2C 7-bit address 0x29 (fixed).
+cannot change the I²C address, so keep that in mind. This board/chip uses I²C
+7-bit address 0x29.
 
 .. image:: /_static/img/module/tls2591.jpg
    :scale: 30 %
    :align: center
 
-Where to buy
+More information
 ----------------
 
-* $7 - http://www.adafruit.com/products/1980
+* https://github.com/maxlklaxl/python-tsl2591
 
-TSL2561 - I2C Luminosity Sensor
+Where to buy
+------------
+
+* 7 USD - http://www.adafruit.com/products/1980
+
+
+TSL2561 - I²C Luminosity Sensor
 ===============================
 
 The TSL2561 luminosity sensor is an advanced digital light sensor, ideal for
@@ -91,7 +97,7 @@ microcontroller, even if it doesn't have analog inputs. The current draw is
 extremely low, so its great for low power data-logging systems. about 0.5mA
 when actively sensing, and less than 15 uA when in powerdown mode.
 
-This board/chip uses I2C 7-bit addresses 0x39, 0x29, 0x49, selectable with
+This board/chip uses I²C 7-bit addresses 0x39, 0x29, 0x49, selectable with
 jumpers.
 
 .. image :: /_static/img/module/tls2561.jpg

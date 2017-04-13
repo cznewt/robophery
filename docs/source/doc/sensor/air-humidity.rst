@@ -38,12 +38,13 @@ seconds old.
 More information
 ----------------
 
-* Chinese datasheet http://www.adafruit.com/datasheets/DHT11-chinese.pdf
+* https://github.com/adafruit/Adafruit_Python_DHT
+* https://cdn-shop.adafruit.com/datasheets/DHT11-chinese.pdf
 
 Where to buy
 ------------
 
-* https://www.adafruit.com/products/386 DHT11 $5
+* 5 USD - https://www.adafruit.com/products/386 DHT11
 
 
 DHT22 - GPIO Humidity and Temperature Sensor
@@ -64,12 +65,12 @@ More information
 ----------------
 
 * https://github.com/adafruit/Adafruit_Python_DHT 
-* English datasheet http://www.adafruit.com/datasheets/DHT22.pdf
+* https://cdn-shop.adafruit.com/datasheets/DHT22.pdf
 
 Where to buy
 ------------
 
-* https://www.adafruit.com/products/385 DHT22 $10
+* 10 USD - https://www.adafruit.com/products/385 DHT22
 
 
 HTU21D - I²C Humidity and Temperature Sensor
@@ -98,5 +99,14 @@ More information
 Where to buy
 ------------
 
-* http://www.adafruit.com/product/1899 $15
-* https://www.sparkfun.com/products/12064 $15
+* 15 USD - http://www.adafruit.com/product/1899
+* 15 USD - https://www.sparkfun.com/products/12064
+
+
+SI7021 - I²C humidity/temperature sensor
+========================================
+
+More information
+----------------
+
+* https://github.com/ControlEverythingCommunity/SI7021/blob/master/Python/SI7021.py

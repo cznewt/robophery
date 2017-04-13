@@ -3,8 +3,8 @@
 Single-board ARM Computers
 ==========================
 
-Raspberry Pi
-============
+Raspberry Pi 1
+==============
 
 The Raspberry Pi is a series of credit card-sized single-board computers
 developed in the UK by the Raspberry Pi Foundation with the intention of
@@ -14,7 +14,28 @@ promoting the teaching of basic computer science in schools.
    :scale: 50 %
    :align: center
 
+Available pins
+--------------
+
+.. image :: /_static/img/pinout/rpi.jpg
+   :scale: 50 %
+   :align: center
+
+Raspberry Pi 2/3
+================
+
+The Raspberry Pi is a series of credit card-sized single-board computers
+developed in the UK by the Raspberry Pi Foundation with the intention of
+promoting the teaching of basic computer science in schools.
+
 .. figure:: /_static/img/device/raspberry_pi_2.jpg
+   :scale: 50 %
+   :align: center
+
+Available pins
+--------------
+
+.. image :: /_static/img/pinout/rpi2.png
    :scale: 50 %
    :align: center
 
@@ -26,7 +47,8 @@ More infromation
 Where to buy
 ------------
 
-* http://eshop.minidroid.cz/raspberry-pi/335-raspberry-pi-2-model-b-1gb.html - R-Pi 2 Model B 1GB - 1200Kc
+* 1200Kc - http://eshop.minidroid.cz/raspberry-pi/335-raspberry-pi-2-model-b-1gb.html
+
 
 BeagleBone Black
 ================
@@ -35,8 +57,13 @@ BeagleBone Black
    :scale: 50 %
    :align: center
 
+
 Available pins
 --------------
+
+.. image :: /_static/img/pinout/bbb.png
+   :scale: 50 %
+   :align: center
 
 * 7 Analog Pins
 * 65 Digital Pins at 3.3V

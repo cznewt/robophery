@@ -35,3 +35,15 @@ Where to buy
 ------------
 
 * 100 CZK - http://www.santy.cz/senzory-c24/sensor-pudni-vlhkost-i132/
+
+
+Parrot Flower Power - Gardening BLE Sensor
+==========================================
+
+More information
+----------------
+
+* http://www.parrot.com/usa/products/flower-power/
+* http://developer.parrot.com/docs/flowerpower/FlowerPower-BLE.pdf
+* http://global.parrot.com/media/porticus/ressources/files/BAT5_Datasheet_FlowerPower_UK_05nov13.pdf
+* http://www.jaredwolff.com/blog/get-started-with-bluetooth-low-energy/

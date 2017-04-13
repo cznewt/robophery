@@ -34,6 +34,8 @@ More information
 * http://interactingobjects.com/building-bbpool/
 * Controlling the pHduino with a Python-Jabberbot script http://phduino.blogspot.cz/2012_07_01_archive.html
 * pHduino: OperationManual https://code.google.com/p/phduino/wiki/OperationManual
+* https://github.com/AtlasScientific/Raspberry-Pi-sample-code
+* https://www.atlas-scientific.com/_files/code/pi_sample_code.pdf
 
 Where to buy
 ------------

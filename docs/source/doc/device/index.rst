@@ -11,3 +11,4 @@ Chapter 2. Devices and interfaces
    bluetooth.rst
    intel.rst
    usb.rst
+   wifi.rst

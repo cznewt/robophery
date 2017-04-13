@@ -51,6 +51,7 @@ More information
 * http://www.ti.com/tool/cc2541dk-sensor#descriptionArea
 * https://github.com/msaunby/ble-sensor-pi
 * http://mike.saunby.net/2013/04/raspberry-pi-and-ti-cc2541-sensortag.html
+* https://github.com/mvartani76/RPi-Ble-Sensor-Tag-Python
 
 Where to buy
 ------------
