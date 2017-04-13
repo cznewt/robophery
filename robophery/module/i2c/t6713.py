@@ -50,12 +50,26 @@ class T6713Module(I2cModule):
         """
         Get all sensor readings.
         """
-        co2_time_start = self._get_time()
+        read_start = self._get_time()
         co2 = self.read_co2()
-        co2_time_stop = self._get_time()
-        co2_time_delta = co2_time_stop - co2_time_start
+        read_stop = self._get_time()
+        read_delta = read_stop - read_start
         data = [
-            (self._name, 'co2_concetration', co2, co2_time_delta),
+            (self._name, 'co2_concetration', co2, read_delta),
         ]
         self._log_data(data)
         return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {
+            'co2_concetration': {
+                'type': 'gauge',
+                'unit': 'ppm',
+                'precision': 30,
+                'range_low': 400,
+                'range_high': 5000,
+                'sensor': self.DEVICE_NAME
+            },
