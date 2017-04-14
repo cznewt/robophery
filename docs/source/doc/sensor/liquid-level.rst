@@ -34,8 +34,8 @@ More information
 Where to buy
 ------------
 
-* 12" (320mm) http://www.adafruit.com/products/464 $40
-* 8"  http://www.adafruit.com/products/463 $40
+* 40 USD - 12" (320mm) http://www.adafruit.com/products/464
+* 40 USD - 8"  http://www.adafruit.com/products/463
 
 
 SainSmart Water Sensor
@@ -58,4 +58,4 @@ More information
 Where to buy
 ------------
 
-* http://www.sainsmart.com/sensors/field/sainsmart-water-sensor-free-cables-arduino-compatile.html $10
+* 10 USD - http://www.sainsmart.com/sensors/field/sainsmart-water-sensor-free-cables-arduino-compatile.html

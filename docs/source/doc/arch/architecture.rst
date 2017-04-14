@@ -77,3 +77,11 @@ ModeMCU Device
 .. image :: /_static/img/arch/detail_mcu.png
    :width: 50 %
    :align: center
+
+
+IQRF Platform
+--------------
+
+.. image :: /_static/img/arch/detail_iqrf.png
+   :width: 50 %
+   :align: center

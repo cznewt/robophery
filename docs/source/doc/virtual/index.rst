@@ -1,9 +1,9 @@
 
 ==========================
-Chapter 6. Virtual Devices
+Chapter 6. Virtual Systems
 ==========================
 
 .. toctree::
 
+   vehicle-terrestrial.rst
    shutter.rst
-   vehicle.rst

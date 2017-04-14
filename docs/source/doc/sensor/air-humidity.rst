@@ -40,7 +40,7 @@ More information
 Where to buy
 ------------
 
-* 5 USD - https://www.adafruit.com/products/386 DHT11
+* 5 USD - https://www.adafruit.com/products/386
 
 
 DHT22 - GPIO Humidity and Temperature Sensor
@@ -66,7 +66,7 @@ More information
 Where to buy
 ------------
 
-* 10 USD - https://www.adafruit.com/products/385 DHT22
+* 10 USD - https://www.adafruit.com/products/385
 
 
 HTU21D - I²C Humidity and Temperature Sensor

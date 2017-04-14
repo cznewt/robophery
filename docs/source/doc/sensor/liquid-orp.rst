@@ -1,7 +1,7 @@
 
-=======================================
-Measuring Reduction Potencial of Liquid
-=======================================
+=============================================
+Measuring Reduction Potencial (ORP) of Liquid
+=============================================
 
 Reduction potential (also known as redox potential, oxidation / reduction
 potential, ORP, pE)  is a measure of the tendency of a chemical species to
@@ -14,8 +14,8 @@ water quality.
 * http://en.wikipedia.org/wiki/Reduction_potential
 
 
-Atlas Scientific ORP Kit - I²C Liquid Redox Sensor
-==================================================
+Atlas Scientific ORP Kit - I²C Liquid ORP Sensor
+================================================
 
 The Atlas Scientific ORP Kit comes with everything you need to get your
 laboratory grade embedded ORP system up and running.
@@ -24,7 +24,7 @@ Remember, a ORP Probe cannot be allowed to dry out or freeze. When it’s not in
 use keep it in the supplied soaker bottle. Periodically change out the storage
 solution in the soaker bottle with new storage solution.
 
-.. image :: /_static/img/module/atlas_scientific_orp_kit.jpg
+.. image :: /_static/img/module/as_orp.jpg
    :width: 50 %
    :align: center
 
@@ -39,4 +39,4 @@ More information
 Where to buy
 ------------
 
-* $130 - https://www.atlas-scientific.com/product_pages/kits/orp_kit.html
+* 130 USD - https://www.atlas-scientific.com/product_pages/kits/orp_kit.html

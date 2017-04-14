@@ -13,10 +13,13 @@ Chapter 5. Physical Sensors
    electric-button.rst
    electric-current.rst
    light-luminosity.rst
+   light-color.rst
    liquid-flow.rst
    liquid-level.rst
+   liquid-ec.rst
+   liquid-o2.rst
    liquid-ph.rst
-   liquid-redox.rst
+   liquid-orp.rst
    revolutions.rst
    soil-moisture.rst
    temperature.rst

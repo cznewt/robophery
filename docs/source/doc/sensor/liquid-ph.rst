@@ -20,7 +20,7 @@ Remember, a pH Probe cannot be allowed to dry out or freeze. When it’s not in
 use keep it in the supplied soaker bottle. Periodically change out the storage
 solution in the soaker bottle with new storage solution.
 
-.. image :: /_static/img/module/atlas_scientific_ph_kit.jpg
+.. image :: /_static/img/module/as_ph.png
    :width: 50 %
    :align: center
 
@@ -36,5 +36,5 @@ More information
 Where to buy
 ------------
 
-* http://www.atlas-scientific.com/product_pages/kits/ph-kit.html $130
-* https://www.sparkfun.com/products/10972 $106
+* 130 USD - http://www.atlas-scientific.com/product_pages/kits/ph-kit.html
+* 106 USD - https://www.sparkfun.com/products/10972

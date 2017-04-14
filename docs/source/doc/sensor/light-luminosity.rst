@@ -1,7 +1,7 @@
 
-==========================
-Measuring Light/Luminosity
-==========================
+=============================
+Measuring Luminosity of Light
+=============================
 
 The lux is the SI unit of illuminance and luminous emittance, measuring
 luminous flux per unit area. It is equal to one lumen per square metre. In
