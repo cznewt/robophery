@@ -3,9 +3,9 @@
 Chapter 3. Supported Interfaces
 ===============================
 
-RoboPhery platform's supported interfaces.
+Supported interfaces of RoboPhery platform.
 
 .. toctree::
 
-   1-wire.rst
-   bluetooth.rst
+   wired.rst
+   wireless.rst

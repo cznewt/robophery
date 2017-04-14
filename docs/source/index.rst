@@ -23,8 +23,10 @@ bus.
 
    doc/arch/index.rst
    doc/device/index.rst
+   doc/interface/index.rst
    doc/actuator/index.rst
    doc/sensor/index.rst
+   doc/virtual/index.rst
 
 
 Indices and tables

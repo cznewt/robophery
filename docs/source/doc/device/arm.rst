@@ -18,7 +18,7 @@ Available pins
 --------------
 
 .. image :: /_static/img/pinout/rpi.png
-   :width: 33 %
+   :width: 25 %
    :align: center
 
 Raspberry Pi 2/3
@@ -36,7 +36,7 @@ Available pins
 --------------
 
 .. image :: /_static/img/pinout/rpi3.png
-   :width: 50 %
+   :width: 40 %
    :align: center
 
 More infromation

@@ -50,3 +50,24 @@ Where to buy
 ------------
 
 * 100 CZK - http://www.santy.cz/moduly-c22/arduino-lcd-1602-16x2-modul-shield-mega-nano-i2c-redukce-seriovy-serial-2560-i52/
+
+
+PCA9685 - I²C to PWM Extension Board
+====================================
+
+It's an i2c-controlled PWM driver with a built in clock. That means that,
+unlike the TLC5940 family, you do not need to continuously send it signal
+tying up your microcontroller. It is 5V compliant, which means you can control
+it from a 3.3V microcontroller and still safely drive up to 6V outputs (this
+is good for when you want to control white or blue LEDs with 3.4+ forward
+voltages). 6 address select pins so you can wire up to 62 of these on a single
+i2c bus, a total of 992 outputs - that's a lot of servos or LEDs.
+
+.. image:: /_static/img/device/pca9685.jpg
+   :width: 50 %
+   :align: center
+
+Where to buy
+------------
+
+* 15 USD - https://www.adafruit.com/product/815
