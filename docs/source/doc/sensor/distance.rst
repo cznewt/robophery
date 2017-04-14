@@ -12,7 +12,7 @@ measurement function, the ranging accuracy can reach to 3mm. The modules
 includes ultrasonic transmitters, receiver and control circuit.
 
 .. image:: /_static/img/module/hc-sr04.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

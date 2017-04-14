@@ -1,14 +1,13 @@
 
-====================
-Chapter 3. Actuators
-====================
+=============================
+Chapter 4. Physical Actuators
+=============================
 
 .. toctree::
    :maxdepth: 2
 
    display-oled.rst
    display-lcd.rst
-   display-tft.rst
    electric-modulation.rst
    electric-switch.rst
    electric-motor.rst

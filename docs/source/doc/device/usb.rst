@@ -6,8 +6,8 @@ USB Extensions
 Get additional GPOIO/I²C/SPI/AIN interfaces by USB port.
 
 
-FT232H - USB to GPIO/SPI/I2C
-============================
+FT232H - USB to GPIO/SPI/I2C Extension Board
+============================================
 
 This chip from FTDI is similar to their USB to serial converter chips but adds
 a 'multi-protocol synchronous serial engine' which allows it to speak many
@@ -15,8 +15,8 @@ common protocols like SPI, I²C, serial UART, JTAG, and more!  There's even a
 handful of digital GPIO pins that you can read and write to do things like
 flash LEDs, read switches or buttons, and more.
 
-.. image:: /_static/img/device/ft232h.jpg
-   :scale: 30 %
+.. image:: /_static/img/device/ft232h.png
+   :width: 50 %
    :align: center
  	
 More information
@@ -34,8 +34,8 @@ Where to buy
 * 16 EUR - http://www.hobbyelectronica.nl/product/ft232h-breakout-usb/
 
 
-UMFT201XB - USB to GPIO/SPI/I2C
-===============================
+UMFT201XB - USB to GPIO/SPI/I2C Extension Board
+===============================================
 
 The UMFT201XB bridges from USB to I²C two-wire serial bus interface. The
 UMFT220XB bridges from USB to Parallel 4-Bit FT1248 Interface. The UMFT230XB
@@ -48,7 +48,7 @@ makes electrical contact with the electrical contacts of the USB connector.
 The serial interface operate at +3.3V. Input/Output pins are 5V tolerant.
 
 .. image:: /_static/img/device/umft201xb.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -60,13 +60,3 @@ Where to buy
 ----------------
 
 * 10 EUR - http://cz.mouser.com/ProductDetail/FTDI/UMFT201XB-01/
-
-
-Arduino
-=======
-
-More information
-----------------
-
-* Python library http://nanpy.github.io/
-* http://electronics.stackexchange.com/questions/15535/reliability-of-the-arduino-platform-for-industrial-use

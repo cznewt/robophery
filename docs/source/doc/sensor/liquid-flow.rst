@@ -11,10 +11,6 @@ flowing stream as it overcomes a known constriction, to indirectly calculate
 flow. Flow may be measured by measuring the velocity of fluid over a known
 area.
 
-
-More information
-================
-
 * https://en.wikipedia.org/wiki/Flow_measurement
 
 
@@ -38,7 +34,7 @@ It will need careful calibration if better than 10% precision is required.
 However, its great for basic measurement tasks!
 
 .. image :: /_static/img/module/liquid_flow_plastic.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 Where to buy
@@ -59,7 +55,7 @@ how many spins the pinwheel has made through the plastic wall. This method
 allows the sensor to stay safe and dry.
 
 .. image :: /_static/img/module/liquid_flow_brass.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 Where to buy

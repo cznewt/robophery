@@ -28,3 +28,4 @@ Physical Actuators
 * :doc:`Electric Switch </doc/actuator/electric-switch>`
 * :doc:`Electric Power Modulation </doc/actuator/electric-modulation>`
 * :doc:`OLED Display </doc/actuator/display-oled>`
+* :doc:`LCD Display </doc/actuator/display-lcd>`

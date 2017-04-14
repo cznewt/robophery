@@ -3,10 +3,6 @@
 Measuring Electric Current
 ==========================
 
-
-More information
-================
-
 * http://en.wikipedia.org/wiki/Electricity_meter
 
 
@@ -21,7 +17,7 @@ De sensormodule kan 20A positief en negatief meten. De output is 100mV per
 gemeten Ampere.
 
 .. image:: /_static/img/module/acs712.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 Where to buy
@@ -40,7 +36,7 @@ impulsního výstupu- viz. tech. parametry). Ideální pro měření spotřeby
 jednotlivých nájemníků, v autokempech, chatách apod.
 
 .. image:: /_static/img/module/ht-1pd.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 Where to buy
@@ -67,7 +63,7 @@ to place a resistor across the output to convert the coil’s induced current to
 a very small measurable voltage.
 
 .. image:: /_static/img/module/current_sensor.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

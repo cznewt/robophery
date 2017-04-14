@@ -13,10 +13,6 @@ partial pressure of water vapour (H2O) in the mixture to the saturated vapour
 pressure of water at a given temperature. Thus the relative humidity of air is
 a function of both water content and temperature.
 
-
-More information
-================
-
 * http://en.wikipedia.org/wiki/Relative_humidity
 
 
@@ -32,7 +28,7 @@ from it once every 2 seconds, so when using, sensor readings can be up to 2
 seconds old.
 
 .. image :: /_static/img/module/dht11.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -58,7 +54,7 @@ works in a bigger range of temperature/humidity, but its larger and more
 expensive.
 
 .. image :: /_static/img/module/dht22.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -85,7 +81,7 @@ might drop a bit. The temperature output has an accuracy of ±1°C from
 recommend the MCP9808 High Accuracy I²C Temperature Sensor Breakout Board.
 
 .. image :: /_static/img/module/htu21d.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -103,10 +99,26 @@ Where to buy
 * 15 USD - https://www.sparkfun.com/products/12064
 
 
-SI7021 - I²C humidity/temperature sensor
-========================================
+SI7021 - I²C Humidity and Temperature Sensor
+============================================
+
+The Si7021 is a low-cost, easy to use, highly accurate, digital temperature
+and humidity sensor. All you need is two lines for I2C communication, and
+you’ll have relative humidity readings and accurate temperature readings as
+well! This sensor is ideal for environmental sensing and data logging, perfect
+for a weather station or humidor control system.
+
+.. image :: /_static/img/module/si7021.jpg
+   :width: 50 %
+   :align: center
 
 More information
 ----------------
 
 * https://github.com/ControlEverythingCommunity/SI7021/blob/master/Python/SI7021.py
+* https://learn.sparkfun.com/tutorials/si7021-humidity-and-temperature-sensor-hookup-guide
+
+Where to buy
+------------
+
+* 7 USD - https://www.sparkfun.com/products/13763

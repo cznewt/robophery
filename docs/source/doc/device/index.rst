@@ -1,14 +1,13 @@
 
-=================================
-Chapter 2. Devices and interfaces
-=================================
+===========================
+Chapter 2. Hardware Devices
+===========================
+
+Target devices for RoboPhery platform.
 
 .. toctree::
 
-   1-wire.rst
    arm.rst
-   android.rst
-   bluetooth.rst
-   intel.rst
    usb.rst
+   i2c.rst
    wifi.rst

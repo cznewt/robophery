@@ -4,11 +4,11 @@ Controlling Electric Motor
 ==========================
 
 
-L293D - GPIO DC motor actuator
+L293D - GPIO DC Motor Actuator
 ==============================
 
 .. image:: /_static/img/module/l293d.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

@@ -1,7 +1,7 @@
 
-==================
-Chapter 4. Sensors
-==================
+===========================
+Chapter 5. Physical Sensors
+===========================
 
 .. toctree::
    :maxdepth: 3
@@ -17,7 +17,7 @@ Chapter 4. Sensors
    liquid-level.rst
    liquid-ph.rst
    liquid-redox.rst
-   motion.rst
+   multi.rst
    revolutions.rst
    soil-moisture.rst
    temperature.rst

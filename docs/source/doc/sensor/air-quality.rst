@@ -22,7 +22,7 @@ All units are factory calibrated to measure CO2 concentration levels up to
 5000ppm, while maintaining accuracy across the range.
 
 .. image:: /_static/img/module/t6713.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

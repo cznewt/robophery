@@ -6,8 +6,8 @@ Switching Electric Power
 Relay Board - GPIO Swich
 ========================
 
-.. image:: /_static/img/module/relay_board.jpg
-   :scale: 30 %
+.. image:: /_static/img/module/relay.jpg
+   :width: 50 %
    :align: center
 
 More information
@@ -20,7 +20,7 @@ SIS-PM Control - USB Switch
 ===========================
 
 .. image:: /_static/img/module/sispm.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

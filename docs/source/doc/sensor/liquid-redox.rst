@@ -11,15 +11,11 @@ potential; the more positive the potential, the greater the species' affinity
 for electrons and tendency to be reduced. ORP is a common measurement for
 water quality.
 
-
-More information
-================
-
 * http://en.wikipedia.org/wiki/Reduction_potential
 
 
-Atlas Scientific ORP Kit - I2C Redox Sensor
-===========================================
+Atlas Scientific ORP Kit - I²C Liquid Redox Sensor
+==================================================
 
 The Atlas Scientific ORP Kit comes with everything you need to get your
 laboratory grade embedded ORP system up and running.
@@ -29,7 +25,7 @@ use keep it in the supplied soaker bottle. Periodically change out the storage
 solution in the soaker bottle with new storage solution.
 
 .. image :: /_static/img/module/atlas_scientific_orp_kit.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

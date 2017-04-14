@@ -11,10 +11,6 @@ increases, there is less overlying atmospheric mass, so that atmospheric
 pressure decreases with increasing elevation. Pressure measures force per unit
 area, with SI units of pascals (1 Pa = 1 N/m2).
 
-
-More information
-================
-
 * https://en.wikipedia.org/wiki/Atmospheric_pressure
 
 
@@ -29,7 +25,7 @@ to microprocessor via I²C highway; Main features: Pressure range: 300~1100hPa
 (altitude -500~9000 meters).
 
 .. image:: /_static/img/module/bmp180.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

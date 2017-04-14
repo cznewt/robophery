@@ -23,7 +23,7 @@ handy addition to an hydroponics, aquarium, fountain or pool controller, or
 perhaps measuring a rain tube.
 
 .. image :: /_static/img/module/etape_liquid_level.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -47,7 +47,7 @@ mainly comprised of three parts: An Electronic brick connector, a 1 MΩ
 resistor, and several lines of bare conducting wires.
 
 .. image :: /_static/img/module/sainsmart_water.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

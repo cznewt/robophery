@@ -9,9 +9,6 @@ thermometric material, detection of heat radiation, or by particle velocity or
 kinetic energy. It may be calibrated in any of various temperature scales,
 Celsius, Fahrenheit, Kelvin, etc.
 
-More information
-================
-
 * http://en.wikipedia.org/wiki/Temperature
 
 
@@ -26,7 +23,7 @@ connect up to 8 to a single I2C bus without address collisions. Best of all, a
 wide voltage range makes is usable with 2.7V to 5.5V logic.
 
 .. image :: /_static/img/module/mcp9808.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -56,7 +53,7 @@ them using the same GPIO pin. Device is able to recognise the input from each
 separate sensor.
 
 .. image :: /_static/img/module/ds18b20.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -87,7 +84,7 @@ a 2 pin terminal block (for connecting to the thermocouple) and pin header (to
 plug into any breadboard or perfboard).
 
 .. image :: /_static/img/module/max31855.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -110,7 +107,7 @@ TMP36 - AIN Temperature Sensor
 Low cost temperature sensor.
 
 .. image:: /_static/img/module/tmp36.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -138,7 +135,7 @@ of 400 µA to 5 mA with virtually no change in performance. When calibrated at
 range. Unlike other sensors, the LM135 has a linear output.
 
 .. image:: /_static/img/module/lm335.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

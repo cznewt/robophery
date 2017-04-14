@@ -11,14 +11,14 @@ developed in the UK by the Raspberry Pi Foundation with the intention of
 promoting the teaching of basic computer science in schools.
 
 .. figure:: /_static/img/device/raspberry_pi.jpg
-   :scale: 50 %
+   :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/rpi.jpg
-   :scale: 50 %
+.. image :: /_static/img/pinout/rpi.png
+   :width: 50 %
    :align: center
 
 Raspberry Pi 2/3
@@ -29,14 +29,14 @@ developed in the UK by the Raspberry Pi Foundation with the intention of
 promoting the teaching of basic computer science in schools.
 
 .. figure:: /_static/img/device/raspberry_pi_2.jpg
-   :scale: 50 %
+   :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/rpi2.png
-   :scale: 50 %
+.. image :: /_static/img/pinout/rpi3.png
+   :width: 50 %
    :align: center
 
 More infromation
@@ -54,15 +54,15 @@ BeagleBone Black
 ================
 
 .. image :: /_static/img/device/beaglebone.jpg
-   :scale: 50 %
+   :width: 50 %
    :align: center
 
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/bbb.png
-   :scale: 50 %
+.. image :: /_static/img/pinout/bbb.jpg
+   :width: 50 %
    :align: center
 
 * 7 Analog Pins
@@ -91,7 +91,7 @@ UDOO
 ====
 
 .. image :: /_static/img/device/udoo.jpg
-   :scale: 50 %
+   :width: 50 %
    :align: center
 
 More information

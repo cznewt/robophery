@@ -23,7 +23,7 @@ soil. The average dielectric constant can be sensed by measuring the speed of
 propagation along a buried transmission line.
 
 .. image:: /_static/img/module/hygro.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -36,9 +36,13 @@ Where to buy
 
 * 100 CZK - http://www.santy.cz/senzory-c24/sensor-pudni-vlhkost-i132/
 
-
-Parrot Flower Power - Gardening BLE Sensor
+ 
+Parrot Flower Power - BLE Gardening Sensor
 ==========================================
+
+.. image :: /_static/img/module/pfp.jpg
+   :width: 50 %
+   :align: center
 
 More information
 ----------------

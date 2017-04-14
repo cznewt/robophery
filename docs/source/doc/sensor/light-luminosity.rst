@@ -11,10 +11,6 @@ the radiometric unit watts per square metre, but with the power at each
 wavelength weighted according to the luminosity function, a standardized model
 of human visual brightness perception.
 
-
-More information
-================
-
 * http://www.intorobotics.com/common-budgeted-arduino-light-sensors/
 
 
@@ -28,7 +24,7 @@ sensitivity of spectral characteristics; For a wide range of brightness for 1
 lux high precision measurement.
 
 .. image:: /_static/img/module/bh1750.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -63,7 +59,7 @@ cannot change the I²C address, so keep that in mind. This board/chip uses I²C
 7-bit address 0x29.
 
 .. image:: /_static/img/module/tls2591.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -101,7 +97,7 @@ This board/chip uses I²C 7-bit addresses 0x39, 0x29, 0x49, selectable with
 jumpers.
 
 .. image :: /_static/img/module/tls2561.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information
@@ -131,7 +127,7 @@ ground. The voltage on the pin will be 2.5V or higher when its light out and
 near ground when its dark.
 
 .. image :: /_static/img/module/cds.jpg
-   :scale: 30 %
+   :width: 50 %
    :align: center
 
 More information

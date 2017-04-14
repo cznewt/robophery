@@ -63,9 +63,9 @@ copyright = u'2017, Ales Komarek'
 #
 # The short X.Y version.
 
-version = '0.1'
+version = '0.5'
 # The full version, including alpha/beta/rc tags.
-release = '0.1.1a'
+release = '0.5.0'
 
 try:
   from robophery import __release__
@@ -218,8 +218,8 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'robophery.tex', u'RoboPhery Doc',
-   u'Ales Komarek', 'manual'),
+  ('index', 'robophery.tex', u'RoboPhery Documentation',
+   u'RoboPhery Team', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -248,8 +248,8 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'robophery', u'RoboPhery Doc',
-     [u'Ales Komarek'], 1)
+    ('index', 'robophery', u'RoboPhery Documentation',
+     [u'Komarek'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -262,8 +262,8 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-  ('index', 'RoboPhery', u'RoboPhery Doc',
-   u'Ales Komarek', 'RoboPhery', 'Python library for interfacing low level hardware sensors and actuators with MQTT and statsd bindings.',
+  ('index', 'RoboPhery', u'RoboPhery Documentation',
+   u'RoboPhery Team', 'RoboPhery', 'Python library for interfacing low level hardware sensors and actuators with MQTT and statsd bindings.',
    'Miscellaneous'),
 ]
 

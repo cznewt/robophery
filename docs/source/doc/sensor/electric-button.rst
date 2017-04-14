@@ -4,7 +4,7 @@ Measuing Electric Circuit
 =========================
 
 
-Generic GPIO switch sensor
+Generic GPIO Switch Sensor
 ==========================
 
 * https://github.com/adafruit/Adafruit_Python_GPIO
