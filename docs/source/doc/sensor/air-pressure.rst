@@ -39,3 +39,11 @@ Where to buy
 
 * 3 USD - http://www.dx.com/p/bosch-bmp180-atmospheric-temperature-pressure-sensor-module-deep-blue-331485
 * 10 USD - http://www.adafruit.com/product/1603
+
+
+BMP280 - I²C Temperature and Pressure Sensor
+============================================
+
+.. image:: /_static/img/module/bmp280.jpg
+   :width: 50 %
+   :align: center

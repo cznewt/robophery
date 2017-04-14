@@ -17,7 +17,7 @@ Chapter 5. Physical Sensors
    liquid-level.rst
    liquid-ph.rst
    liquid-redox.rst
-   multi.rst
    revolutions.rst
    soil-moisture.rst
    temperature.rst
+   multi.rst

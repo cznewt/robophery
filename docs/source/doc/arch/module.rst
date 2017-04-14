@@ -1,8 +1,10 @@
 
-===============
-Module Overview
-===============
+=================
+Available Modules
+=================
 
+Following categories show available sensors and actuators for RoboPhery
+platform.
 
 Physical Sensors
 ================
@@ -12,7 +14,7 @@ Physical Sensors
 * :doc:`Distance</doc/sensor/distance>` - The distance from the observer to a target
 * :doc:`Electric Circuit</doc/sensor/electric-button>` - ...
 * :doc:`Electric Consumption</doc/sensor/electric-current>` - The amount of electric energy consumed by any electrically powered device
-* :doc:`Fan Speed</doc/sensor/revolutions>` - Revolution speed per second (3 Wire, 4 Wire PWM)
+* :doc:`Fan Speed</doc/sensor/revolutions>` - Revolutions per given time
 * :doc:`Light/Luminosity</doc/sensor/light-luminosity>` - A measure of the intensity of light that hits a surface
 * :doc:`Liquid Flow </doc/sensor/liquid-flow>` - Quantification of bulk fluid movement
 * :doc:`Liquid Level </doc/sensor/liquid-level>` - The level of liquid in a container
@@ -26,6 +28,6 @@ Physical Actuators
 ==================
 
 * :doc:`Electric Switch </doc/actuator/electric-switch>`
-* :doc:`Electric Power Modulation </doc/actuator/electric-modulation>`
+* :doc:`Electric Motor </doc/actuator/electric-motor>`
 * :doc:`OLED Display </doc/actuator/display-oled>`
 * :doc:`LCD Display </doc/actuator/display-lcd>`

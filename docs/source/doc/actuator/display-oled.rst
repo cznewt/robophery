@@ -14,8 +14,8 @@ the development of white OLED devices for use in solid-state lighting
 applications.
 
 
-OLED Display 0,96" 128x64, I²C Actuator
-=======================================
+0,96" 128x64 - I²C OLED Display
+===============================
 
 These displays are small, only about 1" diagonal, but very readable due to the
 high contrast of an OLED display. This display is made of 128x32 individual

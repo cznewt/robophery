@@ -18,7 +18,7 @@ Available pins
 --------------
 
 .. image :: /_static/img/pinout/rpi.png
-   :width: 50 %
+   :width: 33 %
    :align: center
 
 Raspberry Pi 2/3
@@ -101,6 +101,10 @@ More information
 
 Odroid C1
 =========
+
+.. image :: /_static/img/device/odroid_c1.jpg
+   :width: 50 %
+   :align: center
 
 More information
 ----------------

@@ -3,8 +3,8 @@
 Switching Electric Power
 ========================
 
-Relay Board - GPIO Swich
-========================
+Generic Relay Switch - GPIO Swich Actuator
+==========================================
 
 .. image:: /_static/img/module/relay.jpg
    :width: 50 %
@@ -16,8 +16,12 @@ More information
 * https://github.com/adafruit/Adafruit_Python_GPIO
 
 
-SIS-PM Control - USB Switch
-===========================
+Generic PWM Switch - PWM Switch Actuator
+========================================
+
+
+SIS-PM Control - USB Switch Actuator
+====================================
 
 .. image:: /_static/img/module/sispm.jpg
    :width: 50 %

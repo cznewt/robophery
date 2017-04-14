@@ -4,8 +4,8 @@ LCD Display
 ===========
 
 
-HD44780 controller - GPIO LCD display
-=====================================
+HD44780 - GPIO LCD Display
+==========================
 
 Standard HD44780 LCDs are useful for creating standalone projects. Comes in
 16x2 or 20x4 sizes. Connection port is 0.1" pitch, single row for easy
