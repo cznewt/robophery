@@ -57,6 +57,20 @@ More information
 * English Datasheet - http://pdf1.alldatasheet.com/datasheet-pdf/view/602893/ETC2/UMFT201XB.html
 
 Where to buy
-----------------
+------------
 
 * 10 EUR - http://cz.mouser.com/ProductDetail/FTDI/UMFT201XB-01/
+
+
+Arduino - GPIO/SPI/I2C Board
+============================
+
+.. image:: /_static/img/device/arduino.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* Python library http://nanpy.github.io/
+* http://electronics.stackexchange.com/questions/15535/reliability-of-the-arduino-platform-for-industrial-use

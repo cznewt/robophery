@@ -99,8 +99,8 @@ More information
 
 * http://www.udoo.org/
 
-Odroid C1
-=========
+ODroid C1/C2
+============
 
 .. image :: /_static/img/device/odroid_c1.jpg
    :width: 50 %

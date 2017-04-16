@@ -3,27 +3,29 @@
 Project Introduction
 ====================
 
-This paper explains how to utilise inexpensive Linux or MicroPython compatible
-devices, actuators and sensors to serve as fully autonomous and isolated agent
-systems that can perform continuous automation for various applications. These
-scenarios range from smart home or environmental automation, surveillance, to
-full ambient intelligence  automation.
+This paper explains how we utilised inexpensive Linux and python compatible
+microcontrollers, actuators and sensors to create fully autonomous and
+isolated agent systems. These systems can perform wide range automation use
+cases. These range from smart home or environmental automation, surveillance,
+to complete ambient intelligence.
 
-The architecture of autonomous agents with connections to the overlay message
-bus for monitoring and controlling these systems is introduced in the first
-chapter. These systems use scalable and modular architecture to minimise the
-computational overhead which allows efficient use of available hardware
-resources.
+First chapter introduces global architecture of autonomous agents with
+communication protocols for messages to the overlaying event driven controllers,
+dashboards or any other services. These systems use scalable and modular
+architecture to minimise the computational overhead which allows efficient use
+of available hardware resources.
 
-The next part covers the autononocity of agents in more details. Logical and
-physical models of the system with description of the virtual functions that
-provide the simple thresholds or fuzzy logic reasoning.
+The next part covers the autonomous agents in more details. Models of hardware
+interfaces and corresponding modules. It also covers description of the
+virtual modules that provide the simple thresholds or fuzzy logic reasoning
+for autonomous control.
 
-The final chapter covers the overlay controlling and monitoring system that
+The final chapter shows simple interaction with overlay control system that
 can communicate with multiple autonomous systems, gather vital information and
-even start arbitrary actions on demand. The control system contains time-
-series database and second level of reasoning which can detect hardware
-malfunctions within the autonomous agent systems and perform necessary steps
-to. The usage of these proposed and implemented systems may go far beyond the
-original scope to monitor and control virtually any software or physical
-system.
+even publish arbitrary actions on demand.
+
+The control system contains time-series database, dashboard and reasoning
+platform which can detect hardware malfunctions of autonomous agent systems
+and perform necessary steps to repair it. With the usage of virtual models
+that provide  high-level access to individual physical modules of individual
+agents.
