@@ -4,6 +4,54 @@
 Wired Interfaces
 ================
 
+GPIO
+====
+
+General-purpose input/output (GPIO) is a generic pin on an integrated circuit
+or computer board whose behavior—including whether it is an input or output
+pin—is controllable by the user at run time.
+
+GPIO pins have no predefined purpose, and go unused by default. The idea is
+that sometimes a system integrator who is building a full system might need a
+handful of additional digital control lines—and having these available from a
+chip avoids having to arrange additional circuitry to provide them. For
+example, the Realtek ALC260 chips (audio codec) have 8 GPIO pins, which go
+unused by default. Some system integrators (Acer Inc. laptops) use the first
+GPIO (GPIO0) on the ALC260 to turn on the amplifier for the laptop's internal
+speakers and external headphone jack.
+
+More information
+----------------
+
+* White, Jon, ed. (2016). Raspberry Pi - The Complete Manual (7 ed.). Imagine Publishing. p. 36. ISBN 978-1785463709.
+* https://en.wikipedia.org/wiki/General-purpose_input/output
+* "General Purpose Input/Output". Oracle® Java ME Embedded Developer's Guide (8 ed.). Oracle Corporation. 2014.
+
+I²C
+===
+
+I²C (Inter-Integrated Circuit), pronounced I-squared-C, is a multi-master,
+multi-slave, packet switched, single-ended, serial computer bus invented by
+Philips Semiconductor (now NXP Semiconductors). It is typically used for
+attaching lower-speed peripheral ICs to processors and microcontrollers in
+short-distance, intra-board communication. Alternatively I²C is spelled I2C
+(pronounced I-two-C) or IIC (pronounced I-I-C).
+
+Since October 10, 2006, no licensing fees are required to implement the I²C
+protocol. However, fees are still required to obtain I²C slave addresses
+allocated by NXP.
+
+Several competitors, such as Siemens AG (later Infineon Technologies AG, now
+Intel mobile communications), NEC, Texas Instruments, STMicroelectronics
+(formerly SGS-Thomson), Motorola (later Freescale, now merged with NXP),
+Nordic Semiconductor and Intersil, have introduced compatible I²C products to
+the market since the mid-1990s.
+
+More information
+----------------
+
+* https://en.wikipedia.org/wiki/I%C2%B2C
+* Official I2C Specification Version 6 - http://www.nxp.com/documents/user_manual/UM10204.pdf
 
 Dallas 1-Wire
 =============

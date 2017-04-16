@@ -3,8 +3,13 @@
 Available Modules
 =================
 
-Following categories show available families of sensors and actuators
-supported by RoboPhery platform.
+
+Interfaces
+================
+
+
+Following categories show available sensor and actuator types  supported by
+the RoboPhery platform.
 
 
 Physical Sensors

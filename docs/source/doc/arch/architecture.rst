@@ -35,15 +35,19 @@ computing, profiling, context awareness, and human-centric computer
 interaction design and is characterized by systems and technologies that are
 (Zelkha et al. 1998; Aarts, Harwig & Schuurmans 2001):
 
-embedded
+Embedded
   Many networked devices are integrated into the environment
-context aware
+
+Context aware
   These devices can recognize you and your situational context
-personalized
+
+Personalized
   They can be tailored to your needs
-adaptive
+
+Adaptive
   They can change in response to you
-anticipatory
+
+Anticipatory
   They can anticipate your desires without conscious mediation.
 
 .. Bieliková, Mária; Krajcovic, Tibor (2001), "Ambient Intelligence within a Home Environment", ERCIM News (published October 2001) (47)
@@ -56,19 +60,13 @@ and event-driven control engine. This setup can be further expanded by
 machine learning services. Actual RoboPhery application is writtern in Python
 code compatible with MicroPython used on less expensive microcontrollers.
 
+
 Ambient Inteligence System
 ==========================
 
 On the following Figure, you can see components of our proposed ambient
 intelligence system and their relationships. The central component is the
-message bus, in our case provided by MQTT broker. MQTT is a machine-to-machine
-connectivity protocol in area of "Internet of Things". It was designed as an
-extremely lightweight publish/subscribe messaging transport. It is useful for
-connections with remote locations where a small code footprint is required
-and/or network bandwidth is low. MQTT broker can handle thousands of messages
-per second, supports high-availability setups for both high performance and
-stability. Individual Autonomous agents and cloud-based Control system along
-with time-series databases are connected to this common message bus.
+message bus, in our case provided by MQTT broker.
 
 .. image :: /_static/img/arch/arch_system.png
    :width: 50 %
@@ -82,7 +80,22 @@ past conditions or predefined conditions. This mechanism is used control the
 autonomous agent if communication bus is broken.
 
 
-Event-driven automation
+Communication Bus
+-----------------
+
+MQTT is a machine-to-machine connectivity protocol in area of "Internet of
+Things". It was designed as an extremely lightweight publish/subscribe
+messaging transport. It is useful for connections with remote locations where
+a small code footprint is required and/or network bandwidth is low. MQTT
+broker can handle thousands of messages per second, supports high-availability
+setups for both high performance and stability. Individual Autonomous agents
+and cloud-based Control system along with time-series databases are connected
+to this common message bus.
+
+.. http://www.redbooks.ibm.com/abstracts/sg248054.html
+
+
+Event-driven Controller
 -----------------------
 
 .. https://en.wikipedia.org/wiki/Event-driven_architecture
@@ -135,18 +148,17 @@ modelled correctly with respect to time series data. TSDBs on the other hand
 impose a model and this allows them to provide more features for doing so.
 
 
-Autonomous Service
-==================
+Autonomous Units
+================
 
-Autonomous agent is Python service, which communicates with hardware
+Autonomous unit is Python service, which communicates with hardware
 peripherals and sending and receiving data from external communication
-sources.
-
-RoboPhery consists of several objects. Communication objects handle sending
-and receiving messages. Interface objects handle abstraction to hardware
-communication at compute device level. Modules encapsulate individual hardware
-sensors and actuators. Finally manager serves as central bus handling all
-necessary communication within the service.
+sources. RoboPhery unit consists of several objects. Communication objects
+handle sending and receiving messages from the upper layer services or other
+autonomous units. Interface objects handle abstraction to hardware
+communication at device level. Modules encapsulate individual hardware sensors
+and actuators. Finally the robophery manager serves as central service that
+connects all other models within the autonomous unit.
 
 When data are collected from sensors, it is important to data will be
 transfered and stored in correct state to the highest part of system, e.g. to
@@ -156,7 +168,6 @@ Message Bus mainly take care about communication between agent in Autonomous
 Agent System, because data can't be easily transfered from sensor (agent) to
 database directly. Message Bus also can aggregate data to bigger units or make
 some basic transformations.
-
 
 Autonomous services take care about conditions from sensors and values, which
 are captured. There are predefined conditions and when captured values are
@@ -174,8 +185,12 @@ Sample Devices
 Following Figures shows simple device configurations.
 
 
-RaspberryPi Device
-------------------
+Raspberry Pi Device
+-------------------
+
+Following figure shows RoboPhery service running on the Raspberry Pi device
+with MCP23008 I2C to GPIO expander and multiple sensors connected to
+individual interfaces.
 
 .. image :: /_static/img/arch/detail_rpi.png
    :width: 50 %
@@ -185,6 +200,9 @@ RaspberryPi Device
 ModeMCU Device
 --------------
 
+Following figure shows RoboPhery service running on the Mode MCU device with
+multiple sensors connected to interfaces present on the device.
+
 .. image :: /_static/img/arch/detail_mcu.png
    :width: 50 %
    :align: center
@@ -192,6 +210,10 @@ ModeMCU Device
 
 IQRF Platform
 --------------
+
+Following figure shows RoboPhery service running on the Raspberry Pi device
+with IQRF coordinator with sensor interfacess connected through a mesh network
+and IQRF interface.
 
 .. image :: /_static/img/arch/detail_iqrf.png
    :width: 50 %
