@@ -15,9 +15,9 @@ actuators have become part of the environment.
 This article shows the design and implementation of Python library for
 interfacing low level hardware sensors and actuators with MQTT and TSDB
 bindings. The system architecture is designed to be so simple at hardware
-level to support microcontroller architectures like ESP2866, ESP32 modules as
-well as ARM or x86 architectures. The communication among devices is handled
-by the standard MQTT message bus.
+level to support sigle-board microcontrollers like ESP2866, ESP32 modules as
+well as sigle-board computers based on ARM or x86 architectures. The
+communication among devices is handled by the standard MQTT message bus.
 
 .. toctree::
    :maxdepth: 3
