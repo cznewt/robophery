@@ -1,7 +1,14 @@
 
-============
-WiFi Devices
-============
+=============================
+Single-board Microcontrollers
+=============================
+
+A single-board microcontroller is a microcontroller built onto a single
+printed circuit board. This board provides all of the circuitry necessary for
+a useful control task: a microprocessor, I/O circuits, a clock generator, RAM,
+stored program memory and any necessary support ICs. The intention is that the
+board is immediately useful to an application developer, without requiring
+them to spend time and effort to develop controller hardware.
 
 
 ESP8266 (NodeMCU)

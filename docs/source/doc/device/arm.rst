@@ -1,7 +1,14 @@
 
-==========================
-Single-board ARM Computers
-==========================
+======================
+Single-board Computers
+======================
+
+A single-board computer (SBC) is a complete computer built on a single circuit
+board, with microprocessor(s), memory, input/output (I/O) and other features
+required of a functional computer. Single-board computers were made as
+demonstration or development systems, for educational systems, or for use as
+embedded computer controllers. Many types of home computers or portable
+computers integrate all their functions onto a single printed circuit board.
 
 Raspberry Pi 1
 ==============
