@@ -4,8 +4,8 @@ WiFi Devices
 ============
 
 
-NodeMcu Lua
-===========
+ESP8266 (ModeMCU)
+=================
 
 Low-power, highly-integrated Wi-Fi solution, a minimal of 7 external
 components, ESP8285 - ESP8266 embeded with 8 Mbit flash.
@@ -55,6 +55,13 @@ More information
 Onion Omega2
 ============
 
+Omega2 is a personal single-board computer created by a startup company called
+Onion, released on Kickstarter. It is advertised as "the world's smallest
+Linux Server" The system combines the tiny form factor and power- efficiency
+of the Arduino, with the power and flexibilities of the Raspberry Pi and is
+identified with FCC Identifier 2AJVP-OMEGA2. It runs Linux kernel based
+lightweight operating system for embedded system called OpenWRT.
+
 .. figure:: /_static/img/device/onion.png
    :width: 50 %
    :align: center
@@ -65,3 +72,8 @@ Available pins
 .. image :: /_static/img/pinout/omega2.jpg
    :width: 50 %
    :align: center
+
+More information
+----------------
+
+* https://docs.onion.io/omega2-docs/
