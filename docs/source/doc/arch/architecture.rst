@@ -3,13 +3,13 @@
 Architecture
 ============
 
-RoboPhery provides software drivers for a wide variety of commonly used
-sensors and actuators through both wired and wireless interfaces. Platform is
-designed for multiple interfaces to be stacked (GPIO over IQRF or BlueTooth) to
-provide seamless intergration with vast variery of hardware platforms. The
-software drivers interact with the underlying hardware platform (or
-microcontroller), as well as with the attached sensors, through API calls to
-attached interfaces.
+RoboPhery project provides software drivers for a wide variety of commonly
+used sensors and actuators through both wired and wireless interfaces.
+Platform is designed for multiple interfaces to be stacked (GPIO or I2C over
+IQRF or BlueTooth) to provide seamless intergration with vast variery of
+hardware platforms. The software drivers interact with the underlying hardware
+platform (or microcontroller), as well as with the attached sensors, through
+API calls to attached interfaces.
 
 The actuators are controlled and the data is collected and this together forms
 a hardware foundation for ambient intelligence environment. The event-driven
@@ -25,10 +25,9 @@ of external cloud services or handled by computer with more processing power.
 Ambient intelligence environments that are those that are sensitive and
 responsive to the presence of people. A typical example of ambient
 intelligence environment is a Home environment [1]. Term Ambient intelligence
-as a vision of the future of consumer electronics, telecommunications and
-computing was originally developed by Eli Zelkha and his team at Palo Alto
-Ventures in the late 1990s. The time frame for this vision was set to
-2010–2020.[1][2][3][4]
+as a vision of the future of consumer electronics and computing was originally
+pointed by Eli Zelkha at Palo Alto Ventures in the late 1990s. The time frame
+set for this vision was 2010–2020.[1][2][3][4]
 
 In an ambient intelligence world, devices work together to support people in
 their everyday life activities, tasks and rituals in a natural way that uses
