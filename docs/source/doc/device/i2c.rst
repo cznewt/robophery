@@ -1,7 +1,7 @@
 
-==============
-I²C Extensions 
-==============
+====================
+I²C Extension Boards
+====================
 
 
 MCP23008 - I²C to GPIO Extension Board

@@ -47,13 +47,15 @@ Intel mobile communications), NEC, Texas Instruments, STMicroelectronics
 Nordic Semiconductor and Intersil, have introduced compatible I²C products to
 the market since the mid-1990s.
 
+
 More information
 ----------------
 
 * https://en.wikipedia.org/wiki/I%C2%B2C
 * Official I2C Specification Version 6 - http://www.nxp.com/documents/user_manual/UM10204.pdf
 
-Dallas 1-Wire
+
+Dallas 1-wire
 =============
 
 The 1-Wire system is the invention of Dallas Semiconductors, who were acquired
@@ -71,6 +73,7 @@ regulated 5V supply or unregulated 12V, both of which can be supplied along
 with the serial bus through a single Cat-5 cable. The power is usually
 injected into each branch of the serial network by a hub.
 
+
 Interference
 ------------
 
@@ -78,6 +81,7 @@ If you have long 1-Wire network runs and are having problems with glitches you
 should add a Schottky diode to the end of your network. Typically a 1N5817
 diode reverse biased across sensors will acheive this. Solder the side with
 the stripe to pin 2 and the other side to pin 1 of the DS18S20.
+
 
 Usage
 -----
@@ -93,6 +97,7 @@ things I'm using it for are:
 * Mains power present sensor
 * Weather instruments
 * Switching on/off devices/lighting 
+
 
 More information
 ----------------
@@ -171,6 +176,7 @@ communications protocol for intelligent buildings. KNX is the successor to,
 and convergence of, three previous standards: the European Home Systems
 Protocol (EHS), BatiBUS, and the European Installation Bus (EIB or Instabus).
 The KNX standard is administered by the KNX Association.
+
 
 More information
 ----------------

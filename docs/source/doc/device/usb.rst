@@ -1,7 +1,7 @@
 
-==============
-USB Extensions 
-==============
+====================
+USB Extension Boards
+====================
 
 Get additional GPOIO/I²C/SPI/AIN interfaces by USB port.
 
