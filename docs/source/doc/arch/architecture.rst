@@ -5,11 +5,11 @@ Architecture
 
 RoboPhery project provides software drivers for a wide variety of commonly
 used sensors and actuators through both wired and wireless interfaces.
-Platform is designed for multiple interfaces to be stacked (GPIO or I2C over
-IQRF or BlueTooth) to provide seamless intergration with vast variery of
+Platform is designed for multiple interfaces to be stacked (GPIO, I²C or SPI
+over IQRF or BlueTooth) to provide seamless intergration with vast variery of
 hardware platforms. The software drivers interact with the underlying hardware
 platform (or microcontroller), as well as with the attached sensors, through
-API calls to attached interfaces.
+API calls to the interfaces.
 
 The actuators are controlled and the data is collected and this together forms
 a hardware foundation for ambient intelligence environment. The event-driven
@@ -116,7 +116,7 @@ consumption of, and reaction to events.
 
 .. K. Mani Chandy Event-Driven Applications: Costs, Benefits and Design Approaches, California Institute of Technology, 2006 [1]
 
-An event can be defined as `a significant change in state`[1]. For example,
+An event can be defined as a significant change in state[1]. For example,
 when a user turn's on a switch, the swith'es state changes from "off" to
 "on". A car dealer's system architecture may treat this state change as an
 event whose occurrence can be made known to other applications within the

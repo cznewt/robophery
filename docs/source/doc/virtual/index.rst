@@ -1,6 +1,6 @@
 
 ==========================
-Chapter 6. Virtual Systems
+Chapter 6. Virtual Modules
 ==========================
 
 Virtual devices represent module aggregation and are useful when encapsulating
@@ -9,5 +9,6 @@ computation when communication layer goes down.
 
 .. toctree::
 
-   vehicle-terrestrial.rst
+   vehicle-terrestrial-leg.rst
+   vehicle-terrestrial-wheel.rst
    shutter.rst

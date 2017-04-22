@@ -1,10 +1,7 @@
 
-===================
-Terrestrial Vehicle
-===================
-
-Generic Tank w/ 2 Belts - 2x Motor/Belt Vehicle
-===============================================
+==========================
+Terrestrial Legged Vehicle
+==========================
 
 
 Allbot Spider 2 Legs/2 Joints - 4 PWM Servo Vehicle
@@ -45,4 +42,3 @@ Allbot Spider 6 Legs/3 Joints - 18 PWM Servo Vehicle
 .. image :: /_static/img/virtual/vr618.jpg
    :width: 50 %
    :align: center
-

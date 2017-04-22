@@ -1,13 +1,13 @@
 
-====================
-Project Introduction
-====================
+============
+Introduction
+============
 
-This paper explains how we utilised inexpensive Linux and python compatible
-microcontrollers, actuators and sensors to create fully autonomous and
-isolated agent systems. These systems can perform wide range automation use
-cases. These range from smart home or environmental automation, surveillance,
-to complete ambient intelligence.
+This paper shows possible utilization of inexpensive Linux and MicroPython
+compatible microcontrollers, hardware actuators and sensors to create fully
+autonomous and isolated agent-based platform. This platform can perform wide
+range automation use cases. These range from simple environmental automations,
+surveillance, to complete ambient intelligence environments.
 
 First chapter introduces global architecture of autonomous agents with
 communication protocols for messages to the overlaying event driven controllers,
