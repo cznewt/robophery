@@ -3,30 +3,44 @@
 Architecture
 ============
 
-RoboPhery provides raw hardware interfaces to the environmental parameters
-through both wired and wireless interfaces. Platform is designed to allow
-stack interfaces (GPIO over MQTT or BlueTooth) to provide seamless
-intergration with vast variery of hardware deviced. The collected values are
-needed for creation and control of ambient intelligence systems. The event-
-driven control system, data storage and processing system can be provided in
-form of external cloud services or handled by x86 platform computer.
+RoboPhery provides software drivers for a wide variety of commonly used
+sensors and actuators through both wired and wireless interfaces. Platform is
+designed for multiple interfaces to be stacked (GPIO over IQRF or BlueTooth) to
+provide seamless intergration with vast variery of hardware platforms. The
+software drivers interact with the underlying hardware platform (or
+microcontroller), as well as with the attached sensors, through API calls to
+attached interfaces.
+
+The actuators are controlled and the data is collected and this together forms
+a hardware foundation for ambient intelligence environment. The event-driven
+control system, data storage and data processing systems are provided in form
+of external cloud services or handled by computer with more processing power.
 
 .. Arribas-Ayllon, Michael. "Ambient Intelligence: an innovation narrative".
 .. Aarts, Emile H. L.; Encarnação, José Luis (13 December 2006). "True Visions: The Emergence of Ambient Intelligence". Springer – via Google Books.
 .. "The Internet of Things and Convenience (PDF Download Available)".
 .. "Ambient Intelligence Knowledge Center .: SemiEngineering.com".
 
-Ambient intelligence refers to environments that are sensitive and responsive
-to the presence of people. Ambient intelligence is a vision on the future of
-consumer electronics, telecommunications and computing that was originally
-developed in the late 1990s by Eli Zelkha and his team at Palo Alto Ventures
-for the time frame 2010–2020.[1][2][3][4] In an ambient intelligence world,
-devices work in concert to support people in carrying out their everyday life
-activities, tasks and rituals in an easy, natural way using information and
-intelligence that is hidden in the network connecting these devices (see
-Internet of Things). As these devices grow smaller, more connected and more
-integrated into our environment, the technology disappears into our
-surroundings until only the user interface remains perceivable by users.
+
+Ambient intelligence environments that are those that are sensitive and
+responsive to the presence of people. A typical example of ambient
+intelligence environment is a Home environment [1]. Term Ambient intelligence
+as a vision of the future of consumer electronics, telecommunications and
+computing was originally developed by Eli Zelkha and his team at Palo Alto
+Ventures in the late 1990s. The time frame for this vision was set to
+2010–2020.[1][2][3][4]
+
+In an ambient intelligence world, devices work together to support people in
+their everyday life activities, tasks and rituals in a natural way that uses
+information from physical environment collected by network connected devices
+and uses cloud power to drive the intelligence that can react and learn to the
+information coming from the environment.
+
+The physical devices steadily grow smaller and are more integrated into our
+environment, the technology used disappears until only the user interface
+remains visible to the users.
+
+.. (Bieliková & Krajcovic 2001)
 
 .. Emile Aarts, Rick Harwig and Martin Schuurmans, chapter Ambient Intelligence in The Invisible Future: The Seamless Integration Of Technology Into Everyday Life, McGraw-Hill Companies, 2001
 
@@ -52,10 +66,7 @@ Anticipatory
 
 .. Bieliková, Mária; Krajcovic, Tibor (2001), "Ambient Intelligence within a Home Environment", ERCIM News (published October 2001) (47)
 
-A typical context of ambient intelligence environment is a Home environment
-(Bieliková & Krajcovic 2001).
-
-The basic architectural setup consists of time-series database, user dashboard
+The basic architecture setup consists of time-series database, user dashboard
 and event-driven control engine. This setup can be further expanded by
 machine learning services. Actual RoboPhery application is writtern in Python
 code compatible with MicroPython used on less expensive microcontrollers.

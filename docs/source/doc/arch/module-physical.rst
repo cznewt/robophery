@@ -1,19 +1,23 @@
 
-=================
-Available Modules
-=================
+================
+Physical Modules
+================
 
 
 Interfaces
-================
+==========
 
 
 Following categories show available sensor and actuator types  supported by
 the RoboPhery platform.
 
 
-Physical Sensors
+Physical Modules
 ================
+
+
+Physical Sensors
+----------------
 
 * :doc:`Air Humidity</doc/sensor/air-humidity>` - Ratio of water vapor pressure to the equilibrium vapor pressure of water
 * :doc:`Air Pressure</doc/sensor/air-pressure>` The force per unit area exerted on a surface by the weight of air above that surface in the atmosphere of Earth
@@ -34,17 +38,9 @@ Physical Sensors
 
 
 Physical Actuators
-==================
+------------------
 
 * :doc:`Electric Switch </doc/actuator/electric-switch>`
 * :doc:`Electric Motor </doc/actuator/electric-motor>`
 * :doc:`LCD Display </doc/actuator/display-lcd>`
 * :doc:`OLED Display </doc/actuator/display-oled>`
-
-
-Virtual Modules
-===============
-
-Virtual devices represent module aggregation and are useful when encapsulating
-some higher logic (lean right at 6 legged spider) or make autonomous
-computation when communication layer goes down.

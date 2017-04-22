@@ -7,4 +7,6 @@ Chapter 1. Project Overview
 
    overview.rst
    architecture.rst
-   module.rst
+   module-physical.rst
+   module-virtual.rst
+   resources.rst

@@ -1,0 +1,15 @@
+
+=================
+Notable Resources
+=================
+
+Following resources were useful while creating this project.
+
+
+Sensor Libraries
+================
+
+Multiple sensors at consistent libraries
+
+* https://github.com/ControlEverythingCommunity/CE_PYTHON_LIB (Control Everything modules)
+* http://iotdk.intel.com/docs/master/upm/python/modules.html (Intel IoT Development Kit: UPM Python)

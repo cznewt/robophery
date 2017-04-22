@@ -42,7 +42,7 @@ class T6713Module(I2cModule):
         buffer = array.array('B', [0x04, 0x13, 0x8b, 0x00, 0x01])
         self.dev.write(buffer)
         self._msleep(100)
-        data = self.dev.read(4)
+        data = self.readRaw8dev.read(4)
         buffer = array.array('B', data)
         return buffer[2] * 256 + buffer[3]
 
