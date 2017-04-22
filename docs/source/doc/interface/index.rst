@@ -1,7 +1,7 @@
 
-===============================
-Chapter 3. Supported Interfaces
-===============================
+==============================
+Chapter 3. Hardware Interfaces
+==============================
 
 Supported interfaces of RoboPhery platform.
 

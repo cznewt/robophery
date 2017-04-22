@@ -1,7 +1,7 @@
 
-=============================
-Chapter 2. Controller Devices
-=============================
+===============================
+Chapter 2. Hardware Controllers
+===============================
 
 Target hardware devices for the RoboPhery platform.
 
