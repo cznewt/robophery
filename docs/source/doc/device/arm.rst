@@ -10,8 +10,8 @@ demonstration or development systems, for educational systems, or for use as
 embedded computer controllers. Many types of home computers or portable
 computers integrate all their functions onto a single printed circuit board.
 
-Raspberry Pi 1
-==============
+Raspberry Pi
+============
 
 The Raspberry Pi is a series of credit card-sized single-board computers
 developed in the UK by the Raspberry Pi Foundation with the intention of

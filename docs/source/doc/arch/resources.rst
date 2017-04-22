@@ -1,13 +1,13 @@
 
-=================
-Notable Resources
-=================
+==================
+External Resources
+==================
 
 Following resources were useful while creating this project.
 
 
-Sensor Libraries
-================
+Hardware Driver Libraries
+=========================
 
 Multiple sensors at consistent libraries
 
