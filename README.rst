@@ -15,5 +15,5 @@ by the standard MQTT message bus.
 More information
 ================
 
-* RoboPhery Documentation: http://robophery.readthedocs.io/en/latest/
-* SenML Standard Draft: https://tools.ietf.org/html/draft-jennings-senml-08
+* Offical RoboPhery Documentation: http://robophery.readthedocs.io
+* Media Types for Sensor Markup Language (SenML): https://tools.ietf.org/html/draft-jennings-core-senml

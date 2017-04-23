@@ -89,7 +89,6 @@ Virtual models can provide future models for autonomous decisions based on
 past conditions or predefined conditions. This mechanism is used control the
 autonomous agent if communication bus is broken.
 
-
 Communication Bus
 -----------------
 
