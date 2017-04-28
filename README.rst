@@ -3,6 +3,13 @@
 RoboPhery: Robotic Peripherals Project
 ======================================
 
+.. image:: https://readthedocs.org/projects/robophery/badge/?version=latest
+    :target: http://http://robophery.readthedocs.io/en/latest/?badge=latest
+    :alt: Documentation Status
+
+.. image:: https://badges.gitter.im/Join%20Chat.svg
+    :target: https://gitter.im/robophery/Lobby
+    :alt: Join Chat on Gitter.im
 
 Design and implementation of Python library for interfacing low level hardware
 sensors and actuators with MQTT and TSDB bindings. The system architecture is
@@ -12,8 +19,8 @@ based on ARM or x86 architectures. The communication among devices is handled
 by the standard MQTT message bus.
 
 
-More information
+More Information
 ================
 
-* Offical RoboPhery Documentation: http://robophery.readthedocs.io
-* Media Types for Sensor Markup Language (SenML): https://tools.ietf.org/html/draft-jennings-core-senml
+* `Offical RoboPhery Documentation <http://robophery.readthedocs.io/>`_
+* `Sensor Markup Language (SenML) <https://tools.ietf.org/html/draft-jennings-core-senml>`_
