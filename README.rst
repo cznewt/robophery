@@ -4,7 +4,7 @@ RoboPhery: Robotic Peripherals Project
 ======================================
 
 .. image:: https://readthedocs.org/projects/robophery/badge/?version=latest
-    :target: http://http://robophery.readthedocs.io/en/latest/?badge=latest
+    :target: http://robophery.readthedocs.io/en/latest/?badge=latest
     :alt: Documentation Status
 
 .. image:: https://badges.gitter.im/Join%20Chat.svg
