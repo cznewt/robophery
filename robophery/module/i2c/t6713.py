@@ -72,4 +72,6 @@ class T6713Module(I2cModule):
                 'range_low': 0,
                 'range_high': 5000,
                 'sensor': self.DEVICE_NAME
-            },
+            }
+        }
+

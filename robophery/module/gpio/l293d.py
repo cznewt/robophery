@@ -99,3 +99,24 @@ class L293dModule(GpioModule):
         ]
         self._log_data(data)
         return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {
+            'direction': {
+                'type': 'gauge',
+                'unit': 'heading',
+                'range_low': -1,
+                'range_high': 1,
+                'sensor': self.DEVICE_NAME
+            },
+            'power': {
+                'type': 'gauge',
+                'unit': '%',
+                'range_low': 0,
+                'range_high': 100,
+                'sensor': self.DEVICE_NAME
+            }
+        }
