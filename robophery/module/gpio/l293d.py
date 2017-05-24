@@ -98,9 +98,9 @@ class L293dModule(GpioModule):
     def set_power(self, power):
         power = int(power)
         if power < 0:
-            self._run(direction=-1, power=100)
+            self._run(direction=-1)
         if power > 0:
-            self._run(direction=1, power=100)
+            self._run(direction=1)
         else:
             self._run(direction=0, power=0)
 

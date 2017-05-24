@@ -53,29 +53,27 @@ class RaspberryPiGpioInterface(GpioInterface):
                                self.GPIO_EVENT_BOTH: self._bus.BOTH }
         super(RaspberryPiGpioInterface, self).__init__(*args, **kwargs)
 
-
     def __del__(self):
         self.cleanup()
-
 
     def setup_pin(self, pin, mode, pull_up_down=None):
         """
         Set the input or output mode for a specified pin. Mode should be
         either OUTPUT or INPUT.
         """
-        if pull_up_down == None:
+        if pull_up_down is None:
             pull_up_down = self.GPIO_PUD_OFF
         self._bus.setup(pin, self._dir_mapping[mode],
                              pull_up_down=self._pud_mapping[pull_up_down])
-
 
     def output(self, pin, value):
         """
         Set the specified pin the provided high/low value. Value should be
         either HIGH/LOW or a boolean (true = high).
         """
+        self._log.debug(
+            "Set value {0} to pin {1}.".format(value, pin))
         self._bus.output(pin, value)
-
 
     def input(self, pin):
         """
@@ -83,7 +81,6 @@ class RaspberryPiGpioInterface(GpioInterface):
         or LOW/false if pulled low.
         """
         return self._bus.input(pin)
-
 
     def input_pins(self, pins):
         """
@@ -107,7 +104,6 @@ class RaspberryPiGpioInterface(GpioInterface):
             kwargs['bouncetime']=bouncetime
         self._bus.add_event_detect(pin, self._edge_mapping[edge], **kwargs)
 
-
     def remove_event_detect(self, pin):
         """
         Remove edge detection for a particular GPIO channel. Pin should be
@@ -115,13 +111,11 @@ class RaspberryPiGpioInterface(GpioInterface):
         """
         self._bus.remove_event_detect(pin)
 
-
     def add_event_callback(self, pin, callback):
         """Add a callback for an event already defined using add_event_detect().
         Pin should be type IN.
         """
         self._bus.add_event_callback(pin, callback)
-
 
     def event_detected(self, pin):
         """
@@ -131,14 +125,12 @@ class RaspberryPiGpioInterface(GpioInterface):
         """
         return self._bus.event_detected(pin)
 
-
     def wait_for_edge(self, pin, edge):
         """
         Wait for an edge. Pin should be type IN. Edge must be RISING,
         FALLING or BOTH.
         """
         self._bus.wait_for_edge(pin, self._edge_mapping[edge])
-
 
     def cleanup(self, pin=None):
         """
