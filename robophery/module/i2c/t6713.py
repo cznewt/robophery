@@ -74,4 +74,3 @@ class T6713Module(I2cModule):
                 'sensor': self.DEVICE_NAME
             }
         }
-

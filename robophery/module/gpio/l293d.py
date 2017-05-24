@@ -76,7 +76,7 @@ class L293dModule(GpioModule):
         """
         self._run(direction=0, power=0)
 
-    def commit_action(self, action):
+    def commit_action(self, action, arg=None):
         if action == 'get_data':
             return self.read_data()
         elif action == 'stop':
@@ -88,6 +88,18 @@ class L293dModule(GpioModule):
         elif action == 'run_backward':
             self.run_backward()
             return self.read_data()
+        elif action == 'set_power':
+            self.set_power(arg[0])
+            return self.read_data()
+
+    def set_power(self, power):
+        power = int(power)
+        if power < 0:
+            self._run(direction=-1, power=100)
+        if power > 0:
+            self._run(direction=1, power=100)
+        else:
+            self._run(direction=0, power=0)
 
     def read_data(self):
         """
