@@ -99,7 +99,7 @@ class L293dModule(GpioModule):
         power = int(power)
         if power < 0:
             self._run(direction=-1)
-        if power > 0:
+        elif power > 0:
             self._run(direction=1)
         else:
             self._run(direction=0, power=0)
