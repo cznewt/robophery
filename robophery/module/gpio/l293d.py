@@ -46,6 +46,8 @@ class L293dModule(GpioModule):
         self._direction = direction
         self._power = power
         # Stop the motor
+        self._log.debug('Set power {0} and direction {1})'.format(power, direction))
+
         if direction == 0:
             self.set_low(self._power_pin)
         # Spin the motor
@@ -77,6 +79,7 @@ class L293dModule(GpioModule):
         self._run(direction=0, power=0)
 
     def commit_action(self, action, arg=None):
+        self._log.debug('Received action {0} with args {1})'.format(action, arg))
         if action == 'get_data':
             return self.read_data()
         elif action == 'stop':
