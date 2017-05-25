@@ -90,6 +90,30 @@ def module_si7021():
     manager.run()
 
 
+def module_tsl2561():
+    config = _config(TSL2561_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
+TSL2591_OPTS = [
+    cfg.Opt('gain',
+            short='g',
+            default=0x00,
+            help='Gain'),
+    cfg.Opt('integration',
+            short='i',
+            default=0x00,
+            help='Integration time'),
+]
+
+
+def module_tsl2591():
+    config = _config(TSL2591_MODULE, TSL2591_OPTS)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_vl53l0x():
     config = _config(VL53L0X_MODULE)
     manager = ModuleManager(**config)
