@@ -271,6 +271,11 @@ T6713_MODULE = {
     'class': 'robophery.module.i2c.tsl2561.T6713Module',
 }
 
+TCS34725_MODULE = {
+    'interface': 'local_i2c',
+    'class': 'robophery.module.i2c.tcs34725.Tcs34725Module',
+}
+
 TSL2561_MODULE = {
     'interface': 'local_i2c',
     'class': 'robophery.module.i2c.tsl2561.Tsl2561Module',

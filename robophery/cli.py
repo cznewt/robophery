@@ -96,6 +96,12 @@ def module_si7021():
     manager.run()
 
 
+def module_tcs34725():
+    config = _config(TCS34725_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_tsl2561():
     config = _config(TSL2561_MODULE)
     manager = ModuleManager(**config)

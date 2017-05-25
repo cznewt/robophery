@@ -95,6 +95,8 @@ BME280_SPI3_EN = 0x01  # Enables 3-wire SPI interface
 
 class Bme280Module(I2cModule):
 
+    DEVICE_NAME = 'bme280'
+
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', BME280_DEFAULT_ADDRESS)
         super(Bme280Module, self).__init__(*args, **kwargs)
@@ -234,7 +236,7 @@ class Bme280Module(I2cModule):
         p = (p - (var2 / 4096.0)) * 6250.0 / var1
         var1 = (self.dig_P9) * p * p / 2147483648.0
         var2 = p * (self.dig_P8) / 32768.0
-        pressure = (p + (var1 + var2 + (self.dig_P7)) / 16.0) / 100
+        pressure = (p + (var1 + var2 + (self.dig_P7)) / 16.0) # Pa
 
         # Humidity offset calculations
         var_H = ((t_fine) - 76800.0)
@@ -260,7 +262,7 @@ class Bme280Module(I2cModule):
             self.read_raw_data()
             data = self.result_calculation()
         except IOError:
-            return {'h': None, 'p': None, 't': None}
+            data = {'h': None, 'p': None, 't': None}
         read_time = (self._get_time() - read_start) / 3
         data = [
             (self._name, 'temperature', data['t'], read_time),
