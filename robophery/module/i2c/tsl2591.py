@@ -117,8 +117,8 @@ class Tsl2591Module(I2cModule):
             self.INTEGRATION_TIME_500MS: 500.,
             self.INTEGRATION_TIME_600MS: 600.,
         }
-        if self.integration_time in case_integ.keys():
-            atime = case_integ[self.integration_time]
+        if self._integration_time in case_integ.keys():
+            atime = case_integ[self._integration_time]
         else:
             atime = 100.
 
@@ -129,8 +129,8 @@ class Tsl2591Module(I2cModule):
             self.GAIN_MAX: 9876.,
         }
 
-        if self.gain in case_gain.keys():
-            again = case_gain[self.gain]
+        if self._gain in case_gain.keys():
+            again = case_gain[self._gain]
         else:
             again = 1.
 
