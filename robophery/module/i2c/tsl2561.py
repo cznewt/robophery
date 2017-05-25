@@ -97,28 +97,24 @@ class Tsl2561Module(I2cModule):
         self._control(self.POWER_UP)
         self._reconfigure()
 
-    def _control(self, params):
-        cmd = self.CMD | self.REG_CONTROL
-        self._bus.write_byte_data(cmd, params)
-
+    def _control(self, param):
+        self.write8(self.CMD | self.REG_CONTROL, param)
         # Wait for 400ms to be power up.
-        self._msleep.sleep(400)
+        self._msleep(400)
 
     def _reconfigure(self):
-        cmd = self.CMD | self.REG_TIMING
-        timing = (self._gain | self._manual | self._integ)
-        self._bus.write_byte_data(cmd, timing)
-
+        self.write8(
+            self.CMD | self.REG_TIMING,
+            self._gain | self._manual | self._integ
+        )
         # Wait for 400ms to complete initial A/D conversion.
-        self._msleep.sleep(400)
+        self._msleep(400)
 
     def read_luminosity(self):
-        cmd = self.CMD | self.CMD_WORD | self.REG_DATA0
-        vals = self.read_i2c_block_data(cmd, 2)
+        vals = self.readList(self.CMD | self.CMD_WORD | self.REG_DATA0, 2)
         self._channel0 = vals[1] << 8 | vals[0]
 
-        cmd = self.CMD | self.CMD_WORD | self.REG_DATA1
-        vals = self.read_i2c_block_data(cmd, 2)
+        vals = self.readList(self.CMD | self.CMD_WORD | self.REG_DATA1, 2)
         self._channel1 = vals[1] << 8 | vals[0]
 
         # If either sensor is satulated, no acculate lux value
@@ -168,15 +164,31 @@ class Tsl2561Module(I2cModule):
 
     def read_data(self):
         """
-        Get all sensor readings.
+        Get the luminosity readings.
         """
-        lumin_self._msleep_start = self._get_self._msleep()
-        lumin = self.read_luminosity()
-        lumin_self._msleep_stop = self._get_self._msleep()
-        lumin_self._msleep_delta = lumin_self._msleep_stop - lumin_self._msleep_start
-
+        read_time_start = self._get_time()
+        try:
+            luminosity = self.read_luminosity()
+        except IOError:
+            luminosity = None
+        read_time_delta = self._get_time() - read_time_start
         data = [
-            (self._name, 'luminosity', lumin, lumin_self._msleep_delta),
+            (self._name, 'luminosity', luminosity, read_time_delta),
         ]
         self._log_data(data)
         return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {
+            'luminosity': {
+                'type': 'gauge',
+                'unit': 'lx',
+                'precision': 0.000180,
+                'range_low': 0,
+                'range_high': 88000,
+                'sensor': self.DEVICE_NAME
+            }
+        }
