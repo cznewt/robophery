@@ -50,6 +50,8 @@ class L293dModule(GpioModule):
 
         if direction == 0:
             self.set_low(self._power_pin)
+            self.set_low(self._forward_pin)
+            self.set_low(self._backward_pin)
         # Spin the motor
         else:
             if direction == 1:

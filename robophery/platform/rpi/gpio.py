@@ -72,7 +72,7 @@ class RaspberryPiGpioInterface(GpioInterface):
         either HIGH/LOW or a boolean (true = high).
         """
         self._log.debug(
-            "Set value {0} to pin {1}.".format(value, pin))
+            "Ouput at pin {0} set to {1}.".format(pin, "HIGH" if value else "LOW"))
         self._bus.output(pin, value)
 
     def input(self, pin):
