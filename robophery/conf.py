@@ -158,6 +158,11 @@ BH1750_MODULE = {
     'class': 'robophery.module.i2c.bh1750.Bh1750Module',
 }
 
+BME280_MODULE = {
+    'interface': 'local_i2c',
+    'class': 'robophery.module.i2c.bme280.Bme280Module',
+}
+
 BMP085_MODULE = {
     'interface': 'local_i2c',
     'class': 'robophery.module.i2c.bmp085.Bmp085Module',

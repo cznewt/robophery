@@ -166,14 +166,14 @@ class Tsl2561Module(I2cModule):
         """
         Get the luminosity readings.
         """
-        read_time_start = self._get_time()
+        read_start = self._get_time()
         try:
             luminosity = self.read_luminosity()
         except IOError:
             luminosity = None
-        read_time_delta = self._get_time() - read_time_start
+        read_time = self._get_time() - read_start
         data = [
-            (self._name, 'luminosity', luminosity, read_time_delta),
+            (self._name, 'luminosity', luminosity, read_time),
         ]
         self._log_data(data)
         return data

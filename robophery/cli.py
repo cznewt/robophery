@@ -54,6 +54,12 @@ def manager_service():
 # I2C modules
 
 
+def module_bme280():
+    config = _config(BME280_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_bmp085():
     config = _config(BMP085_MODULE)
     manager = ModuleManager(**config)
