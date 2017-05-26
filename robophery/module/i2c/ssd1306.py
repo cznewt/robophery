@@ -87,12 +87,12 @@ class Ssd1306Module(I2cModule):
             self._gpio_interface.setup_pin(self._reset_pin, self._gpio_interface.GPIO_MODE_OUT)
         self.begin()
 
+        self.set_contrast(self._contrast)
         # Clear display.
         self.clear()
         self.display()
-        self.set_contrast(self._contrast)
 
-        self.write_text('hello world')
+        self.write_text('RoboPhery SSD1306\nInitialised.')
 
     def command(self, c):
         """
@@ -239,10 +239,14 @@ class Ssd1306Module(I2cModule):
         top = padding
         x = 0
 
-        draw.text((x, top), str(text), font=font, fill=255)
-        draw.text((x, top + 8), str(text), font=font, fill=255)
-        draw.text((x, top + 16), str(text), font=font, fill=255)
-        draw.text((x, top + 25), str(text), font=font, fill=255)
+        y = [0, 8, 16, 25]
+        text_array = text.splitlines()
+        if len(text_array) > 4:
+            text_array = text_array[0:3]
+        i = 0
+        for text_line in text_array:
+            draw.text((x, top + y[i]), str(text_line), font=font, fill=255)
+            i += 1
 
         # Display image.
         self.image(image)
