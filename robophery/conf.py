@@ -260,6 +260,11 @@ SERVO_MODULE = {
     'data_pin': None,
 }
 
+SSD1306_MODULE = {
+    'interface': 'local_i2c',
+    'class': 'robophery.module.i2c.ssd1306.Ssd1306Module',
+}
+
 SWITCH_MODULE = {
     'interface': 'local_gpio',
     'class': 'robophery.module.gpio.switch.SwitchModule',

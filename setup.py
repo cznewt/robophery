@@ -42,6 +42,7 @@ setup(
             'rp_relay = robophery.cli:module_relay',
             'rp_si7021 = robophery.cli:module_si7021',
             'rp_servo = robophery.cli:module_servo',
+            'rp_ssd1306 = robophery.cli:module_ssd1306',
             'rp_switch = robophery.cli:module_switch',
             'rp_tcs34725 = robophery.cli:module_tcs34725',
             'rp_tsl2561 = robophery.cli:module_tsl2561',

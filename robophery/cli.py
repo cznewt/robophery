@@ -96,6 +96,12 @@ def module_si7021():
     manager.run()
 
 
+def module_ssd1306():
+    config = _config(SSD1306_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_tcs34725():
     config = _config(TCS34725_MODULE)
     manager = ModuleManager(**config)
