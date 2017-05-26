@@ -27,9 +27,9 @@ def _config(module_conf, opts=None):
     conf = {
         'log_level': 'debug',
         'log_handlers': ['console', ],
-        'read_interval': 2000,
+        'read_interval': 2500,
         'platform': 'raspberrypi',
-        'config': RPI_PCA_PLATFORM
+        'config': RPI_PLATFORM
     }
     conf['config']['comm'] = {}
     conf['config']['module'] = {

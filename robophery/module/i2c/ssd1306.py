@@ -63,7 +63,7 @@ SSD1306_VERTICAL_AND_RIGHT_HORIZONTAL_SCROLL = 0x29
 SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL = 0x2A
 
 
-class SSD1306Module(I2cModule):
+class Ssd1306Module(I2cModule):
     """
     Base class for SSD1306-based OLED displays. Implementors should subclass
     and provide an implementation for the _initialize function.
@@ -72,7 +72,7 @@ class SSD1306Module(I2cModule):
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', SSD1306_I2C_ADDRESS)
-        super(SSD1306Module, self).__init__(*args, **kwargs)
+        super(Ssd1306Module, self).__init__(*args, **kwargs)
         width = kwargs.get('width', 128)
         height = kwargs.get('height', 64)
         self._width = width
