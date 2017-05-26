@@ -88,6 +88,7 @@ class Ssd1306Module(I2cModule):
         # Clear display.
         self.clear()
         self.display()
+        self.set_contrast(255)
 
         self.write_text('hello world')
 
@@ -124,6 +125,22 @@ class Ssd1306Module(I2cModule):
                              .format(self._width, self._height))
         # Turn on the display.
         self.command(SSD1306_DISPLAYON)
+
+    def commit_action(self, action, arg=None):
+        self._log.debug('Received action {0} with args {1})'.format(
+            action, arg))
+        if action == 'get_data':
+            return self.read_data()
+        elif action == 'clear':
+            self.clear()
+            self.display()
+            return self.read_data()
+        elif action == 'set_contrast':
+            self.set_contrast(arg[0])
+            return self.read_data()
+        elif action == 'write_text':
+            self.write_text(arg[0])
+            return self.read_data()
 
     def reset(self):
         """
@@ -194,6 +211,7 @@ class Ssd1306Module(I2cModule):
         if contrast < 0 or contrast > 255:
             raise ValueError(
                 'Contrast must be a value from 0 to 255 (inclusive).')
+        self._contrast = contrast
         self.command(SSD1306_SETCONTRAST)
         self.command(contrast)
 
@@ -341,3 +359,31 @@ class Ssd1306Module(I2cModule):
         self.command(0x40)
         self.command(SSD1306_DISPLAYALLON_RESUME)           # 0xA4
         self.command(SSD1306_NORMALDISPLAY)                 # 0xA6
+
+    def read_data(self):
+        """
+        Get the luminosity readings.
+        """
+        read_start = self._get_time()
+        contrast = self._contrast
+        read_time = self._get_time() - read_start
+        data = [
+            (self._name, 'contrast', contrast, read_time),
+        ]
+        self._log_data(data)
+        return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {
+            'contrast': {
+                'type': 'gauge',
+                'unit': '',
+                'precision': 1,
+                'range_low': 0,
+                'range_high': 255,
+                'sensor': self.DEVICE_NAME
+            },
+        }
