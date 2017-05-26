@@ -27,7 +27,7 @@ class Pca9685PwmInterface(PwmInterface):
     """
     PWM implementation for the PCA9685 PWM LED/servo controller.
     """
-    DEVICE_NAME = 'i2c-pca9685'
+    DEVICE_NAME = 'pca9685'
     DEVICE_ADDR = 0x40
     AVAILABLE_PINS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 

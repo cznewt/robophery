@@ -242,6 +242,20 @@ L293D_MODULE = {
     'backward_pin': None,
 }
 
+L293D_PWM_MODULE = {
+    'interface': 'local_pwm',
+    'class': 'robophery.module.pwm.l293d.L293dModule',
+    'power_pin': None,
+    'backward_pin': {
+        'interface': 'local_gpio',
+        'pin': 36,
+    },
+    'backward_pin': {
+        'interface': 'local_gpio',
+        'pin': 38,
+    },
+}
+
 MCP9808_MODULE = {
     'interface': 'local_i2c',
     'class': 'robophery.module.i2c.mcp9808.Mcp9808Module',
@@ -277,6 +291,10 @@ SERVO_MODULE = {
 SSD1306_MODULE = {
     'interface': 'local_i2c',
     'class': 'robophery.module.i2c.ssd1306.Ssd1306Module',
+    'reset_pin': {
+        'interface': 'local_gpio',
+        'pin': 24,
+    }
 }
 
 SWITCH_MODULE = {

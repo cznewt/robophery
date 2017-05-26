@@ -72,16 +72,17 @@ class Ssd1306Module(I2cModule):
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', SSD1306_I2C_ADDRESS)
+        self._reset_pin = kwargs.get('reset_pin').get('pin', 25)
         super(Ssd1306Module, self).__init__(*args, **kwargs)
         width = kwargs.get('width', 128)
-        height = kwargs.get('height', 64)
+        height = kwargs.get('height', 32)
         self._width = width
         self._height = height
         self._pages = height // 8
         self._buffer = [0] * (width * self._pages)
         # Default to platform GPIO if not provided.
-        # self._rst = rst
-        # self._gpio.setup(self._rst, GPIO.OUT)
+        self._gpio_iface = kwargs['reset_pin']['interface']
+        self._gpio_iface.setup(self._reset_pin, self._gpio_iface.GPIO_MODE_OUT)
         self.begin()
 
         # Clear display.
@@ -102,7 +103,7 @@ class Ssd1306Module(I2cModule):
         Send byte of data to display.
         """
         control = 0x40   # Co = 0, DC = 0
-        self._i2c.write8(control, c)
+        self.write8(control, c)
 
     def begin(self, vccstate=SSD1306_SWITCHCAPVCC):
         """
@@ -129,13 +130,13 @@ class Ssd1306Module(I2cModule):
         Reset the display.
         """
         # Set reset high for a millisecond.
-        # self._gpio.set_high(self._rst)
+        self._gpio_iface.set_high(self._reset_pin)
         self._msleep(1)
         # Set reset low for 10 milliseconds.
-        # self._gpio.set_low(self._rst)
+        self._gpio_iface.set_low(self._reset_pin)
         self._msleep(10)
         # Set reset high again.
-        # self._gpio.set_high(self._rst)
+        self._gpio_iface.set_high(self._reset_pin)
 
     def display(self):
         """
