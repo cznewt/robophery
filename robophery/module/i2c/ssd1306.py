@@ -72,7 +72,8 @@ class Ssd1306Module(I2cModule):
 
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', SSD1306_I2C_ADDRESS)
-        self._reset_pin = kwargs.get('reset_pin').get('pin', 25)
+        self._contrast = kwargs.get('contrast', 255)
+        self._reset_pin = kwargs.get('reset_pin').get('pin', None)
         super(Ssd1306Module, self).__init__(*args, **kwargs)
         width = kwargs.get('width', 128)
         height = kwargs.get('height', 32)
@@ -81,14 +82,15 @@ class Ssd1306Module(I2cModule):
         self._pages = height // 8
         self._buffer = [0] * (width * self._pages)
         # Default to platform GPIO if not provided.
-        self._gpio_interface = self._manager._interface[kwargs['reset_pin']['interface']]
-        self._gpio_interface.setup_pin(self._reset_pin, self._gpio_interface.GPIO_MODE_OUT)
+        if self._reset_pin is not None:
+            self._gpio_interface = self._manager._interface[kwargs['reset_pin']['interface']]
+            self._gpio_interface.setup_pin(self._reset_pin, self._gpio_interface.GPIO_MODE_OUT)
         self.begin()
 
         # Clear display.
         self.clear()
         self.display()
-        self.set_contrast(255)
+        self.set_contrast(self._contrast)
 
         self.write_text('hello world')
 
@@ -99,13 +101,6 @@ class Ssd1306Module(I2cModule):
         control = 0x00   # Co = 0, DC = 0
         self.write8(control, c)
 
-    def data(self, c):
-        """
-        Send byte of data to display.
-        """
-        control = 0x40   # Co = 0, DC = 0
-        self.write8(control, c)
-
     def begin(self, vccstate=SSD1306_SWITCHCAPVCC):
         """
         Initialize display.
@@ -113,7 +108,8 @@ class Ssd1306Module(I2cModule):
         # Save vcc state.
         self._vccstate = vccstate
         # Reset and initialize display.
-        self.reset()
+        if self._reset_pin is not None:
+            self.reset()
         if (self._width == 128 and self._height == 64):
             self._init_128_64()
         elif (self._width == 128 and self._height == 32):

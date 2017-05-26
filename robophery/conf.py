@@ -293,7 +293,7 @@ SSD1306_MODULE = {
     'class': 'robophery.module.i2c.ssd1306.Ssd1306Module',
     'reset_pin': {
         'interface': 'local_gpio',
-        'pin': 24,
+        'pin': None,
     }
 }
 
