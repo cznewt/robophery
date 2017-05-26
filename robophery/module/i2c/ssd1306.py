@@ -73,7 +73,7 @@ class Ssd1306Module(I2cModule):
     def __init__(self, *args, **kwargs):
         self._addr = kwargs.get('addr', SSD1306_I2C_ADDRESS)
         self._contrast = kwargs.get('contrast', 255)
-        self._reset_pin = kwargs.get('reset_pin').get('pin', None)
+        self._reset_pin = kwargs.get('reset_pin', {}).get('pin', None)
         super(Ssd1306Module, self).__init__(*args, **kwargs)
         width = kwargs.get('width', 128)
         height = kwargs.get('height', 32)
@@ -238,8 +238,8 @@ class Ssd1306Module(I2cModule):
         padding = -2
         top = padding
         x = 0
-
         y = [0, 8, 16, 25]
+
         text_array = text.splitlines()
         if len(text_array) > 4:
             text_array = text_array[0:3]
