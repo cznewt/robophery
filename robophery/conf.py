@@ -73,6 +73,20 @@ RPI_PLATFORM = {
             'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
             'bus_number': 1
         },
+    },
+}
+
+RPI_W1_PLATFORM = {
+    'interface': {
+        'local_gpio': {
+            'engine': 'gpio',
+            'class': 'robophery.platform.rpi.gpio.RaspberryPiGpioInterface',
+        },
+        'local_i2c': {
+            'engine': 'i2c',
+            'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
+            'bus_number': 1
+        },
         'local_pwm': {
             'engine': 'pwm',
             'class': 'robophery.platform.rpi.pwm.LinuxW1Interface',
