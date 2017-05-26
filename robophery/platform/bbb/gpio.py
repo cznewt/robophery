@@ -48,6 +48,8 @@ class BeagleboneGpioInterface(GpioInterface):
         self._use_pin(pin)
 
     def output(self, pin, value):
+        self._log.debug(
+            "Ouput of pin {0} set to {1}.".format(pin, "HIGH" if value else "LOW"))
         self._bus.output(pin, value)
 
     def input(self, pin):

@@ -45,7 +45,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         Write bytes to the specified register.
         """
-        self._log.debug("Writing multiple values {0:#x} to register {1:#x} at address {2:#x}.".format(
+        self._log.debug("Writing multiple values {0} to register {1:#x} at address {2:#x}.".format(
             data, register, addr))
         self._bus.write_i2c_block_data(addr, register, data)
 
