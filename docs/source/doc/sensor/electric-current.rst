@@ -37,19 +37,28 @@ Where to buy
 * 10 USD - https://www.adafruit.com/product/904
 
 
-ACS712 - GPIO Electrometer
-==========================
+ACS712 - ADC Electrometer
+=========================
 
-Acs712 stroommeter module op basis van de ACS712ELC-20A chip. Met deze sensor
-kun je zowel wissel- als gelijkstroom meten tot maximaal 20A. Geschikt voor
-het meten van 230V netspanning.
+Hall Effect based linear ACS712 current sensor. The sensor gives precise
+current measurement for both AC and DC signals. Thick copper conductor and
+signal traces allows for survival of the device up to 5 times overcurrent
+conditions.
 
-De sensormodule kan 20A positief en negatief meten. De output is 100mV per
-gemeten Ampere.
+The ACS712 outputs an analog voltage output signal that varies linearly with
+sensed current. The device requires 5VDC for VCC and a couple of filter
+capacitors. Please keep in mind that though the ACS712 is rated for 2.1kV
+isolation, the PCB it is on is not designed for that type of voltage. Please
+keep that in mind if you are using this breakout in high voltage applications.
 
 .. image:: /_static/img/module/acs712.jpg
    :width: 50 %
    :align: center
+
+More information
+----------------
+
+* https://www.sparkfun.com/datasheets/BreakoutBoards/0712.pdf
 
 Where to buy
 ------------

@@ -20,6 +20,7 @@ Chapter 5. Physical Sensors
    liquid-o2.rst
    liquid-ph.rst
    liquid-orp.rst
+   position.rst
    revolutions.rst
    soil-moisture.rst
    temperature.rst
