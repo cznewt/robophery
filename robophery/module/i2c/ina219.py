@@ -1,22 +1,4 @@
-# The MIT License (MIT)
-# Copyright (c) 2016 Scott Williamson
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy of
-# this software and associated documentation files (the "Software"), to deal in
-# the Software without restriction, including without limitation the rights to
-# use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of
-# the Software, and to permit persons to whom the Software is furnished to do so,
-# subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in all
-# copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-# FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-# COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-# IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-# CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+from math import trunc
 from robophery.interface.i2c import I2cModule
 
 
@@ -26,173 +8,432 @@ class Ina219Module(I2cModule):
     """
     DEVICE_NAME = 'ina219'
     # INA219 default address
-    DEVICE_ADDR = 0x40
-    INA219_READ = 0x01
 
-    INA219_REG_CONFIG = 0x00
-    INA219_CONFIG_RESET = 0x8000  # Reset Bit
-    INA219_CONFIG_BVOLTAGERANGE_MASK = 0x2000  # Bus Voltage Range Mask
-    INA219_CONFIG_BVOLTAGERANGE_16V = 0x0000  # 0-16V Range
-    INA219_CONFIG_BVOLTAGERANGE_32V = 0x2000  # 0-32V Range
+    RANGE_16V = 0  # Range 0-16 volts
+    RANGE_32V = 1  # Range 0-32 volts
 
-    INA219_CONFIG_GAIN_MASK = 0x1800  # Gain Mask
-    INA219_CONFIG_GAIN_1_40MV = 0x0000  # Gain 1, 40mV Range
-    INA219_CONFIG_GAIN_2_80MV = 0x0800  # Gain 2, 80mV Range
-    INA219_CONFIG_GAIN_4_160MV = 0x1000  # Gain 4, 160mV Range
-    INA219_CONFIG_GAIN_8_320MV = 0x1800  # Gain 8, 320mV Range
+    GAIN_1_40MV = 0  # Maximum shunt voltage 40mV
+    GAIN_2_80MV = 1  # Maximum shunt voltage 80mV
+    GAIN_4_160MV = 2  # Maximum shunt voltage 160mV
+    GAIN_8_320MV = 3  # Maximum shunt voltage 320mV
+    GAIN_AUTO = -1  # Determine gain automatically
 
-    INA219_CONFIG_BADCRES_MASK = 0x0780  # Bus ADC Resolution Mask
-    INA219_CONFIG_BADCRES_9BIT = 0x0080  # 9-bit bus res = 0..511
-    INA219_CONFIG_BADCRES_10BIT = 0x0100  # 10-bit bus res = 0..1023
-    INA219_CONFIG_BADCRES_11BIT = 0x0200  # 11-bit bus res = 0..2047
-    INA219_CONFIG_BADCRES_12BIT = 0x0400  # 12-bit bus res = 0..4097
+    ADC_9BIT = 0  # 9-bit conversion time  84us.
+    ADC_10BIT = 1  # 10-bit conversion time 148us.
+    ADC_11BIT = 2  # 11-bit conversion time 2766us.
+    ADC_12BIT = 3  # 12-bit conversion time 532us.
+    ADC_2SAMP = 9  # 2 samples at 12-bit, conversion time 1.06ms.
+    ADC_4SAMP = 10  # 4 samples at 12-bit, conversion time 2.13ms.
+    ADC_8SAMP = 11  # 8 samples at 12-bit, conversion time 4.26ms.
+    ADC_16SAMP = 12  # 16 samples at 12-bit,conversion time 8.51ms
+    ADC_32SAMP = 13  # 32 samples at 12-bit, conversion time 17.02ms.
+    ADC_64SAMP = 14  # 64 samples at 12-bit, conversion time 34.05ms.
+    ADC_128SAMP = 15  # 128 samples at 12-bit, conversion time 68.10ms.
 
-    # Shunt ADC Resolution and Averaging Mask
-    INA219_CONFIG_SADCRES_MASK = 0x0078
-    INA219_CONFIG_SADCRES_9BIT_1S_84US = 0x0000  # 1 x 9-bit shunt sample
-    INA219_CONFIG_SADCRES_10BIT_1S_148US = 0x0008  # 1 x 10-bit shunt sample
-    INA219_CONFIG_SADCRES_11BIT_1S_276US = 0x0010  # 1 x 11-bit shunt sample
-    INA219_CONFIG_SADCRES_12BIT_1S_532US = 0x0018  # 1 x 12-bit shunt sample
-    # 2 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_2S_1060US = 0x0048
-    # 4 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_4S_2130US = 0x0050
-    # 8 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_8S_4260US = 0x0058
-    # 16 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_16S_8510US = 0x0060
-    # 32 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_32S_17MS = 0x0068
-    # 64 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_64S_34MS = 0x0070
-    # 128 x 12-bit shunt samples averaged together
-    INA219_CONFIG_SADCRES_12BIT_128S_69MS = 0x0078
+    __ADDRESS = 0x40
 
-    INA219_CONFIG_MODE_MASK = 0x0007  # Operating Mode Mask
-    INA219_CONFIG_MODE_POWERDOWN = 0x0000
-    INA219_CONFIG_MODE_SVOLT_TRIGGERED = 0x0001
-    INA219_CONFIG_MODE_BVOLT_TRIGGERED = 0x0002
-    INA219_CONFIG_MODE_SANDBVOLT_TRIGGERED = 0x0003
-    INA219_CONFIG_MODE_ADCOFF = 0x0004
-    INA219_CONFIG_MODE_SVOLT_CONTINUOUS = 0x0005
-    INA219_CONFIG_MODE_BVOLT_CONTINUOUS = 0x0006
-    INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS = 0x0007
+    __REG_CONFIG = 0x00
+    __REG_SHUNTVOLTAGE = 0x01
+    __REG_BUSVOLTAGE = 0x02
+    __REG_POWER = 0x03
+    __REG_CURRENT = 0x04
+    __REG_CALIBRATION = 0x05
 
-    INA219_REG_SHUNTVOLTAGE = 0x01  # SHUNT VOLTAGE REGISTER (R)
-    INA219_REG_BUSVOLTAGE = 0x02  # BUS VOLTAGE REGISTER (R)
-    INA219_REG_POWER = 0x03  # POWER REGISTER (R)
-    INA219_REG_CURRENT = 0x04  # CURRENT REGISTER (R)
-    INA219_REG_CALIBRATION = 0x05  # CALIBRATION REGISTER (R/W)
+    __RST = 15
+    __BRNG = 13
+    __PG1 = 12
+    __PG0 = 11
+    __BADC4 = 10
+    __BADC3 = 9
+    __BADC2 = 8
+    __BADC1 = 7
+    __SADC4 = 6
+    __SADC3 = 5
+    __SADC2 = 4
+    __SADC1 = 3
+    __MODE3 = 2
+    __MODE2 = 1
+    __MODE1 = 0
+
+    __OVF = 1
+    __CNVR = 2
+
+    __BUS_RANGE = [16, 32]
+    __GAIN_VOLTS = [0.04, 0.08, 0.16, 0.32]
+
+    __CONT_SH_BUS = 7
+
+    __AMP_ERR_MSG = ('Expected current %.3fA is greater '
+                     'than max possible current %.3fA')
+    __RNG_ERR_MSG = ('Expected amps %.2fA, out of range, use a lower '
+                     'value shunt resistor')
+    __VOLT_ERR_MSG = ('Invalid voltage range, must be one of: '
+                      'RANGE_16V, RANGE_32V')
+
+    __LOG_FORMAT = '%(asctime)s - %(levelname)s - INA219 %(message)s'
+    __LOG_MSG_1 = ('shunt ohms: %.3f, bus max volts: %d, '
+                   'shunt volts max: %.2f%s, '
+                   'bus ADC: %d, shunt ADC: %d')
+    __LOG_MSG_2 = ('calibrate called with: bus max volts: %dV, '
+                   'max shunt volts: %.2fV%s')
+    __LOG_MSG_3 = ('Current overflow detected - '
+                   'attempting to increase gain')
+
+    __SHUNT_MILLIVOLTS_LSB = 0.01  # 10uV
+    __BUS_MILLIVOLTS_LSB = 4  # 4mV
+    __CALIBRATION_FACTOR = 0.04096
+    __MAX_CALIBRATION_VALUE = 0xFFFE  # Max value supported (65534 decimal)
+    # In the spec (p17) the current LSB factor for the minimum LSB is
+    # documented as 32767, but a larger value (100.1% of 32767) is used
+    # to guarantee that current overflow can always be detected.
+    __CURRENT_LSB_FACTOR = 32800
 
     def __init__(self, *args, **kwargs):
+        """
+        Construct the class passing in the resistance of the shunt
+        resistor and the maximum expected current flowing through it in
+        your system.
+
+        Arguments:
+        shunt_resistance -- value of shunt resistor in Ohms (mandatory).
+        max_current -- the maximum expected current in Amps (optional).
+        """
         self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Ina219Module, self).__init__(*args, **kwargs)
-        self._set_calibration_32v_2a()
+        self._shunt_resistance = kwargs.get('shunt_resistance', 0.1)
+        self._max_current = kwargs.get('max_current', None)
+        self._voltage_range = kwargs.get('voltage_range', self.RANGE_32V)
 
-    def _twos_to_int(self, val, len):
-        # Convert twos compliment to integer
-        if(val & (1 << len - 1)):
-            val = val - (1 << len)
-        return val
+        self._min_device_current_lsb = self._calculate_min_current_lsb()
+        self._gain = None
+        self._auto_gain_enabled = False
+        self.configure(voltage_range=self._voltage_range)
 
-    def _set_calibration_32v_2a(self):
-        self._cal_value = 4096
-        # Current LSB = 100uA per bit (1000/100 = 10)
-        self._current_divider_ma = 10
-        self._power_divider_mw = 2  # Power LSB = 1mW per bit (2/1)
+    def configure(self, voltage_range=RANGE_32V, gain=GAIN_AUTO,
+                  bus_adc=ADC_12BIT, shunt_adc=ADC_12BIT):
+        """
+        Configures and calibrates how the INA219 will take measurements.
 
-        # Set Calibration register to 'Cal' calculated above
-        bytes = [(self._cal_value >> 8) & 0xFF, self._cal_value & 0xFF]
-        self.writeList(self.INA219_REG_CALIBRATION, bytes)
+        Arguments:
+        voltage_range -- The full scale voltage range, this is either 16V
+            or 32V represented by one of the following constants;
+            RANGE_16V, RANGE_32V (default).
+        gain -- The gain which controls the maximum range of the shunt
+            voltage represented by one of the following constants;
+            GAIN_1_40MV, GAIN_2_80MV, GAIN_4_160MV,
+            GAIN_8_320MV, GAIN_AUTO (default).
+        bus_adc -- The bus ADC resolution (9, 10, 11, or 12-bit) or
+            set the number of samples used when averaging results
+            represent by one of the following constants; ADC_9BIT,
+            ADC_10BIT, ADC_11BIT, ADC_12BIT (default),
+            ADC_2SAMP, ADC_4SAMP, ADC_8SAMP, ADC_16SAMP,
+            ADC_32SAMP, ADC_64SAMP, ADC_128SAMP
+        shunt_adc -- The shunt ADC resolution (9, 10, 11, or 12-bit) or
+            set the number of samples used when averaging results
+            represent by one of the following constants; ADC_9BIT,
+            ADC_10BIT, ADC_11BIT, ADC_12BIT (default),
+            ADC_2SAMP, ADC_4SAMP, ADC_8SAMP, ADC_16SAMP,
+            ADC_32SAMP, ADC_64SAMP, ADC_128SAMP
+        """
+        self.__validate_voltage_range(voltage_range)
+        self._voltage_range = voltage_range
 
-        # Set Config register to take into account the settings above
-        config = self.INA219_CONFIG_BVOLTAGERANGE_32V | \
-            self.INA219_CONFIG_GAIN_8_320MV | \
-            self.INA219_CONFIG_BADCRES_12BIT | \
-            self.INA219_CONFIG_SADCRES_12BIT_1S_532US | \
-            self.INA219_CONFIG_MODE_SANDBVOLT_CONTINUOUS
-
-        bytes = [(config >> 8) & 0xFF, config & 0xFF]
-        self.writeList(self.INA219_REG_CONFIG, bytes)
-
-    def _get_raw_bus_voltage(self):
-        result = self.readU16(self.INA219_REG_BUSVOLTAGE)
-
-        # Shift to the right 3 to drop CNVR and OVF and multiply by LSB
-        return (result >> 3) * 4
-
-    def _get_raw_shunt_voltage(self):
-        result = self.readList(self.INA219_REG_SHUNTVOLTAGE, 2)
-        if (result[0] >> 7 == 1):
-            testint = (result[0] * 256 + result[1])
-            othernew = self._twos_to_int(testint, 16)
-            return othernew
+        if self._max_current is not None:
+            if gain == self.GAIN_AUTO:
+                self._auto_gain_enabled = True
+                self._gain = self._determine_gain(self._max_current)
+            else:
+                self._gain = gain
         else:
-            return (result[0] << 8) | (result[1])
+            if gain != self.GAIN_AUTO:
+                self._gain = gain
+            else:
+                self._auto_gain_enabled = True
+                self._gain = self.GAIN_1_40MV
 
-    def _get_raw_current(self):
-        # Sometimes a sharp load will reset the INA219, which will
-        # reset the cal register, meaning CURRENT and POWER will
-        # not be available ... avoid this by always setting a cal
-        # value even if it's an unfortunate extra step
-        bytes = [(self._cal_value >> 8) & 0xFF, self._cal_value & 0xFF]
-        self.writeList(self.INA219_REG_CALIBRATION, bytes)
-        # Now we can safely read the CURRENT register!
-        result = self.readList(self.INA219_REG_CURRENT, 2)
-        if (result[0] >> 7 == 1):
-            testint = (result[0] * 256 + result[1])
-            othernew = self._twos_to_int(testint, 16)
-            return othernew
+        self._log.info('Gain set to %.2fV.' % self.__GAIN_VOLTS[self._gain])
+
+        self._log.debug(
+            self.__LOG_MSG_1 %
+            (self._shunt_resistance, self.__BUS_RANGE[voltage_range],
+             self.__GAIN_VOLTS[self._gain],
+             self.__max_current_to_string(self._max_current),
+             bus_adc, shunt_adc))
+
+        self._calibrate(
+            self.__BUS_RANGE[voltage_range], self.__GAIN_VOLTS[self._gain],
+            self._max_current)
+        self._configure(voltage_range, self._gain, bus_adc, shunt_adc)
+
+    def voltage(self):
+        """
+        Returns the bus voltage in volts.
+        """
+        value = self._voltage_register()
+        return float(value) * self.__BUS_MILLIVOLTS_LSB / 1000
+
+    def supply_voltage(self):
+        """
+        Returns the bus supply voltage in volts. This is the sum of
+        the bus voltage and shunt voltage. A DeviceRangeError
+        exception is thrown if current overflow occurs.
+        """
+        return self.voltage() + (float(self.shunt_voltage()) / 1000)
+
+    def current(self):
+        """
+        Returns the bus current in milliamps. A DeviceRangeError
+        exception is thrown if current overflow occurs.
+        """
+        self._handle_current_overflow()
+        return self._current_register() * self._current_lsb * 1000
+
+    def power(self):
+        """
+        Returns the bus power consumption in milliwatts.
+        A DeviceRangeError exception is thrown if current overflow occurs.
+        """
+        self._handle_current_overflow()
+        return self._power_register() * self._power_lsb * 1000
+
+    def shunt_voltage(self):
+        """
+        Returns the shunt voltage in millivolts.
+        A DeviceRangeError exception is thrown if current overflow occurs.
+        """
+        self._handle_current_overflow()
+        return self._shunt_voltage_register() * self.__SHUNT_MILLIVOLTS_LSB
+
+    def sleep(self):
+        """
+        Put the INA219 into power down mode.
+        """
+        configuration = self._read_configuration()
+        self._configuration_register(configuration & 0xFFF8)
+
+    def wake(self):
+        """
+        Wake the INA219 from power down mode
+        """
+        configuration = self._read_configuration()
+        self._configuration_register(configuration | 0x0007)
+        # 40us delay to recover from powerdown (p14 of spec)
+        self._usleep(40)
+
+    def current_overflow(self):
+        """ Returns true if the sensor has detect current overflow. In
+        this case the current and power values are invalid."""
+        return self._has_current_overflow()
+
+    def reset(self):
+        """ Reset the INA219 to its default configuration. """
+        self._configuration_register(1 << self.__RST)
+
+    def _handle_current_overflow(self):
+        if self._auto_gain_enabled:
+            while self._has_current_overflow():
+                self._increase_gain()
         else:
-            return (result[0] << 8) | (result[1])
+            if self._has_current_overflow():
+                raise DeviceRangeError(self.__GAIN_VOLTS[self._gain])
 
-    def _get_raw_power(self):
-        result = self.readList(self.INA219_REG_POWER, 2)
-        if (result[0] >> 7 == 1):
-            testint = (result[0] * 256 + result[1])
-            othernew = self._twos_to_int(testint, 16)
-            return othernew
+    def _determine_gain(self, max_expected_amps):
+        shunt_v = max_expected_amps * self._shunt_resistance
+        if shunt_v > self.__GAIN_VOLTS[3]:
+            raise ValueError(self.__RNG_ERR_MSG % max_expected_amps)
+        gain = min(v for v in self.__GAIN_VOLTS if v > shunt_v)
+        return self.__GAIN_VOLTS.index(gain)
+
+    def _increase_gain(self):
+        self._log.info(self.__LOG_MSG_3)
+        gain = self._read_gain()
+        if gain < len(self.__GAIN_VOLTS) - 1:
+            gain = gain + 1
+            self._calibrate(self.__BUS_RANGE[self._voltage_range],
+                            self.__GAIN_VOLTS[gain])
+            self._configure_gain(gain)
+            # 1ms delay required for new configuration to take effect,
+            # otherwise invalid current/power readings can occur.
+            self._msleep(1)
         else:
-            return (result[0] << 8) | (result[1])
+            self._log.info('Device limit reach, gain cannot be increased')
+            raise DeviceRangeError(self.__GAIN_VOLTS[gain], True)
 
-    def get_shunt_voltage(self):
-        """
-        Get shunt voltage (mV)
-        """
-        value = self._get_raw_shunt_voltage()
-        return value * 0.01
+    def _configure(self, voltage_range, gain, bus_adc, shunt_adc):
+        configuration = (
+            voltage_range << self.__BRNG | gain << self.__PG0 |
+            bus_adc << self.__BADC1 | shunt_adc << self.__SADC1 |
+            self.__CONT_SH_BUS)
+        self._configuration_register(configuration)
 
-    def get_bus_voltage(self):
-        """
-        Get bus voltage (V)
-        """
-        value = self._get_raw_bus_voltage()
-        return value * 0.001
+    def _calibrate(self, bus_volts_max, shunt_volts_max,
+                   max_expected_amps=None):
+        self._log.info(self.__LOG_MSG_2 %
+                       (bus_volts_max, shunt_volts_max,
+                        self.__max_current_to_string(max_expected_amps)))
 
-    def get_current(self):
-        """
-        Get current (mA)
-        """
-        valueDec = self._get_raw_current()
-        valueDec /= self._current_divider_ma
-        return valueDec
+        max_possible_amps = shunt_volts_max / self._shunt_resistance
 
-    def get_power(self):
-        """
-        Get power (mW)
-        """
-        valueDec = self._get_raw_power()
-        valueDec /= self._power_divider_mw
-        return valueDec
+        self._log.info("max possible current: %.3fA" %
+                       max_possible_amps)
+
+        self._current_lsb = \
+            self._determine_current_lsb(max_expected_amps, max_possible_amps)
+        self._log.info("current LSB: %.3e A/bit" % self._current_lsb)
+
+        self._power_lsb = self._current_lsb * 20
+        self._log.info("power LSB: %.3e W/bit" % self._power_lsb)
+
+        max_current = self._current_lsb * 32767
+        self._log.info("max current before overflow: %.4fA" % max_current)
+
+        max_shunt_voltage = max_current * self._shunt_resistance
+        self._log.info("max shunt voltage before overflow: %.4fmV" %
+                       (max_shunt_voltage * 1000))
+
+        calibration = trunc(self.__CALIBRATION_FACTOR /
+                            (self._current_lsb * self._shunt_resistance))
+        self._log.info("calibration: 0x%04x (%d)" % (calibration, calibration))
+        self._calibration_register(calibration)
+
+    def _determine_current_lsb(self, max_expected_amps, max_possible_amps):
+        if max_expected_amps is not None:
+            if max_expected_amps > round(max_possible_amps, 3):
+                raise ValueError(self.__AMP_ERR_MSG %
+                                 (max_expected_amps, max_possible_amps))
+            self._log.info("max expected current: %.3fA" %
+                           max_expected_amps)
+            if max_expected_amps < max_possible_amps:
+                current_lsb = max_expected_amps / self.__CURRENT_LSB_FACTOR
+            else:
+                current_lsb = max_possible_amps / self.__CURRENT_LSB_FACTOR
+        else:
+            current_lsb = max_possible_amps / self.__CURRENT_LSB_FACTOR
+
+        if current_lsb < self._min_device_current_lsb:
+            current_lsb = self._min_device_current_lsb
+        return current_lsb
+
+    def _configuration_register(self, register_value):
+        self._log.debug("configuration: 0x%04x" % register_value)
+        self.__write_register(self.__REG_CONFIG, register_value)
+
+    def _read_configuration(self):
+        return self.__read_register(self.__REG_CONFIG)
+
+    def _calculate_min_current_lsb(self):
+        return self.__CALIBRATION_FACTOR / \
+            (self._shunt_resistance * self.__MAX_CALIBRATION_VALUE)
+
+    def _read_gain(self):
+        configuration = self._read_configuration()
+        gain = (configuration & 0x1800) >> self.__PG0
+        self._log.info("gain is currently: %.2fV" % self.__GAIN_VOLTS[gain])
+        return gain
+
+    def _configure_gain(self, gain):
+        configuration = self._read_configuration()
+        configuration = configuration & 0xE7FF
+        self._configuration_register(configuration | (gain << self.__PG0))
+        self._gain = gain
+        self._log.info("gain set to: %.2fV" % self.__GAIN_VOLTS[gain])
+
+    def _calibration_register(self, register_value):
+        self._log.debug("calibration: 0x%04x" % register_value)
+        self.__write_register(self.__REG_CALIBRATION, register_value)
+
+    def _has_current_overflow(self):
+        ovf = self._read_voltage_register() & self.__OVF
+        return (ovf == 1)
+
+    def _voltage_register(self):
+        register_value = self._read_voltage_register()
+        return register_value >> 3
+
+    def _read_voltage_register(self):
+        return self.__read_register(self.__REG_BUSVOLTAGE)
+
+    def _current_register(self):
+        return self.__read_register(self.__REG_CURRENT, True)
+
+    def _shunt_voltage_register(self):
+        return self.__read_register(self.__REG_SHUNTVOLTAGE, True)
+
+    def _power_register(self):
+        return self.__read_register(self.__REG_POWER)
+
+    def __validate_voltage_range(self, voltage_range):
+        if voltage_range > len(self.__BUS_RANGE) - 1:
+            raise ValueError(self.__VOLT_ERR_MSG)
+
+    def __write_register(self, register, register_value):
+        register_bytes = self.__to_bytes(register_value)
+        self._log.debug(
+            "write register 0x%02x: 0x%04x 0b%s" %
+            (register, register_value,
+             self.__binary_as_string(register_value)))
+        self.writeList(register, register_bytes)
+
+    def __read_register(self, register, negative_value_supported=False):
+        if negative_value_supported:
+            register_value = self.readS16BE(register)
+        else:
+            register_value = self.readU16BE(register)
+        self._log.debug(
+            "read register 0x%02x: 0x%04x 0b%s" %
+            (register, register_value,
+             self.__binary_as_string(register_value)))
+        return register_value
+
+    def __to_bytes(self, register_value):
+        return [(register_value >> 8) & 0xFF, register_value & 0xFF]
+
+    def __binary_as_string(self, register_value):
+        return bin(register_value)[2:].zfill(16)
+
+    def __max_current_to_string(self, max_expected_amps):
+        if max_expected_amps is None:
+            return ''
+        else:
+            return ', max expected amps: %.3fA' % max_expected_amps
 
     def read_data(self):
         """
         Get all sensor readings.
         """
+        current_read_start = self._get_time()
+        try:
+            current = self.current()
+        except IOError:
+            current = None
+        current_read_time = self._get_time() - current_read_start
+
+        voltage_read_start = self._get_time()
+        try:
+            voltage = self.voltage()
+        except IOError:
+            voltage = None
+        voltage_read_time = self._get_time() - voltage_read_start
+
+        power_read_start = self._get_time()
+        try:
+            power = self.power()
+        except IOError:
+            power = None
+        power_read_time = self._get_time() - power_read_start
+
+        svoltage_read_start = self._get_time()
+        try:
+            shunt_voltage = self.shunt_voltage()
+        except IOError:
+            shunt_voltage = None
+        svoltage_read_time = self._get_time() - svoltage_read_start
+
         data = [
-            (self._name, 'voltage', self.get_shunt_voltage()),
-            (self._name, 'current', self.get_current()),
-            # (self._name, 'power', self.get_power()),
+            (self._name, 'current', current, current_read_time),
+            (self._name, 'voltage', voltage, voltage_read_time),
+            (self._name, 'power', power, power_read_time),
+            (self._name, 'shunt_voltage', shunt_voltage, svoltage_read_time),
         ]
         self._log_data(data)
         return data
@@ -207,15 +448,45 @@ class Ina219Module(I2cModule):
                 'unit': 'V',
                 'precision': 0.0003,
                 'range_low': 0,
-                'range_high': 26,
+                'range_high': 32,
                 'sensor': self.DEVICE_NAME
             },
             'current': {
                 'type': 'gauge',
-                'unit': 'A',
-                'precision': 0.0008,
+                'unit': 'mA',
+                'precision': 0.8,
                 'range_low': 0,
-                'range_high': 3.2,
+                'range_high': 3200,
+                'sensor': self.DEVICE_NAME
+            },
+            'power': {
+                'type': 'gauge',
+                'unit': 'mW',
+                'precision': 0.8,
+                'range_low': 0,
+                'range_high': 3200,
+                'sensor': self.DEVICE_NAME
+            },
+            'shunt_voltage': {
+                'type': 'gauge',
+                'unit': 'mV',
+                'precision': 0.1,
+                'range_low': 0,
+                'range_high': 100,
                 'sensor': self.DEVICE_NAME
             },
         }
+
+
+class DeviceRangeError(Exception):
+
+    __DEV_RNG_ERR = ('Current out of range (overflow), '
+                     'for gain %.2fV')
+
+    def __init__(self, gain_volts, device_max=False):
+        msg = self.__DEV_RNG_ERR % gain_volts
+        if device_max:
+            msg = msg + ', device limit reached'
+        super(DeviceRangeError, self).__init__(msg)
+        self.gain_volts = gain_volts
+        self.device_limit_reached = device_max

@@ -78,6 +78,12 @@ def module_htu21d():
     manager.run()
 
 
+def module_ina219():
+    config = _config(INA219_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_mcp9808():
     config = _config(MCP9808_MODULE)
     manager = ModuleManager(**config)
