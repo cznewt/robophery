@@ -5,7 +5,7 @@ class AtlasModule(I2cModule):
     """
     Module for AtlasScientific sensors.
     """
-    DEVICE_NAME = 'i2c-atlas'
+    DEVICE_NAME = 'atlas'
     DEVICE_ADDR = 98
     SLAVE_ADDR = 0x703
 

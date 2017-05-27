@@ -57,7 +57,7 @@ class Dht22Module(GpioModule):
                 'precision': 0.5,
                 'range_low': -40,
                 'range_high': 80,
-                'sensor': 'dht22'
+                'sensor': self.DEVICE_NAME
             },
             'humidity': {
                 'type': 'gauge',
@@ -65,6 +65,6 @@ class Dht22Module(GpioModule):
                 'precision': 5,
                 'range_low': 0,
                 'range_high': 100,
-                'sensor': 'dht22'
+                'sensor': self.DEVICE_NAME
             }
         }

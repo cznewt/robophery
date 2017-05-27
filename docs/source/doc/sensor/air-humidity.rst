@@ -14,6 +14,7 @@ pressure of water at a given temperature. Thus the relative humidity of air is
 a function of both water content and temperature.
 
 * http://en.wikipedia.org/wiki/Relative_humidity
+* https://www.kandrsmith.org/RJS/Misc/Hygrometers/calib_many.html
 
 
 DHT11 - GPIO Humidity and Temperature Sensor 
@@ -122,3 +123,21 @@ Where to buy
 ------------
 
 * 7 USD - https://www.sparkfun.com/products/13763
+
+
+AM2320 - I²C Humidity and Temperature Sensor
+============================================
+
+The AM2320 is effectively the latest version of the AM2302 with the addition
+of an option to communicate over I2C interface. It is physically a little
+smaller, but with identical pin-out. The one-wire serial of the AM2302 is
+retained making this a simple drop-in replacement.
+
+.. image :: /_static/img/module/am2320.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* http://akizukidenshi.com/download/ds/aosong/AM2320.pdf
