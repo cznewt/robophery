@@ -11,11 +11,36 @@ class PwmModule(Module):
         self.stop = self._interface.stop
 
     def __str__(self):
-        return "{0} (connected to {1}, data pin {2})".format(self._base_name(), self._interface._name, self._pin)
+        return self._base_name()
+
+    def _setup_pwm_iface(self, data):
+        iface = self._manager._interface[data['iface']]
+        pin = data['pin']
+        return PwmPort(iface, pin)
+
+
+class PwmPort():
+
+    def __init__(self, iface, pin):
+        self._iface = iface
+        self._pin = pin
+        self._iface.use_pin(pin)
 
     def _normalize_pin(self, pin):
         value = int(pin)
         return value
+
+    def setup_pin(self, dutycycle, frequency=2000):
+        self._iface.setup_pin(self._pin, dutycycle, frequency)
+
+    def set_duty_cycle(self, dutycycle):
+        self._iface.set_duty_cycle(self._pin, dutycycle)
+
+    def set_frequency(self, frequency):
+        self._iface.set_frequency(self._pin, frequency)
+
+    def stop(self):
+        self._iface.stop(self._pin)
 
 
 class PwmInterface(Interface):
@@ -27,7 +52,7 @@ class PwmInterface(Interface):
         self._pins_used = []
         super(PwmInterface, self).__init__(*args, **kwargs)
 
-    def _use_pin(self, pin):
+    def use_pin(self, pin):
         self._pins_used.append(pin)
 
     def setup_pin(self, pin, dutycycle, frequency=2000):

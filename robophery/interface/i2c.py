@@ -5,40 +5,50 @@ class I2cModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(I2cModule, self).__init__(*args, **kwargs)
-        self._interface.setup_addr(self._addr)
+
+    def _setup_i2c_iface(self, data):
+        return I2cPort(self._manager._interface[data['iface']], data['addr'])
 
     def __str__(self):
-        return "{0} (connected to {1}, address {2:#x})".format(self._base_name(), self._interface._name, self._addr)
+        return self._base_name()
+
+
+class I2cPort():
+
+    def __init__(self, iface, addr):
+        self._iface = iface
+        self._addr = addr
+        self._iface.use_addr(addr)
 
     def writeRaw8(self, value):
-        self._interface.writeRaw8(self._addr, value)
+        self._iface.writeRaw8(self._addr, value)
 
     def write8(self, register, value):
-        self._interface.write8(self._addr, register, value)
+        self._iface.write8(self._addr, register, value)
 
     def write16(self, register, value):
-        self._interface.write16(self._addr, register, value)
+        self._iface.write16(self._addr, register, value)
 
     def writeList(self, register, data):
-        self._interface.writeList(self._addr, register, data)
+        self._iface.writeList(self._addr, register, data)
 
     def readRaw8(self):
-        return self._interface.readRaw8(self._addr)
+        return self._iface.readRaw8(self._addr)
 
     def readU8(self, register):
-        return self._interface.readU8(self._addr, register)
+        return self._iface.readU8(self._addr, register)
 
     def readS8(self, register):
-        return self._interface.readS8(self._addr, register)
+        return self._iface.readS8(self._addr, register)
 
     def readU16(self, register, little_endian=True):
-        return self._interface.readU16(self._addr, register, little_endian)
+        return self._iface.readU16(self._addr, register, little_endian)
 
     def readS16(self, register, little_endian=True):
-        return self._interface.readS16(self._addr, register, little_endian)
+        return self._iface.readS16(self._addr, register, little_endian)
 
     def readList(self, register, length):
-        return self._interface.readList(self._addr, register, length)
+        return self._iface.readList(self._addr, register, length)
 
 
 class I2cInterface(Interface):
@@ -53,7 +63,7 @@ class I2cInterface(Interface):
     def __str__(self):
         return "%s (bus number: %s)" % (self._base_name(), self._busnum)
 
-    def setup_addr(self, addr):
+    def use_addr(self, addr):
         """
         Set the specified address.
         """

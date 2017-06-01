@@ -57,13 +57,13 @@ class BeaglebonePwmInterface(PwmInterface):
     def setup_pin(self, pin, dutycycle, frequency=2000):
         if dutycycle < 0.0 or dutycycle > 100.0:
             raise ValueError(
-                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+                'Invalid duty cycle value, must be between 0 to 100.')
         self._bus.start(pin, dutycycle, frequency)
 
     def set_duty_cycle(self, pin, dutycycle):
         if dutycycle < 0.0 or dutycycle > 100.0:
             raise ValueError(
-                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+                'Invalid duty cycle value, must be between 0 to 100.')
         self._bus.set_duty_cycle(pin, dutycycle)
 
     def set_frequency(self, pin, frequency):

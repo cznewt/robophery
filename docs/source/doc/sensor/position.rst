@@ -3,6 +3,11 @@
 Measuring Position
 ==================
 
+More information
+----------------
+
+* https://learn.adafruit.com/comparing-gyroscope-datasheets/overview
+
 MPU6050 - I²C 3 Axis Accelerometer and Gyroscope
 ================================================
 

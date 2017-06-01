@@ -84,8 +84,8 @@ class Tsl2561Module(I2cModule):
     INTEGRATE_NA = 0b00000011
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Tsl2561Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
         self._gain = self.GAIN_LOW
         self._manual = self.INTEGRATION_STOP
@@ -98,12 +98,12 @@ class Tsl2561Module(I2cModule):
         self._reconfigure()
 
     def _control(self, param):
-        self.write8(self.CMD | self.REG_CONTROL, param)
+        self._data.write8(self.CMD | self.REG_CONTROL, param)
         # Wait for 400ms to be power up.
         self._msleep(400)
 
     def _reconfigure(self):
-        self.write8(
+        self._data.write8(
             self.CMD | self.REG_TIMING,
             self._gain | self._manual | self._integ
         )
@@ -111,10 +111,10 @@ class Tsl2561Module(I2cModule):
         self._msleep(400)
 
     def read_luminosity(self):
-        vals = self.readList(self.CMD | self.CMD_WORD | self.REG_DATA0, 2)
+        vals = self._data.readList(self.CMD | self.CMD_WORD | self.REG_DATA0, 2)
         self._channel0 = vals[1] << 8 | vals[0]
 
-        vals = self.readList(self.CMD | self.CMD_WORD | self.REG_DATA1, 2)
+        vals = self._data.readList(self.CMD | self.CMD_WORD | self.REG_DATA1, 2)
         self._channel1 = vals[1] << 8 | vals[0]
 
         # If either sensor is satulated, no acculate lux value

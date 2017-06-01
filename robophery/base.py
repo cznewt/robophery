@@ -9,7 +9,7 @@ try:
     logging_format = "%(created)f [%(name)s] %(message)s"
     logging.basicConfig(format=logging_format, level=logging.DEBUG)
     from importlib import import_module
-except Exception:
+except ImportError:
     pass
 
 
@@ -378,7 +378,6 @@ class Module(object):
     def __init__(self, *args, **kwargs):
         self._name = kwargs.get('name', self.DEVICE_NAME)
         self._manager = kwargs.get('manager', None)
-        self._interface = kwargs.get('interface', None)
         self._class = kwargs.get('class', None)
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._log = self._manager._get_logger(self._name)

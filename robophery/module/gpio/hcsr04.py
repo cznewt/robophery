@@ -8,29 +8,29 @@ class HcSr04Module(GpioModule):
     DEVICE_NAME = 'hcsr04'
 
     def __init__(self, *args, **kwargs):
-        self._trigger_pin = self._normalize_pin(kwargs.get('trigger_pin'))
-        self._echo_pin = self._normalize_pin(kwargs.get('echo_pin'))
         super(HcSr04Module, self).__init__(*args, **kwargs)
-        self.setup_pin(self._trigger_pin, self.GPIO_MODE_OUT)
-        self.set_low(self._trigger_pin)
-        self.setup_pin(self._echo_pin, self.GPIO_MODE_IN)
-        self._msleep(2000)
+        self._trigger = self._setup_gpio_iface(kwargs.get('trigger'))
+        self._trigger.setup_pin(self.GPIO_MODE_OUT)
+        self._trigger.set_low()
+        self._echo = self._setup_gpio_iface(kwargs.get('echo'))
+        self._echo.setup_pin(self.GPIO_MODE_IN)
+        self._sleep(2)
 
     def __del__(self):
-        self.cleanup(self._trigger_pin)
-        self.cleanup(self._echo_pin)
+        self._echo.cleanup()
+        self._trigger.cleanup()
 
     def get_distance(self):
-        self.set_high(self._trigger_pin)
+        self._trigger.set_high()
         self._usleep(10)
-        self.set_low(self._trigger_pin)
+        self._trigger.set_low()
 
-        # while self.is_low(self._echo_pin):
+        # while self._echo.is_low():
         #    pulse_start = self._get_time()
-        # while self.is_high(self._echo_pin):
+        # while self._echo.is_high():
         #    pulse_end = self._get_time()
-
         # pulse_duration = pulse_end - pulse_start
+
         pulse_duration = 0.001
         distance = pulse_duration * 1715
         return distance
@@ -41,8 +41,7 @@ class HcSr04Module(GpioModule):
         """
         read_start = self._get_time()
         distance = self.get_distance()
-        read_stop = self._get_time()
-        read_time = read_stop - read_start
+        read_time = self._get_time() - read_start
         data = [
             (self._name, 'distance', distance, read_time),
         ]

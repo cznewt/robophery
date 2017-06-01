@@ -13,19 +13,19 @@ class Si7021Module(I2cModule):
     READ_HUMIDITY_CMD = 0xf5
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Si7021Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def read_temperature(self):
         # Read data back, 2 bytes, Temperature MSB first
-        self.writeRaw8(self.READ_TEMP_CMD)
+        self._data.writeRaw8(self.READ_TEMP_CMD)
         self._msleep(300)
         data0 = self.readRaw8()
         data1 = self.readRaw8()
         return ((data0 * 256 + data1) * 175.72 / 65536.0) - 46.85
 
     def read_humidity(self):
-        self.writeRaw8(self.READ_HUMIDITY_CMD)
+        self._data.writeRaw8(self.READ_HUMIDITY_CMD)
         self._msleep(300)
         # Read data back, 2 bytes, Humidity MSB first
         data0 = self.readRaw8()

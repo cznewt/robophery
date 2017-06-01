@@ -11,8 +11,8 @@ class T6713Module(I2cModule):
     DEVICE_ADDR = 0x15
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(T6713Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def _status(self):
         buffer = array.array('B', [0x04, 0x13, 0x8a, 0x00, 0x01])

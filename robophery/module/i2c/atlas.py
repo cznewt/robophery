@@ -15,8 +15,8 @@ class AtlasModule(I2cModule):
     SHORT_TIMEOUT = 0.5
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(AtlasModule, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def write(self, cmd):
         # appends the null character and sends the string over I2C

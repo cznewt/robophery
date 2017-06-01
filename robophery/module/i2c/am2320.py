@@ -22,17 +22,17 @@ class Am2320Module(I2cModule):
     DEVICE_ADDR = 0x5c
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Am2320Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def _read_raw(self, command, regaddr, regcount):
         try:
-            self.writeList(0x00, [])
-            self.writeList(command, [regaddr, regcount])
+            self._data.writeList(0x00, [])
+            self._data.writeList(command, [regaddr, regcount])
 
             self._msleep(2)
 
-            buf = self.readList(self.address, 0, 8)
+            buf = self._data.readList(self.address, 0, 8)
         except IOError, exc:
             raise CommunicationError(str(exc))
 

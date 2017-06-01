@@ -8,29 +8,74 @@ class GpioModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
-        self._setup_interface()
 
-    def _normalize_pin(self, pin):
-        value = int(pin)
-        return value
+    def _setup_gpio_iface(self, data):
+        iface = self._manager._interface[data['iface']]
+        pin = data['pin']
+        return GpioPort(iface, pin)
 
-    def _setup_interface(self):
-        self.setup_pin = self._interface.setup_pin
-        self.output = self._interface.output
-        self.input = self._interface.input
-        self.set_high = self._interface.set_high
-        self.set_low = self._interface.set_low
-        self.is_high = self._interface.is_high
-        self.is_low = self._interface.is_low
-        self.input_pins = self._interface.input_pins
-        self.output_pins = self._interface.output_pins
-        self.setup_pins = self._interface.setup_pins
-        self.add_event_detect = self._interface.add_event_detect
-        self.remove_event_detect = self._interface.remove_event_detect
-        self.add_event_callback = self._interface.add_event_callback
-        self.event_detected = self._interface.event_detected
-        self.wait_for_edge = self._interface.wait_for_edge
-        self.cleanup = self._interface.cleanup
+    def __str__(self):
+        return self._base_name()
+
+
+class GpioPort():
+
+    def __init__(self, iface, pin):
+        self._iface = iface
+        self._pin = pin
+        self._iface.use_pin(pin)
+
+    def setup_pin(self, mode, pull_up_down=None):
+        self._iface.setup_pin(self._pin, mode, pull_up_down)
+
+    def get_pin(self):
+        return self._iface.get_pin(self, self._pin)
+
+    def output(self, value):
+        self._iface.output(self._pin, value)
+
+    def input(self):
+        self._iface.input(self._pin)
+
+    def set_high(self):
+        self._iface.set_high(self._pin)
+
+    def set_low(self, pin):
+        self._iface.set_low(self._pin)
+
+    def is_high(self, pin):
+        return self._iface.is_high(self._pin)
+
+    def is_low(self, pin):
+        return self._iface.is_low(self._pin)
+
+    def setup_pins(self, pins):
+        self._iface.setup_pins(pins)
+
+    def output_pins(self, pins):
+        self._iface.output_pins(pins)
+
+    def input_pins(self, pins):
+        self._iface.input_pins(self, pins)
+        return [self.input(pin) for pin in pins]
+
+    def add_event_detect(self, edge):
+        self._iface.add_event_detect(self._pin, edge)
+
+    def remove_event_detect(self):
+        self._iface.remove_event_detect(self._pin)
+
+    def add_event_callback(self, callback):
+        self._iface.add_event_callback(self._pin, callback)
+
+    def event_detected(self):
+        self._iface.event_detected(self._pin)
+
+    def wait_for_edge(self, edge):
+        self._iface.wait_for_edge(self._pin, edge)
+
+    def cleanup(self):
+        self._iface.cleanup(self._pin)
 
 
 class GpioInterface(Interface):
@@ -60,8 +105,11 @@ class GpioInterface(Interface):
     GPIO_DRIVE_HIGH = 2
 
     def __init__(self, *args, **kwargs):
-        self._pins = {}
+        self._pins_used = []
         super(GpioInterface, self).__init__(*args, **kwargs)
+
+    def use_pin(self, pin):
+        self._pins_used.append(pin)
 
     def setup_pin(self, pin, mode, pull_up_down=None):
         """
@@ -136,14 +184,15 @@ class GpioInterface(Interface):
 
     def input_pins(self, pins):
         """
-        Read multiple pins specified in the given list and return list of pin values
-        GPIO.HIGH/True if the pin is pulled high, or GPIO.LOW/False if pulled low.
+        Read multiple pins specified in the given list and return list of pin
+        values GPIO.HIGH/True if the pin is pulled high, or GPIO.LOW/False
+        if pulled low.
         """
         return [self.input(pin) for pin in pins]
 
     def add_event_detect(self, pin, edge):
         """
-        Enable edge detection events for a particular GPIO channel. Pin 
+        Enable edge detection events for a particular GPIO channel. Pin
         should be type IN. Edge must be RISING, FALLING or BOTH.
         """
         raise NotImplementedError
@@ -164,22 +213,22 @@ class GpioInterface(Interface):
 
     def event_detected(self, pin):
         """
-        Returns True if an edge has occured on a given GPIO. You need to 
-        enable edge detection using add_event_detect() first. Pin should be 
+        Returns True if an edge has occured on a given GPIO. You need to
+        enable edge detection using add_event_detect() first. Pin should be
         type IN.
         """
         raise NotImplementedError
 
     def wait_for_edge(self, pin, edge):
         """
-        Wait for an edge. Pin should be type IN. Edge must be RISING, 
+        Wait for an edge. Pin should be type IN. Edge must be RISING,
         FALLING or BOTH.
         """
         raise NotImplementedError
 
     def cleanup(self, pin=None):
         """
-        Clean up GPIO event detection for specific pin, or all pins if none 
+        Clean up GPIO event detection for specific pin, or all pins if none
         is specified.
         """
         raise NotImplementedError

@@ -30,7 +30,7 @@ class Ina219Module(I2cModule):
     ADC_64SAMP = 14  # 64 samples at 12-bit, conversion time 34.05ms.
     ADC_128SAMP = 15  # 128 samples at 12-bit, conversion time 68.10ms.
 
-    __ADDRESS = 0x40
+    DEVICE_ADDRESS = 0x40
 
     __REG_CONFIG = 0x00
     __REG_SHUNTVOLTAGE = 0x01
@@ -98,8 +98,8 @@ class Ina219Module(I2cModule):
         shunt_resistance -- value of shunt resistor in Ohms (mandatory).
         max_current -- the maximum expected current in Amps (optional).
         """
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Ina219Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         self._shunt_resistance = kwargs.get('shunt_resistance', 0.1)
         self._max_current = kwargs.get('max_current', None)
         self._voltage_range = kwargs.get('voltage_range', self.RANGE_32V)
@@ -372,13 +372,13 @@ class Ina219Module(I2cModule):
             "write register 0x%02x: 0x%04x 0b%s" %
             (register, register_value,
              self.__binary_as_string(register_value)))
-        self.writeList(register, register_bytes)
+        self._data.writeList(register, register_bytes)
 
     def __read_register(self, register, negative_value_supported=False):
         if negative_value_supported:
-            register_value = self.readS16BE(register)
+            register_value = self._data.readS16BE(register)
         else:
-            register_value = self.readU16BE(register)
+            register_value = self._data.readU16BE(register)
         self._log.debug(
             "read register 0x%02x: 0x%04x 0b%s" %
             (register, register_value,
