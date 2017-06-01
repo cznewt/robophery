@@ -29,15 +29,15 @@ class Bh1750Module(I2cModule):
     ONE_TIME_LOW_RES_MODE = 0x23
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Bh1750Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         self.resolution_mode = kwargs.get('resolution_mode', 2)
         self.additional_delay = kwargs.get('additional_delay', 0)
         self.set_sensitivity()
 
     def _set_mode(self, mode):
         self.mode = mode
-        self.writeRaw8(self.mode)
+        self._data.writeRaw8(self.mode)
 
     def set_resolution_mode(self, resolution_mode):
         self.resolution_mode = resolution_mode
@@ -90,7 +90,7 @@ class Bh1750Module(I2cModule):
 
     def get_result(self):
         """ Return current measurement result in lx. """
-        data = self.readU16(self.mode)
+        data = self._data.readU16(self.mode)
         count = data >> 8 | (data & 0xff) << 8
         mode2coeff = 2 if (self.mode & 0x03) == 0x01 else 1
         ratio = 1 / (1.2 * (self.mtreg / 69.0) * mode2coeff)

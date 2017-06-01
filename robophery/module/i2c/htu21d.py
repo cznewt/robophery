@@ -24,8 +24,8 @@ class Htu21dModule(I2cModule):
     HTU21D_C = 235.66
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Htu21dModule, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         # Check that mode is valid.
         self._mode = kwargs.get('mode', self.HOLD_MASTER)
         if self._mode not in [self.HOLD_MASTER, self.NOHOLD_MASTER]:
@@ -48,7 +48,7 @@ class Htu21dModule(I2cModule):
         """
         Reads the raw temperature from the sensor.
         """
-        msb, lsb, chsum = self.readList(self.HTU21D_TRIGGERTEMPCMD, 3)
+        msb, lsb, chsum = self._data.readList(self.HTU21D_TRIGGERTEMPCMD, 3)
         if self.crc_check(msb, lsb, chsum) is False:
             raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb
@@ -59,7 +59,7 @@ class Htu21dModule(I2cModule):
         """
         Reads the raw relative humidity from the sensor.
         """
-        msb, lsb, chsum = self.readList(self.HTU21D_TRIGGERHUMIDITYCMD, 3)
+        msb, lsb, chsum = self._data.readList(self.HTU21D_TRIGGERHUMIDITYCMD, 3)
         if self.crc_check(msb, lsb, chsum) is False:
             raise RuntimeError("CRC Exception")
         raw = (msb << 8) + lsb

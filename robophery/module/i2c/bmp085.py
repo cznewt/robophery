@@ -56,8 +56,8 @@ class Bmp085Module(I2cModule):
     BMP085_READPRESSURECMD = 0x34
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Bmp085Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         self._mode = kwargs.get('mode', self.BMP085_ULTRAHIGHRES)
         if self._mode not in [self.BMP085_ULTRALOWPOWER, self.BMP085_STANDARD, self.BMP085_HIGHRES, self.BMP085_ULTRAHIGHRES]:
             raise ValueError(
@@ -65,17 +65,17 @@ class Bmp085Module(I2cModule):
         self._load_calibration()
 
     def _load_calibration(self):
-        self.cal_AC1 = self.readS16(self.BMP085_CAL_AC1, False)   # INT16
-        self.cal_AC2 = self.readS16(self.BMP085_CAL_AC2, False)   # INT16
-        self.cal_AC3 = self.readS16(self.BMP085_CAL_AC3, False)   # INT16
-        self.cal_AC4 = self.readU16(self.BMP085_CAL_AC4, False)   # UINT16
-        self.cal_AC5 = self.readU16(self.BMP085_CAL_AC5, False)   # UINT16
-        self.cal_AC6 = self.readU16(self.BMP085_CAL_AC6, False)   # UINT16
-        self.cal_B1 = self.readS16(self.BMP085_CAL_B1, False)     # INT16
-        self.cal_B2 = self.readS16(self.BMP085_CAL_B2, False)     # INT16
-        self.cal_MB = self.readS16(self.BMP085_CAL_MB, False)     # INT16
-        self.cal_MC = self.readS16(self.BMP085_CAL_MC, False)     # INT16
-        self.cal_MD = self.readS16(self.BMP085_CAL_MD, False)     # INT16
+        self.cal_AC1 = self._data.readS16(self.BMP085_CAL_AC1, False)  # INT16
+        self.cal_AC2 = self._data.readS16(self.BMP085_CAL_AC2, False)  # INT16
+        self.cal_AC3 = self._data.readS16(self.BMP085_CAL_AC3, False)  # INT16
+        self.cal_AC4 = self._data.readU16(self.BMP085_CAL_AC4, False)  # UINT16
+        self.cal_AC5 = self._data.readU16(self.BMP085_CAL_AC5, False)  # UINT16
+        self.cal_AC6 = self._data.readU16(self.BMP085_CAL_AC6, False)  # UINT16
+        self.cal_B1 = self._data.readS16(self.BMP085_CAL_B1, False)    # INT16
+        self.cal_B2 = self._data.readS16(self.BMP085_CAL_B2, False)    # INT16
+        self.cal_MB = self._data.readS16(self.BMP085_CAL_MB, False)    # INT16
+        self.cal_MC = self._data.readS16(self.BMP085_CAL_MC, False)    # INT16
+        self.cal_MD = self._data.readS16(self.BMP085_CAL_MD, False)    # INT16
 #        self._log.debug('AC1 = {0:6d}'.format(self.cal_AC1))
 #        self._log.debug('AC2 = {0:6d}'.format(self.cal_AC2))
 #        self._log.debug('AC3 = {0:6d}'.format(self.cal_AC3))
@@ -109,9 +109,9 @@ class Bmp085Module(I2cModule):
         """
         Read the raw (uncompensated) temperature from the sensor.
         """
-        self.write8(self.BMP085_CONTROL, self.BMP085_READTEMPCMD)
+        self._data.write8(self.BMP085_CONTROL, self.BMP085_READTEMPCMD)
         self._msleep(5)  # Wait 5ms
-        raw = self.readU16(self.BMP085_TEMPDATA, False)
+        raw = self._data.readU16(self.BMP085_TEMPDATA, False)
 #        self._log.debug('Raw temp 0x{0:X} ({1})'.format(raw & 0xFFFF, raw))
         return raw
 
@@ -119,7 +119,7 @@ class Bmp085Module(I2cModule):
         """
         Read the raw (uncompensated) pressure level from the sensor.
         """
-        self.write8(self.BMP085_CONTROL,
+        self._data.write8(self.BMP085_CONTROL,
                     self.BMP085_READPRESSURECMD + (self._mode << 6))
         if self._mode == self.BMP085_ULTRALOWPOWER:
             self._msleep(5)
@@ -129,9 +129,9 @@ class Bmp085Module(I2cModule):
             self._msleep(26)
         else:
             self._msleep(8)
-        msb = self.readU8(self.BMP085_PRESSUREDATA)
-        lsb = self.readU8(self.BMP085_PRESSUREDATA + 1)
-        xlsb = self.readU8(self.BMP085_PRESSUREDATA + 2)
+        msb = self._data.readU8(self.BMP085_PRESSUREDATA)
+        lsb = self._data.readU8(self.BMP085_PRESSUREDATA + 1)
+        xlsb = self._data.readU8(self.BMP085_PRESSUREDATA + 2)
         raw = ((msb << 16) + (lsb << 8) + xlsb) >> (8 - self._mode)
         # self._log.debug('Raw pressure 0x{0:04X} ({1})'.format(raw & 0xFFFF, raw))
         return raw

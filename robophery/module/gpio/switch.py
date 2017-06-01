@@ -9,15 +9,14 @@ class SwitchModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(SwitchModule, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_pin(kwargs.get('data_pin'))
-        self.setup_pin(self._pin, self.GPIO_MODE_IN)
         self._turn_on_count = 0
         self._turn_off_count = 0
         self._runtime = 0
-        both_edge = self._interface.GPIO_EVENT_BOTH
-        self.add_event_detect(self._pin, both_edge,
-                              callback=self._process_event)
-        if self.is_high(self._pin):
+        self._data = self._setup_gpio_iface(kwargs.get('data'))
+        self._data.setup_pin(self.GPIO_MODE_IN)
+        #self._data.add_event_detect(self._data._iface.GPIO_EVENT_BOTH,
+        #                            callback=self._process_event)
+        if self._data.is_high():
             self._runtime_start = self._get_time()
             self._state = 1
         else:

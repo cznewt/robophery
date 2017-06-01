@@ -9,11 +9,10 @@ class RevCounterModule(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(RevCounterModule, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self._revolutions = 0
-        self.setup_pin(self._pin, self.GPIO_MODE_IN)
-        rise_edge = self._interface.GPIO_EVENT_RISING
-        self.add_event_detect(self._pin, rise_edge,
+        self._data = self._setup_gpio_iface(kwargs.get('data'))
+        self._data.setup_pin(self.GPIO_MODE_IN)
+        self.add_event_detect(self._data._iface.GPIO_EVENT_RISING,
                               callback=self._process_rise)
 
     def _process_rise(self, pin):
@@ -25,8 +24,7 @@ class RevCounterModule(GpioModule):
         """
         read_start = self._get_time()
         revolutions = self._revolutions
-        read_stop = self._get_time()
-        read_time = read_stop - read_start
+        read_time = self._get_time() - read_start
         data = [
             (self._name, 'revolutions', revolutions, read_time),
         ]

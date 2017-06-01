@@ -98,14 +98,14 @@ class Bme280Module(I2cModule):
     DEVICE_NAME = 'bme280'
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', BME280_DEFAULT_ADDRESS)
         super(Bme280Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def read_pres_temp_coeff(self):
         """
         Read data back from BME280_DIG_T1_LSB_REG(0x88), 24 bytes
         """
-        b1 = self.readList(BME280_DIG_T1_LSB_REG, 24)
+        b1 = self._data.readList(BME280_DIG_T1_LSB_REG, 24)
 
         # Temp coefficients
         self.dig_T1 = b1[1] * 256 + b1[0]
@@ -155,10 +155,10 @@ class Bme280Module(I2cModule):
 
     def read_hum_coeff(self):
         """Read data back from BME280_DIG_H1_REG(0xA1), 1 byte"""
-        self.dig_H1 = self.readU8(BME280_DIG_H1_REG)
+        self.dig_H1 = self._data.readU8(BME280_DIG_H1_REG)
 
         """Read data back from BME280_DIG_H2_LSB_REG(0xE1), 7 bytes"""
-        b1 = self.readList(BME280_DIG_H2_LSB_REG, 7)
+        b1 = self._data.readList(BME280_DIG_H2_LSB_REG, 7)
 
         # Humidity coefficients
         self.dig_H2 = b1[1] * 256 + b1[0]
@@ -184,15 +184,15 @@ class Bme280Module(I2cModule):
         Select the Control Humidity Register from the given provided value
         """
         HUMIDITY_SAMPLE = (BME280_H_OVERSAMPLE_1)
-        self.write8(BME280_CTRL_HUMIDITY_REG, HUMIDITY_SAMPLE)
+        self._data.write8(BME280_CTRL_HUMIDITY_REG, HUMIDITY_SAMPLE)
 
         # Select the Control Measure Register from the given provided value
         PRES_TEMP_SAMPLE = (BME280_P_OVERSAMPLE_1 |
                             BME280_T_OVERSAMPLE_1 | BME280_MODE_NORMAL)
-        self.write8(BME280_CTRL_MEAS_REG, PRES_TEMP_SAMPLE)
+        self._data.write8(BME280_CTRL_MEAS_REG, PRES_TEMP_SAMPLE)
 
         TIME_CONFIG = (BME280_STANDBY_MS_1000 | BME280_FILTER_OFF)
-        self.write8(BME280_CONFIG_REG, TIME_CONFIG)
+        self._data.write8(BME280_CONFIG_REG, TIME_CONFIG)
 
     def read_raw_data(self):
         """
@@ -200,7 +200,7 @@ class Bme280Module(I2cModule):
         Pressure MSB, Pressure LSB, Pressure xLSB, Temperature MSB,
         Temperature LSB, Temperature xLSB, Humidity MSB, Humidity LSB.
         """
-        data = self.readList(BME280_PRESSURE_MSB_REG, 8)
+        data = self._data.readList(BME280_PRESSURE_MSB_REG, 8)
 
         # Convert pressure and temperature data to 19-bits
         self.adc_p = ((data[0] * 65536) +

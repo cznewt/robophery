@@ -26,18 +26,18 @@ class Mcp9808Module(I2cModule):
     MCP9808_REG_DEVICE_ID = 0x07
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Mcp9808Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         # Assert it's the right thing
-        mid = self.readU16(self.MCP9808_REG_MANUF_ID, False)
+        mid = self._data.readU16(self.MCP9808_REG_MANUF_ID, False)
         if mid != 0x0054:
             self._log.error('Not right manufacturer (0x54): %s' % mid)
-        did = self.readU16(self.MCP9808_REG_DEVICE_ID, False)
+        did = self._data.readU16(self.MCP9808_REG_DEVICE_ID, False)
         if did != 0x0400:
             self._log.error('Not right device ID (0x4): %s' % did)
 
     def get_temperature(self):
-        data = self.readU16(self.MCP9808_REG_AMBIENT_TEMP, False)
+        data = self._data.readU16(self.MCP9808_REG_AMBIENT_TEMP, False)
         temperature = data & 0x0FFF
         temperature /= 16.0
         if data & 0x1000:

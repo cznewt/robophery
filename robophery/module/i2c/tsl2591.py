@@ -57,8 +57,8 @@ class Tsl2591Module(I2cModule):
     GAIN_MAX = 0x30  # max gain (9876x)
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Tsl2591Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
 
         self._channel = self.VISIBLE_LIGHT
         self._gain = self.GAIN_LOW
@@ -69,13 +69,13 @@ class Tsl2591Module(I2cModule):
         self._disable()
 
     def _enable(self):
-        self.write8(
+        self._data.write8(
             self.COMMAND_BIT | self.REGISTER_ENABLE,
             self.ENABLE_POWERON | self.ENABLE_AEN | self.ENABLE_AIEN
         )
 
     def _disable(self):
-        self.write8(
+        self._data.write8(
             self.COMMAND_BIT | self.REGISTER_ENABLE,
             self.ENABLE_POWEROFF
         )
@@ -83,7 +83,7 @@ class Tsl2591Module(I2cModule):
     def _set_timing(self, integration):
         self._enable()
         self._integration_time = integration
-        self.write8(
+        self._data.write8(
             self.COMMAND_BIT | self.REGISTER_CONTROL,
             self._integration_time | self._gain
         )
@@ -95,7 +95,7 @@ class Tsl2591Module(I2cModule):
     def _set_gain(self, gain):
         self._enable()
         self._gain = gain
-        self.write8(
+        self._data.write8(
             self.COMMAND_BIT | self.REGISTER_CONTROL,
             self._integration_time | self._gain
         )
@@ -146,8 +146,8 @@ class Tsl2591Module(I2cModule):
         self._enable()
         # not sure if we need it "// Wait x ms for ADC to complete"
         self._sleep(0.120 * self._integration_time + 1)
-        full = self.readU16(self.COMMAND_BIT | self.REGISTER_CHAN0_LOW)
-        ir = self.readU16(self.COMMAND_BIT | self.REGISTER_CHAN1_LOW)
+        full = self._data.readU16(self.COMMAND_BIT | self.REGISTER_CHAN0_LOW)
+        ir = self._data.readU16(self.COMMAND_BIT | self.REGISTER_CHAN1_LOW)
         self._disable()
         return full, ir
 

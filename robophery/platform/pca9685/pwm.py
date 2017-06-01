@@ -20,7 +20,9 @@
 # THE SOFTWARE.
 from __future__ import division
 import math
+
 from robophery.interface.pwm import PwmInterface
+from robophery.interface.i2c import I2cPort
 
 
 class Pca9685PwmInterface(PwmInterface):
@@ -55,28 +57,29 @@ class Pca9685PwmInterface(PwmInterface):
     OUTDRV = 0x04
 
     def __init__(self, *args, **kwargs):
-        self._parent_interface = kwargs['parent']['interface']
-        self._parent_address = kwargs['parent']['address']
-        self._parent_interface.setup_addr(self._parent_address)
+        super(Pca9685PwmInterface, self).__init__(*args, **kwargs)
         self._pins_available = self.AVAILABLE_PINS
         self._frequency = None
-        super(Pca9685PwmInterface, self).__init__(*args, **kwargs)
+        self._data = self._setup_parent(kwargs['data'])
         self.set_all_duty_cycle(0)
-        self._parent_interface.write8(
-            self._parent_address, self.MODE2, self.OUTDRV)
-        self._parent_interface.write8(
-            self._parent_address, self.MODE1, self.ALLCALL)
+        self._data.write8(self.MODE2, self.OUTDRV)
+        self._data.write8(self.MODE1, self.ALLCALL)
         # wait for oscillator
         self._msleep(5)
-        mode1 = self._parent_interface.readU8(self._parent_address, self.MODE1)
+        mode1 = self._data.readU8(self.MODE1)
         # wake up (reset sleep)
         mode1 = mode1 & ~self.SLEEP
-        self._parent_interface.write8(self._parent_address, self.MODE1, mode1)
+        self._data.write8(self.MODE1, mode1)
         # wait for oscillator
         self._msleep(5)
 
+    def _setup_parent(self, data):
+        iface = self._manager._interface[data['iface']]
+        addr = data['addr']
+        return I2cPort(iface, addr)
+
     def reset(self):
-        self._parent_interface.writeRaw8(0x00, 0x06)
+        self._data.writeRaw8(0x00, 0x06)
 
     def setup_pin(self, pin, dutycycle=0, frequency=2000):
         """
@@ -99,18 +102,13 @@ class Pca9685PwmInterface(PwmInterface):
             self._log.debug('Estimated pre-scale: {0}'.format(prescaleval))
             prescale = int(math.floor(prescaleval + 0.5))
             self._log.debug('Final pre-scale: {0}'.format(prescale))
-            oldmode = self._parent_interface.readU8(
-                self._parent_address, self.MODE1)
+            oldmode = self._data.readU8(self.MODE1)
             newmode = (oldmode & 0x7F) | 0x10    # sleep
-            self._parent_interface.write8(
-                self._parent_address, self.MODE1, newmode)  # go to sleep
-            self._parent_interface.write8(
-                self._parent_address, self.PRESCALE, prescale)
-            self._parent_interface.write8(
-                self._parent_address, self.MODE1, oldmode)
+            self._data.write8(self.MODE1, newmode)  # go to sleep
+            self._data.write8(self.PRESCALE, prescale)
+            self._data.write8(self.MODE1, oldmode)
             self._msleep(5)
-            self._parent_interface.write8(
-                self._parent_address, self.MODE1, oldmode | 0x80)
+            self._data.write8(self.MODE1, oldmode | 0x80)
         self._frequency = frequency
 
     def set_duty_cycle(self, pin, dutycycle):
@@ -120,14 +118,10 @@ class Pca9685PwmInterface(PwmInterface):
         """
         on = 0
         off = int(dutycycle)
-        self._parent_interface.write8(
-            self._parent_address, self.LED0_ON_L + 4 * pin, on & 0xFF)
-        self._parent_interface.write8(
-            self._parent_address, self.LED0_ON_H + 4 * pin, on >> 8)
-        self._parent_interface.write8(
-            self._parent_address, self.LED0_OFF_L + 4 * pin, off & 0xFF)
-        self._parent_interface.write8(
-            self._parent_address, self.LED0_OFF_H + 4 * pin, off >> 8)
+        self._data.write8(self.LED0_ON_L + 4 * pin, on & 0xFF)
+        self._data.write8(self.LED0_ON_H + 4 * pin, on >> 8)
+        self._data.write8(self.LED0_OFF_L + 4 * pin, off & 0xFF)
+        self._data.write8(self.LED0_OFF_H + 4 * pin, off >> 8)
 
     def set_all_duty_cycle(self, dutycycle):
         """
@@ -135,11 +129,7 @@ class Pca9685PwmInterface(PwmInterface):
         """
         on = 0
         off = int(dutycycle)
-        self._parent_interface.write8(
-            self._parent_address, self.ALL_LED_ON_L, on & 0xFF)
-        self._parent_interface.write8(
-            self._parent_address, self.ALL_LED_ON_H, on >> 8)
-        self._parent_interface.write8(
-            self._parent_address, self.ALL_LED_OFF_L, off & 0xFF)
-        self._parent_interface.write8(
-            self._parent_address, self.ALL_LED_OFF_H, off >> 8)
+        self._data.write8(self.ALL_LED_ON_L, on & 0xFF)
+        self._data.write8(self.ALL_LED_ON_H, on >> 8)
+        self._data.write8(self.ALL_LED_OFF_L, off & 0xFF)
+        self._data.write8(self.ALL_LED_OFF_H, off >> 8)

@@ -1,6 +1,6 @@
 try:
     import smbus
-except Exception:
+except ImportError:
     raise RuntimeError(
         "Cannot load smbus library. Please install the library.")
 
@@ -19,9 +19,9 @@ class SMBusI2cInterface(I2cInterface):
         Write an 8-bit value on the bus (without register).
         """
         value = value & 0xFF
-        self._log.debug(
-            "Writing raw 8-bit value {0:#x} to address {1:#x}.".format(value, addr))
         self._bus.write_byte(addr, value)
+        self._log.debug(
+            "Wrote raw 8-bit value {0:#x} to address {1:#x}.".format(value, addr))
 
     def write8(self, addr, register, value):
         """
@@ -30,24 +30,24 @@ class SMBusI2cInterface(I2cInterface):
         value = value & 0xFF
         self._bus.write_byte_data(addr, register, value)
         self._log.debug(
-            "Writing 8-bit value {0:#x} to register {1:#x} at address {2:#x}.".format(value, register, addr))
+            "Wrote 8-bit value {0:#x} to register {1:#x} at address {2:#x}.".format(value, register, addr))
 
     def write16(self, addr, register, value):
         """
         Write a 16-bit value to the specified register.
         """
         value = value & 0xFFFF
-        self._log.debug(
-            "Writing 16-bit value {0:#x} to register {1:#x} at address {2:#x}.".format(value, register, addr))
         self._bus.write_word_data(addr, register, value)
+        self._log.debug(
+            "Wrote 16-bit value {0:#x} to register {1:#x} at address {2:#x}.".format(value, register, addr))
 
     def writeList(self, addr, register, data):
         """
         Write bytes to the specified register.
         """
-        self._log.debug("Writing multiple values {0} to register {1:#x} at address {2:#x}.".format(
-            data, register, addr))
         self._bus.write_i2c_block_data(addr, register, data)
+        self._log.debug("Wrote values {0} to register {1:#x} at address {2:#x}.".format(
+            data, register, addr))
 
     def readRaw8(self, addr):
         """
@@ -55,7 +55,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         result = self._bus.read_byte(addr) & 0xFF
         self._log.debug(
-            "Reading raw 8-bit value {0:#x} from address {1:#x}.".format(result, addr))
+            "Read raw 8-bit value {0:#x} from address {1:#x}.".format(result, addr))
         return result
 
     def readU8(self, addr, register):
@@ -64,7 +64,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         result = self._bus.read_byte_data(addr, register) & 0xFF
         self._log.debug(
-            "Reading unsigned 8-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
+            "Read unsigned 8-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
         return result
 
     def readS8(self, addr, register):
@@ -75,7 +75,7 @@ class SMBusI2cInterface(I2cInterface):
         if result > 127:
             result -= 256
         self._log.debug(
-            "Reading signed 8-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
+            "Calculated signed 8-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
         return result
 
     def readU16(self, addr, register, little_endian=True):
@@ -90,7 +90,7 @@ class SMBusI2cInterface(I2cInterface):
         if not little_endian:
             result = ((result << 8) & 0xFF00) + (result >> 8)
         self._log.debug(
-            "Reading unsigned 16-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
+            "Read unsigned 16-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
         return result
 
     def readS16(self, addr, register, little_endian=True):
@@ -103,7 +103,7 @@ class SMBusI2cInterface(I2cInterface):
         if result > 32767:
             result -= 65536
         self._log.debug(
-            "Reading signed 16-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
+            "Calculated signed 16-bit value {0:#x} from register {1:#x} at address {2:#x}.".format(result, register, addr))
         return result
 
     def readList(self, addr, register, length):
@@ -115,6 +115,6 @@ class SMBusI2cInterface(I2cInterface):
         print_results = []
         for result in results:
             print_results.append("{0:#x}".format(result))
-        self._log.debug("Reading {0} 8-bit values {1} from register {2:#x} at address {3:#x}.".format(
+        self._log.debug("Read {0} 8-bit values {1} from register {2:#x} at address {3:#x}.".format(
             length, ", ".join(print_results), register, addr))
         return results

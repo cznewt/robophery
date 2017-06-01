@@ -14,12 +14,14 @@ class ServoModule(PwmModule):
     SERVO_MAX_PULSE = 600
 
     def __init__(self, *args, **kwargs):
-        self._pin = self._normalize_pin(kwargs.get('data_pin'))
-        self._angle = kwargs.get('angle', None)
-        self._reverse_logic = kwargs.get('reverse_logic', False)
-        self._offset_angle = kwargs.get('offset_angle', 0)
         super(ServoModule, self).__init__(*args, **kwargs)
-        self.setup_pin(self._pin)
+        self._angle = kwargs.get('angle', None)
+        self._offset_angle = kwargs.get('offset_angle', 0)
+        self._reverse_logic = kwargs.get('reverse_logic', False)
+
+        self._power = self._setup_pwm_iface(kwargs.get('power'))
+        self._power.setup_pin(0)
+
         if self._angle is None:
             self._angle = 90
         else:

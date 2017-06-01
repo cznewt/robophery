@@ -8,4 +8,4 @@ class Vr408Module(Module):
     DEVICE_NAME = 'vr408'
 
     def __init__(self, *args, **kwargs):
-        pass
+        super(Vr408Module, self).__init__(*args, **kwargs)

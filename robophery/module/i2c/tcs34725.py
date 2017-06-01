@@ -48,8 +48,8 @@ class Tcs34725Module(I2cModule):
     DEVICE_NAME = 'tcs34725'
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', TCS34725_DEFAULT_ADDRESS)
         super(Tcs34725Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         self.enable_selection()
         self.time_selection()
         self.gain_selection()
@@ -60,23 +60,23 @@ class Tcs34725Module(I2cModule):
         """
         ENABLE_CONFIGURATION = (TCS34725_REG_ENABLE_AEN |
                                 TCS34725_REG_ENABLE_PON)
-        self.write8(TCS34725_REG_ENABLE |
+        self._data.write8(TCS34725_REG_ENABLE |
                     TCS34725_COMMAND_BIT, ENABLE_CONFIGURATION)
 
     def time_selection(self):
         """
         Select the ATIME register configuration from the given provided values
         """
-        self.write8(TCS34725_REG_ATIME |
+        self._data.write8(TCS34725_REG_ATIME |
                     TCS34725_COMMAND_BIT, TCS34725_REG_ATIME_700)
-        self.write8(TCS34725_REG_WTIME |
+        self._data.write8(TCS34725_REG_WTIME |
                     TCS34725_COMMAND_BIT, TCS34725_REG_WTIME_2_4)
 
     def gain_selection(self):
         """
         Select the gain register configuration from the given provided values
         """
-        self.write8(TCS34725_REG_CONTROL |
+        self._data.write8(TCS34725_REG_CONTROL |
                     TCS34725_COMMAND_BIT, TCS34725_REG_CONTROL_AGAIN_1)
 
     def read_luminance(self):
@@ -85,7 +85,7 @@ class Tcs34725Module(I2cModule):
         TCS34725_COMMAND_BIT, (0x80) cData LSB, cData MSB, Red LSB, Red MSB,
         Green LSB, Green MSB, Blue LSB, Blue MSB
         """
-        data = self.readList(TCS34725_REG_CDATAL | TCS34725_COMMAND_BIT, 8)
+        data = self._data.readList(TCS34725_REG_CDATAL | TCS34725_COMMAND_BIT, 8)
 
         # Convert the data
         cData = data[1] * 256 + data[0]

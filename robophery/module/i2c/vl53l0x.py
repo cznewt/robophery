@@ -10,33 +10,33 @@ class Vl53L0XModule(I2cModule):
     # VL53L0X default address
     DEVICE_ADDR = 0x29
 
-    VL53L0X_REG_IDENTIFICATION_MODEL_ID = 0x00c0
-    VL53L0X_REG_IDENTIFICATION_REVISION_ID = 0x00c2
-    VL53L0X_REG_PRE_RANGE_CONFIG_VCSEL_PERIOD = 0x0050
-    VL53L0X_REG_FINAL_RANGE_CONFIG_VCSEL_PERIOD = 0x0070
-    VL53L0X_REG_SYSRANGE_START = 0x000
+    VL53L0X_IDENTIFICATION_MODEL_ID = 0x00c0
+    VL53L0X_IDENTIFICATION_REVISION_ID = 0x00c2
+    VL53L0X_PRE_RANGE_CONFIG_VCSEL_PERIOD = 0x0050
+    VL53L0X_FINAL_RANGE_CONFIG_VCSEL_PERIOD = 0x0070
+    VL53L0X_SYSRANGE_START = 0x000
 
-    VL53L0X_REG_RESULT_INTERRUPT_STATUS = 0x0013
-    VL53L0X_REG_RESULT_RANGE_STATUS = 0x0014
+    VL53L0X_RESULT_INTERRUPT_STATUS = 0x0013
+    VL53L0X_RESULT_RANGE_STATUS = 0x0014
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Vl53L0XModule, self).__init__(*args, **kwargs)
-        val1 = self.readU8(self.VL53L0X_REG_IDENTIFICATION_REVISION_ID)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
+        val1 = self._data.readU8(self.VL53L0X_IDENTIFICATION_REVISION_ID)
         self._revision_id = hex(val1)
-        val1 = self.readU8(self.VL53L0X_REG_IDENTIFICATION_MODEL_ID)
+        val1 = self._data.readU8(self.VL53L0X_IDENTIFICATION_MODEL_ID)
         self._device_id = hex(val1)
-        val1 = self.readU8(self.VL53L0X_REG_PRE_RANGE_CONFIG_VCSEL_PERIOD)
-        val1 = self.readU8(self.VL53L0X_REG_FINAL_RANGE_CONFIG_VCSEL_PERIOD)
+        val1 = self._data.readU8(self.VL53L0X_PRE_RANGE_CONFIG_VCSEL_PERIOD)
+        val1 = self._data.readU8(self.VL53L0X_FINAL_RANGE_CONFIG_VCSEL_PERIOD)
 
     def bswap(self, val):
         return struct.unpack('<H', struct.pack('>H', val))[0]
 
     def mread_word_data(self, reg):
-        return self.bswap(self.readU16(reg))
+        return self.bswap(self._data.readU16(reg))
 
     def mwrite_word_data(self, reg, data):
-        return self.write16(reg, self.bswap(data))
+        return self._data.write16(reg, self.bswap(data))
 
     def _makeuint16(self, lsb, msb):
         return ((msb & 0xFF) << 8) | (lsb & 0xFF)
@@ -50,17 +50,17 @@ class Vl53L0XModule(I2cModule):
         return vcsel_period_pclks
 
     def read_distance(self):
-        val1 = self.write8(self.VL53L0X_REG_SYSRANGE_START, 0x01)
+        val1 = self._data.write8(self.VL53L0X_SYSRANGE_START, 0x01)
         cnt = 0
         while (cnt < 100):
             # 1 second waiting time max
             self._msleep(10)
-            val = self.readU8(self.VL53L0X_REG_RESULT_RANGE_STATUS)
+            val = self._data.readU8(self.VL53L0X_RESULT_RANGE_STATUS)
             if (val & 0x01):
                 break
             cnt += 1
 
-        data = self.readList(0x14, 12)
+        data = self._data.readList(0x14, 12)
         ambient_count = self._makeuint16(data[7], data[6])
         signal_count = self._makeuint16(data[9], data[8])
         distance = self._makeuint16(data[11], data[10])

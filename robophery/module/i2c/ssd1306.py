@@ -20,6 +20,7 @@
 # THE SOFTWARE.
 
 from robophery.interface.i2c import I2cModule
+from robophery.interface.gpio import GpioModule
 
 from PIL import Image
 from PIL import ImageDraw
@@ -63,7 +64,7 @@ SSD1306_VERTICAL_AND_RIGHT_HORIZONTAL_SCROLL = 0x29
 SSD1306_VERTICAL_AND_LEFT_HORIZONTAL_SCROLL = 0x2A
 
 
-class Ssd1306Module(I2cModule):
+class Ssd1306Module(I2cModule, GpioModule):
     """
     Base class for SSD1306-based OLED displays. Implementors should subclass
     and provide an implementation for the _initialize function.
@@ -71,10 +72,9 @@ class Ssd1306Module(I2cModule):
     DEVICE_NAME = 'ssd1306'
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', SSD1306_I2C_ADDRESS)
-        self._contrast = kwargs.get('contrast', 255)
-        self._reset_pin = kwargs.get('reset_pin', {}).get('pin', None)
         super(Ssd1306Module, self).__init__(*args, **kwargs)
+        self._contrast = kwargs.get('contrast', 255)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         width = kwargs.get('width', 128)
         height = kwargs.get('height', 32)
         self._width = width
@@ -82,9 +82,11 @@ class Ssd1306Module(I2cModule):
         self._pages = height // 8
         self._buffer = [0] * (width * self._pages)
         # Default to platform GPIO if not provided.
-        if self._reset_pin is not None:
-            self._gpio_interface = self._manager._interface[kwargs['reset_pin']['interface']]
-            self._gpio_interface.setup_pin(self._reset_pin, self._gpio_interface.GPIO_MODE_OUT)
+        if kwargs.get('reset', {}).get('pin', None) is None:
+            self._reset = None
+        else:
+            self._reset = self._setup_gpio_iface(kwargs.get('reset'))
+            self._reset.setup_pin(self._reset._iface.GPIO_MODE_OUT)
         self.begin()
 
         self.set_contrast(self._contrast)
@@ -99,7 +101,7 @@ class Ssd1306Module(I2cModule):
         Send command byte to display.
         """
         control = 0x00   # Co = 0, DC = 0
-        self.write8(control, c)
+        self._data.write8(control, c)
 
     def begin(self, vccstate=SSD1306_SWITCHCAPVCC):
         """
@@ -108,7 +110,7 @@ class Ssd1306Module(I2cModule):
         # Save vcc state.
         self._vccstate = vccstate
         # Reset and initialize display.
-        if self._reset_pin is not None:
+        if self._reset is not None:
             self.reset()
         if (self._width == 128 and self._height == 64):
             self._init_128_64()
@@ -143,13 +145,13 @@ class Ssd1306Module(I2cModule):
         Reset the display.
         """
         # Set reset high for a millisecond.
-        self._gpio_interface.set_high(self._reset_pin)
+        self._reset.set_high()
         self._msleep(1)
         # Set reset low for 10 milliseconds.
-        self._gpio_interface.set_low(self._reset_pin)
+        self._reset.set_low()
         self._msleep(10)
         # Set reset high again.
-        self._gpio_interface.set_high(self._reset_pin)
+        self._reset.set_high()
 
     def display(self):
         """
@@ -164,7 +166,7 @@ class Ssd1306Module(I2cModule):
         # Write buffer data.
         for i in range(0, len(self._buffer), 16):
             control = 0x40   # Co = 0, DC = 0
-            self.writeList(control, self._buffer[i:i + 16])
+            self._data.writeList(control, self._buffer[i:i + 16])
 
     def image(self, image):
         """

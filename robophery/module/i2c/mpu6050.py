@@ -56,10 +56,10 @@ class Mpu6050Module(I2cModule):
     GYRO_CONFIG = 0x1B
 
     def __init__(self, *args, **kwargs):
-        self._addr = kwargs.get('addr', self.DEVICE_ADDR)
         super(Mpu6050Module, self).__init__(*args, **kwargs)
+        self._data = self._setup_i2c_iface(kwargs.get('data'))
         # Wake up the MPU-6050 since it starts in sleep mode
-        self.write8(self.PWR_MGMT_1, 0x00)
+        self._data.write8(self.PWR_MGMT_1, 0x00)
 
     def read_word(self, register):
         """
@@ -68,8 +68,8 @@ class Mpu6050Module(I2cModule):
         register - the first register to read from.
         """
         # Read the data from the registers
-        high = self.readU8(register)
-        low = self.readU8(register + 1)
+        high = self._data.readU8(register)
+        low = self._data.readU8(register + 1)
 
         value = (high << 8) + low
 
@@ -100,9 +100,9 @@ class Mpu6050Module(I2cModule):
         pre-defined range is advised.
         """
         # First change it to 0x00 to make sure we write the correct value later
-        self.write8(self.ACCEL_CONFIG, 0x00)
+        self._data.write8(self.ACCEL_CONFIG, 0x00)
         # Write the new range to the ACCEL_CONFIG register
-        self.write8(self.ACCEL_CONFIG, accel_range)
+        self._data.write8(self.ACCEL_CONFIG, accel_range)
 
     def read_accel_range(self, raw=False):
         """Reads the range the accelerometer is set to.
@@ -111,7 +111,7 @@ class Mpu6050Module(I2cModule):
         If raw is False, it will return an integer: -1, 2, 4, 8 or 16. When it
         returns -1 something went wrong.
         """
-        raw_data = self.readU8(self.ACCEL_CONFIG)
+        raw_data = self._data.readU8(self.ACCEL_CONFIG)
 
         if raw is True:
             return raw_data
@@ -171,10 +171,10 @@ class Mpu6050Module(I2cModule):
         range is advised.
         """
         # First change it to 0x00 to make sure we write the correct value later
-        self.write8(self.GYRO_CONFIG, 0x00)
+        self._data.write8(self.GYRO_CONFIG, 0x00)
 
         # Write the new range to the ACCEL_CONFIG register
-        self.write8(self.GYRO_CONFIG, gyro_range)
+        self._data.write8(self.GYRO_CONFIG, gyro_range)
 
     def read_gyro_range(self, raw=False):
         """
@@ -184,7 +184,7 @@ class Mpu6050Module(I2cModule):
         If raw is False, it will return 250, 500, 1000, 2000 or -1. If the
         returned value is equal to -1 something went wrong.
         """
-        raw_data = self.readU8(self.GYRO_CONFIG)
+        raw_data = self._data.readU8(self.GYRO_CONFIG)
 
         if raw is True:
             return raw_data
