@@ -192,16 +192,24 @@ class ModuleManager(object):
                 interface['manager'] = self
                 self._interface[interface_name] = InterfaceClass(**interface)
 
+    def _setup_module(self, module_name, module):
+        """
+        Initialise platform modules
+        """
+        ModuleClass = self._load_class(module.get('class'))
+        module['name'] = module_name
+        module['manager'] = self
+        if module_name not in self._module:
+            self._module[module_name] = ModuleClass(**module)
+
     def _setup_modules(self, modules={}):
         """
         Initialise platform modules
         """
         for module_name, module in modules.items():
-            ModuleClass = self._load_class(module.get('class'))
-            if module_name != 'module':
-                module['name'] = module_name
-            module['manager'] = self
-            self._module[module_name] = ModuleClass(**module)
+            for sub_module in module.get('requires', []):
+                self._setup_module(sub_module, modules[sub_module])
+            self._setup_module(module_name, module)
 
     def _load_class(self, name):
         """
