@@ -87,7 +87,7 @@ class Pca9685PwmInterface(PwmInterface):
         Enable PWM output on specified pin. Set to initial percent duty cycle
         value (0.0 to 100.0) and frequency (in Hz).
         """
-        self._use_pin(pin)
+        self.use_pin(pin)
 
     def set_frequency(self, frequency):
         """

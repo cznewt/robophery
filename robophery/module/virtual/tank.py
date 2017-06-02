@@ -43,3 +43,13 @@ class TankModule(Module):
         """
         self._left_belt.run_forward(60)
         self._right_belt.run_backward(30)
+
+    def read_data(self):
+        data = []
+        return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {}

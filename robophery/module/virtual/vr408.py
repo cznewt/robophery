@@ -42,3 +42,13 @@ class Vr408Module(Module):
         Turn tank to the left.
         """
         pass
+
+    def read_data(self):
+        data = []
+        return data
+
+    def meta_data(self):
+        """
+        Get the readings meta-data.
+        """
+        return {}
