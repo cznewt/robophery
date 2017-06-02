@@ -17,6 +17,10 @@ class TankModule(Module):
             return self.read_data()
         elif action == 'stop':
             self.stop()
+        elif action == 'forward':
+            self.forward()
+        elif action == 'backward':
+            self.backward()
         elif action == 'turn_left':
             self.turn_left()
         elif action == 'turn_right':
@@ -30,22 +34,38 @@ class TankModule(Module):
         self._left_belt.stop()
         self._right_belt.stop()
 
+    def forward(self):
+        """
+        Run tank forward.
+        """
+        self._left_belt.run_forward(100)
+        self._right_belt.run_forward(100)
+
+    def backward(self):
+        """
+        Run tank backward.
+        """
+        self._left_belt.run_backward(100)
+        self._right_belt.run_backward(100)
+
     def turn_left(self):
         """
         Turn tank to the left.
         """
-        self._left_belt.run_backward(30)
-        self._right_belt.run_forward(60)
+        self._left_belt.run_backward(100)
+        self._right_belt.run_forward(100)
 
     def turn_right(self):
         """
         Turn tank to the left.
         """
-        self._left_belt.run_forward(60)
-        self._right_belt.run_backward(30)
+        self._left_belt.run_forward(100)
+        self._right_belt.run_backward(100)
 
     def read_data(self):
-        data = []
+        data = [
+        #    (self._name, 'direction', self._direction, 0),
+        ]
         return data
 
     def meta_data(self):
