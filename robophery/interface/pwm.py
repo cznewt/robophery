@@ -35,6 +35,12 @@ class PwmPort():
     def set_frequency(self, frequency):
         self._iface.set_frequency(self._pin, frequency)
 
+    def set_pulse(self, on, off):
+        self._iface.set_pulse(self._pin, on, off)
+
+    def set_pulse_all(self, on, off):
+        self._iface.set_pulse_all(on, off)
+
     def stop(self):
         self._iface.stop(self._pin)
 

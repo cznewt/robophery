@@ -33,7 +33,7 @@ class Pca9685PwmInterface(PwmInterface):
     DEVICE_ADDR = 0x40
     AVAILABLE_PINS = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
-    # Registers/etc:
+    # Registers
     MODE1 = 0x00
     MODE2 = 0x01
     SUBADR1 = 0x02
@@ -49,7 +49,7 @@ class Pca9685PwmInterface(PwmInterface):
     ALL_LED_OFF_L = 0xFC
     ALL_LED_OFF_H = 0xFD
 
-    # Bits:
+    # Commands
     RESTART = 0x80
     SLEEP = 0x10
     ALLCALL = 0x01
@@ -62,7 +62,7 @@ class Pca9685PwmInterface(PwmInterface):
         self._frequency = None
         self._data = self._setup_parent(kwargs['data'])
         self._log.info("Started interface {0}.".format(self))
-        self.set_all_duty_cycle(0)
+        self.set_pulse_all(0, 0)
         self._data.write8(self.MODE2, self.OUTDRV)
         self._data.write8(self.MODE1, self.ALLCALL)
         # wait for oscillator
@@ -73,6 +73,7 @@ class Pca9685PwmInterface(PwmInterface):
         self._data.write8(self.MODE1, mode1)
         # wait for oscillator
         self._msleep(5)
+        self.set_frequency(kwargs.get('frequency', 60))
 
     def _setup_parent(self, data):
         iface = self._manager._interface[data['iface']]
@@ -112,24 +113,19 @@ class Pca9685PwmInterface(PwmInterface):
             self._data.write8(self.MODE1, oldmode | 0x80)
         self._frequency = frequency
 
-    def set_duty_cycle(self, pin, dutycycle):
+    def set_pulse(self, pin, on=0, off=0):
         """
-        Set percent duty cycle of PWM output on specified pin. Duty cycle must
-        be a value 0.0 to 100.0 (inclusive).
+        Set PWM pulse start and end for output on specified pin.
         """
-        on = 0
-        off = int(dutycycle)
         self._data.write8(self.LED0_ON_L + 4 * pin, on & 0xFF)
         self._data.write8(self.LED0_ON_H + 4 * pin, on >> 8)
         self._data.write8(self.LED0_OFF_L + 4 * pin, off & 0xFF)
         self._data.write8(self.LED0_OFF_H + 4 * pin, off >> 8)
 
-    def set_all_duty_cycle(self, dutycycle):
+    def set_pulse_all(self, on=0, off=0):
         """
-        Sets all PWM channels.
+        Set PWM pulse start and end for output on specified pin.
         """
-        on = 0
-        off = int(dutycycle)
         self._data.write8(self.ALL_LED_ON_L, on & 0xFF)
         self._data.write8(self.ALL_LED_ON_H, on >> 8)
         self._data.write8(self.ALL_LED_OFF_L, off & 0xFF)

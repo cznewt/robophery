@@ -20,7 +20,6 @@ class ServoModule(PwmModule):
         self._reverse_logic = kwargs.get('reverse_logic', False)
 
         self._data = self._setup_pwm_iface(kwargs.get('data'))
-        self._data.setup_pin(0)
 
         if self._angle is None:
             self._angle = 90
@@ -47,7 +46,7 @@ class ServoModule(PwmModule):
                     (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * angle / 180.0)
         self._log.debug('Set angle {0} deg (pulse {1})'.format(angle, pulse))
         if pulse >= self.SERVO_MIN_PULSE and pulse <= self.SERVO_MAX_PULSE:
-            self._data.set_duty_cycle(self._pin, pulse)
+            self._data.set_pulse(0, pulse)
 
     def set_pulse_length(self, pulse):
         # 1,000,000 us per second

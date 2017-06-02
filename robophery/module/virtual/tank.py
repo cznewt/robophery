@@ -12,7 +12,9 @@ class TankModule(Module):
         self._left_belt = self._get_module(kwargs['left_belt'])
         self._right_belt = self._get_module(kwargs['right_belt'])
 
-    def commit_action(self, action):
+    def commit_action(self, action, arg=None):
+        self._log.debug('Received action {0} with args {1})'.format(
+            action, arg))
         if action == 'read_data':
             return self.read_data()
         elif action == 'stop':
@@ -31,8 +33,8 @@ class TankModule(Module):
         """
         Stop the tank movement.
         """
-        self._left_belt.stop()
-        self._right_belt.stop()
+        self._left_belt.commit_action('stop')
+        self._right_belt.commit_action('stop')
 
     def forward(self):
         """
