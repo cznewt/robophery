@@ -1,0 +1,474 @@
+
+//--------------------------------------------------------------
+void wave_rear_left(waves, speed){
+
+    self._move(knee_rear_left, 180);
+    self._animate(speed);
+    
+  for (i = 0; i < waves; i++){
+    self._move(hip_rear_left, 0);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 65);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 0);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._animate(speed);
+  }    
+  
+    self._move(knee_rear_left, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void wave_rear_right(waves, speed){
+
+    self._move(knee_rear_right, 180);
+    self._animate(speed);
+    
+  for (i = 0; i < waves; i++){
+    self._move(hip_rear_right, 0);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 65);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 0);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._animate(speed);
+  }    
+  
+    self._move(knee_rear_right, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void wave_front_right(waves, speed){
+
+    self._move(knee_front_right, 180);
+    self._animate(speed);
+    
+  for (i = 0; i < waves; i++){
+    self._move(hip_front_right, 0);
+    self._animate(speed);
+    
+    self._move(hip_front_right, 65);
+    self._animate(speed);
+    
+    self._move(hip_front_right, 0);
+    self._animate(speed);
+    
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+  }    
+  
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void wave_front_left(waves, speed){
+
+    self._move(knee_front_left, 180);
+    self._animate(speed);
+    
+  for (i = 0; i < waves; i++){
+    self._move(hip_front_left, 0);
+    self._animate(speed);
+    
+    self._move(hip_front_left, 65);
+    self._animate(speed);
+    
+    self._move(hip_front_left, 0);
+    self._animate(speed);
+    
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+  }    
+  
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void scared(shakes, beeps){
+    self._move(knee_front_right, 0);
+    self._move(knee_rear_right, 0);
+    self._move(knee_front_left, 0);
+    self._move(knee_rear_left, 0);
+    self._animate(50);
+    
+    for (i = 0; i < shakes; i++){
+ 
+      self._move(hip_rear_right, 80);
+      self._move(hip_rear_left, 10);
+      self._move(hip_front_right, 10);
+      self._move(hip_front_left, 80);
+      self._animate(100);
+      
+      self._move(hip_rear_left, 80);
+      self._move(hip_rear_right, 10);
+      self._move(hip_front_left, 10);
+      self._move(hip_front_right, 80);
+      self._animate(50);
+    }
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(200);
+    
+    chirp(beeps, 0);
+    
+    self._move(knee_front_right, 45);
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._move(knee_rear_left, 45);
+    self._animate(75);
+}
+//--------------------------------------------------------------
+void lean_right(speed){
+    self._move(knee_front_right, 90);
+    self._move(knee_rear_right, 90);
+    self._animate(speed);
+    
+    delay(speed/2);
+    
+    self._move(knee_front_right, 45);
+    self._move(knee_rear_right, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void lean_left(speed){
+    self._move(knee_front_left, 90);
+    self._move(knee_rear_left, 90);
+    self._animate(speed);
+    
+    delay(speed/2);
+    
+    self._move(knee_front_left, 45);
+    self._move(knee_rear_left, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void leanforward(speed){
+    self._move(knee_front_left, 90);
+    self._move(knee_front_right, 90);
+    self._animate(speed);
+    
+    delay(speed/2);
+    
+    self._move(knee_front_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void leanbackward(speed){
+    self._move(knee_rear_left, 90);
+    self._move(knee_rear_right, 90);
+    self._animate(speed);
+    
+    delay(speed/2);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_rear_right, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void look_left(speed){
+    self._move(hip_rear_left, 80);
+    self._move(hip_rear_right, 10);
+    self._move(hip_front_left, 10);
+    self._move(hip_front_right, 80);
+    self._animate(speed);
+    
+    delay(speed/2);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void look_right(speed){
+    self._move(hip_rear_right, 80);
+    self._move(hip_rear_left, 10);
+    self._move(hip_front_right, 10);
+    self._move(hip_front_left, 80);
+    self._animate(speed);
+    
+    delay(speed/2);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+}
+//--------------------------------------------------------------
+void walkforward(steps, speed){
+  for (i = 0; i < steps; i++){
+    self._move(knee_rear_right, 80);
+    self._move(knee_front_left, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 80);
+    self._move(hip_front_left, 20);
+    self._animate(speed);
+
+    self._move(knee_rear_right, 30);
+    self._move(knee_front_left, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 80);
+    self._move(knee_front_right, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 80);
+    self._move(hip_front_right, 20);
+    self._animate(speed);
+
+    self._move(knee_rear_left, 30);
+    self._move(knee_front_right, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+  }
+}
+//--------------------------------------------------------------
+void walkbackward(steps, speed){
+  for (i = 0; i < steps; i++){
+    self._move(knee_rear_right, 80);
+    self._move(knee_front_left, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 20);
+    self._move(hip_front_left, 80);
+    self._animate(speed);
+
+    self._move(knee_rear_right, 30);
+    self._move(knee_front_left, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 80);
+    self._move(knee_front_right, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 20);
+    self._move(hip_front_right, 80);
+    self._animate(speed);
+
+    self._move(knee_rear_left, 30);
+    self._move(knee_front_right, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+  }
+}
+//--------------------------------------------------------------
+void walk_left(steps, speed){
+  for (i = 0; i < steps; i++){
+    self._move(knee_rear_right, 80);
+    self._move(knee_front_left, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 0);
+    self._move(hip_front_left, 90);
+    self._animate(speed);
+
+    self._move(knee_rear_right, 30);
+    self._move(knee_front_left, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+     
+    self._move(knee_rear_left, 80);
+    self._move(knee_front_right, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 90);
+    self._move(hip_front_right, 0);
+    self._animate(speed);
+
+    self._move(knee_rear_left, 30);
+    self._move(knee_front_right, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+  }
+}
+//--------------------------------------------------------------
+void walk_right(steps, speed){
+  for (i = 0; i < steps; i++){
+    self._move(knee_rear_left, 80);
+    self._move(knee_front_right, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 0);
+    self._move(hip_front_right, 90);
+    self._animate(speed);
+
+    self._move(knee_rear_left, 30);
+    self._move(knee_front_right, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+     
+    self._move(knee_rear_right, 80);
+    self._move(knee_front_left, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 90);
+    self._move(hip_front_left, 0);
+    self._animate(speed);
+
+    self._move(knee_rear_right, 30);
+    self._move(knee_front_left, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+  }
+}
+//--------------------------------------------------------------
+void turn_left(steps, speed){
+  for (i = 0; i < steps; i++){
+    self._move(knee_rear_right, 80);
+    self._move(knee_front_left, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 90);
+    self._move(hip_front_left, 90);
+    self._animate(speed);
+
+    self._move(knee_rear_right, 30);
+    self._move(knee_front_left, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 80);
+    self._move(knee_front_right, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 0);
+    self._move(hip_front_right, 0);
+    self._animate(speed);
+
+    self._move(knee_rear_left, 30);
+    self._move(knee_front_right, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+  }
+}
+//--------------------------------------------------------------
+void turn_right(steps, speed){
+  for (i = 0; i < steps; i++){
+    self._move(knee_rear_right, 80);
+    self._move(knee_front_left, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 0);
+    self._move(hip_front_left, 0);
+    self._animate(speed);
+
+    self._move(knee_rear_right, 30);
+    self._move(knee_front_left, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_right, 45);
+    self._move(hip_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_right, 45);
+    self._move(knee_front_left, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 80);
+    self._move(knee_front_right, 80);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 90);
+    self._move(hip_front_right, 90);
+    self._animate(speed);
+
+    self._move(knee_rear_left, 30);
+    self._move(knee_front_right, 30);
+    self._animate(speed);
+    
+    self._move(hip_rear_left, 45);
+    self._move(hip_front_right, 45);
+    self._animate(speed);
+    
+    self._move(knee_rear_left, 45);
+    self._move(knee_front_right, 45);
+    self._animate(speed);
+  }
+}

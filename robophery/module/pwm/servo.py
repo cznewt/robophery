@@ -16,8 +16,8 @@ class ServoModule(PwmModule):
     def __init__(self, *args, **kwargs):
         super(ServoModule, self).__init__(*args, **kwargs)
         self._angle = kwargs.get('angle', None)
-        self._offset_angle = kwargs.get('offset_angle', 0)
-        self._reverse_logic = kwargs.get('reverse_logic', False)
+        self._offset = kwargs.get('offset', 0)
+        self._flipped = kwargs.get('flipped', False)
 
         self._data = self._setup_pwm_iface(kwargs.get('data'))
 
@@ -42,6 +42,8 @@ class ServoModule(PwmModule):
 
     def set_angle(self, angle):
         self._angle = angle
+        if self._flipped:
+            angle = 180 - angle
         pulse = int(self.SERVO_MIN_PULSE +
                     (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * angle / 180.0)
         self._log.debug('Set angle {0} deg (pulse {1})'.format(angle, pulse))

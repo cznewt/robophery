@@ -9,6 +9,7 @@ class Vr408Module(Module):
 
     def __init__(self, *args, **kwargs):
         super(Vr408Module, self).__init__(*args, **kwargs)
+        self._joint = kwargs['joint']
         self._front_left_hip = self._get_module(kwargs['front_left_hip'])
         self._front_left_knee = self._get_module(kwargs['front_left_knee'])
         self._front_right_hip = self._get_module(kwargs['front_right_hip'])
@@ -25,23 +26,460 @@ class Vr408Module(Module):
             self.turn_left()
         return self.read_data()
 
+    def _move(self, joint, angle):
+        pass
+
+    def _animate(self, speed):
+        self._msleep(speed)
+
+    def _delay(self, speed):
+        self._msleep(speed)
+
     def stop(self):
         """
         Stop the tank movement.
         """
         pass
 
-    def turn_left(self):
-        """
-        Turn tank to the left.
-        """
-        pass
+    def wave_rear_left(self, waves, speed):
 
-    def turn_right(self):
-        """
-        Turn tank to the left.
-        """
-        pass
+        self._move("knee_rear_left", 180)
+        self._animate(speed)
+
+        for i in range(waves):
+            self._move("hip_rear_left", 0)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 65)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 0)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 45)
+            self._animate(speed)
+
+        self._move("knee_rear_left", 45)
+        self._animate(speed)
+
+    def wave_rear_right(self, waves, speed):
+        self._move("knee_rear_right", 180)
+        self._animate(speed)
+
+        for i in range(waves):
+            self._move("hip_rear_right", 0)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 65)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 0)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._animate(speed)
+
+        self._move("knee_rear_right", 45)
+        self._animate(speed)
+
+    def wave_front_right(self, waves, speed):
+
+        self._move("knee_front_right", 180)
+        self._animate(speed)
+
+        for i in range(waves):
+            self._move("hip_front_right", 0)
+            self._animate(speed)
+
+            self._move("hip_front_right", 65)
+            self._animate(speed)
+
+            self._move("hip_front_right", 0)
+            self._animate(speed)
+
+            self._move("hip_front_right", 45)
+            self._animate(speed)
+
+        self._move("knee_front_right", 45)
+        self._animate(speed)
+
+    def wave_front_left(self, waves, speed):
+        self._move("knee_front_left", 180)
+        self._animate(speed)
+
+        for i in range(waves):
+            self._move("hip_front_left", 0)
+            self._animate(speed)
+
+            self._move("hip_front_left", 65)
+            self._animate(speed)
+
+            self._move("hip_front_left", 0)
+            self._animate(speed)
+
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+        self._move("knee_front_left", 45)
+        self._animate(speed)
+
+    def scared(self, shakes):
+        self._move("knee_front_right", 0)
+        self._move("knee_rear_right", 0)
+        self._move("knee_front_left", 0)
+        self._move("knee_rear_left", 0)
+        self._animate(50)
+
+        for i in range(shakes):
+            self._move("hip_rear_right", 80)
+            self._move("hip_rear_left", 10)
+            self._move("hip_front_right", 10)
+            self._move("hip_front_left", 80)
+            self._animate(100)
+
+            self._move("hip_rear_left", 80)
+            self._move("hip_rear_right", 10)
+            self._move("hip_front_left", 10)
+            self._move("hip_front_right", 80)
+            self._animate(50)
+
+        self._move("hip_rear_right", 45)
+        self._move("hip_rear_left", 45)
+        self._move("hip_front_right", 45)
+        self._move("hip_front_left", 45)
+        self._animate(200)
+
+        self._move("knee_front_right", 45)
+        self._move("knee_rear_right", 45)
+        self._move("knee_front_left", 45)
+        self._move("knee_rear_left", 45)
+        self._animate(75)
+
+    def lean_right(self, speed):
+        self._move("knee_front_right", 90)
+        self._move("knee_rear_right", 90)
+        self._animate(speed)
+
+        self._delay(speed / 2)
+
+        self._move("knee_front_right", 45)
+        self._move("knee_rear_right", 45)
+        self._animate(speed)
+
+    def lean_left(self, speed):
+        self._move("knee_front_left", 90)
+        self._move("knee_rear_left", 90)
+        self._animate(speed)
+
+        self._delay(speed / 2)
+
+        self._move("knee_front_left", 45)
+        self._move("knee_rear_left", 45)
+        self._animate(speed)
+
+    def leanforward(self, speed):
+        self._move("knee_front_left", 90)
+        self._move("knee_front_right", 90)
+        self._animate(speed)
+
+        self._delay(speed / 2)
+
+        self._move("knee_front_left", 45)
+        self._move("knee_front_right", 45)
+        self._animate(speed)
+
+    def leanbackward(self, speed):
+        self._move("knee_rear_left", 90)
+        self._move("knee_rear_right", 90)
+        self._animate(speed)
+
+        self._delay(speed / 2)
+
+        self._move("knee_rear_left", 45)
+        self._move("knee_rear_right", 45)
+        self._animate(speed)
+
+    def look_left(self, speed):
+        self._move("hip_rear_left", 80)
+        self._move("hip_rear_right", 10)
+        self._move("hip_front_left", 10)
+        self._move("hip_front_right", 80)
+        self._animate(speed)
+
+        self._delay(speed / 2)
+
+        self._move("hip_rear_right", 45)
+        self._move("hip_rear_left", 45)
+        self._move("hip_front_right", 45)
+        self._move("hip_front_left", 45)
+        self._animate(speed)
+
+    def look_right(self, speed):
+        self._move("hip_rear_right", 80)
+        self._move("hip_rear_left", 10)
+        self._move("hip_front_right", 10)
+        self._move("hip_front_left", 80)
+        self._animate(speed)
+
+        self._delay(speed / 2)
+
+        self._move("hip_rear_right", 45)
+        self._move("hip_rear_left", 45)
+        self._move("hip_front_right", 45)
+        self._move("hip_front_left", 45)
+        self._animate(speed)
+
+    def walk_forward(self, steps, speed):
+        for i in range(steps):
+            self._move("knee_rear_right", 80)
+            self._move("knee_front_left", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 80)
+            self._move("hip_front_left", 20)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 30)
+            self._move("knee_front_left", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 45)
+            self._move("knee_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 80)
+            self._move("knee_front_right", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 80)
+            self._move("hip_front_right", 20)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 30)
+            self._move("knee_front_right", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 45)
+            self._move("hip_front_right", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 45)
+            self._move("knee_front_right", 45)
+            self._animate(speed)
+
+    def walk_backward(self, steps, speed):
+        for i in range(steps):
+            self._move("knee_rear_right", 80)
+            self._move("knee_front_left", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 20)
+            self._move("hip_front_left", 80)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 30)
+            self._move("knee_front_left", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 45)
+            self._move("knee_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 80)
+            self._move("knee_front_right", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 20)
+            self._move("hip_front_right", 80)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 30)
+            self._move("knee_front_right", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 45)
+            self._move("hip_front_right", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 45)
+            self._move("knee_front_right", 45)
+            self._animate(speed)
+
+    def walk_left(self, steps, speed):
+        for i in range(steps):
+            self._move("knee_rear_right", 80)
+            self._move("knee_front_left", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 0)
+            self._move("hip_front_left", 90)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 30)
+            self._move("knee_front_left", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 45)
+            self._move("knee_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 80)
+            self._move("knee_front_right", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 90)
+            self._move("hip_front_right", 0)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 30)
+            self._move("knee_front_right", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 45)
+            self._move("hip_front_right", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 45)
+            self._move("knee_front_right", 45)
+            self._animate(speed)
+
+    def walk_right(self, steps, speed):
+        for i in range(steps):
+            self._move("knee_rear_left", 80)
+            self._move("knee_front_right", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 0)
+            self._move("hip_front_right", 90)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 30)
+            self._move("knee_front_right", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 45)
+            self._move("hip_front_right", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 45)
+            self._move("knee_front_right", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 80)
+            self._move("knee_front_left", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 90)
+            self._move("hip_front_left", 0)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 30)
+            self._move("knee_front_left", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 45)
+            self._move("knee_front_left", 45)
+            self._animate(speed)
+
+    def turn_left(self, steps, speed):
+        for i in range(steps):
+            self._move("knee_rear_right", 80)
+            self._move("knee_front_left", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 90)
+            self._move("hip_front_left", 90)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 30)
+            self._move("knee_front_left", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 45)
+            self._move("knee_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 80)
+            self._move("knee_front_right", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 0)
+            self._move("hip_front_right", 0)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 30)
+            self._move("knee_front_right", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_left", 45)
+            self._move("hip_front_right", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_left", 45)
+            self._move("knee_front_right", 45)
+            self._animate(speed)
+
+    def turn_right(self, steps, speed):
+        for i in range(steps):
+            self._move("knee_rear_right", 80)
+            self._move("knee_front_left", 80)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 0)
+            self._move("hip_front_left", 0)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 30)
+            self._move("knee_front_left", 30)
+            self._animate(speed)
+
+            self._move("hip_rear_right", 45)
+            self._move("hip_front_left", 45)
+            self._animate(speed)
+
+            self._move("knee_rear_right", 45)
+            self._move("knee_front_left", 45)
+            self._animate(speed)
+
+        self._move("knee_rear_left", 80)
+        self._move("knee_front_right", 80)
+        self._animate(speed)
+
+        self._move("hip_rear_left", 90)
+        self._move("hip_front_right", 90)
+        self._animate(speed)
+
+        self._move("knee_rear_left", 30)
+        self._move("knee_front_right", 30)
+        self._animate(speed)
+
+        self._move("hip_rear_left", 45)
+        self._move("hip_front_right", 45)
+        self._animate(speed)
+
+        self._move("knee_rear_left", 45)
+        self._move("knee_front_right", 45)
+        self._animate(speed)
 
     def read_data(self):
         data = []
