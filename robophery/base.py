@@ -436,4 +436,4 @@ class Module(object):
         """
         Get specific module by name.
         """
-        return self._manager._interface[module]
+        return self._manager._module[module]
