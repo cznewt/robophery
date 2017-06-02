@@ -9,3 +9,36 @@ class Vr408Module(Module):
 
     def __init__(self, *args, **kwargs):
         super(Vr408Module, self).__init__(*args, **kwargs)
+        self._front_left_hip = self._get_module(kwargs['front_left_hip'])
+        self._front_left_knee = self._get_module(kwargs['front_left_knee'])
+        self._front_right_hip = self._get_module(kwargs['front_right_hip'])
+        self._front_right_knee = self._get_module(kwargs['front_right_knee'])
+
+    def commit_action(self, action):
+        if action == 'read_data':
+            return self.read_data()
+        elif action == 'stop':
+            self.stop()
+        elif action == 'turn_left':
+            self.turn_left()
+        elif action == 'turn_right':
+            self.turn_left()
+        return self.read_data()
+
+    def stop(self):
+        """
+        Stop the tank movement.
+        """
+        pass
+
+    def turn_left(self):
+        """
+        Turn tank to the left.
+        """
+        pass
+
+    def turn_right(self):
+        """
+        Turn tank to the left.
+        """
+        pass

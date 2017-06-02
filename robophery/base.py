@@ -423,3 +423,9 @@ class Module(object):
         Get specific time.
         """
         return time.time()
+
+    def _get_module(self, module):
+        """
+        Get specific module by name.
+        """
+        return self._manager._interface[module]
