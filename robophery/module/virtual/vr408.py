@@ -10,24 +10,26 @@ class Vr408Module(Module):
     def __init__(self, *args, **kwargs):
         super(Vr408Module, self).__init__(*args, **kwargs)
         self._joint = kwargs['joint']
-        self._front_left_hip = self._get_module(kwargs['front_left_hip'])
-        self._front_left_knee = self._get_module(kwargs['front_left_knee'])
-        self._front_right_hip = self._get_module(kwargs['front_right_hip'])
-        self._front_right_knee = self._get_module(kwargs['front_right_knee'])
 
     def commit_action(self, action):
         if action == 'read_data':
             return self.read_data()
         elif action == 'stop':
             self.stop()
+        elif action == 'forward':
+            self.walk_forward(5, 200)
+        elif action == 'backward':
+            self.walk_backward(5, 200)
         elif action == 'turn_left':
-            self.turn_left()
+            self.turn_left(5, 200)
         elif action == 'turn_right':
-            self.turn_left()
+            self.turn_left(5, 200)
+        elif action == 'wave_rear_left':
+            self.wave_rear_left(10, 200)
         return self.read_data()
 
     def _move(self, joint, angle):
-        pass
+        self._manager._module[self._joint[joint]].commit_action('set_angle', angle)
 
     def _animate(self, speed):
         self._msleep(speed)
