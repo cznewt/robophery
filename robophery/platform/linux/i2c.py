@@ -13,6 +13,7 @@ class SMBusI2cInterface(I2cInterface):
         self._busnum = int(kwargs.get('busnum', 1))
         self._bus = smbus.SMBus(self._busnum)
         super(SMBusI2cInterface, self).__init__(*args, **kwargs)
+        self._log.info("Started interface {0}.".format(self))
 
     def writeRaw8(self, addr, value):
         """

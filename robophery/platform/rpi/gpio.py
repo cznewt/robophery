@@ -47,6 +47,7 @@ class RaspberryPiGpioInterface(GpioInterface):
                               self.GPIO_EVENT_FALLING: self._bus.FALLING,
                               self.GPIO_EVENT_BOTH: self._bus.BOTH}
         super(RaspberryPiGpioInterface, self).__init__(*args, **kwargs)
+        self._log.info("Started interface {0}.".format(self))
 
     def __del__(self):
         self.cleanup()

@@ -15,6 +15,7 @@ class BluezBleInterface(BleInterface):
     def __init__(self, *args, **kwargs):
         super(BluezBleInterface, self).__init__(*args, **kwargs)
         self._addr = kwargs.get('addr')
+        self._log.info("Started interface {0}.".format(self))
 
     def __del__(self):
         self._disconnect()

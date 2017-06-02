@@ -38,6 +38,7 @@ class RaspberryPiPwmInterface(PwmInterface):
         self._bus.setwarnings(False)
         self._bus.setmode(self._bus.BOARD)
         self._pins = {}
+        self._log.info("Started interface {0}.".format(self))
 
     def setup_pin(self, pin, dutycycle, frequency=2000):
         """

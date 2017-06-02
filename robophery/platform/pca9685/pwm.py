@@ -61,6 +61,7 @@ class Pca9685PwmInterface(PwmInterface):
         self._pins_available = self.AVAILABLE_PINS
         self._frequency = None
         self._data = self._setup_parent(kwargs['data'])
+        self._log.info("Started interface {0}.".format(self))
         self.set_all_duty_cycle(0)
         self._data.write8(self.MODE2, self.OUTDRV)
         self._data.write8(self.MODE1, self.ALLCALL)
