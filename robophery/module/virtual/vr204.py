@@ -19,7 +19,9 @@ class Vr204Module(Module):
     def commit_action(self, action, arg=None):
         self._log.debug('Received action :0} with args :1})'.format(
             action, arg))
-        if action == 'stop':
+        if action == 'reset':
+            self.reset()
+        elif action == 'stop':
             self.stop()
         elif action == 'scared':
             self.scared(10)
@@ -41,6 +43,9 @@ class Vr204Module(Module):
 
     def _delay(self, speed):
         self._msleep(speed)
+
+    def reset(self):
+        self._manager._module["hip_left"].commit_action('reset')
 
     def stop(self):
         """

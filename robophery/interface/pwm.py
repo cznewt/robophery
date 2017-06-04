@@ -44,6 +44,9 @@ class PwmPort():
     def stop(self):
         self._iface.stop(self._pin)
 
+    def reset(self):
+        self._iface.reset()
+
 
 class PwmInterface(Interface):
     """
@@ -78,6 +81,12 @@ class PwmInterface(Interface):
         raise NotImplementedError
 
     def stop(self, pin):
+        """
+        Stop PWM output on specified pin.
+        """
+        raise NotImplementedError
+
+    def reset(self):
         """
         Stop PWM output on specified pin.
         """

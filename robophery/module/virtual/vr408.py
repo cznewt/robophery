@@ -19,7 +19,9 @@ class Vr408Module(Module):
     def commit_action(self, action, arg=None):
         self._log.debug('Received action {0} with args {1})'.format(
             action, arg))
-        if action == 'stop':
+        if action == 'reset':
+            self.reset()
+        elif action == 'stop':
             self.stop()
         elif action == 'sit':
             self.sit()
@@ -46,6 +48,9 @@ class Vr408Module(Module):
         elif action == 'wave_front_right':
             self.wave_front_right(10, 200)
         return self.read_data()
+
+    def reset(self):
+        self._manager._module["knee_front_right"].commit_action('reset')
 
     def _move(self, joint, angle):
         self._manager._module[self._joint[joint]].commit_action('set_angle', [angle])
