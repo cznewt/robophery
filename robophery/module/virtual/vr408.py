@@ -19,20 +19,32 @@ class Vr408Module(Module):
     def commit_action(self, action, arg=None):
         self._log.debug('Received action {0} with args {1})'.format(
             action, arg))
-        if action == 'read_data':
-            return self.read_data()
-        elif action == 'stop':
+        if action == 'stop':
             self.stop()
-        elif action == 'forward':
+        elif action == 'sit':
+            self.sit()
+        elif action == 'scared':
+            self.scared(10)
+        elif action == 'go_forward':
             self.walk_forward(5, 200)
-        elif action == 'backward':
+        elif action == 'go_backward':
             self.walk_backward(5, 200)
+        elif action == 'go_left':
+            self.walk_left(5, 200)
+        elif action == 'go_right':
+            self.walk_right(5, 200)
         elif action == 'turn_left':
             self.turn_left(5, 200)
         elif action == 'turn_right':
             self.turn_left(5, 200)
         elif action == 'wave_rear_left':
             self.wave_rear_left(10, 200)
+        elif action == 'wave_rear_right':
+            self.wave_rear_right(10, 200)
+        elif action == 'wave_front_left':
+            self.wave_front_left(10, 200)
+        elif action == 'wave_front_right':
+            self.wave_front_right(10, 200)
         return self.read_data()
 
     def _move(self, joint, angle):
@@ -194,7 +206,7 @@ class Vr408Module(Module):
         self._move("knee_rear_left", 45)
         self._animate(speed)
 
-    def leanforward(self, speed):
+    def lean_forward(self, speed):
         self._move("knee_front_left", 90)
         self._move("knee_front_right", 90)
         self._animate(speed)
@@ -205,7 +217,7 @@ class Vr408Module(Module):
         self._move("knee_front_right", 45)
         self._animate(speed)
 
-    def leanbackward(self, speed):
+    def lean_backward(self, speed):
         self._move("knee_rear_left", 90)
         self._move("knee_rear_right", 90)
         self._animate(speed)
