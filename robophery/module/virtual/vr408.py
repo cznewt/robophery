@@ -1,3 +1,8 @@
+# module for controlling ALLBOT VR408 spider
+#
+# Ported from https://github.com/Velleman/ALLBOT-lib/blob/master/examples/VR408/VR408.ino
+#
+
 from robophery.base import Module
 
 
@@ -11,7 +16,9 @@ class Vr408Module(Module):
         super(Vr408Module, self).__init__(*args, **kwargs)
         self._joint = kwargs['joint']
 
-    def commit_action(self, action):
+    def commit_action(self, action, arg=None):
+        self._log.debug('Received action {0} with args {1})'.format(
+            action, arg))
         if action == 'read_data':
             return self.read_data()
         elif action == 'stop':
@@ -39,9 +46,17 @@ class Vr408Module(Module):
 
     def stop(self):
         """
-        Stop the tank movement.
+        Stop the tank movement and stand still.
         """
-        pass
+        self._move("knee_front_right", 45)
+        self._move("knee_rear_right", 45)
+        self._move("knee_front_left", 45)
+        self._move("knee_rear_left", 45)
+        self._move("hip_rear_right", 45)
+        self._move("hip_rear_left", 45)
+        self._move("hip_front_right", 45)
+        self._move("hip_front_left", 45)
+        self._animate(50)
 
     def wave_rear_left(self, waves, speed):
 

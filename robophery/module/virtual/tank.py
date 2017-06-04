@@ -30,6 +30,7 @@ class TankModule(Module):
         return self.read_data()
 
     def stop(self):
+
         """
         Stop the tank movement.
         """
