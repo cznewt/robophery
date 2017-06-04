@@ -36,7 +36,7 @@ class Vr408Module(Module):
         return self.read_data()
 
     def _move(self, joint, angle):
-        self._manager._module[self._joint[joint]].commit_action('set_angle', angle)
+        self._manager._module[self._joint[joint]].commit_action('set_angle', [angle])
 
     def _animate(self, speed):
         self._msleep(speed)
