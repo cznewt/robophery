@@ -81,7 +81,7 @@ class Pca9685PwmInterface(PwmInterface):
         return I2cPort(iface, addr)
 
     def reset(self):
-        self._data.writeRaw8(0x00, 0x06)
+        self._data.writeRaw8(0x06)
 
     def setup_pin(self, pin, dutycycle=0, frequency=2000):
         """
