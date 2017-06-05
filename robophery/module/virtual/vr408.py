@@ -75,6 +75,17 @@ class Vr408Module(Module):
         self._move("hip_front_left", 45)
         self._animate(50)
 
+    def sit(self):
+        self._move("knee_front_right", 90)
+        self._move("knee_rear_right", 90)
+        self._move("knee_front_left", 90)
+        self._move("knee_rear_left", 90)
+        self._move("hip_rear_right", 90)
+        self._move("hip_rear_left", 90)
+        self._move("hip_front_right", 90)
+        self._move("hip_front_left", 90)
+        self._animate(50)
+
     def wave_rear_left(self, waves, speed):
 
         self._move("knee_rear_left", 180)
