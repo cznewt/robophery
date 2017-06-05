@@ -50,7 +50,7 @@ class Vr408Module(Module):
         return self.read_data()
 
     def reset(self):
-        self._manager._module["knee_front_right"].commit_action('reset')
+        self._manager._module[self._joint["knee_front_right"]].commit_action('reset')
 
     def _move(self, joint, angle):
         self._manager._module[self._joint[joint]].commit_action('set_angle', [angle])

@@ -45,7 +45,7 @@ class Vr204Module(Module):
         self._msleep(speed)
 
     def reset(self):
-        self._manager._module["hip_left"].commit_action('reset')
+        self._manager._module[self._joint["hip_left"]].commit_action('reset')
 
     def stop(self):
         """
