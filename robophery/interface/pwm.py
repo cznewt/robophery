@@ -47,7 +47,7 @@ class PwmPort():
     def reset(self):
         self._iface.reset()
 
-
+        
 class PwmInterface(Interface):
     """
     Base class for implementing PWM interface.

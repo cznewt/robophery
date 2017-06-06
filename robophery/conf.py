@@ -171,6 +171,7 @@ LINUX_STATSD_COMM = {
 
 # Physical module configurations
 
+
 AM2320_MODULE = {
     'class': 'robophery.module.i2c.am2320.Am2320Module',
     'data': {
@@ -178,6 +179,7 @@ AM2320_MODULE = {
         'addr': 0x5c,
     },
 }
+
 
 BH1750_MODULE = {
     'class': 'robophery.module.i2c.bh1750.Bh1750Module',
