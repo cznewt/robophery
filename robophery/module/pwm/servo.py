@@ -16,11 +16,10 @@ class ServoModule(PwmModule):
     def __init__(self, *args, **kwargs):
         super(ServoModule, self).__init__(*args, **kwargs)
         self._angle = kwargs.get('angle', None)
-        self._offset_angle = kwargs.get('offset_angle', 0)
-        self._reverse_logic = kwargs.get('reverse_logic', False)
+        self._offset = kwargs.get('offset', 0)
+        self._flipped = kwargs.get('flipped', False)
 
-        self._power = self._setup_pwm_iface(kwargs.get('power'))
-        self._power.setup_pin(0)
+        self._data = self._setup_pwm_iface(kwargs.get('data'))
 
         if self._angle is None:
             self._angle = 90
@@ -39,28 +38,18 @@ class ServoModule(PwmModule):
             return self.read_data()
 
     def reset(self):
-        self._interface.reset()
+        self._data.reset()
 
     def set_angle(self, angle):
         self._angle = angle
+        if self._flipped:
+            angle = 180 - angle
+        angle += self._offset
         pulse = int(self.SERVO_MIN_PULSE +
-                    (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * angle / 180.0)
+                    (self.SERVO_MAX_PULSE - self.SERVO_MIN_PULSE) * angle / 180)
         self._log.debug('Set angle {0} deg (pulse {1})'.format(angle, pulse))
         if pulse >= self.SERVO_MIN_PULSE and pulse <= self.SERVO_MAX_PULSE:
-            self.set_duty_cycle(self._pin, pulse)
-
-    def set_pulse_length(self, pulse):
-        # 1,000,000 us per second
-        pulse_length = 1000000
-        # 60 Hz
-        pulse_length //= 60
-        self._log.debug('{0}us per period'.format(pulse_length))
-        # 12 bits of resolution
-        pulse_length //= 4096
-        self._log.debug('{0}us per bit'.format(pulse_length))
-        pulse *= 1000
-        pulse //= pulse_length
-        self.set_duty_cycle(self._pin, pulse)
+            self._data.set_pulse(0, pulse)
 
     def read_data(self):
         read_start = self._get_time()

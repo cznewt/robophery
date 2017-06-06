@@ -63,7 +63,7 @@ class Ft232hGpioInterface(GpioInterface):
         # Reset device.
         self._check(ftdi.usb_reset)
         # Disable flow control. Commented out because it is unclear if this is necessary.
-        #self._check(ftdi.setflowctrl, ftdi.SIO_DISABLE_FLOW_CTRL)
+        # self._check(ftdi.setflowctrl, ftdi.SIO_DISABLE_FLOW_CTRL)
         # Change read & write buffers to maximum size, 65535 bytes.
         self._check(ftdi.read_data_set_chunksize, 65535)
         self._check(ftdi.write_data_set_chunksize, 65535)

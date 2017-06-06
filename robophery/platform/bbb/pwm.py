@@ -18,13 +18,13 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-from robophery.interface.pwm import PwmInterface
-
 try:
     import Adafruit_BBIO.PWM
-except Exception:
+except ImportError:
     raise RuntimeError(
-        "Cannot load RPi.GPIO library. Please install the library.")
+        "Cannot load Adafruit_BBIO.PWM library. Please install the library.")
+
+from robophery.interface.pwm import PwmInterface
 
 
 class BeaglebonePwmInterface(PwmInterface):
@@ -57,13 +57,13 @@ class BeaglebonePwmInterface(PwmInterface):
     def setup_pin(self, pin, dutycycle, frequency=2000):
         if dutycycle < 0.0 or dutycycle > 100.0:
             raise ValueError(
-                'Invalid duty cycle value, must be between 0 to 100.')
+                'Invalid duty cycle value, must be between 0 and 100.')
         self._bus.start(pin, dutycycle, frequency)
 
     def set_duty_cycle(self, pin, dutycycle):
         if dutycycle < 0.0 or dutycycle > 100.0:
             raise ValueError(
-                'Invalid duty cycle value, must be between 0 to 100.')
+                'Invalid duty cycle value, must be between 0 and 100.')
         self._bus.set_duty_cycle(pin, dutycycle)
 
     def set_frequency(self, pin, frequency):

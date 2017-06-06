@@ -5,10 +5,6 @@ class PwmModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(PwmModule, self).__init__(*args, **kwargs)
-        self.setup_pin = self._interface.setup_pin
-        self.set_duty_cycle = self._interface.set_duty_cycle
-        self.set_frequency = self._interface.set_frequency
-        self.stop = self._interface.stop
 
     def __str__(self):
         return self._base_name()
@@ -39,10 +35,19 @@ class PwmPort():
     def set_frequency(self, frequency):
         self._iface.set_frequency(self._pin, frequency)
 
+    def set_pulse(self, on, off):
+        self._iface.set_pulse(self._pin, on, off)
+
+    def set_pulse_all(self, on, off):
+        self._iface.set_pulse_all(on, off)
+
     def stop(self):
         self._iface.stop(self._pin)
 
+    def reset(self):
+        self._iface.reset()
 
+        
 class PwmInterface(Interface):
     """
     Base class for implementing PWM interface.
@@ -76,6 +81,12 @@ class PwmInterface(Interface):
         raise NotImplementedError
 
     def stop(self, pin):
+        """
+        Stop PWM output on specified pin.
+        """
+        raise NotImplementedError
+
+    def reset(self):
         """
         Stop PWM output on specified pin.
         """

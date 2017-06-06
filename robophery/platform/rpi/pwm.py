@@ -22,7 +22,7 @@ from robophery.interface.pwm import PwmInterface
 
 try:
     import RPi.GPIO
-except:
+except ImportError:
     raise RuntimeError(
         "Cannot load RPi.GPIO library. Please install the library.")
 
@@ -33,9 +33,12 @@ class RaspberryPiPwmInterface(PwmInterface):
     """
 
     def __init__(self, *args, **kwargs):
-        self._parent_interface = kwargs['parent']['interface']
-        self._pins_available = kwargs['parent']['data_pins']
-        self.pins = {}
+        self._bus = RPi.GPIO
+        # Suppress warnings about GPIO in use.
+        self._bus.setwarnings(False)
+        self._bus.setmode(self._bus.BOARD)
+        self._pins = {}
+        self._log.info("Started interface {0}.".format(self))
 
     def setup_pin(self, pin, dutycycle, frequency=2000):
         """
@@ -44,11 +47,11 @@ class RaspberryPiPwmInterface(PwmInterface):
         """
         if dutycycle < 0.0 or dutycycle > 100.0:
             raise ValueError(
-                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+                'Invalid duty cycle value, must be between 0 to 100.')
         # Make pin an output.
-        self._parent_interface.setup(pin, self._parent_interface.GPIO_MODE_OUT)
+        self._bus.setup(pin, self._bus.GPIO_MODE_OUT)
         # Create PWM instance and save a reference for later access.
-        self.pins[pin] = self._parent_interface.PWM(pin, frequency)
+        self.pins[pin] = self._bus.PWM(pin, frequency)
         # Start the PWM at the specified duty cycle.
         self.pins[pin].start(dutycycle)
 
@@ -59,7 +62,7 @@ class RaspberryPiPwmInterface(PwmInterface):
         """
         if dutycycle < 0.0 or dutycycle > 100.0:
             raise ValueError(
-                'Invalid duty cycle value, must be between 0.0 to 100.0 (inclusive).')
+                'Invalid duty cycle value, must be between 0 to 100.')
         if pin not in self.pins:
             raise ValueError(
                 'Pin {0} is not configured as a PWM.'.format(pin))

@@ -18,7 +18,12 @@
 # LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
-import Adafruit_BBIO.GPIO
+try:
+    import Adafruit_BBIO.GPIO
+except ImportError:
+    raise RuntimeError(
+        "Cannot load Adafruit_BBIO.GPIO library. Please install the library.")
+
 from robophery.interface.gpio import GpioInterface
 
 
@@ -48,8 +53,7 @@ class BeagleboneGpioInterface(GpioInterface):
         self._use_pin(pin)
 
     def output(self, pin, value):
-        self._log.debug(
-            "Ouput of pin {0} set to {1}.".format(pin, "HIGH" if value else "LOW"))
+        self._log.debug("Ouput of pin {0} set to {1}.".format(pin, "HIGH" if value else "LOW"))
         self._bus.output(pin, value)
 
     def input(self, pin):

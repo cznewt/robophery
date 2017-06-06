@@ -180,31 +180,36 @@ class ModuleManager(object):
         Initialise platform bus interfaces
         """
         for interface_name, interface in interfaces.items():
-            if 'parent' not in interface:
+            if 'data' not in interface:
                 InterfaceClass = self._load_class(interface.get('class'))
                 interface['name'] = interface_name
                 interface['manager'] = self
                 self._interface[interface_name] = InterfaceClass(**interface)
         for interface_name, interface in interfaces.items():
-            if 'parent' in interface:
+            if 'data' in interface:
                 InterfaceClass = self._load_class(interface.get('class'))
                 interface['name'] = interface_name
                 interface['manager'] = self
-                interface['parent']['interface'] = self._interface[
-                    interface['parent']['interface']]
                 self._interface[interface_name] = InterfaceClass(**interface)
+
+    def _setup_module(self, module_name, module):
+        """
+        Initialise platform modules
+        """
+        ModuleClass = self._load_class(module.get('class'))
+        module['name'] = module_name
+        module['manager'] = self
+        if module_name not in self._module:
+            self._module[module_name] = ModuleClass(**module)
 
     def _setup_modules(self, modules={}):
         """
         Initialise platform modules
         """
         for module_name, module in modules.items():
-            ModuleClass = self._load_class(module.get('class'))
-            if module_name != 'module':
-                module['name'] = module_name
-            module['manager'] = self
-            module['interface'] = self._interface[module['interface']]
-            self._module[module_name] = ModuleClass(**module)
+            for sub_module in module.get('requires', []):
+                self._setup_module(sub_module, modules[sub_module])
+            self._setup_module(module_name, module)
 
     def _load_class(self, name):
         """
@@ -347,7 +352,6 @@ class Interface(object):
         self._class = kwargs.get('class', None)
         self._manager = kwargs.get('manager', None)
         self._log = self._manager._get_logger(self._name)
-        self._log.info("Started bus interface {0}.".format(self))
 
     def __str__(self):
         return self._base_name()
@@ -427,3 +431,9 @@ class Module(object):
         Get specific time.
         """
         return time.time()
+
+    def _get_module(self, module):
+        """
+        Get specific module by name.
+        """
+        return self._manager._module[module]

@@ -40,13 +40,13 @@ class GpioPort():
     def set_high(self):
         self._iface.set_high(self._pin)
 
-    def set_low(self, pin):
+    def set_low(self):
         self._iface.set_low(self._pin)
 
-    def is_high(self, pin):
+    def is_high(self):
         return self._iface.is_high(self._pin)
 
-    def is_low(self, pin):
+    def is_low(self):
         return self._iface.is_low(self._pin)
 
     def setup_pins(self, pins):
@@ -65,8 +65,8 @@ class GpioPort():
     def remove_event_detect(self):
         self._iface.remove_event_detect(self._pin)
 
-    def add_event_callback(self, callback):
-        self._iface.add_event_callback(self._pin, callback)
+    def add_event_callback(self, callback=None, bouncetime=-1):
+        self._iface.add_event_callback(self._pin, callback, bouncetime)
 
     def event_detected(self):
         self._iface.event_detected(self._pin)

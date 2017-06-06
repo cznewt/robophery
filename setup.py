@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'rp_manager = robophery.cli:manager_service',
             'rp_ft232h_discovery = robophery.utils.ft232h:discover_devices',
+            'rp_am2320 = robophery.cli:module_am2320',
             'rp_bh1750 = robophery.cli:module_bh1750',
             'rp_bme280 = robophery.cli:module_bme280',
             'rp_bmp085 = robophery.cli:module_bmp085',

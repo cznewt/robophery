@@ -82,7 +82,7 @@ class Ssd1306Module(I2cModule, GpioModule):
         self._pages = height // 8
         self._buffer = [0] * (width * self._pages)
         # Default to platform GPIO if not provided.
-        if kwargs.get('reset', {}).get('pin', None):
+        if kwargs.get('reset', {}).get('pin', None) is None:
             self._reset = None
         else:
             self._reset = self._setup_gpio_iface(kwargs.get('reset'))

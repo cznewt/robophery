@@ -10,7 +10,7 @@ class L293dModule(GpioModule):
     def __init__(self, *args, **kwargs):
         super(L293dModule, self).__init__(*args, **kwargs)
         self._direction = 0
-        self._power = 0
+        self._force = 0
         # L293D pin 1 or pin 9: On or off
         self._power = self._setup_gpio_iface(kwargs.get('power'))
         self._power.setup_pin(self.GPIO_MODE_OUT)
@@ -34,7 +34,7 @@ class L293dModule(GpioModule):
         Method to drive L293D via GPIO
         """
         self._direction = direction
-        self._power = power
+        self._force = power
         # Stop the motor
         self._log.debug('Set power {0} and direction {1})'.format(
             power, direction))
@@ -104,7 +104,7 @@ class L293dModule(GpioModule):
         """
         data = [
             (self._name, 'direction', self._direction, 0),
-            (self._name, 'power', self._power, 0),
+            (self._name, 'power', self._force, 0),
         ]
         self._log_data(data)
         return data

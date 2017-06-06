@@ -77,11 +77,8 @@ RPI_PLATFORM = {
         },
         'local_pwm': {
             'class': 'robophery.platform.rpi.pwm.RaspberryPiPwmInterface',
+            'pins': [4, 5, 10],
             'engine': 'pwm',
-            'data': {
-                'iface': 'local_gpio',
-                'pins': [4, 5, 10],
-            }
         },
         'local_i2c': {
             'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
@@ -172,7 +169,17 @@ LINUX_STATSD_COMM = {
     'port': 8125,
 }
 
-# Module configurations
+# Physical module configurations
+
+
+AM2320_MODULE = {
+    'class': 'robophery.module.i2c.am2320.Am2320Module',
+    'data': {
+        'iface': 'local_i2c',
+        'addr': 0x5c,
+    },
+}
+
 
 BH1750_MODULE = {
     'class': 'robophery.module.i2c.bh1750.Bh1750Module',
@@ -429,3 +436,6 @@ VL53L0X_MODULE = {
         'addr': 0x29,
     },
 }
+
+# Virtual module configurations
+

@@ -1,5 +1,11 @@
-import w1thermsensor
+try:
+    import w1thermsensor
+except ImportError:
+    raise RuntimeError(
+        "Cannot load w1thermsensor library. Please install the library.")
+
 from robophery.interface.w1 import W1Interface
+from robophery.interface.gpio import GpioPort
 
 
 class LinuxW1Interface(W1Interface):
@@ -14,13 +20,21 @@ class LinuxW1Interface(W1Interface):
     ]
 
     def __init__(self, *args, **kwargs):
-        self._parent_interface = kwargs['parent']['interface']
-        self._parent_data_pin = kwargs['parent']['data_pin']
-#        self._parent_interface.setup_pin(self._parent_data_pin)
         super(LinuxW1Interface, self).__init__(*args, **kwargs)
+        self._data = self._setup_parent(kwargs['data'])
+        self._log.info("Started interface {0}.".format(self))
 
     def __str__(self):
-        return "{0} (connected to {1}, data pin {2})".format(self._base_name(), self._parent_interface._name, self._parent_data_pin)
+        return "{0} (connected to {1}, data pin {2})".format(
+            self._base_name(),
+            self._data._iface._name,
+            self._data._pin
+        )
+
+    def _setup_parent(self, data):
+        iface = self._manager._interface[data['iface']]
+        pin = data['pin']
+        return GpioPort(iface, pin)
 
     def _get_devices(self):
         output = []
