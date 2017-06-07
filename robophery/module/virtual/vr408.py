@@ -36,9 +36,9 @@ class Vr408Module(Module):
         elif action == 'go_right':
             self.walk_right(5, 200)
         elif action == 'turn_left':
-            self.turn_left(5, 200)
+            self.turn_left(1, 200)
         elif action == 'turn_right':
-            self.turn_left(5, 200)
+            self.turn_right(1, 200)
         elif action == 'wave_rear_left':
             self.wave_rear_left(10, 200)
         elif action == 'wave_rear_right':
