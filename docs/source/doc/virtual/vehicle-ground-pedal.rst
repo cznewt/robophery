@@ -1,7 +1,7 @@
 
-==========================
-Terrestrial Legged Vehicle
-==========================
+=====================
+Ground Vehicle Legged
+=====================
 
 
 Allbot Spider 2 Legs/2 Joints - 4 PWM Servo Vehicle

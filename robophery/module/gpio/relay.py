@@ -18,15 +18,12 @@ class RelayModule(GpioModule):
         self._data.setup_pin(self.GPIO_MODE_OUT)
         self._data.set_low()
 
-    def commit_action(self, action):
-        if action == 'read_data':
-            return self.read_data()
-        elif action == 'turn_on':
+    def commit_action(self, action, arg=None):
+        if action == 'turn_on':
             self.turn_on()
-            return self.read_data()
         elif action == 'turn_off':
             self.turn_off()
-            return self.read_data()
+        return self.read_data()
 
     def turn_on(self):
         """

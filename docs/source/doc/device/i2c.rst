@@ -71,3 +71,50 @@ Where to buy
 ------------
 
 * 15 USD - https://www.adafruit.com/product/815
+
+
+ADS1015 - I²C to ADC Extension Board
+====================================
+
+ADS1015 provides 12-bit precision at 3300 samples/second over I2C. The chip
+can be configured as 4 single-ended input channels, or two differential
+channels. As a nice bonus, it even includes a programmable gain amplifier, up
+to x16, to help boost up smaller single/differential signals to the full
+range.
+
+.. image:: /_static/img/device/ads1015.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* https://github.com/adafruit/Adafruit_Python_ADS1X15
+
+Where to buy
+------------
+
+* 10 USD - https://www.adafruit.com/product/1083
+
+
+ADS1115 - I²C to ADC Extension Board
+====================================
+
+ADS1115 provides 16-bit precision at 860 samples/second over I2C. The chip can
+be configured as 4 single-ended input channels, or two differential channels.
+As a nice bonus, it even includes a programmable gain amplifier, up to x16, to
+help boost up smaller single/differential signals to the full range.
+
+.. image:: /_static/img/device/ads1115.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* https://github.com/adafruit/Adafruit_Python_ADS1X15
+
+Where to buy
+------------
+
+* 15 USD - https://www.adafruit.com/product/1085

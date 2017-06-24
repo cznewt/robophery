@@ -6,7 +6,7 @@ USB Extension Boards
 Get additional GPOIO/I²C/SPI/AIN interfaces by USB port.
 
 
-FT232H - USB to GPIO/SPI/I2C Extension Board
+FT232H - USB to GPIO/SPI/I²C Extension Board
 ============================================
 
 This chip from FTDI is similar to their USB to serial converter chips but adds
@@ -34,7 +34,7 @@ Where to buy
 * 16 EUR - http://www.hobbyelectronica.nl/product/ft232h-breakout-usb/
 
 
-UMFT201XB - USB to GPIO/SPI/I2C Extension Board
+UMFT201XB - USB to GPIO/SPI/I²C Extension Board
 ===============================================
 
 The UMFT201XB bridges from USB to I²C two-wire serial bus interface. The
