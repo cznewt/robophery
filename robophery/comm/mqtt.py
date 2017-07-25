@@ -12,6 +12,8 @@ class MqttComm(object):
         self._class = kwargs.get('class', None)
         self._host = kwargs.get('host', '127.0.0.1')
         self._port = kwargs.get('port', 1883)
+        self._username = kwargs.get('username', None)
+        self._password = kwargs.get('password', None)
         self._subscribe_topic = kwargs.get(
             'subscribe_topic', 'robophery_sub/{0}'.format(self._manager._name))
         self._publish_topic = kwargs.get(

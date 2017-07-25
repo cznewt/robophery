@@ -10,6 +10,9 @@ class PahoMqttComm(MqttComm):
         self._client = mqtt.Client()
         self._client.on_connect = self._on_connect
         self._client.on_message = self._on_message
+        if self._username is not None:
+            self._client.username_pw_set(
+                self._username, password=self._password)
         self._client.connect(self._host, self._port, 60)
         self._client.loop_start()
 

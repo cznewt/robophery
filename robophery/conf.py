@@ -75,11 +75,6 @@ RPI_PLATFORM = {
             'class': 'robophery.platform.rpi.gpio.RaspberryPiGpioInterface',
             'engine': 'gpio',
         },
-        'local_pwm': {
-            'class': 'robophery.platform.rpi.pwm.RaspberryPiPwmInterface',
-            'pins': [4, 5, 10],
-            'engine': 'pwm',
-        },
         'local_i2c': {
             'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
             'engine': 'i2c',
