@@ -372,6 +372,15 @@ SERVO_MODULE = {
     },
 }
 
+
+SHT3X_MODULE = {
+    'class': 'robophery.module.i2c.si7021.Sht3xModule',
+    'data': {
+        'iface': 'local_i2c',
+        'addr': 0x44,
+    },
+}
+
 SSD1306_MODULE = {
     'class': 'robophery.module.i2c.ssd1306.Ssd1306Module',
     'data': {

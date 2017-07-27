@@ -108,6 +108,12 @@ def module_si7021():
     manager.run()
 
 
+def module_sht3x():
+    config = _config(SHT3X_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_ssd1306():
     config = _config(SSD1306_MODULE)
     manager = ModuleManager(**config)
