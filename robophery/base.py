@@ -370,6 +370,12 @@ class Interface(object):
         self._log.debug("Sleeping for {0} us.". format(microseconds))
         time.sleep(microseconds / 1000000.0)
 
+    def _get_time(self):
+        """
+        Get specific time.
+        """
+        return time.time()
+
     def _base_name(self):
         return '{0} {1}'.format(self._class.split('.')[-1], self._name)
 

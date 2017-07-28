@@ -128,7 +128,7 @@ class Ft232hGpioInterface(GpioInterface):
     def _poll_read(self, expected, timeout_s=5.0):
         """
         Helper function to continuously poll reads on the FTDI device until an
-        expected number of bytes are returned.  Will throw a timeout error if
+        expected number of bytes are returned. Will throw a timeout error if
         no data is received within the specified number of timeout seconds.
         Returns the read data as a string if successful, otherwise raises an
         execption.
