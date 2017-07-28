@@ -48,6 +48,9 @@ class Ft232hI2cInterface(I2cInterface):
         self._log.info("Started interface {0}.".format(self))
         self.scan()
 
+    def __str__(self):
+        return self._base_name()
+
     def _idle(self):
         """
         Put the I2C lines into an idle state with SCL and SDA high.
