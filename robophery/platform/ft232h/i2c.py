@@ -181,7 +181,7 @@ class Ft232hI2cInterface(I2cInterface):
             if addr <= 7 or addr >= 120:
                 continue
             if self.ping(addr):
-                self._log.debug('Detected device at address 0x{0:02x}'.format(address))
+                self._log.debug('Detected device at address 0x{0:02x}'.format(addr))
 
     def ping(self, addr):
         """
