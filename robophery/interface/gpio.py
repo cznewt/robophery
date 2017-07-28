@@ -108,7 +108,7 @@ class GpioInterface(Interface):
         self._pins_used = []
         super(GpioInterface, self).__init__(*args, **kwargs)
 
-    def use_pin(self, pin):
+    def _use_pin(self, pin):
         self._pins_used.append(pin)
 
     def setup_pin(self, pin, mode, pull_up_down=None):
