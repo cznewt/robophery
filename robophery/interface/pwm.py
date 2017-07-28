@@ -20,7 +20,7 @@ class PwmPort():
     def __init__(self, iface, pin):
         self._iface = iface
         self._pin = pin
-        self._iface.use_pin(pin)
+        self._iface._use_pin(pin)
 
     def _normalize_pin(self, pin):
         value = int(pin)
@@ -57,7 +57,7 @@ class PwmInterface(Interface):
         self._pins_used = []
         super(PwmInterface, self).__init__(*args, **kwargs)
 
-    def use_pin(self, pin):
+    def _use_pin(self, pin):
         self._pins_used.append(pin)
 
     def setup_pin(self, pin, dutycycle, frequency=2000):

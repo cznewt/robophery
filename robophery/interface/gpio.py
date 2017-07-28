@@ -23,7 +23,7 @@ class GpioPort():
     def __init__(self, iface, pin):
         self._iface = iface
         self._pin = pin
-        self._iface.use_pin(pin)
+        self._iface._use_pin(pin)
 
     def setup_pin(self, mode, pull_up_down=None):
         self._iface.setup_pin(self._pin, mode, pull_up_down)
