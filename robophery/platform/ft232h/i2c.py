@@ -33,7 +33,7 @@ class Ft232hI2cInterface(I2cInterface):
         """
         super(Ft232hI2cInterface, self).__init__(*args, **kwargs)
 #        self._address = address
-        self._data = kwargs.get('data').get('iface')
+        self._data = self._manager._interface[kwargs.get('data').get('iface')]
         self._sda1 = int(kwargs.get('data').get('sda1_pin', 0))
         self._sda2 = int(kwargs.get('data').get('sda2_pin', 1))
         self._scl = int(kwargs.get('data').get('scl_pin', 2))
