@@ -141,3 +141,27 @@ More information
 ----------------
 
 * http://akizukidenshi.com/download/ds/aosong/AM2320.pdf
+
+
+SHT30/SHT31 - I²C Humidity and Temperature Sensor
+=================================================
+
+.. image :: /_static/img/module/sht3x.jpg
+   :width: 50 %
+   :align: center
+
+Sensiron Temperature/Humidity sensors are some of the finest & highest-
+accuracy devices you can get. And, finally we have some that have a true I2C
+interface for easy reading.
+
+
+More information
+----------------
+
+* https://cdn-shop.adafruit.com/product-files/2857/Sensirion_Humidity_SHT3x_Datasheet_digital-767294.pdf
+
+Where to buy
+------------
+
+* 14 USD - https://www.adafruit.com/product/2857
+* 5 USD - aliexpress
