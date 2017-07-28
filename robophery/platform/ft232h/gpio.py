@@ -255,9 +255,9 @@ class Ft232hGpioInterface(GpioInterface):
     def _setup_pin(self, pin, mode):
         if pin < 0 or pin > 15:
             raise ValueError('Pin must be between 0 and 15 (inclusive).')
-        if mode not in (GPIO.IN, GPIO.OUT):
+        if mode not in (self.IN, self.OUT):
             raise ValueError('Mode must be GPIO.IN or GPIO.OUT.')
-        if mode == GPIO.IN:
+        if mode == self.IN:
             # Set the direction and level of the pin to 0.
             self._direction &= ~(1 << pin) & 0xFFFF
             self._level &= ~(1 << pin) & 0xFFFF
