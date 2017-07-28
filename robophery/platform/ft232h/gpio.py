@@ -41,15 +41,12 @@ class Ft232hGpioInterface(GpioInterface):
     HIGH = True
     LOW = False
 
-
     def __init__(self, *args, **kwargs):
         """
-        Create a FT232H object.  Will search for the first available FT232H
+        Create a FT232H object. Will search for the first available FT232H
         device with the specified USB vendor ID and product ID (defaults to
-        FT232H default VID & PID).  Can also specify an optional serial number
-        string to open an explicit FT232H device given its serial number.  See
-        the FT232H.enumerate_device_serials() function to see how to list all
-        connected device serial numbers.
+        FT232H default VID & PID). Can also specify an optional serial number
+        string to open an explicit FT232H device given its serial number.
         """
         self._serial = kwargs.get('serial', None)
         # Initialize FTDI device connection.
@@ -58,6 +55,7 @@ class Ft232hGpioInterface(GpioInterface):
             raise RuntimeError('ftdi_new failed! Is libftdi1 installed?')
         # Register handler to close and cleanup FTDI context on program exit.
         atexit.register(self.close)
+        super(Ft232hGpioInterface, self).__init__(*args, **kwargs)
         if self._serial is None:
             # Open USB connection for specified VID and PID if no serial is
             # specified.
@@ -82,8 +80,6 @@ class Ft232hGpioInterface(GpioInterface):
         self._write('\x80\x00\x00\x82\x00\x00')
         self._direction = 0x0000
         self._level = 0x0000
-
-        super(Ft232hGpioInterface, self).__init__(*args, **kwargs)
 
     def close(self):
         """
