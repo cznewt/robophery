@@ -152,15 +152,15 @@ class Ft232hI2cInterface(I2cInterface):
         # Increase expected response bytes.
         self._expected += len(data)
 
-    def _address_byte(self, read=True):
+    def _address_byte(self, addr, read=True):
         """
         Return the address byte with the specified R/W bit set. If read is
         True the R/W bit will be 1, otherwise the R/W bit will be 0.
         """
         if read:
-            return (self._address << 1) | 0x01
+            return (addr << 1) | 0x01
         else:
-            return self._address << 1
+            return addr << 1
 
     def _verify_acks(self, response):
         """
@@ -171,7 +171,7 @@ class Ft232hI2cInterface(I2cInterface):
             if byte & 0x01 != 0x00:
                 raise RuntimeError('Failed to find expected I2C ACK!')
 
-    def ping(self):
+    def ping(self, addr):
         """
         Attempt to detect if a device at this address is present on the I2C
         bus. Will send out the device's address for writing and verify an ACK
@@ -180,7 +180,7 @@ class Ft232hI2cInterface(I2cInterface):
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False)])
+        self._i2c_write_bytes([self._address_byte(addr, False)])
         self._i2c_stop()
         response = self._transaction_end()
         if len(response) != 1:
@@ -188,7 +188,7 @@ class Ft232hI2cInterface(I2cInterface):
                 'Expected 1 response byte but received {0} byte(s).'.format(len(response)))
         return ((response[0] & 0x01) == 0x00)
 
-    def writeRaw8(self, value):
+    def writeRaw8(self, addr, value):
         """
         Write an 8-bit value on the bus (without register).
         """
@@ -196,12 +196,12 @@ class Ft232hI2cInterface(I2cInterface):
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False), value])
+        self._i2c_write_bytes([self._address_byte(addr, False), value])
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
 
-    def write8(self, register, value):
+    def write8(self, addr, register, value):
         """
         Write an 8-bit value to the specified register.
         """
@@ -209,12 +209,12 @@ class Ft232hI2cInterface(I2cInterface):
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False), register, value])
+        self._i2c_write_bytes([self._address_byte(addr, False), register, value])
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
 
-    def write16(self, register, value, little_endian=True):
+    def write16(self, addr, register, value, little_endian=True):
         """
         Write a 16-bit value to the specified register.
         """
@@ -226,25 +226,25 @@ class Ft232hI2cInterface(I2cInterface):
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False), register, value_low,
+        self._i2c_write_bytes([self._address_byte(addr, False), register, value_low,
                                value_high])
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
 
-    def writeList(self, register, data):
+    def writeList(self, addr, register, data):
         """
         Write bytes to the specified register.
         """
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False), register] + data)
+        self._i2c_write_bytes([self._address_byte(addr, False), register] + data)
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
 
-    def readList(self, register, length):
+    def readList(self, addr, register, length):
         """
         Read a length number of bytes from the specified register.  Results
         will be returned as a bytearray.
@@ -254,7 +254,7 @@ class Ft232hI2cInterface(I2cInterface):
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(True), register])
+        self._i2c_write_bytes([self._address_byte(addr, True), register])
         self._i2c_stop()
         self._i2c_idle()
         self._i2c_start()
@@ -264,50 +264,52 @@ class Ft232hI2cInterface(I2cInterface):
         self._verify_acks(response[:-length])
         return response[-length:]
 
-    def readRaw8(self):
+    def readRaw8(self, addr):
         """
         Read an 8-bit value on the bus (without register).
         """
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False)])
+        self._i2c_write_bytes([self._address_byte(addr, False)])
         self._i2c_stop()
         self._i2c_idle()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(True)])
+        self._i2c_write_bytes([self._address_byte(addr, True)])
         self._i2c_read_bytes(1)
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response[:-1])
         return response[-1]
 
-    def readU8(self, register):
+    def readU8(self, addr, register):
         """
         Read an unsigned byte from the specified register.
         """
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False), register])
+        self._i2c_write_bytes([self._address_byte(addr, False), register])
         self._i2c_stop()
         self._i2c_idle()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(True)])
+        self._i2c_write_bytes([self._address_byte(addr, True)])
         self._i2c_read_bytes(1)
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response[:-1])
         return response[-1]
 
-    def readS8(self, register):
-        """Read a signed byte from the specified register."""
-        result = self.readU8(register)
+    def readS8(self, addr, register):
+        """
+        Read a signed byte from the specified register.
+        """
+        result = self.readU8(addr, register)
         if result > 127:
             result -= 256
         return result
 
-    def readU16(self, register, little_endian=True):
+    def readU16(self, addr, register, little_endian=True):
         """
         Read an unsigned 16-bit value from the specified register, with the
         specified endianness (default little endian, or least significant byte
@@ -316,11 +318,11 @@ class Ft232hI2cInterface(I2cInterface):
         self._idle()
         self._transaction_start()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(False), register])
+        self._i2c_write_bytes([self._address_byte(addr, False), register])
         self._i2c_stop()
         self._i2c_idle()
         self._i2c_start()
-        self._i2c_write_bytes([self._address_byte(True)])
+        self._i2c_write_bytes([self._address_byte(addr, True)])
         self._i2c_read_bytes(2)
         self._i2c_stop()
         response = self._transaction_end()
@@ -330,41 +332,41 @@ class Ft232hI2cInterface(I2cInterface):
         else:
             return (response[-2] << 8) | response[-1]
 
-    def readS16(self, register, little_endian=True):
+    def readS16(self, addr, register, little_endian=True):
         """
         Read a signed 16-bit value from the specified register, with the
         specified endianness (default little endian, or least significant byte
         first).
         """
-        result = self.readU16(register, little_endian)
+        result = self.readU16(addr, register, little_endian)
         if result > 32767:
             result -= 65536
         return result
 
-    def readU16LE(self, register):
+    def readU16LE(self, addr, register):
         """
         Read an unsigned 16-bit value from the specified register, in little
         endian byte order.
         """
-        return self.readU16(register, little_endian=True)
+        return self.readU16(addr, register, little_endian=True)
 
-    def readU16BE(self, register):
+    def readU16BE(self, addr, register):
         """
         Read an unsigned 16-bit value from the specified register, in big
         endian byte order.
         """
-        return self.readU16(register, little_endian=False)
+        return self.readU16(addr, register, little_endian=False)
 
-    def readS16LE(self, register):
+    def readS16LE(self, addr, register):
         """
         Read a signed 16-bit value from the specified register, in little
         endian byte order.
         """
-        return self.readS16(register, little_endian=True)
+        return self.readS16(addr, register, little_endian=True)
 
-    def readS16BE(self, register):
+    def readS16BE(self, addr, register):
         """
         Read a signed 16-bit value from the specified register, in big
         endian byte order.
         """
-        return self.readS16(register, little_endian=False)
+        return self.readS16(addr, register, little_endian=False)
