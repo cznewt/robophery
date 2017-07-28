@@ -14,6 +14,29 @@ class SMBusI2cInterface(I2cInterface):
         self._bus = smbus.SMBus(self._busnum)
         super(SMBusI2cInterface, self).__init__(*args, **kwargs)
         self._log.info("Started interface {0}.".format(self))
+        self.scan(self)
+
+    def scan(self):
+        """
+        Attempt to detect all devices present on the I2C bus.
+        """
+        for addr in range(128):
+            if self.ping(addr):
+                self._log.info('Detected device at address 0x{0:02x}'.format(addr))
+
+    def ping(self, addr):
+        """
+        Attempt to detect if a device at this address is present on the I2C
+        bus. Will send out the device's address for writing and verify an ACK
+        is received. Returns true if the ACK is received, and false if not.
+        """
+        try:
+            data = self.readRaw8(addr)
+            ping = True
+        except:
+            ping = False
+        return ping
+
 
     def writeRaw8(self, addr, value):
         """

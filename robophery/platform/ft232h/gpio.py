@@ -80,6 +80,7 @@ class Ft232hGpioInterface(GpioInterface):
         self._write('\x80\x00\x00\x82\x00\x00')
         self._direction = 0x0000
         self._level = 0x0000
+        self._log.info("Started interface {0}.".format(self))
 
     def close(self):
         """

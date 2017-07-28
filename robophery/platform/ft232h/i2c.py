@@ -45,6 +45,7 @@ class Ft232hI2cInterface(I2cInterface):
         # can share the I2C bus.
         self._data._write('\x9E\x07\x00')
         self._idle()
+        self._log.info("Started interface {0}.".format(self))
         self.scan()
 
     def _idle(self):
@@ -212,6 +213,8 @@ class Ft232hI2cInterface(I2cInterface):
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
+        self._log.debug(
+            "Wrote raw 8-bit value {0:#x} to address {1:#x}.".format(value, addr))
 
     def write8(self, addr, register, value):
         """
@@ -225,6 +228,8 @@ class Ft232hI2cInterface(I2cInterface):
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
+        self._log.debug(
+            "Wrote 8-bit value {0:#x} to register {1:#x} at address {2:#x}.".format(value, register, addr))
 
     def write16(self, addr, register, value, little_endian=True):
         """
@@ -243,6 +248,8 @@ class Ft232hI2cInterface(I2cInterface):
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
+        self._log.debug(
+            "Wrote 16-bit value {0:#x} to register {1:#x} at address {2:#x}.".format(value, register, addr))
 
     def writeList(self, addr, register, data):
         """
@@ -255,6 +262,8 @@ class Ft232hI2cInterface(I2cInterface):
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response)
+        self._log.debug("Wrote values {0} to register {1:#x} at address {2:#x}.".format(
+            data, register, addr))
 
     def readList(self, addr, register, length):
         """
@@ -274,6 +283,8 @@ class Ft232hI2cInterface(I2cInterface):
         self._i2c_stop()
         response = self._transaction_end()
         self._verify_acks(response[:-length])
+        self._log.debug("Read {0} 8-bit values {1} from register {2:#x} at address {3:#x}.".format(
+            length, ", ".join(print_results), register, addr))
         return response[-length:]
 
     def readRaw8(self, addr):
