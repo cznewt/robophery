@@ -16,6 +16,9 @@ class SMBusI2cInterface(I2cInterface):
         self._log.info("Started interface {0}.".format(self))
         self.scan()
 
+    def __str__(self):
+        return "%s (device /dev/i2c-%s)" % (self._base_name(), self._busnum)
+
     def scan(self):
         """
         Attempt to detect all devices present on the I2C bus.
