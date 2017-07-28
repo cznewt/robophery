@@ -10,6 +10,12 @@ FT232H_PLATFORM = {
         'ft232h_i2c': {
             'class': 'robophery.platform.ft232h.i2c.Ft232hI2cInterface',
             'engine': 'i2c',
+            'data': {
+                'iface': 'ft232h_gpio',
+                'sda1_pin': 0,
+                'sda2_pin': 1,
+                'scl_pin': 2,
+            }
         }
     }
 }

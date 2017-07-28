@@ -20,6 +20,8 @@
 # THE SOFTWARE.
 
 import ftdi1 as ftdi
+import atexit
+import math
 from robophery.interface.gpio import GpioInterface
 
 
@@ -34,7 +36,11 @@ class Ft232hGpioInterface(GpioInterface):
     MSBFIRST = 0
     LSBFIRST = 1
 
-    _REPEAT_DELAY = 4
+    OUT = 0
+    IN = 1
+    HIGH = True
+    LOW = False
+
 
     def __init__(self, *args, **kwargs):
         """
@@ -62,7 +68,7 @@ class Ft232hGpioInterface(GpioInterface):
                 self.FT232H_VID, self.FT232H_PID, self._serial))
         # Reset device.
         self._check(ftdi.usb_reset)
-        # Disable flow control. Commented out because it is unclear if this is necessary.
+        # Disable flow control. It is unclear if this is necessary.
         # self._check(ftdi.setflowctrl, ftdi.SIO_DISABLE_FLOW_CTRL)
         # Change read & write buffers to maximum size, 65535 bytes.
         self._check(ftdi.read_data_set_chunksize, 65535)
@@ -76,11 +82,13 @@ class Ft232hGpioInterface(GpioInterface):
         self._write('\x80\x00\x00\x82\x00\x00')
         self._direction = 0x0000
         self._level = 0x0000
-        super(BeagleboneGpioInterface, self).__init__(*args, **kwargs)
+
+        super(Ft232hGpioInterface, self).__init__(*args, **kwargs)
 
     def close(self):
         """
-        Close the FTDI device. Will be automatically called when the program ends.
+        Close the FTDI device. Will be automatically called when the
+        program ends.
         """
         if self._bus is not None:
             ftdi.free(self._bus)
@@ -92,16 +100,16 @@ class Ft232hGpioInterface(GpioInterface):
         verify it succeeds.
         """
         # Get modem status. Useful to enable for debugging.
-        #ret, status = ftdi.poll_modem_status(self._bus)
+        # ret, status = ftdi.poll_modem_status(self._bus)
         # if ret == 0:
         #   logger.debug('Modem status {0:02X}'.format(status))
         # else:
         #   logger.debug('Modem status error {0}'.format(ret))
         length = len(string)
         ret = ftdi.write_data(self._bus, string, length)
-        # Log the string that was written in a python hex string format using a very
-        # ugly one-liner list comprehension for brevity.
-        #logger.debug('Wrote {0}'.format(''.join(['\\x{0:02X}'.format(ord(x)) for x in string])))
+        # Log the string that was written in a python hex string format using
+        # a very ugly one-liner list comprehension for brevity.
+        # logger.debug('Wrote {0}'.format(''.join(['\\x{0:02X}'.format(ord(x)) for x in string])))
         if ret < 0:
             raise RuntimeError('ftdi_write_data failed with error {0}: {1}'.format(
                 ret, ftdi.get_error_string(self._bus)))
@@ -115,7 +123,7 @@ class Ft232hGpioInterface(GpioInterface):
         verify the response matches the expected value.
         """
         ret = command(self._bus, *args)
-        logger.debug('Called ftdi_{0} and got response {1}.'.format(
+        self._log.debug('Called ftdi_{0} and got response {1}.'.format(
             command.__name__, ret))
         if ret != 0:
             raise RuntimeError('ftdi_{0} failed with error {1}: {2}'.format(
@@ -124,9 +132,10 @@ class Ft232hGpioInterface(GpioInterface):
     def _poll_read(self, expected, timeout_s=5.0):
         """
         Helper function to continuously poll reads on the FTDI device until an
-        expected number of bytes are returned.  Will throw a timeout error if no
-        data is received within the specified number of timeout seconds.  Returns
-        the read data as a string if successful, otherwise raises an execption.
+        expected number of bytes are returned.  Will throw a timeout error if
+        no data is received within the specified number of timeout seconds.
+        Returns the read data as a string if successful, otherwise raises an
+        execption.
         """
         start = self._get_time()
         # Start with an empty response buffer.
@@ -161,8 +170,8 @@ class Ft232hGpioInterface(GpioInterface):
 
     def _mpsse_sync(self, max_retries=10):
         """
-        Synchronize buffers with MPSSE by sending bad opcode and reading expected
-        error response. Should be called once after enabling MPSSE.
+        Synchronize buffers with MPSSE by sending bad opcode and reading
+        expected error response. Should be called once after enabling MPSSE.
         """
         # Send a bad/unknown command (0xAB), then read buffer until bad command
         # response is found.
@@ -208,7 +217,7 @@ class Ft232hGpioInterface(GpioInterface):
             math.ceil((30000000.0 - float(clock_hz)) / float(clock_hz))) & 0xFFFF
         if three_phase:
             divisor = int(divisor * (2.0 / 3.0))
-        logger.debug(
+        self._log.debug(
             'Setting clockspeed with divisor value {0}'.format(divisor))
         # Send command to set divisor from low and high byte values.
         self._write(
@@ -226,7 +235,7 @@ class Ft232hGpioInterface(GpioInterface):
         # Assemble response into 16 bit value.
         low_byte = ord(data[0])
         high_byte = ord(data[1])
-        logger.debug('Read MPSSE GPIO low byte = {0:02X} and high byte = {1:02X}'.format(
+        self._log.debug('Read MPSSE GPIO low byte = {0:02X} and high byte = {1:02X}'.format(
             low_byte, high_byte))
         return (high_byte << 8) | low_byte
 
