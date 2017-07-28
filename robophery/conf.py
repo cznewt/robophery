@@ -380,7 +380,7 @@ SERVO_MODULE = {
 
 
 SHT3X_MODULE = {
-    'class': 'robophery.module.i2c.si7021.Sht3xModule',
+    'class': 'robophery.module.i2c.sht3x.Sht3xModule',
     'data': {
         'iface': 'local_i2c',
         'addr': 0x44,
@@ -408,7 +408,7 @@ SWITCH_MODULE = {
 }
 
 T6713_MODULE = {
-    'class': 'robophery.module.i2c.tsl2561.T6713Module',
+    'class': 'robophery.module.i2c.t6713.T6713Module',
     'data': {
         'iface': 'local_i2c',
         'addr': 0x15,

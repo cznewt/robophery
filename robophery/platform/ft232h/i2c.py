@@ -45,6 +45,7 @@ class Ft232hI2cInterface(I2cInterface):
         # can share the I2C bus.
         self._data._write('\x9E\x07\x00')
         self._idle()
+        self.scan()
 
     def _idle(self):
         """
@@ -170,6 +171,17 @@ class Ft232hI2cInterface(I2cInterface):
         for byte in response:
             if byte & 0x01 != 0x00:
                 raise RuntimeError('Failed to find expected I2C ACK!')
+
+    def scan(self):
+        """
+        Attempt to detect all devices present on the I2C bus.
+        """
+        for addr in range(127):
+            # Skip I2C addresses which are reserved.
+            if addr <= 7 or addr >= 120:
+                continue
+            if self.ping(addr):
+                self._log.debug('Detected device at address 0x{0:02x}'.format(address))
 
     def ping(self, addr):
         """

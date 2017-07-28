@@ -119,10 +119,10 @@ class Ft232hGpioInterface(GpioInterface):
         verify the response matches the expected value.
         """
         ret = command(self._bus, *args)
-        self._log.debug('Called ftdi_{0} and got response {1}.'.format(
+        self._log.debug('Called {0} with result code {1}.'.format(
             command.__name__, ret))
         if ret != 0:
-            raise RuntimeError('ftdi_{0} failed with error {1}: {2}'.format(
+            raise RuntimeError('Calling {0} failed with error {1}: {2}'.format(
                 command.__name__, ret, ftdi.get_error_string(self._bus)))
 
     def _poll_read(self, expected, timeout_s=5.0):
@@ -214,7 +214,7 @@ class Ft232hGpioInterface(GpioInterface):
         if three_phase:
             divisor = int(divisor * (2.0 / 3.0))
         self._log.debug(
-            'Setting clockspeed with divisor value {0}'.format(divisor))
+            'Set clock speed with divisor {0}.'.format(divisor))
         # Send command to set divisor from low and high byte values.
         self._write(
             str(bytearray((0x86, divisor & 0xFF, (divisor >> 8) & 0xFF))))
