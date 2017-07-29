@@ -32,7 +32,7 @@ class Am2320Module(I2cModule):
 
             self._msleep(2)
 
-            buf = self._data.readList(self.address, 0, 8)
+            buf = self._data.readList(0, 8)
         except IOError, exc:
             raise CommunicationError(str(exc))
 

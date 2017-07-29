@@ -25,7 +25,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         for addr in range(128):
             if self.ping(addr):
-                self._log.info('Detected device at address 0x{0:02x}'.format(addr))
+                self._log.info('Detected device at address 0x{0:02x}.'.format(addr))
 
     def ping(self, addr):
         """
