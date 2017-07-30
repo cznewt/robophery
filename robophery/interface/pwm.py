@@ -5,6 +5,12 @@ class PwmModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(PwmModule, self).__init__(*args, **kwargs)
+        if kwargs.get('data', False):
+            self._log.info("Started device {0} (using {1}, pin {2}).".format(
+                self._base_name(),
+                kwargs.get('data').get('iface'),
+                kwargs.get('data').get('pin')
+            ))
 
     def __str__(self):
         return self._base_name()
