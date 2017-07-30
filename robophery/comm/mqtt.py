@@ -23,7 +23,10 @@ class MqttComm(object):
         self._log.info("Started communication channel {0}.".format(self))
 
     def __str__(self):
-        return "{0} (connected to tcp://{1}:{2}, publishing to {3} in {4} format, subscribed to {5})".format(self._base_name(), self._host, self._port, self._publish_topic, self._publish_format, self._subscribe_topic)
+        if self._username is None:
+            return "{0} (connected to tcp://{1}:{2}, publishing to {3} in {4} format, subscribed to {5})".format(self._base_name(), self._host, self._port, self._publish_topic, self._publish_format, self._subscribe_topic)
+        else:
+            return "{0} (connected to tcp://{1}:{2}, publishing to {3} in {4} format, subscribed to {5}, user {6})".format(self._base_name(), self._host, self._port, self._publish_topic, self._publish_format, self._subscribe_topic, self._username)
 
     def _base_name(self):
         return '{0} {1}'.format(self._class.split('.')[-1], self._name)

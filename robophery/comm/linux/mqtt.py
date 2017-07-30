@@ -46,11 +46,18 @@ class PahoMqttComm(MqttComm):
                     final_data[names[0]] = {names[1]: datum['avg_value']}
         for name, datum in final_data.items():
             topic = "{0}/{1}".format(self._publish_topic, name)
+            if self._username is not None:
+                auth = {
+                    'username': self._username,
+                    'password': self._password
+                }
+            else:
+                auth = None
             publish.single(topic,
                            payload=self._to_string(datum),
                            hostname=self._host,
                            client_id=self._manager._name,
-                           # auth=auth,
+                           auth=auth,
                            # tls=tls,
                            port=self._port,
                            protocol=mqtt.MQTTv311)
