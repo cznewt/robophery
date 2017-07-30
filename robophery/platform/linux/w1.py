@@ -25,7 +25,7 @@ class LinuxW1Interface(W1Interface):
         self._log.info("Started interface {0}.".format(self))
 
     def __str__(self):
-        return "{0} (connected to {1}, data pin {2})".format(
+        return "{0} (using {1}, pin {2})".format(
             self._base_name(),
             self._data._iface._name,
             self._data._pin

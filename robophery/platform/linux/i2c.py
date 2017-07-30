@@ -17,7 +17,7 @@ class SMBusI2cInterface(I2cInterface):
         self.scan()
 
     def __str__(self):
-        return "%s (device /dev/i2c-%s)" % (self._base_name(), self._busnum)
+        return "%s (using /dev/i2c-%s)" % (self._base_name(), self._busnum)
 
     def scan(self):
         """
@@ -25,7 +25,9 @@ class SMBusI2cInterface(I2cInterface):
         """
         for addr in range(128):
             if self.ping(addr):
-                self._log.info('Detected device at address 0x{0:02x}.'.format(addr))
+                self._log.info('Detected device at address {2:#x}.'.format(
+                    addr
+                ))
 
     def ping(self, addr):
         """
@@ -34,12 +36,11 @@ class SMBusI2cInterface(I2cInterface):
         is received. Returns true if the ACK is received, and false if not.
         """
         try:
-            data = self.readRaw8(addr)
+            self.readRaw8(addr)
             ping = True
         except:
             ping = False
         return ping
-
 
     def writeRaw8(self, addr, value):
         """
@@ -48,7 +49,8 @@ class SMBusI2cInterface(I2cInterface):
         value = value & 0xFF
         self._bus.write_byte(addr, value)
         self._log.debug(
-            "Wrote raw 8-bit value {0:#x} to address {1:#x}.".format(value, addr))
+            "Wrote raw 8-bit value {0:#x} to address {1:#x}.".format(
+                value, addr))
 
     def write8(self, addr, register, value):
         """

@@ -75,6 +75,14 @@ class Pca9685PwmInterface(PwmInterface):
         self._msleep(5)
         self.set_frequency(kwargs.get('frequency', 60))
 
+    def __str__(self):
+        return "{0} (using {1}, address: {2:#x}, available pins: {3})".format(
+            self._base_name(),
+            self._data._iface._name,
+            self._data._addr,
+            self._pins_available
+        )
+
     def _setup_parent(self, data):
         iface = self._manager._interface[data['iface']]
         addr = data['addr']

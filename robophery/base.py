@@ -391,7 +391,6 @@ class Module(object):
         self._class = kwargs.get('class', None)
         self._read_interval = kwargs.get('read_interval', self.READ_INTERVAL)
         self._log = self._manager._get_logger(self._name)
-        self._log.info("Started device module {0}.".format(self))
 
     def __str__(self):
         return self._base_name()

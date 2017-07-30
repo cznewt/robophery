@@ -28,7 +28,11 @@ class Pcf8574GpioInterface(GpioInterface):
         return I2cPort(iface, addr)
 
     def __str__(self):
-        return "{0} (connected to {1}, address {2:#x})".format(self._base_name(), self._data._iface._name, self._data._addr)
+        return "{0} (using {1}, address: {2:#x})".format(
+            self._base_name(),
+            self._data._iface._name,
+            self._data._addr
+        )
 
     def _write_pins(self):
         self._data.writeRaw8(self.gpio | self.iodir)
