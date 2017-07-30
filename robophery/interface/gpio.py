@@ -8,7 +8,7 @@ class GpioModule(Module):
 
     def __init__(self, *args, **kwargs):
         super(GpioModule, self).__init__(*args, **kwargs)
-        if kwargs.get('data', False):
+        if kwargs.get('data', {}).get('pin', False):
             self._log.info("Started device {0} (using {1}, pin {2}).".format(
                 self._base_name(),
                 kwargs.get('data').get('iface'),
