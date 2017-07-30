@@ -25,7 +25,7 @@ class SMBusI2cInterface(I2cInterface):
         """
         for addr in range(128):
             if self.ping(addr):
-                self._log.info('Detected device at address {2:#x}.'.format(
+                self._log.info('Detected device at address {0:#x}.'.format(
                     addr
                 ))
 
@@ -36,7 +36,7 @@ class SMBusI2cInterface(I2cInterface):
         is received. Returns true if the ACK is received, and false if not.
         """
         try:
-            self.readRaw8(addr)
+            data = self.readRaw8(addr)
             ping = True
         except:
             ping = False

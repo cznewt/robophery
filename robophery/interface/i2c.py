@@ -6,7 +6,7 @@ class I2cModule(Module):
     def __init__(self, *args, **kwargs):
         super(I2cModule, self).__init__(*args, **kwargs)
         if kwargs.get('data', False):
-            self._log.info("Started device {0} on interface {1} at address {2}.".format(
+            self._log.info("Started device {0} (interface: {1}, address {2:#x}}).".format(
                 self._base_name(),
                 kwargs.get('data').get('iface'),
                 kwargs.get('data').get('addr')
