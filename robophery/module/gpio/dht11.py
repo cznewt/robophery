@@ -10,7 +10,7 @@ class Dht11Module(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(Dht11Module, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_pin(kwargs.get('data_pin'))
+        self._pin = kwargs.get('data').get('pin')
         self._type = 11
 
     def commit_action(self, action):
