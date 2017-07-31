@@ -10,7 +10,7 @@ class Dht22Module(GpioModule):
 
     def __init__(self, *args, **kwargs):
         super(Dht22Module, self).__init__(*args, **kwargs)
-        self._pin = self._normalize_pin(kwargs.get('data_pin'))
+#        self._pin = self._normalize_pin(kwargs.get('data_pin'))
         self._type = 22
 
     def commit_action(self, action):
@@ -25,7 +25,7 @@ class Dht22Module(GpioModule):
         humidity, temperature = Adafruit_DHT.read(self._type, self._pin)
         read_time_stop = self._get_time()
         read_time_delta = (read_time_stop - read_time_start) / 2
-        if temperature == None or humidity == None:
+        if temperature is None or humidity is None:
             self._log.error("Data CRC failed while reading data.")
             data = [
                 (self._name, 'temperature', None, read_time_delta),
