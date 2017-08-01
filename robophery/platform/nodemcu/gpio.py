@@ -38,6 +38,10 @@ class NodeMcuGpioInterface(GpioInterface):
             mode = self.GPIO_MODE_NONE
         if pull_up_down is None:
             pull_up_down = self.GPIO_PUD_OFF
+        elif pull_up_down == 'up':
+            pull_up_down = self.GPIO_PUD_UP
+        elif pull_up_down == 'down':
+            pull_up_down = self.GPIO_PUD_DOWN
         if drive is None:
             pull_up_down = self.GPIO_DRIVE_LOW
 

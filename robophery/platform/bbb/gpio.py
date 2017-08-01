@@ -48,6 +48,10 @@ class BeagleboneGpioInterface(GpioInterface):
     def setup_pin(self, pin, mode, pull_up_down=None):
         if pull_up_down is None:
             pull_up_down = self.GPIO_PUD_OFF
+        elif pull_up_down == 'up':
+            pull_up_down = self.GPIO_PUD_UP
+        elif pull_up_down == 'down':
+            pull_up_down = self.GPIO_PUD_DOWN
         self._bus.setup(pin, self._dir_mapping[mode],
                         pull_up_down=self._pud_mapping[pull_up_down])
         self._use_pin(pin)

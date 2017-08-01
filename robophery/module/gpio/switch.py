@@ -13,9 +13,10 @@ class SwitchModule(GpioModule):
         self._turn_off_count = 0
         self._runtime = 0
         self._data = self._setup_gpio_iface(kwargs.get('data'))
-        self._data.setup_pin(self.GPIO_MODE_IN)
-        #self._data.add_event_detect(self._data._iface.GPIO_EVENT_BOTH,
-        #                            callback=self._process_event)
+        self._pull_up_down = kwargs.get('data').get('pull_up_down', None)
+        self._data.setup_pin(self.GPIO_MODE_IN, pull_up_down=self._pull_up_down)
+        self._data.add_event_detect(self._data._iface.GPIO_EVENT_BOTH,
+                                    callback=self._process_event)
         if self._data.is_high():
             self._runtime_start = self._get_time()
             self._state = 1
