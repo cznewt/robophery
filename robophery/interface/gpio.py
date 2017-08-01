@@ -66,7 +66,7 @@ class GpioPort():
         return [self.input(pin) for pin in pins]
 
     def add_event_detect(self, edge, callback=None, bouncetime=-1):
-        self._iface.add_event_detect(self._pin, edge)
+        self._iface.add_event_detect(self._pin, edge, callback=callback, bouncetime=bouncetime)
 
     def remove_event_detect(self):
         self._iface.remove_event_detect(self._pin)
