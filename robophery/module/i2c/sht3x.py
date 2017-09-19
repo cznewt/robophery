@@ -139,7 +139,11 @@ class Sht3xModule(I2cModule):
         Query SHT3x to get the humidity and temperature readings.
         """
         read_start = self._get_time()
-        temperature, humidity = self._read_temperature_humidity()
+        try:
+            temperature, humidity = self._read_temperature_humidity()
+        except IOError:
+            temperature = None
+            humidity = None
         read_time = (self._get_time() - read_start) / 2
         data = [
             (self._name, 'temperature', temperature, read_time),
