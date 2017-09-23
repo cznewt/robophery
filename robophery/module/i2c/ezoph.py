@@ -1,7 +1,7 @@
 from robophery.interface.i2c import I2cModule
 
 
-class EzoHpModule(I2cModule):
+class EzoPhModule(I2cModule):
     """
     Module for AtlasScientific sensors.
     """
@@ -15,7 +15,7 @@ class EzoHpModule(I2cModule):
     TIMEOUT_SHORT = 500
 
     def __init__(self, *args, **kwargs):
-        super(EzoHpModule, self).__init__(*args, **kwargs)
+        super(EzoPhModule, self).__init__(*args, **kwargs)
         self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def _write_cmd(self, cmd):
