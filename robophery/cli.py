@@ -78,6 +78,18 @@ def module_bh1750():
     manager.run()
 
 
+def module_ezoec():
+    config = _config(EZOEC_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
+def module_ezoph():
+    config = _config(EZOPH_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_htu21d():
     config = _config(HTU21D_MODULE)
     manager = ModuleManager(**config)

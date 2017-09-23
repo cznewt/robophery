@@ -230,6 +230,22 @@ DS18_MODULE = {
     },
 }
 
+EZOEC_MODULE = {
+    'class': 'robophery.module.i2c.ezoec.EzoEcModule',
+    'data': {
+        'iface': 'local_i2c',
+        'addr': 0x100,
+    },
+}
+
+EZOPH_MODULE = {
+    'class': 'robophery.module.i2c.ezoph.EzoPhModule',
+    'data': {
+        'iface': 'local_i2c',
+        'addr': 0x99,
+    },
+}
+
 HCSR04_MODULE = {
     'class': 'robophery.module.gpio.hcsr04.Hcsr04Module',
     'echo': {

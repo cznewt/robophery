@@ -1,12 +1,12 @@
 from robophery.interface.i2c import I2cModule
 
 
-class AtlasModule(I2cModule):
+class EzoEcModule(I2cModule):
     """
     Module for AtlasScientific sensors.
     """
-    DEVICE_NAME = 'atlas'
-    DEVICE_ADDR = 98
+    DEVICE_NAME = 'ezoec'
+    DEVICE_ADDR = 100
     SLAVE_ADDR = 0x703
 
     # the timeout needed to query readings and calibrations
@@ -15,7 +15,7 @@ class AtlasModule(I2cModule):
     SHORT_TIMEOUT = 0.5
 
     def __init__(self, *args, **kwargs):
-        super(AtlasModule, self).__init__(*args, **kwargs)
+        super(EzoHpModule, self).__init__(*args, **kwargs)
         self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def write(self, cmd):

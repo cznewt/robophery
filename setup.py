@@ -33,6 +33,8 @@ setup(
             'rp_dht11 = robophery.cli:module_dht11',
             'rp_dht22 = robophery.cli:module_dht22',
             'rp_ds18 = robophery.cli:module_ds18',
+            'rp_ezoec = robophery.cli:module_ezoec',
+            'rp_ezoph = robophery.cli:module_ezoph',
             'rp_htu21d = robophery.cli:module_htu21d',
             'rp_hcsr04 = robophery.cli:module_hcsr04',
             'rp_ina219 = robophery.cli:module_ina219',
