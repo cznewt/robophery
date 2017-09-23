@@ -1,6 +1,6 @@
 
 =============================
-Chapter 4. Physical Actuators
+Chapter 5. Physical Actuators
 =============================
 
 .. toctree::

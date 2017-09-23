@@ -1,6 +1,6 @@
 
 ==========================
-Chapter 6. Virtual Modules
+Chapter 7. Virtual Modules
 ==========================
 
 Virtual devices represent module aggregation and are useful when encapsulating

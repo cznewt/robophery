@@ -24,6 +24,7 @@ communication among devices is handled by the standard MQTT message bus.
    :glob:
 
    doc/arch/index.rst
+   doc/install/index.rst
    doc/device/index.rst
    doc/interface/index.rst
    doc/actuator/index.rst

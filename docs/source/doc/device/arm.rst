@@ -54,13 +54,13 @@ More infromation
 Where to buy
 ------------
 
-* 1200Kc - http://eshop.minidroid.cz/raspberry-pi/335-raspberry-pi-2-model-b-1gb.html
+* 1200 CZK - http://eshop.minidroid.cz/raspberry-pi/335-raspberry-pi-2-model-b-1gb.html
 
 
 BeagleBone Black
 ================
 
-.. image :: /_static/img/device/beaglebone.jpg
+.. image :: /_static/img/device/beaglebone-black.jpg
    :width: 50 %
    :align: center
 
@@ -92,7 +92,20 @@ More infromation
 Where to buy
 ------------
 
-* http://cz.farnell.com/element14/bbone-black-4g/beaglebone-black-rev-c-cortex/dp/2422228  - BeagleBone Black REV C - 1200Kc
+* 1200 CZK - http://cz.farnell.com/element14/bbone-black-4g/beaglebone-black-rev-c-cortex/dp/2422228  - BeagleBone Black REV C
+
+BeagleBone Blue
+===============
+
+.. image :: /_static/img/device/beaglebone-blue.jpg
+   :width: 50 %
+   :align: center
+
+Where to buy
+------------
+
+* 1900 CZK - https://cz.farnell.com/beagleboard/bbone-blue/beaglebone-blue-robotics-platform/dp/2612583
+
 
 UDOO
 ====

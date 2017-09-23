@@ -1,6 +1,6 @@
 
 ===========================
-Chapter 5. Physical Sensors
+Chapter 6. Physical Sensors
 ===========================
 
 .. toctree::
