@@ -40,7 +40,6 @@ PCF8574 - I²C to GPIO Extension Board
    :width: 50 %
    :align: center
 
-
 More infromation
 ----------------
 
@@ -118,3 +117,30 @@ Where to buy
 ------------
 
 * 15 USD - https://www.adafruit.com/product/1085
+
+
+P82B715 - Active I²C Long Cable Extender
+========================================
+
+This module is designed to enable long range I2C communications which extends
+the cable length from several meters to about 50 meters. Operating with any
+I2C master, slave or bus buffer is the primary advantage of this module. NXP
+P82B715 I2C bus extender IC is used as the main component on this module. The
+module has four pull-up resistors on board: two on the unbuffered bus side and
+another two on the buffered bus side. Additionally, there are two LEDs
+indicates the SCL and SDA activities on the bus. Both the LEDs are driven by
+transistors which draw negligibly small current from the SCL and SDA lines.
+
+.. image:: /_static/img/device/p82b715.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* https://www.nxp.com/docs/en/data-sheet/P82B715.pdf
+
+Where to buy
+------------
+
+* 18 USD - http://sandboxelectronics.com/?product=active-i2c-long-cable-extender-p82b715-module
