@@ -23,25 +23,16 @@ This galvanic dissolved oxygen probe is a passive device that generates a small 
 from 0mv to 47mv depending on the oxygen saturation of the HDPE sensing membrane.
 This voltage can easily be read by a multimeter or an analog to digital converter.
 
-Determining the dissolved oxygen percentage as compaired to atmospheric
-oxygen. (non scientific measurement)
-
-% saturation= (mv in water / mv in air) x 100
-
-Determining the dissolved oxygen in mg/L from the probes output voltage is
-very complex, and the responsibility of the embedded systems engineer.
-
-The Atlas Scientific Dissolved Oxygen Circuit will perform the calculations
-for you, to derive oxygen saturation in mg/L.
-
 .. image :: /_static/img/module/as_do.png
    :width: 50 %
    :align: center
 
+
 More information
 ----------------
 
-* https://www.atlas-scientific.com/_files/_app_notes/do-app-note.pdf
+* https://www.atlas-scientific.com/_files/_datasheets/_circuit/DO_EZO_datasheet.pdf
+
 
 Where to buy
 ------------

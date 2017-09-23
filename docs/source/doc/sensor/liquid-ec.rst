@@ -32,10 +32,13 @@ circuit, it has a range of 5 µS/cm to 200,000 µS/cm.
    :width: 50 %
    :align: center
 
+
 More information
 ----------------
 
 * https://www.atlas-scientific.com/_files/_datasheets/_probe/EC_K_1.0_probe.pdf
+* https://www.atlas-scientific.com/_files/_datasheets/_circuit/EC_EZO_datasheet.pdf
+
 
 Where to buy
 ------------

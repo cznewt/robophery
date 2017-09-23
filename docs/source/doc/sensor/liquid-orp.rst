@@ -1,7 +1,7 @@
 
-=============================================
-Measuring Reduction Potencial (ORP) of Liquid
-=============================================
+=================================================
+Measuring Oxidation/Reduction Potencial of Liquid
+=================================================
 
 Reduction potential (also known as redox potential, oxidation / reduction
 potential, ORP, pE)  is a measure of the tendency of a chemical species to
@@ -28,6 +28,7 @@ solution in the soaker bottle with new storage solution.
    :width: 50 %
    :align: center
 
+
 More information
 ----------------
 
@@ -35,6 +36,7 @@ More information
 * www.ozoneapplications.com/info/orp.htm
 * https://www.atlas-scientific.com/_files/_datasheets/_circuit/ORP_EZO_datasheet.pdf
 * https://www.atlas-scientific.com/_files/_datasheets/_circuit/ORP_Circuit_4.0.pdf
+
 
 Where to buy
 ------------

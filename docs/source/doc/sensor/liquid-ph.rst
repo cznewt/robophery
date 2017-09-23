@@ -24,14 +24,13 @@ solution in the soaker bottle with new storage solution.
    :width: 50 %
    :align: center
 
+
 More information
 ----------------
 
-* http://interactingobjects.com/building-bbpool/
-* Controlling the pHduino with a Python-Jabberbot script http://phduino.blogspot.cz/2012_07_01_archive.html
-* pHduino: OperationManual https://code.google.com/p/phduino/wiki/OperationManual
 * https://github.com/AtlasScientific/Raspberry-Pi-sample-code
-* https://www.atlas-scientific.com/_files/code/pi_sample_code.pdf
+* https://www.atlas-scientific.com/_files/_datasheets/_circuit/pH_EZO_datasheet.pdf
+
 
 Where to buy
 ------------
