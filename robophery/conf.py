@@ -234,7 +234,7 @@ EZOEC_MODULE = {
     'class': 'robophery.module.i2c.ezoec.EzoEcModule',
     'data': {
         'iface': 'local_i2c',
-        'addr': 0x100,
+        'addr': 0x64,
     },
 }
 
@@ -242,7 +242,7 @@ EZOPH_MODULE = {
     'class': 'robophery.module.i2c.ezoph.EzoPhModule',
     'data': {
         'iface': 'local_i2c',
-        'addr': 0x99,
+        'addr': 0x63,
     },
 }
 

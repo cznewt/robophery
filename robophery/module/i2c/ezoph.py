@@ -50,9 +50,8 @@ class EzoPhModule(I2cModule):
         the response.
         """
         self._data.writeRaw8(0x52)
-
+        self._data.writeRaw8(0x00)
         self._msleep(self.TIMEOUT_LONG)
-
         response_raw = self._data.readList(0, 31)
         if response_raw[0] == 1:
             response = filter(lambda x: x != 0, response_raw)
