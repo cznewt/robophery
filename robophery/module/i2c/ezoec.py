@@ -15,7 +15,7 @@ class EzoEcModule(I2cModule):
     SHORT_TIMEOUT = 0.5
 
     def __init__(self, *args, **kwargs):
-        super(EzoHpModule, self).__init__(*args, **kwargs)
+        super(EzoEcModule, self).__init__(*args, **kwargs)
         self._data = self._setup_i2c_iface(kwargs.get('data'))
 
     def write(self, cmd):
