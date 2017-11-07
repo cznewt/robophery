@@ -35,7 +35,11 @@ class MqttComm(object):
         return json.dumps(datum)
 
     def receive_data(self, topic, raw_data):
-        data = json.loads(raw_data)
+        try:
+            data = json.loads(raw_data)
+        except Exception as e:
+            self._log.error("Error parsing received message {0}: {1}".format(raw_data, e))
+            return
         tgt = data.get('tgt', 'unknown')
         fun = data.get('fun', 'get_data')
         arg = data.get('arg', None)
