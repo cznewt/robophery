@@ -20,7 +20,7 @@ class RelayModule(GpioModule):
 	if self._invert_logic:
           self._data.set_high()
         else:
-          self._data.set_low()        
+          self._data.set_low()
 
     def commit_action(self, action, arg=None):
         if action == 'turn_on':
@@ -69,7 +69,7 @@ class RelayModule(GpioModule):
         read_stop = self._get_time()
         read_time = (read_stop - read_start) / 4
         data = [
-            (self._name, 'state', self._state, read_time),
+            (self._name, 'state', self._state),
             (self._name, 'runtime', self._runtime, read_time),
             (self._name, 'turned_on', self._turn_on_count, read_time),
             (self._name, 'turned_off', self._turn_off_count, read_time),
