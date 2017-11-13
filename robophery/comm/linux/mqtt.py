@@ -10,18 +10,23 @@ class PahoMqttComm(MqttComm):
         self._client = mqtt.Client()
         self._client.on_connect = self._on_connect
         self._client.on_message = self._on_message
+        self._client.on_disconnect = self._on_disconnect
         if self._username is not None:
             self._client.username_pw_set(
                 self._username, password=self._password)
         self._client.connect(self._host, self._port, 60)
         self._client.loop_start()
 
+    def _on_disconnect(self, client, userdata, rc):
+        if rc != 0:
+            self._log.error("Unexpectedly disconnected from MQTT {0}:{1} with return code {2}".format(self._host, self._port, rc))
+
     def _on_connect(self, client, userdata, flags, rc):
         """
         The callback for when the client receives a CONNACK response from
         the server.
         """
-        self._log.info("Connected to {0}:{1} with result code {2}.".format(
+        self._log.info("Connected to {0}:{1} with return code {2}.".format(
             self._host, self._port, rc))
         # Subscribing in on_connect() means that if we lose the connection and
         # reconnect then subscriptions will be renewed.
