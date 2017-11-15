@@ -30,6 +30,7 @@ communication among devices is handled by the standard MQTT message bus.
    doc/actuator/index.rst
    doc/sensor/index.rst
    doc/virtual/index.rst
+   doc/integration/index.rst
 
 
 Indices and tables

@@ -1,0 +1,9 @@
+[submodule "micropython"]
+	path = micropython
+	url = git@github.com:micropython/micropython.git
+[submodule "espsdk"]
+	path = espsdk
+	url = git@github.com:pfalcon/esp-open-sdk.git
+[submodule "micropython-lib"]
+	path = micropython-lib
+	url = git@github.com:micropython/micropython-lib.git
