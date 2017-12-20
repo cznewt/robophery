@@ -33,7 +33,7 @@ class Am2320Module(I2cModule):
             self._msleep(1.6)
 
             data = self._data.readList(0, 8)
-        except IOError, exc:
+        except IOError as exc:
             raise CommunicationError(str(exc))
 
         # Check data[0] and data[1]

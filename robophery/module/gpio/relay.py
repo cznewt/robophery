@@ -17,10 +17,10 @@ class RelayModule(GpioModule):
         self._data = self._setup_gpio_iface(kwargs.get('data'))
         self._data.setup_pin(self.GPIO_MODE_OUT)
         self._invert_logic = kwargs.get('invert_logic', False)
-	if self._invert_logic:
-          self._data.set_high()
+        if self._invert_logic:
+            self._data.set_high()
         else:
-          self._data.set_low()
+            self._data.set_low()
 
     def commit_action(self, action, arg=None):
         if action == 'turn_on':
@@ -34,9 +34,9 @@ class RelayModule(GpioModule):
         Turn on the relay.
         """
         if self._invert_logic:
-          self._data.set_low()
+            self._data.set_low()
         else:
-          self._data.set_high()
+            self._data.set_high()
         self._state = 1
         self._turn_on_count += 1
         self._runtime_start = self._get_time()
@@ -46,9 +46,9 @@ class RelayModule(GpioModule):
         Turn off the relay.
         """
         if self._invert_logic:
-          self._data.set_high()
+            self._data.set_high()
         else:
-          self._data.set_low()
+            self._data.set_low()
         self._update_runtime()
         self._state = 0
         self._turn_off_count += 1

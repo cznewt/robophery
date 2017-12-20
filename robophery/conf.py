@@ -78,14 +78,14 @@ BBB_PLATFORM = {
 RPI_PLATFORM = {
     'interface': {
         'local_gpio': {
-            'class': 'robophery.platform.rpi.gpio.RaspberryPiGpioInterface',
+            'class': 'robophery.platform.noop.gpio.NoopGpioInterface',
             'engine': 'gpio',
         },
-        'local_i2c': {
-            'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
-            'engine': 'i2c',
-            'bus_number': 1
-        },
+#        'local_i2c': {
+#            'class': 'robophery.platform.linux.i2c.SMBusI2cInterface',
+#            'engine': 'i2c',
+#            'bus_number': 1
+#        },
     },
 }
 
