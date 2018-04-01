@@ -378,14 +378,6 @@ RELAY_MODULE = {
     },
 }
 
-SI7021_MODULE = {
-    'class': 'robophery.module.i2c.si7021.Si7021Module',
-    'data': {
-        'iface': 'local_i2c',
-        'addr': 0x40,
-    },
-}
-
 SERVO_MODULE = {
     'class': 'robophery.module.pwm.servo.ServoModule',
     'data': {
@@ -394,6 +386,21 @@ SERVO_MODULE = {
     },
 }
 
+SGP30_MODULE = {
+    'class': 'robophery.module.i2c.sgp30.Sgp30Module',
+    'data': {
+        'iface': 'local_i2c',
+        'addr': 0x58,
+    },
+}
+
+SI7021_MODULE = {
+    'class': 'robophery.module.i2c.si7021.Si7021Module',
+    'data': {
+        'iface': 'local_i2c',
+        'addr': 0x40,
+    },
+}
 
 SHT3X_MODULE = {
     'class': 'robophery.module.i2c.sht3x.Sht3xModule',

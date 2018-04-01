@@ -114,6 +114,12 @@ def module_mpu6050():
     manager.run()
 
 
+def module_sgp30():
+    config = _config(SGP30_MODULE)
+    manager = ModuleManager(**config)
+    manager.run()
+
+
 def module_si7021():
     config = _config(SI7021_MODULE)
     manager = ModuleManager(**config)
