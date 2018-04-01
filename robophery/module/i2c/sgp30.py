@@ -56,7 +56,7 @@ class Sgp30Module(I2cModule):
         self._sleep(delay)
         if not reply_size:
             return None
-        crc_result = self._data.readList(reply_size)
+        crc_result = self._data.readList(self.REG_ADDR, reply_size)
         #print("\tRaw Read: ", crc_result)
         result = []
         for i in range(reply_size):
