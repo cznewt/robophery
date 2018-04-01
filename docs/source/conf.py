@@ -37,7 +37,6 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx.ext.todo',
     'sphinx.ext.coverage',
-    'sphinx.ext.pngmath',
     'sphinx.ext.viewcode',
 ]
 
@@ -54,8 +53,8 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'RoboPhery'
-copyright = u'2017, Ales Komarek'
+project = u'RoboPhery Project'
+copyright = u'2017-2018, RoboPhery Team'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -245,7 +244,7 @@ latex_documents = [
 # (source start file, name, description, authors, manual section).
 man_pages = [
     ('index', 'robophery', u'RoboPhery Documentation',
-     [u'Komarek'], 1)
+     [u'RoboPhery Team'], 1)
 ]
 
 # If true, show URL addresses after external links.
