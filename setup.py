@@ -5,6 +5,12 @@ from setuptools import setup, find_packages
 with open('README.rst') as readme:
     long_description = ''.join(readme.readlines())
 
+with open('./requirements.txt') as _requirements:
+    requirements = [r.strip() for r in _requirements.readlines()]
+
+with open('./requirements_tests.txt') as _tests_requirements:
+    tests_requirements = [r.strip() for r in _tests_requirements.readlines()]
+
 setup(
     name='robophery',
     version='0.2',
@@ -15,12 +21,23 @@ setup(
     license='Apache Software License',
     url='http://www.github.cz/cznewt/robophery',
     packages=find_packages(exclude=['.txt']),
+    include_package_data=True,
+    install_requires=requirements,
+    tests_require=tests_requirements,
     classifiers=[
         'Intended Audience :: System Administrators',
         'License :: OSI Approved :: Apache Software License',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',
     ],
+    extras_require={
+        'tests': [
+            'pytest',
+            'flake8'],
+        'docs': [
+            'sphinx',
+            'sphinx_rtd_theme']
+    },
     zip_safe=False,
     entry_points={
         'console_scripts': [
