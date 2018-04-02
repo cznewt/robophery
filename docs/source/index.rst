@@ -23,18 +23,10 @@ communication among devices is handled by the standard MQTT message bus.
    :maxdepth: 3
    :glob:
 
-   doc/arch/index.rst
-   doc/install/index.rst
-   doc/device/index.rst
-   doc/interface/index.rst
-   doc/actuator/index.rst
-   doc/sensor/index.rst
-   doc/virtual/index.rst
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
+   doc/arch/index
+   doc/install/index
+   doc/device/index
+   doc/interface/index
+   doc/actuator/index
+   doc/sensor/index
+   doc/virtual/index

@@ -57,7 +57,7 @@ More information
 ----------------
 
 * https://learn.adafruit.com/adafruit-sgp30-gas-tvoc-eco2-mox-sensor
-
+* https://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/9_Gas_Sensors/Sensirion_Gas_Sensors_SGP30_Datasheet_EN.pdf
 
 Where to buy
 ------------
