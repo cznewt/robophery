@@ -19,21 +19,21 @@ class Sgp30Module(I2cModule):
         super(Sgp30Module, self).__init__(*args, **kwargs)
         self._data = self._setup_i2c_iface(kwargs.get('data'))
         # get unique serial, its 48 bits and store in an array
-        self.serial = self._sgp_query(0x36, [0x82], 0.01, 3)
+        # self.serial = self._sgp_query(0x36, [0x82], 0.01, 3)
         # check the feature set
-        featureset = self._sgp_query(0x20, [0x2f], 0.01, 1)
-        if featureset[0] != self.FEATURESET:
-            self._log.error('Not right device ID (0x0020): {}'.format(featureset[0]))
+        # featureset = self._sgp_query(0x20, [0x2f], 0.01, 1)
+        # if featureset[0] != self.FEATURESET:
+        #    self._log.error('Not right device ID (0x0020): {}'.format(featureset[0]))
         self.iaq_init()
-        self.set_iaq_baseline(0x8973, 0x8aae)
+        # self.set_iaq_baseline(0x8973, 0x8aae)
 
     def iaq_init(self):
         """Initialize the IAQ algorithm"""
-        self._sgp_query(self.REG_ADDR, [0x03], 0.01, 0)
+        self._sgp_query(self.REG_ADDR, [0x03], 0.5, 0)
 
     def iaq_measure(self):
         """Measure the CO2eq and TVOC"""
-        return self._sgp_query(self.REG_ADDR, [0x08], 0.05, 2)
+        return self._sgp_query(self.REG_ADDR, [0x08], 0.6, 2)
 
     def get_iaq_baseline(self):
         """Retreive the IAQ algorithm baseline for CO2eq and TVOC"""
@@ -56,8 +56,13 @@ class Sgp30Module(I2cModule):
         self._sleep(delay)
         if not reply_size:
             return None
-        crc_result = self._data.readList(self.REG_ADDR, reply_size)
-        #print("\tRaw Read: ", crc_result)
+        #crc_result = bytearray(reply_size * 3)
+        #raw_data = self._data.readList(self.REG_ADDR, reply_size * 3)
+        crc_result = self._data.readList(self.REG_ADDR, reply_size * 3)
+        print("\tCRC result: ", crc_result)
+        #print("\tRaw Read: ", raw_data)
+        #for i in range(raw_data):
+        #    crc_result[i] = raw_data[i]
         result = []
         for i in range(reply_size):
             word = [crc_result[3*i], crc_result[3*i+1]]
