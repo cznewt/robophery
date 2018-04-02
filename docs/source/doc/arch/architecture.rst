@@ -78,7 +78,7 @@ On the following Figure, you can see components of our proposed ambient
 intelligence system and their relationships. The central component is the
 message bus, in our case provided by MQTT broker.
 
-.. image :: /_static/img/arch/arch_system.png
+.. image :: /static/img/arch/arch_system.png
    :width: 50 %
    :align: center
 
@@ -183,7 +183,7 @@ are captured. There are predefined conditions and when captured values are
 identical with same condition, monitoring agent send a message via message bus
 to reacting agent, which will performs predefined action.
 
-.. image :: /_static/img/arch/arch_unit.png
+.. image :: /static/img/arch/arch_unit.png
    :width: 50 %
    :align: center
 
@@ -201,7 +201,7 @@ Following figure shows RoboPhery service running on the Raspberry Pi device
 with MCP23008 I2C to GPIO expander and multiple sensors connected to
 individual interfaces.
 
-.. image :: /_static/img/arch/detail_rpi.png
+.. image :: /static/img/arch/detail_rpi.png
    :width: 50 %
    :align: center
 
@@ -212,7 +212,7 @@ ModeMCU Device
 Following figure shows RoboPhery service running on the Mode MCU device with
 multiple sensors connected to interfaces present on the device.
 
-.. image :: /_static/img/arch/detail_mcu.png
+.. image :: /static/img/arch/detail_mcu.png
    :width: 50 %
    :align: center
 
@@ -224,6 +224,6 @@ Following figure shows RoboPhery service running on the Raspberry Pi device
 with IQRF coordinator with sensor interfacess connected through a mesh network
 and IQRF interface.
 
-.. image :: /_static/img/arch/detail_iqrf.png
+.. image :: /static/img/arch/detail_iqrf.png
    :width: 50 %
    :align: center

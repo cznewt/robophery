@@ -11,7 +11,7 @@ Ultrasonic ranging module HC - SR04 provides 2cm - 400cm non-contact
 measurement function, the ranging accuracy can reach to 3mm. The modules
 includes ultrasonic transmitters, receiver and control circuit.
 
-.. image:: /_static/img/module/hc-sr04.jpg
+.. image:: /static/img/module/hc-sr04.jpg
    :width: 50 %
    :align: center
 
@@ -57,7 +57,7 @@ totally invisible to the human eye, coupled with internal physical infrared
 filters, it enables longer ranging distance, higher immunity to ambient light
 and better robustness to cover-glass optical cross-talk.
 
-.. image:: /_static/img/module/vl53l0x.jpg
+.. image:: /static/img/module/vl53l0x.jpg
    :width: 50 %
    :align: center
 

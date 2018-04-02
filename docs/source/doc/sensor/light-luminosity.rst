@@ -23,7 +23,7 @@ calibration; Do not distinguish between ambient light; Close to the visual
 sensitivity of spectral characteristics; For a wide range of brightness for 1
 lux high precision measurement.
 
-.. image:: /_static/img/module/bh1750.jpg
+.. image:: /static/img/module/bh1750.jpg
    :width: 50 %
    :align: center
 
@@ -58,7 +58,7 @@ sensor has a massive 600,000,000:1 dynamic range! Unlike the TSL2561 you
 cannot change the I²C address, so keep that in mind. This board/chip uses I²C
 7-bit address 0x29.
 
-.. image:: /_static/img/module/tls2591.jpg
+.. image:: /static/img/module/tls2591.jpg
    :width: 50 %
    :align: center
 
@@ -96,7 +96,7 @@ when actively sensing, and less than 15 uA when in powerdown mode.
 This board/chip uses I²C 7-bit addresses 0x39, 0x29, 0x49, selectable with
 jumpers.
 
-.. image :: /_static/img/module/tls2561.jpg
+.. image :: /static/img/module/tls2561.jpg
    :width: 50 %
    :align: center
 
@@ -126,7 +126,7 @@ input pin. Then connect a 10K pull-down resistor from that analog pin to
 ground. The voltage on the pin will be 2.5V or higher when its light out and
 near ground when its dark.
 
-.. image :: /_static/img/module/cds.jpg
+.. image :: /static/img/module/cds.jpg
    :width: 50 %
    :align: center
 

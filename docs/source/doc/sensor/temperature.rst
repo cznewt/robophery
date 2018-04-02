@@ -22,7 +22,7 @@ microcontroller using standard i2c. There are 3 address pins so you can
 connect up to 8 to a single I2C bus without address collisions. Best of all, a
 wide voltage range makes is usable with 2.7V to 5.5V logic.
 
-.. image :: /_static/img/module/mcp9808.jpg
+.. image :: /static/img/module/mcp9808.jpg
    :width: 50 %
    :align: center
 
@@ -52,7 +52,7 @@ The DS18B20 is a rather useful sensor because you can read more than one of
 them using the same GPIO pin. Device is able to recognise the input from each
 separate sensor.
 
-.. image :: /_static/img/module/ds18b20.jpg
+.. image :: /static/img/module/ds18b20.jpg
    :width: 50 %
    :align: center
 
@@ -83,7 +83,7 @@ capacitors and level shifting circuitry, all assembled and tested. Comes with
 a 2 pin terminal block (for connecting to the thermocouple) and pin header (to
 plug into any breadboard or perfboard).
 
-.. image :: /_static/img/module/max31855.jpg
+.. image :: /static/img/module/max31855.jpg
    :width: 50 %
    :align: center
 
@@ -106,7 +106,7 @@ TMP36 - AIN Temperature Sensor
 
 Low cost temperature sensor.
 
-.. image:: /_static/img/module/tmp36.jpg
+.. image:: /static/img/module/tmp36.jpg
    :width: 50 %
    :align: center
 
@@ -134,7 +134,7 @@ of 400 µA to 5 mA with virtually no change in performance. When calibrated at
 25°C, the LM135 has typically less than 1°C error over a 100°C temperature
 range. Unlike other sensors, the LM135 has a linear output.
 
-.. image:: /_static/img/module/lm335.jpg
+.. image:: /static/img/module/lm335.jpg
    :width: 50 %
    :align: center
 

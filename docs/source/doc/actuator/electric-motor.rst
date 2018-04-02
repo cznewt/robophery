@@ -7,7 +7,7 @@ Controlling Electric Motor
 L293D - GPIO DC Motor Actuator
 ==============================
 
-.. image:: /_static/img/module/l293d.jpg
+.. image:: /static/img/module/l293d.jpg
    :width: 50 %
    :align: center
 
@@ -21,6 +21,6 @@ More information
 MG90S - PWM Relay Motor Actuator
 ================================
 
-.. image:: /_static/img/module/mg90s.jpg
+.. image:: /static/img/module/mg90s.jpg
    :width: 50 %
    :align: center

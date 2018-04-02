@@ -28,7 +28,7 @@ grab data. The only real downside of this sensor is you can only get new data
 from it once every 2 seconds, so when using, sensor readings can be up to 2
 seconds old.
 
-.. image :: /_static/img/module/dht11.jpg
+.. image :: /static/img/module/dht11.jpg
    :width: 50 %
    :align: center
 
@@ -54,7 +54,7 @@ needed). Compared to the DHT11, this sensor is more precise, more accurate and
 works in a bigger range of temperature/humidity, but its larger and more
 expensive.
 
-.. image :: /_static/img/module/dht22.jpg
+.. image :: /static/img/module/dht22.jpg
    :width: 50 %
    :align: center
 
@@ -81,7 +81,7 @@ might drop a bit. The temperature output has an accuracy of ±1°C from
 -30~90°C. If you're looking to measure temperature more accurately, we
 recommend the MCP9808 High Accuracy I²C Temperature Sensor Breakout Board.
 
-.. image :: /_static/img/module/htu21d.jpg
+.. image :: /static/img/module/htu21d.jpg
    :width: 50 %
    :align: center
 
@@ -109,7 +109,7 @@ you’ll have relative humidity readings and accurate temperature readings as
 well! This sensor is ideal for environmental sensing and data logging, perfect
 for a weather station or humidor control system.
 
-.. image :: /_static/img/module/si7021.jpg
+.. image :: /static/img/module/si7021.jpg
    :width: 50 %
    :align: center
 
@@ -133,7 +133,7 @@ of an option to communicate over I2C interface. It is physically a little
 smaller, but with identical pin-out. The one-wire serial of the AM2302 is
 retained making this a simple drop-in replacement.
 
-.. image :: /_static/img/module/am2320.jpg
+.. image :: /static/img/module/am2320.jpg
    :width: 50 %
    :align: center
 
@@ -146,7 +146,7 @@ More information
 SHT30/SHT31 - I²C Humidity and Temperature Sensor
 =================================================
 
-.. image :: /_static/img/module/sht3x.jpg
+.. image :: /static/img/module/sht3x.jpg
    :width: 50 %
    :align: center
 

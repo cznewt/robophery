@@ -35,14 +35,14 @@ NodeMCU is an open source IoT platform. It includes firmware which runs on the
 ESP8266 Wi-Fi SoC from Espressif Systems, and hardware which is based on the
 ESP-12 module.
 
-.. figure:: /_static/img/device/nodemcu.jpg
+.. figure:: /static/img/device/nodemcu.jpg
    :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/nodemcu.jpg
+.. image :: /static/img/pinout/nodemcu.jpg
    :width: 50 %
    :align: center
 
@@ -62,14 +62,14 @@ host MCU, reducing communication stack overhead on the main application
 processor. ESP32 can interface with other systems to provide Wi-Fi and
 Bluetooth functionality through the SPI / SDIO or I2C / UART interfaces.
 
-.. figure:: /_static/img/device/esp32.jpg
+.. figure:: /static/img/device/esp32.jpg
    :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/esp32.png
+.. image :: /static/img/pinout/esp32.png
    :width: 50 %
    :align: center
 
@@ -89,14 +89,14 @@ of the Arduino, with the power and flexibilities of the Raspberry Pi and is
 identified with FCC Identifier 2AJVP-OMEGA2. It runs Linux kernel based
 lightweight operating system for embedded system called OpenWRT.
 
-.. figure:: /_static/img/device/onion.png
+.. figure:: /static/img/device/onion.png
    :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/omega2.jpg
+.. image :: /static/img/pinout/omega2.jpg
    :width: 50 %
    :align: center
 

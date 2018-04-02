@@ -23,7 +23,7 @@ This galvanic dissolved oxygen probe is a passive device that generates a small 
 from 0mv to 47mv depending on the oxygen saturation of the HDPE sensing membrane.
 This voltage can easily be read by a multimeter or an analog to digital converter.
 
-.. image :: /_static/img/module/as_do.png
+.. image :: /static/img/module/as_do.png
    :width: 50 %
    :align: center
 

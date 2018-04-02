@@ -20,7 +20,7 @@ Remember, a pH Probe cannot be allowed to dry out or freeze. When it’s not in
 use keep it in the supplied soaker bottle. Periodically change out the storage
 solution in the soaker bottle with new storage solution.
 
-.. image :: /_static/img/module/as_ph.png
+.. image :: /static/img/module/as_ph.png
    :width: 50 %
    :align: center
 

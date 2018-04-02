@@ -14,7 +14,7 @@ in wiring it up. Single LED backlight included can be dimmed easily with a
 resistor or PWM and uses much less power than LCD with EL (electroluminescent)
 backlights.
 
-.. figure:: /_static/img/module/hd44780.jpg
+.. figure:: /static/img/module/hd44780.jpg
    :width: 50 %
    :align: center
 

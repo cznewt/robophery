@@ -21,7 +21,7 @@ and read individually. The SensorTag includes the following sensors:
 * Gyroscope (IMU-3000) from InvenSense, http://www.invensense.com/mems/gyro/imu3000.html
 * Magnetometer (MAG3110) from Freescale, http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=MAG3110
 
-.. figure:: /_static/img/module/cc2541.jpg
+.. figure:: /static/img/module/cc2541.jpg
    :width: 50 %
    :align: center
 
@@ -48,7 +48,7 @@ consumption compared to previous Bluetooth® Smart products. It also includes
 cloud support, letting you move your sensor data from the smartphone app to
 the cloud with a simple touch on the screen.
 
-.. figure:: /_static/img/module/cc2650.jpg
+.. figure:: /static/img/module/cc2650.jpg
    :width: 50 %
    :align: center
 

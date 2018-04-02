@@ -21,7 +21,7 @@ saving applications such as demand control ventilation.
 All units are factory calibrated to measure CO2 concentration levels up to
 5000ppm, while maintaining accuracy across the range.
 
-.. image:: /_static/img/module/t6713.jpg
+.. image:: /static/img/module/t6713.jpg
    :width: 50 %
    :align: center
 
@@ -48,7 +48,7 @@ tracks the baseline calibration, calculates TVOC and eCO2 values, and provides
 an I2C interface to read from. Unlike the CCS811, this sensor does not require
 I2C clock stretching.
 
-.. image:: /_static/img/module/sgp30.jpg
+.. image:: /static/img/module/sgp30.jpg
    :width: 50 %
    :align: center
 

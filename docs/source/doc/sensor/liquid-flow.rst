@@ -33,7 +33,7 @@ vary a bit depending on the flow rate, fluid pressure and sensor orientation.
 It will need careful calibration if better than 10% precision is required.
 However, its great for basic measurement tasks!
 
-.. image :: /_static/img/module/liquid_flow_plastic.jpg
+.. image :: /static/img/module/liquid_flow_plastic.jpg
    :width: 50 %
    :align: center
 
@@ -54,7 +54,7 @@ effect magnetic sensor on the other side of the plastic tube that can measure
 how many spins the pinwheel has made through the plastic wall. This method
 allows the sensor to stay safe and dry.
 
-.. image :: /_static/img/module/liquid_flow_brass.jpg
+.. image :: /static/img/module/liquid_flow_brass.jpg
    :width: 50 %
    :align: center
 

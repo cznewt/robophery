@@ -16,7 +16,7 @@ silicon die together with an onboard Digital Motion Processor™ (DMP™) capabl
 of processing complex 9-axis MotionFusion algorithms, the MPU-6050 does away
 with the cross-axis alignment problems that can creep up on discrete parts.
 
-.. figure:: /_static/img/module/mpu6050.jpg
+.. figure:: /static/img/module/mpu6050.jpg
    :width: 50 %
    :align: center
 
@@ -35,7 +35,7 @@ gravity) or how fast the board is accelerating in 3D space. The other is a
 coming from, generally used to detect magnetic north.  The third is a 3-axis
 gyroscope that can measure spin and twist.
 
-.. figure:: /_static/img/module/lsm9ds0.jpg
+.. figure:: /static/img/module/lsm9ds0.jpg
    :width: 50 %
    :align: center
 
@@ -57,7 +57,7 @@ allows the host application to limit the digital signal bandwidth. The device
 may be configured to generate an interrupt when a user-programmable angular
 rate threshold is crossed on any one of the enabled axes.
 
-.. figure:: /_static/img/module/fxas21002c.png
+.. figure:: /static/img/module/fxas21002c.png
    :width: 50 %
    :align: center
 

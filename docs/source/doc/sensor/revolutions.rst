@@ -10,14 +10,14 @@ Measuing Revolutions
 3 wire fans have an extra OUTPUT from the fan to tell the (generally
 motherboard) what speed the fan is turning.
 
-.. figure:: /_static/img/module/3pin-fan.jpg
+.. figure:: /static/img/module/3pin-fan.jpg
    :width: 50 %
    :align: center
 
 Wiring schemes
 --------------
 
-.. figure:: /_static/img/scheme/fan_revolutions.jpg
+.. figure:: /static/img/scheme/fan_revolutions.jpg
    :width: 50 %
    :align: center
 

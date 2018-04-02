@@ -24,7 +24,7 @@ Remember, a ORP Probe cannot be allowed to dry out or freeze. When it’s not in
 use keep it in the supplied soaker bottle. Periodically change out the storage
 solution in the soaker bottle with new storage solution.
 
-.. image :: /_static/img/module/as_orp.jpg
+.. image :: /static/img/module/as_orp.jpg
    :width: 50 %
    :align: center
 

@@ -24,7 +24,7 @@ Because the display makes its own light, no backlight is required. This
 reduces the power required to run the OLED and is why the display has such
 high contrast. The driver chip SSD1306, communicates via I2C only.
 
-.. figure:: /_static/img/module/oled_128_32.jpg
+.. figure:: /static/img/module/oled_128_32.jpg
    :width: 50 %
    :align: center
 

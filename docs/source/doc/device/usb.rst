@@ -15,7 +15,7 @@ common protocols like SPI, I²C, serial UART, JTAG, and more!  There's even a
 handful of digital GPIO pins that you can read and write to do things like
 flash LEDs, read switches or buttons, and more.
 
-.. image:: /_static/img/device/ft232h.png
+.. image:: /static/img/device/ft232h.png
    :width: 50 %
    :align: center
  	
@@ -47,7 +47,7 @@ The module plug directly into the USB host connector and the pads of the PCB
 makes electrical contact with the electrical contacts of the USB connector.
 The serial interface operate at +3.3V. Input/Output pins are 5V tolerant.
 
-.. image:: /_static/img/device/umft201xb.jpg
+.. image:: /static/img/device/umft201xb.jpg
    :width: 50 %
    :align: center
 
@@ -65,7 +65,7 @@ Where to buy
 Arduino - GPIO/SPI/I2C Board
 ============================
 
-.. image:: /_static/img/device/arduino.jpg
+.. image:: /static/img/device/arduino.jpg
    :width: 50 %
    :align: center
 

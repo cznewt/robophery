@@ -22,7 +22,7 @@ higher water concentration causes a higher average dielectric constant for the
 soil. The average dielectric constant can be sensed by measuring the speed of
 propagation along a buried transmission line.
 
-.. image:: /_static/img/module/hygro.jpg
+.. image:: /static/img/module/hygro.jpg
    :width: 50 %
    :align: center
 
@@ -40,7 +40,7 @@ Where to buy
 Parrot Flower Power - BLE Gardening Sensor
 ==========================================
 
-.. image :: /_static/img/module/pfp.jpg
+.. image :: /static/img/module/pfp.jpg
    :width: 50 %
    :align: center
 

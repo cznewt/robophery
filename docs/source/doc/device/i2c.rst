@@ -23,7 +23,7 @@ You can set the I²C address by tying the ADDR0-2 pins to power or ground, for
 up to 8 unique addresses. That means 8 chips can share a single I²C bus -
 that's 64 I/O pins,
 
-.. image:: /_static/img/device/mcp23008.jpg
+.. image:: /static/img/device/mcp23008.jpg
    :width: 50 %
    :align: center
 
@@ -36,7 +36,7 @@ Where to buy
 PCF8574 - I²C to GPIO Extension Board
 =====================================
 
-.. image:: /_static/img/device/pcf8574.jpg
+.. image:: /static/img/device/pcf8574.jpg
    :width: 50 %
    :align: center
 
@@ -62,7 +62,7 @@ is good for when you want to control white or blue LEDs with 3.4+ forward
 voltages). 6 address select pins so you can wire up to 62 of these on a single
 i2c bus, a total of 992 outputs - that's a lot of servos or LEDs.
 
-.. image:: /_static/img/device/pca9685.jpg
+.. image:: /static/img/device/pca9685.jpg
    :width: 50 %
    :align: center
 
@@ -81,7 +81,7 @@ channels. As a nice bonus, it even includes a programmable gain amplifier, up
 to x16, to help boost up smaller single/differential signals to the full
 range.
 
-.. image:: /_static/img/device/ads1015.jpg
+.. image:: /static/img/device/ads1015.jpg
    :width: 50 %
    :align: center
 
@@ -104,7 +104,7 @@ be configured as 4 single-ended input channels, or two differential channels.
 As a nice bonus, it even includes a programmable gain amplifier, up to x16, to
 help boost up smaller single/differential signals to the full range.
 
-.. image:: /_static/img/device/ads1115.jpg
+.. image:: /static/img/device/ads1115.jpg
    :width: 50 %
    :align: center
 
@@ -131,7 +131,7 @@ another two on the buffered bus side. Additionally, there are two LEDs
 indicates the SCL and SDA activities on the bus. Both the LEDs are driven by
 transistors which draw negligibly small current from the SCL and SDA lines.
 
-.. image:: /_static/img/device/p82b715.jpg
+.. image:: /static/img/device/p82b715.jpg
    :width: 50 %
    :align: center
 

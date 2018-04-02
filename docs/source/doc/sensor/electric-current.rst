@@ -27,7 +27,7 @@ max current is ±400mA and the resolution is 0.1mA. Advanced hackers can remove
 the 0.1 ohm current sense resistor and replace it with their own to change the
 range (say a 0.01 ohm to measure up 32 Amps with a resolution of 8mA)
 
-.. image:: /_static/img/module/ina219.jpg
+.. image:: /static/img/module/ina219.jpg
    :width: 50 %
    :align: center
 
@@ -51,7 +51,7 @@ capacitors. Please keep in mind that though the ACS712 is rated for 2.1kV
 isolation, the PCB it is on is not designed for that type of voltage. Please
 keep that in mind if you are using this breakout in high voltage applications.
 
-.. image:: /_static/img/module/acs712.jpg
+.. image:: /static/img/module/acs712.jpg
    :width: 50 %
    :align: center
 
@@ -75,7 +75,7 @@ oakmžitého odběru se mění frekvence blikání LED diody a frekvence pulsů
 impulsního výstupu- viz. tech. parametry). Ideální pro měření spotřeby
 jednotlivých nájemníků, v autokempech, chatách apod.
 
-.. image:: /_static/img/module/ht-1pd.jpg
+.. image:: /static/img/module/ht-1pd.jpg
    :width: 50 %
    :align: center
 
@@ -102,7 +102,7 @@ does not have a load resistor built in, so in most cases it will be necessary
 to place a resistor across the output to convert the coil’s induced current to
 a very small measurable voltage.
 
-.. image:: /_static/img/module/current_sensor.jpg
+.. image:: /static/img/module/current_sensor.jpg
    :width: 50 %
    :align: center
 

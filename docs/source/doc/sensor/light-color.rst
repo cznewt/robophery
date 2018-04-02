@@ -23,7 +23,7 @@ Connect to any microcontroller with I2C and our example code will quickly get
 you going with 4 channel readings. We include some example code to detect
 light lux and temperature that we snagged from the eval board software.
 
-.. image:: /_static/img/module/tcs34725.jpg
+.. image:: /static/img/module/tcs34725.jpg
    :width: 50 %
    :align: center
 

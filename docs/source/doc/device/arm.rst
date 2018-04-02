@@ -17,14 +17,14 @@ The Raspberry Pi is a series of credit card-sized single-board computers
 developed in the UK by the Raspberry Pi Foundation with the intention of
 promoting the teaching of basic computer science in schools.
 
-.. figure:: /_static/img/device/raspberry_pi.jpg
+.. figure:: /static/img/device/raspberry_pi.jpg
    :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/rpi.png
+.. image :: /static/img/pinout/rpi.png
    :width: 25 %
    :align: center
 
@@ -35,14 +35,14 @@ The Raspberry Pi is a series of credit card-sized single-board computers
 developed in the UK by the Raspberry Pi Foundation with the intention of
 promoting the teaching of basic computer science in schools.
 
-.. figure:: /_static/img/device/raspberry_pi_2.jpg
+.. figure:: /static/img/device/raspberry_pi_2.jpg
    :width: 50 %
    :align: center
 
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/rpi3.png
+.. image :: /static/img/pinout/rpi3.png
    :width: 40 %
    :align: center
 
@@ -60,7 +60,7 @@ Where to buy
 BeagleBone Black
 ================
 
-.. image :: /_static/img/device/beaglebone-black.jpg
+.. image :: /static/img/device/beaglebone-black.jpg
    :width: 50 %
    :align: center
 
@@ -68,7 +68,7 @@ BeagleBone Black
 Available pins
 --------------
 
-.. image :: /_static/img/pinout/bbb.jpg
+.. image :: /static/img/pinout/bbb.jpg
    :width: 50 %
    :align: center
 
@@ -97,7 +97,7 @@ Where to buy
 BeagleBone Blue
 ===============
 
-.. image :: /_static/img/device/beaglebone-blue.jpg
+.. image :: /static/img/device/beaglebone-blue.jpg
    :width: 50 %
    :align: center
 
@@ -110,7 +110,7 @@ Where to buy
 UDOO
 ====
 
-.. image :: /_static/img/device/udoo.jpg
+.. image :: /static/img/device/udoo.jpg
    :width: 50 %
    :align: center
 
@@ -122,7 +122,7 @@ More information
 ODroid C1/C2
 ============
 
-.. image :: /_static/img/device/odroid_c1.jpg
+.. image :: /static/img/device/odroid_c1.jpg
    :width: 50 %
    :align: center
 

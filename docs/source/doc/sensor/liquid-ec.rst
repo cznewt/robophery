@@ -28,7 +28,7 @@ This Atlas Scientific conductivity probe, has a cell constant of K 1.0 When
 this conductivity probe is connected to an Atlas Scientific EZOTM conductivity
 circuit, it has a range of 5 µS/cm to 200,000 µS/cm.
 
-.. image :: /_static/img/module/as_ec_k1.png
+.. image :: /static/img/module/as_ec_k1.png
    :width: 50 %
    :align: center
 

@@ -24,7 +24,7 @@ leadless ceramic chip carrier (LCC) super thin encapsulation; Directly connect
 to microprocessor via I²C highway; Main features: Pressure range: 300~1100hPa
 (altitude -500~9000 meters).
 
-.. image:: /_static/img/module/bmp180.jpg
+.. image:: /static/img/module/bmp180.jpg
    :width: 50 %
    :align: center
 
@@ -44,6 +44,6 @@ Where to buy
 BMP280 - I²C Temperature and Pressure Sensor
 ============================================
 
-.. image:: /_static/img/module/bmp280.jpg
+.. image:: /static/img/module/bmp280.jpg
    :width: 50 %
    :align: center
