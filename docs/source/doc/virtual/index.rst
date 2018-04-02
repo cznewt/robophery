@@ -9,6 +9,6 @@ computation when communication layer goes down.
 
 .. toctree::
 
-   vehicle-ground-pedal.rst
-   vehicle-ground-wheel.rst
-   shutter.rst
+   vehicle-ground-pedal
+   vehicle-ground-wheel
+   shutter

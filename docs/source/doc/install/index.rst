@@ -7,5 +7,5 @@ Supported installation procedures.
 
 .. toctree::
 
-   manual.rst
-   saltstack.rst
+   manual
+   saltstack

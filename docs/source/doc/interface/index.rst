@@ -7,5 +7,5 @@ Supported interfaces of RoboPhery platform.
 
 .. toctree::
 
-   wired.rst
-   wireless.rst
+   wired
+   wireless

@@ -5,8 +5,8 @@ Chapter 1. Project Overview
 
 .. toctree::
 
-   overview.rst
-   architecture.rst
-   module-physical.rst
-   module-virtual.rst
-   resources.rst
+   overview
+   architecture
+   module-physical
+   module-virtual
+   resources
