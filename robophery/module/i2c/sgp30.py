@@ -28,19 +28,27 @@ class Sgp30Module(I2cModule):
         self.set_iaq_baseline(0x8973, 0x8aae)
 
     def iaq_init(self):
-        """Initialize the IAQ algorithm"""
+        """
+        Initialize the IAQ algorithm.
+        """
         self._sgp_query(self.REG_ADDR, [0x03], 0.5, 0)
 
     def iaq_measure(self):
-        """Measure the CO2eq and TVOC"""
+        """
+        Measure the CO2eq and TVOC.
+        """
         return self._sgp_query(self.REG_ADDR, [0x08], 0.6, 2)
 
     def get_iaq_baseline(self):
-        """Retreive the IAQ algorithm baseline for CO2eq and TVOC"""
+        """
+        Retreive the IAQ algorithm baseline for CO2eq and TVOC.
+        """
         return self._sgp_query(self.REG_ADDR, [0x15], 0.01, 2)
 
     def set_iaq_baseline(self, co2eq, tvoc):
-        """Set the previously recorded IAQ algorithm baseline for CO2eq and TVOC"""
+        """
+        Set the previously recorded IAQ algorithm baseline for CO2eq and TVOC.
+        """
         if co2eq == 0 and tvoc == 0:
             raise RuntimeError('Invalid baseline')
         buffer = []
@@ -51,18 +59,14 @@ class Sgp30Module(I2cModule):
         self._sgp_query(self.REG_ADDR, [0x1e] + buffer, 0.01, 0)
 
     def _sgp_query(self, reg, cmd, delay, reply_size):
-        """Run an SGP command query, get a reply and CRC results if necessary"""
+        """
+        Run an SGP command query, get a reply and CRC results if necessary.
+        """
         self._data.writeList(reg, cmd)
         self._sleep(delay)
         if not reply_size:
             return None
-        #crc_result = bytearray(reply_size * 3)
-        #raw_data = self._data.readList(self.REG_ADDR, reply_size * 3)
         crc_result = self._data.readList(self.REG_ADDR, reply_size * 3)
-        print("\tCRC result: ", crc_result)
-        #print("\tRaw Read: ", raw_data)
-        #for i in range(raw_data):
-        #    crc_result[i] = raw_data[i]
         result = []
         for i in range(reply_size):
             word = [crc_result[3*i], crc_result[3*i+1]]
@@ -74,7 +78,9 @@ class Sgp30Module(I2cModule):
         return result
 
     def _generate_crc(self, data):
-        """8-bit CRC algorithm for checking data"""
+        """
+        8-bit CRC algorithm for checking data.
+        """
         crc = self.CRC8_INIT
         # calculates 8-Bit checksum with given polynomial
         for byte in data:
@@ -112,17 +118,17 @@ class Sgp30Module(I2cModule):
             'co2eq': {
                 'type': 'gauge',
                 'unit': 'ppm',
-                'resolution': 1,
-                'precision': 1,
-                'range_low': 0,
+                'resolution': 3,
+                'precision': '10%',
+                'range_low': 400,
                 'range_high': 60000,
                 'sensor': self.DEVICE_NAME
             },
             'tvoc': {
                 'type': 'gauge',
                 'unit': 'ppb',
-                'resolution': 1,
-                'precision': 1,
+                'resolution': 6,
+                'precision': '10%',
                 'range_low': 0,
                 'range_high': 60000,
                 'sensor': self.DEVICE_NAME
