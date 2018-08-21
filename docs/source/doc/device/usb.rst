@@ -62,6 +62,32 @@ Where to buy
 * 10 EUR - http://cz.mouser.com/ProductDetail/FTDI/UMFT201XB-01/
 
 
+Maestro - USB to PWM Extension Board
+====================================
+
+The 18-channel Mini Maestro 18 raises the performance bar for serial servo
+controllers with features such as a native USB interface and internal scripting
+control. Whether you want the best servo control available (0.25μs resolution
+with built-in speed and acceleration control and pulse rates up to 333 Hz) or a
+general I/O controller (e.g. to interface with a sensor or ESC via your USB
+port), this compact, versatile device will deliver. This fully-assembled version
+ships with header pins installed.
+
+.. image:: /static/img/device/maestro.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* https://github.com/FRC4564/Maestro
+
+Where to buy
+------------
+
+* 40 USD - https://www.pololu.com/product/1354
+
+
 Arduino - GPIO/SPI/I2C Board
 ============================
 

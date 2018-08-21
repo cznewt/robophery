@@ -51,3 +51,20 @@ More information
 * http://developer.parrot.com/docs/flowerpower/FlowerPower-BLE.pdf
 * http://global.parrot.com/media/porticus/ressources/files/BAT5_Datasheet_FlowerPower_UK_05nov13.pdf
 * http://www.jaredwolff.com/blog/get-started-with-bluetooth-low-energy/
+
+
+Xiaomi Mi Flora - BLE Gardening Sensor
+======================================
+
+The Mi Flora plant sensor is a small Bluetooth Low Energy device that monitors
+the moisture and conductivity of the soil as well as ambient light and
+temperature.
+
+.. image :: /static/img/module/mi_flora.jpg
+   :width: 50 %
+   :align: center
+
+Where to buy
+------------
+
+* 20 USD - https://www.aliexpress.com/item/Original-Xiaomi-Mi-Plants-Monitor-Flower-Plants-Tester-Xiaomi-Flora-Sensor-with-Bluetooth-for-Aquarium-Garden/32739947607.html

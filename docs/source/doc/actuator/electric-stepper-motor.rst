@@ -28,6 +28,7 @@ More information
 ----------------
 
 * https://www.electroschematics.com/8878/uln2803-datasheet/
+* https://medium.com/@Keithweaver_/controlling-stepper-motors-using-python-with-a-raspberry-pi-b3fbd482f886
 
 
 EasyDriver - GPIO Stepper Motor Actuator
@@ -75,3 +76,16 @@ NEMA-17 - Stepper Motor
 .. image:: /static/img/module/nema-17.jpg
    :width: 50 %
    :align: center
+
+
+BYJ48 - Stepper Motor
+=====================
+
+.. image:: /static/img/module/byj48.jpg
+   :width: 50 %
+   :align: center
+
+More information
+----------------
+
+* https://www.instructables.com/id/BYJ48-Stepper-Motor/

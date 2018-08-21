@@ -42,3 +42,18 @@ Allbot Spider 6 Legs/3 Joints - 18 PWM Servo Vehicle
 .. image :: /static/img/virtual/vr618.jpg
    :width: 50 %
    :align: center
+
+Allbot Spider 6 Legs/3 Joints - 18 PWM Servo Vehicle
+====================================================
+
+
+
+17DOF Bipedal Robot - 17 PWM Servo Robot
+========================================
+
+17DOF Bipedal Robot 
+
+More information
+----------------
+
+* https://www.piddlerintheroot.com/project-denji/
