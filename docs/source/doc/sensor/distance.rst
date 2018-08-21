@@ -26,6 +26,23 @@ Where to buy
 * 120 CZK - http://www.santy.cz/senzory-c24/arduino-hc-sr04-modul-shield-mega-nano-vzdalenost-mereni-i23/
 
 
+
+AJ-SR04M - GPIO Ultasonic Distance Sensor
+=========================================
+
+AJ-SR04M Integration Ultrasonic Ranging Module Reversing Radar Waterproof
+Ultrasonic Square Wave TTL& Serial interface 20cm-8m.
+
+.. image:: /static/img/module/aj-sr04m.jpg
+   :width: 50 %
+   :align: center
+
+Where to buy
+------------
+
+* 450 CZK - http://www.santy.cz/senzory-c24/arduino-hc-sr04-modul-vzdalenost-mereni-vodotesny-waterproof-i320/
+
+
 US-020 - GPIO Ultasonic Distance Sensor 
 =======================================
 
