@@ -41,6 +41,7 @@ Physical Actuators
 ------------------
 
 * :doc:`Electric Switch </doc/actuator/electric-switch>`
-* :doc:`Electric Motor </doc/actuator/electric-motor>`
+* :doc:`Electric DC Motor </doc/actuator/electric-dc-motor>`
+* :doc:`Electric Stepper Motor </doc/actuator/electric-stepper-motor>`
 * :doc:`LCD Display </doc/actuator/display-lcd>`
 * :doc:`OLED Display </doc/actuator/display-oled>`

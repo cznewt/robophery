@@ -7,6 +7,7 @@ Chapter 5. Physical Actuators
    :maxdepth: 2
 
    electric-switch.rst
-   electric-motor.rst
+   electric-dc-motor.rst
+   electric-stepper-motor.rst
    display-oled.rst
    display-lcd.rst
