@@ -94,10 +94,18 @@ Where to buy
 
 * 1200 CZK - http://cz.farnell.com/element14/bbone-black-4g/beaglebone-black-rev-c-cortex/dp/2422228  - BeagleBone Black REV C
 
+
 BeagleBone Blue
 ===============
 
 .. image :: /static/img/device/beaglebone-blue.jpg
+   :width: 50 %
+   :align: center
+
+Available pins
+--------------
+
+.. image :: /static/img/pinout/bbb_blue.jpg
    :width: 50 %
    :align: center
 
@@ -118,6 +126,7 @@ More information
 ----------------
 
 * http://www.udoo.org/
+
 
 ODroid C1/C2
 ============

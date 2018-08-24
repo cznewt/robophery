@@ -43,15 +43,14 @@ Allbot Spider 6 Legs/3 Joints - 18 PWM Servo Vehicle
    :width: 50 %
    :align: center
 
-Allbot Spider 6 Legs/3 Joints - 18 PWM Servo Vehicle
-====================================================
 
+17DOF Bipedal Humanoid Robot - 17 PWM Servo Robot
+=================================================
 
-
-17DOF Bipedal Robot - 17 PWM Servo Robot
-========================================
-
-17DOF Bipedal Robot 
+The 17DOF Bipedal Humanoid Robot is completely assembled and ready to
+play. Robot could perform walking, squat, turning, side slide movements, and
+could dancing, fighting, or more complicated movements. Robot can feedback
+itself position.
 
 More information
 ----------------
